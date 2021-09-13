@@ -1,4 +1,5 @@
-﻿using FPTBlog.UserModule.Entity;
+﻿using FPTBlog.TagModule.Entity;
+using FPTBlog.UserModule.Entity;
 using FPTBlog.Utils.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,6 +15,7 @@ namespace FPTBlog.Utils
             this.Config = config;
         }
         public DbSet<User> user { set; get; }
+        public DbSet<Tag> tag { set; get; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
