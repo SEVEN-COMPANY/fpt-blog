@@ -22,15 +22,12 @@ namespace FPTBlog.AuthModule
     {
 
 
-        private readonly IUserRepository UserRepository;
-
         private readonly IAuthService AuthService;
 
         private readonly IUserService UserService;
         private readonly IJwtService JwtService;
-        public AuthController(IUserRepository userRepository, IAuthService authService, IJwtService jwtService, IUserService userService)
+        public AuthController(IAuthService authService, IJwtService jwtService, IUserService userService)
         {
-            this.UserRepository = userRepository;
             this.AuthService = authService;
             this.UserService = userService;
             this.JwtService = jwtService;
@@ -59,7 +56,7 @@ namespace FPTBlog.AuthModule
                 return View(Routers.Login.Page);
             }
 
-            var user = this.UserRepository.GetUserByUsername(input.Username);
+            var user = this.UserService.GetUserByUsername(input.Username);
             if (user == null)
             {
                 ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
@@ -110,7 +107,7 @@ namespace FPTBlog.AuthModule
                 return View(Routers.Register.Page);
             }
 
-            var isExistUser = this.UserRepository.GetUserByUsername(input.Username);
+            var isExistUser = this.UserService.GetUserByUsername(input.Username);
             if (isExistUser != null)
             {
                 ServerResponse.SetFieldErrorMessage("username", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
