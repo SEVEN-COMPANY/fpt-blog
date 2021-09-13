@@ -20,14 +20,12 @@ namespace FPTBlog.TagModule
         [HttpGet("add")]
         public IActionResult AddTagPage()
         {
-            Console.WriteLine("get");
             return View(Routers.AddTag.Page);
         }
 
         [HttpPost("add")]
         public IActionResult AddTagHandler(string name)
         {
-            Console.WriteLine("post");
             var input = new AddTagDto(){
                 Name = name
             };

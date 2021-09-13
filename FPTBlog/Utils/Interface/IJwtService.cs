@@ -2,7 +2,7 @@
 
 namespace FPTBlog.Utils.Interface
 {
-    interface IJwtService
+    public interface IJwtService
     {
         public string GenerateToken(string data);
 
