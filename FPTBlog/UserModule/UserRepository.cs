@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FPTBlog.UserModule
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DB Db;
         public UserRepository(DB db)
@@ -25,6 +25,11 @@ namespace FPTBlog.UserModule
         {
             this.Db.user.Add(user);
             return this.Db.SaveChanges() > 0;
+        }
+        public User GetUserById(string id)
+        {
+            User user = this.Db.user.FirstOrDefault(item => item.UserId == id);
+            return user;
         }
     }
 }

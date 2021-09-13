@@ -1,1 +1,17 @@
-<h1>Login page</h1>
+@{
+    ViewData["Title"] = Routers.Login.Title;
+    var username = new FormField() { Label = "Username", Field = "username", Type = "text" };
+    var password = new FormField() { Label = "Password", Field = "password", Type = "password" };
+    var loginBtn = new FormField() { Label = "Login" };
+}
+
+
+<div>
+    <form method="post" action="@Routers.Login.Link">
+        <h1 class="text-4xl font-semibold text-center">Login Account</h1>
+        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", username)
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", password)
+        @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", loginBtn)
+    </form>
+</div>

@@ -49,6 +49,7 @@ namespace FPTBlog
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<AuthGuard>();
             // User Module
             services.AddScoped<IUserRepository, UserRepository>();
         }
