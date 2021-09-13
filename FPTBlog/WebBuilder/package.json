@@ -1,0 +1,29 @@
+{
+    "name": "mono-webpack",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "build:dev": "webpack --config webpack.development.js",
+        "build:pro": "webpack --config webpack.production.js ",
+        "style:dev": "npx tailwindcss build ./styles.css -o ./../wwwroot/style/styles.css",
+        "style:pro": "NODE_ENV=production npx tailwindcss build ./styles.css -o ./../wwwroot/style/styles.css"
+    },
+    "dependencies": {
+        "@babel/core": "^7.15.5",
+        "babel-core": "^6.26.3",
+        "@types/quill": "^2.0.9",
+        "autoprefixer": "^10.3.4",
+        "babel-loader": "^8.2.2",
+        "babel-preset-es2015": "^6.24.1",
+        "html-loader": "^2.1.2",
+        "postcss": "^8.3.6",
+        "quill": "^1.3.7",
+        "tailwindcss": "^2.2.15",
+        "ts-loader": "^9.2.5",
+        "typescript": "^4.4.3",
+        "webpack": "^5.52.1",
+        "webpack-cli": "^4.8.0",
+        "webpack-merge": "^5.8.0"
+    }
+}
