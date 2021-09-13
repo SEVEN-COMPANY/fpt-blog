@@ -26,6 +26,8 @@ using FPTBlog.UserModule.Interface;
 using FPTBlog.UserModule;
 using FPTBlog.AuthModule.Interface;
 using FPTBlog.AuthModule;
+using FPTBlog.TagModule.Interface;
+using FPTBlog.TagModule;
 
 namespace FPTBlog
 {
@@ -46,11 +48,17 @@ namespace FPTBlog
             services.AddScoped<DB>();
             services.AddScoped<IRedisService, RedisService>();
             services.AddScoped<IJwtService, JwtService>();
+
+            // Auth Module
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            
             // User Module
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+            // Tag Module
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<ITagService, TagService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,15 @@
+@{
+    var name = new FormField() {Label = "Name", Field = "name", Type = "text"};
+    var addBtn = new FormField(){Label = "Add"};
+}
+
+<div>
+    <form action="@Routers.AddTag.Link" method="post">
+        <h1>Add Tag</h1>
+        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+        <div>
+            @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)
+        </div>
+        @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", addBtn)
+    </form>
+</div>
