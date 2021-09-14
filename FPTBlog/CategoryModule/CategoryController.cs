@@ -74,6 +74,8 @@ namespace CategoryModule.Controllers
             category.Status = input.Status;
             category.CreateDate = DateTime.Now.ToShortDateString();
             this.CategoryService.SaveCategory(category);
+
+            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
         }
 
@@ -82,7 +84,7 @@ namespace CategoryModule.Controllers
         [HttpGet("update")]
         public IActionResult UpdateCategory(string categoryId)
         {
-            var category = this.CategoryService.GetCategory(categoryId);
+            var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
             this.ViewData["category"] = category;
             return View(Routers.UpdateCategory.Page);
         }
@@ -123,12 +125,13 @@ namespace CategoryModule.Controllers
                 }
             }
 
-
             category.Name = input.Name;
             category.Description = input.Description;
             category.Status = input.Status;
-            this.DB.SaveChanges();
 
+            this.CategoryService.UpdateCategory(category);
+
+            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
         }
     }

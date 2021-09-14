@@ -9,9 +9,9 @@ namespace FPTBlog.CategoryModule.Interface
     public interface ICategoryService
     {
         public List<Category> GetCategories();
-        public Category GetCategory(string categoryId);
         public bool SaveCategory(Category category);
         public Category GetCategoryByCategoryName(string name);
         public Category GetCategoryByCategoryId(string categoryId);
+        public bool UpdateCategory(Category category);
     }
 }
