@@ -10,10 +10,14 @@ window.onload = async function () {
     const btnSave = document.getElementById('save');
 
     btnSend?.addEventListener('click', function () {
-        http.post('/blog', {
-            title: 'hello',
-            contain: editor.root.innerHTML,
-        });
+        const blogId = document.getElementById('blogId');
+        if (blogId) {
+            http.post('/blog', {
+                BlogId: blogId.innerHTML.trim(),
+                Title: 'hello',
+                Content: editor.root.innerHTML,
+            });
+        }
     });
 
     btnSave?.addEventListener('click', function () {

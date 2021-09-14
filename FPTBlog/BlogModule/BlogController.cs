@@ -5,6 +5,7 @@ using FPTBlog.BlogModule.Entity;
 using FPTBlog.BlogModule.Interface;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
+using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,7 @@ namespace FPTBlog.BlogModule
         {
             Blog blog = new Blog();
             ViewData["blog"] = blog;
+            this.BlogService.SaveBlog(blog);
             return View(Routers.EditorPage.Page);
         }
 
@@ -52,18 +54,39 @@ namespace FPTBlog.BlogModule
                 return "not pass validation";
             }
             Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if(blog == null){
+
+                return "blog not found";
+            }
+            blog.Title = input.Title;
+            blog.Content = input.Content;
+            this.BlogService.UpdateBlog(blog);
 
             return "ok";
         }
 
 
         [HttpPost("")]
-        public IActionResult AddBlogHandler(string title, string contain)
+        public IActionResult AddBlogHandler([FromBody]AddBlogDto input)
         {
-            Console.WriteLine(title);
-            Console.WriteLine(contain);
-            // Console.WriteLine(editor);
-            return View(Routers.AddBlog.Page);
+            ValidationResult result = new AddBlogDtoValidator().Validate(input);
+            if(!result.IsValid)
+            {
+                ServerResponse.MapDetails(result, this.ViewData);
+                return View(Routers.EditorPage.Page);
+            }
+
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if(blog == null){
+                ServerResponse.SetFieldErrorMessage("blogId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+               return View(Routers.EditorPage.Page);
+            }
+
+            blog.Title = input.Title;
+            blog.Content = input.Content;
+            this.BlogService.UpdateBlog(blog);
+
+            return View(Routers.GetBlog.Page);
         }
     }
 }

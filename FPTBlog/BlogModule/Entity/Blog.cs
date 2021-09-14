@@ -66,8 +66,9 @@ namespace FPTBlog.BlogModule.Entity
 
         public Blog(){
             this.BlogId = Guid.NewGuid().ToString();
-            this.Title = "";
-            this.Description = "";
+            this.Title = "Title";
+            this.Content = "<p>Content</p>";
+            this.Description = "Description";
             this.ReadTime = 1;
             this.Like = 0;
             this.Dislike = 0;
