@@ -1,5 +1,6 @@
 ﻿using FPTBlog.TagModule.Entity;
 using FPTBlog.UserModule.Entity;
+using FPTBlog.CategoryModule.Entity;
 using FPTBlog.Utils.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FPTBlog.Utils
 {
-    public class DB: DbContext
+    public class DB : DbContext
     {
         private IConfig Config;
         public DB(IConfig config)
@@ -16,6 +17,8 @@ namespace FPTBlog.Utils
         }
         public DbSet<User> user { set; get; }
         public DbSet<Tag> tag { set; get; }
+        public DbSet<Category> Category { set; get; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
