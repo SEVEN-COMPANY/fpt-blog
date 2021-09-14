@@ -7,7 +7,8 @@ namespace FPTBlog.UserModule.Entity
     public enum UserRole
     {
         STUDENT = 0,
-        MANAGER = 1
+        MANAGER = 1,
+        GUEST = 2
     }
 
     public enum UserStatus
