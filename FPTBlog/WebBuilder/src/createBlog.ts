@@ -20,9 +20,9 @@ window.onload = async function () {
         const blogId = document.getElementById('blogId');
         if (blogId) {
             http.post('/blog/save', {
-                blogId: blogId.innerHTML.trim(),
-                title: 'hello',
-                contain: editor.root.innerHTML,
+                BlogId: blogId.innerHTML.trim(),
+                Title: 'hello',
+                Content: editor.root.innerHTML,
             });
         }
     });
