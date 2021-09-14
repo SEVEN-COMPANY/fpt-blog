@@ -1,0 +1,31 @@
+@using FPTBlog.TagModule.Entity
+@{
+    List<Tag> tags = (List<Tag>)ViewData["tags"];
+}
+
+<div>
+    <h1>All Tags</h1>
+    @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var tag in tags)
+            {
+                var updateLink = $"{@Routers.UpdateTag.Link}?tagId={@tag.TagId}";
+                
+                <tr>
+                    <td>@tag.Name</td>
+                    <td>
+                        <a href="@updateLink">Update</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
