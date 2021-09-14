@@ -17,18 +17,18 @@ namespace FPTBlog.UserModule
 
         public User GetUserByUsername(string username)
         {
-            var user = this.Db.user.FirstOrDefault(item => item.Username == username);
+            var user = this.Db.User.FirstOrDefault(item => item.Username == username);
             return user;
         }
 
         public bool SaveUser(User user)
         {
-            this.Db.user.Add(user);
+            this.Db.User.Add(user);
             return this.Db.SaveChanges() > 0;
         }
         public User GetUserById(string id)
         {
-            User user = this.Db.user.FirstOrDefault(item => item.UserId == id);
+            User user = this.Db.User.FirstOrDefault(item => item.UserId == id);
             return user;
         }
     }
