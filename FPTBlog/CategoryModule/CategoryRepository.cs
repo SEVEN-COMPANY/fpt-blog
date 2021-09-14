@@ -20,11 +20,6 @@ namespace FPTBlog.CategoryModule
             List<Category> categories = this.DB.Category.ToList();
             return categories;
         }
-        public Category GetCategory(string categoryId)
-        {
-            Category category = this.DB.Category.Find(categoryId);
-            return category;
-        }
 
         public Category GetCategoryByCategoryName(string name)
         {
@@ -39,6 +34,17 @@ namespace FPTBlog.CategoryModule
         public bool SaveCategory(Category category)
         {
             this.DB.Category.Add(category);
+            return this.DB.SaveChanges() > 0;
+        }
+
+        public bool UpdateCategory(Category category)
+        {
+            Category obj = this.GetCategoryByCategoryId(category.CategoryId);
+
+            obj.Name = category.Name;
+            obj.Description = category.Description;
+            obj.Status = category.Status;
+
             return this.DB.SaveChanges() > 0;
         }
     }
