@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = Routers.UpdateUser.Title;
+    User user = (User)ViewData["user"];
+
+    var name = new FormField() { Label = "Name", Field = "name", Type = "text", Value = user.Name };
+    var email = new FormField() { Label = "Email", Field = "email", Type = "text", Value = user.Email };
+    var address = new FormField() { Label = "Address", Field = "address", Type = "text", Value = user.Address };
+    var phone = new FormField() { Label = "Phone", Field = "phone", Type = "text", Value = user.Phone };
+    var updateUserBtn = new FormField() { Label = "Update User Information" };
+}
+
+<div>
+    <form action="@Routers.UpdateUser.Link" method="post">
+        <h1>User Information</h1>
+        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+        <div>
+            @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)
+            @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", email)
+            @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", address)
+            @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", phone)
+        </div>
+        @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", updateUserBtn)
+    </form>
+</div>
