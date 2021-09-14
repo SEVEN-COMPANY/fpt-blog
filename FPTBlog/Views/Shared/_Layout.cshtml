@@ -10,15 +10,13 @@
 </head>
 
 <body>
-    <header>
-
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="flex flex-col min-h-screen">
+        @await Html.PartialAsync("~/Views/Components/Navbar.cshtml")
+        <main class="z-10 flex flex-1">
             @RenderBody()
         </main>
     </div>
-
+    <script src="~/js/navbar.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

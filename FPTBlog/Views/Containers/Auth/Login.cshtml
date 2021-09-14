@@ -6,12 +6,37 @@
 }
 
 
-<div>
-    <form method="post" action="@Routers.Login.Link">
-        <h1 class="text-4xl font-semibold text-center">Login Account</h1>
-        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
-        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", username)
-        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", password)
-        @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", loginBtn)
-    </form>
+<div class="flex items-center justify-center flex-1 p-2">
+    <div class="w-full px-4 py-16 border rounded-md shadow-xl md:w-96 fade-in">
+        <form method="post" action="@Routers.Login.Link" class="space-y-6">
+            <h1 class="text-4xl font-semibold text-center">Login Account</h1>
+            <div class="space-y-4">
+                @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", username)
+                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", password)
+            </div>
+            @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", loginBtn)
+            <div class="space-y-2">
+                <div class="flex items-center space-x-2">
+                    <div class="flex-1 h-0.5 bg-gray-600"></div>
+                    <div class="font-medium text-center opacity-90">
+                        Or
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gray-600"></div>
+                </div>
+                <div>
+                    @await Html.PartialAsync("~/Views/Components/Form/FormLoginGoogle.cshtml")
+                </div>
+                <div class="text-center">
+                    <a href="@Routers.Register.Link"
+                        class="inline-block p-2 font-semibold duration-300 hover:text-tango-500">Register New
+                        Account Instead?</a>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+@section Scripts {
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+}
