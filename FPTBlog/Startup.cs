@@ -28,6 +28,9 @@ using FPTBlog.AuthModule.Interface;
 using FPTBlog.AuthModule;
 using FPTBlog.TagModule.Interface;
 using FPTBlog.TagModule;
+using FPTBlog.CategoryModule.Interface;
+using FPTBlog.CategoryModule;
+
 
 namespace FPTBlog
 {
@@ -61,6 +64,10 @@ namespace FPTBlog
             // Tag Module
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ITagService, TagService>();
+
+            // Category Module
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

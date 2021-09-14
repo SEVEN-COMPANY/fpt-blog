@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = Routers.CreateCategory.Title;
+    var name = new FormField() { Label = "Category Name", Field = "name", Type = "text" };
+    var descirption = new FormField() { Label = "Description", Field = "description", Type = "text" };
+    var status = new FormField() { Label = "Status", Field = "status", Type = "number" };
+
+}
+
+<div>
+    <form method="post" action="/category/create">
+        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", descirption)
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", status)
+
+        <button>Create</button>
+    </form>
+</div>
