@@ -28,11 +28,8 @@ export function saveToServer(editor: Quill, file: File) {
     const formData = new FormData();
     formData.append('image', file);
 
-    http.post('/upload/image', formData)
-        .then(() => {
-            insertToEditor(editor, 'https://picsum.photos/200/300');
-        })
-        .finally(() => {
-            insertToEditor(editor, 'https://picsum.photos/200/300');
-        });
+    http.post('/blog/image', formData).then((res) => {
+        const imageUrl = res.data;
+        insertToEditor(editor, imageUrl);
+    });
 }
