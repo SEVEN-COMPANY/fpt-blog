@@ -5,6 +5,7 @@ using FPTBlog.Utils.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using FPTBlog.BlogModule.Entity;
 
 namespace FPTBlog.Utils
 {
@@ -15,16 +16,22 @@ namespace FPTBlog.Utils
         {
             this.Config = config;
         }
-        public DbSet<User> user { set; get; }
-        public DbSet<Tag> tag { set; get; }
+        public DbSet<User> User { set; get; }
+        public DbSet<Tag> Tag { set; get; }
         public DbSet<Category> Category { set; get; }
-
+        public DbSet<Blog> Blog { set; get; }
+        public DbSet<BlogTag> BlogTag {get;set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(this.Config.GetEnvByKey("DB_URL"));
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<BlogTag>().HasKey(sc => new { sc.BlogId, sc.TagId });
+    }
         public static async Task<Boolean> InitDatabase(IConfig config)
         {
             var dbContext = new DB(config);

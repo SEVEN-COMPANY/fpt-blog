@@ -1,9 +1,11 @@
+@using FPTBlog.BlogModule.Entity
 @section Styles {
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 }
 
 @{
-    string blogId = (string)ViewData["blogId"] ?? "123";
+    Blog blog = (Blog)ViewData["blog"];
+    string blogId = blog.BlogId ?? "123";
 }
 
 

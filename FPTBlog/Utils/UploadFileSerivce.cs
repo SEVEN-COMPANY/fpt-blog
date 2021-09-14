@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace FPTBlog.Utils
 {
-    public class UploadFileSerivce : IUploadFileService
+    public class UploadFileService : IUploadFileService
     {
         readonly string folderUrl = "/public/image/";
         public static string[] imageExtension = { "png", "jpg", "jpeg" };
@@ -25,6 +25,7 @@ namespace FPTBlog.Utils
 
         public bool CheckFileSize(IFormFile file, int limit)
         {
+            // Unit: MB
             return file.Length < limit * 1024 * 1024;
         }
 

@@ -16,7 +16,7 @@ namespace FPTBlog.CategoryModule.Entity
     {
         [Key]
         [Required]
-        [StringLength(50)]
+        [StringLength(40)]
         public string CategoryId { set; get; }
 
         [Required]

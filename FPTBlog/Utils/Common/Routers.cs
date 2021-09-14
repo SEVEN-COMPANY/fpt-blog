@@ -21,10 +21,9 @@ namespace FPTBlog.Utils.Common
         public static readonly RouterItem GetTags = new RouterItem() {Page = "/Views/Containers/Tag/GetTags.cshtml", Title = "Get Tags", Link = "/tag"};
     
         // Blog
-        public static readonly RouterItem AddBlog = new RouterItem() {Page = "/Views/Containers/Blog/AddBlog.cshtml", Title = "Add Blog", Link = "/blog/add"};
-        public static readonly RouterItem GetBlog = new RouterItem() {Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/blog"};
+        public static readonly RouterItem GetBlog = new RouterItem() {Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/blog/get"};
         public static readonly RouterItem GetAllBlogs = new RouterItem() {Page = "/Views/Containers/Blog/GetAllBlogs.cshtml", Title = "Get All Blogs", Link = "/blog/all"};
-        public static readonly RouterItem EditorPage = new RouterItem() { Page = "/Views/Containers/Blog/EditorPage.cshtml", Title = "Write Your Blog", Link = "" };
+        public static readonly RouterItem EditorPage = new RouterItem() { Page = "/Views/Containers/Blog/EditorPage.cshtml", Title = "Write Your Blog", Link = "/blog" };
         public static readonly RouterItem Category = new RouterItem() { Page = "/Views/Containers/Category/Category.cshtml", Title = "All Category", Link = "/category" };
         public static readonly RouterItem CreateCategory = new RouterItem() { Page = "/Views/Containers/Category/CreateCategory.cshtml", Title = "Create Category", Link = "/category/create" };
         public static readonly RouterItem UpdateCategory = new RouterItem() { Page = "/Views/Containers/Category/UpdateCategory.cshtml", Title = "Update Category", Link = "/category/update" };

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FPTBlog.BlogModule.Entity;
 
 namespace FPTBlog.TagModule.Entity
 {
@@ -20,11 +22,13 @@ namespace FPTBlog.TagModule.Entity
         [StringLength(20)]
         public string CreateDate { get; set; }
 
+        public ICollection<BlogTag> BlogTags {get;set;}
         public Tag()
         {
             this.TagId = Guid.NewGuid().ToString();
             this.Name = "";
             this.CreateDate = DateTime.Now.ToShortDateString();
+            this.BlogTags = new List<BlogTag>();
         }
 
         public override string ToString()
