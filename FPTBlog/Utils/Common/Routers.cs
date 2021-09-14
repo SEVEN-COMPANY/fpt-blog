@@ -24,5 +24,6 @@ namespace FPTBlog.Utils.Common
         public static readonly RouterItem AddBlog = new RouterItem() {Page = "/Views/Containers/Blog/AddBlog.cshtml", Title = "Add Blog", Link = "/blog/add"};
         public static readonly RouterItem GetBlog = new RouterItem() {Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/blog"};
         public static readonly RouterItem GetAllBlogs = new RouterItem() {Page = "/Views/Containers/Blog/GetAllBlogs.cshtml", Title = "Get All Blogs", Link = "/blog/all"};
+        public static readonly RouterItem EditorPage = new RouterItem() { Page = "/Views/Containers/Blog/EditorPage.cshtml", Title = "Write Your Blog", Link = "" };
     }
 }
