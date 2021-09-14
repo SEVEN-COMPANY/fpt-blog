@@ -4,8 +4,8 @@
 }
 
 <div>
+    <h1>Add Tag</h1>
     <form action="@Routers.AddTag.Link" method="post">
-        <h1>Add Tag</h1>
         @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
         <div>
             @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)

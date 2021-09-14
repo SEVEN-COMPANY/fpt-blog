@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FPTBlog.TagModule.Entity;
 using FPTBlog.TagModule.Interface;
 
@@ -9,6 +10,11 @@ namespace FPTBlog.TagModule
         public TagService(ITagRepository tagRepository)
         {
             this.tagRepository = tagRepository;
+        }
+
+        public List<Tag> GetTags()
+        {
+            return this.tagRepository.GetTags();
         }
 
         public Tag GetTagByName(string name)
@@ -24,6 +30,11 @@ namespace FPTBlog.TagModule
         public bool SaveTag(Tag tag)
         {
             return this.tagRepository.SaveTag(tag);
+        }
+
+        public bool UpdateTag(Tag tag)
+        {
+            return this.tagRepository.UpdateTag(tag);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.TagModule.DTO;
 using FPTBlog.TagModule.Entity;
@@ -49,6 +50,55 @@ namespace FPTBlog.TagModule
 
             ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS, this.ViewData);
             return View(Routers.AddTag.Page);
+        }
+
+        [HttpGet("update")]
+        public IActionResult UpdateTagPage(string tagId)
+        {
+            Tag tag = this.TagService.GetTagByTagId(tagId);
+            if(tag == null){
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                return View(Routers.UpdateTag.Page);
+            }
+            ViewData["tag"] = tag;
+            return View(Routers.UpdateTag.Page);
+        }
+
+        [HttpPost("update")]
+        public IActionResult UpdateTagHandler(string tagId, string name)
+        {
+            var input = new UpdateTagDto(){
+                TagId = tagId,
+                Name = name
+            };
+
+            var tag = this.TagService.GetTagByTagId(input.TagId);
+            if(tag == null){
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                return View(Routers.UpdateTag.Page);
+            }
+            this.ViewData["tag"] = tag;
+
+            ValidationResult result = new UpdateTagDtoValidator().Validate(input);
+            if(!result.IsValid)
+            {
+                ServerResponse.MapDetails(result, this.ViewData);
+                return View(Routers.UpdateTag.Page);
+            }
+
+            tag.Name = input.Name;
+            this.TagService.UpdateTag(tag);
+
+            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
+            return View(Routers.UpdateTag.Page);
+        }
+    
+        [HttpGet("")]
+        public IActionResult GetTagsPage(){
+            List<Tag> tags = this.TagService.GetTags();
+            this.ViewData["tags"] = tags;
+
+            return View(Routers.GetTags.Page);
         }
     }
 }

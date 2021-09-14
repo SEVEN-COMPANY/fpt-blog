@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using FPTBlog.TagModule.Entity;
 using FPTBlog.TagModule.Interface;
@@ -11,6 +12,12 @@ namespace FPTBlog.TagModule
         public TagRepository(DB Db)
         {
             this.Db = Db;
+        }
+
+        public List<Tag> GetTags()
+        {
+            List<Tag> list = this.Db.tag.ToList();
+            return list;
         }
 
         public Tag GetTagByName(string name)
@@ -28,6 +35,18 @@ namespace FPTBlog.TagModule
         public bool SaveTag(Tag tag)
         {
             this.Db.tag.Add(tag);
+            return this.Db.SaveChanges() > 0;
+        }
+
+        public bool UpdateTag(Tag tag)
+        {
+            Tag obj = this.Db.tag.FirstOrDefault(item => item.TagId == tag.TagId);
+            if(obj == null){
+                return false;
+            }
+
+            obj.Name = tag.Name;
+
             return this.Db.SaveChanges() > 0;
         }
     }
