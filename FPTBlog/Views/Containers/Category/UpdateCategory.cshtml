@@ -1,0 +1,40 @@
+@using FPTBlog.CategoryModule.Entity
+
+@{
+    ViewData["Title"] = Routers.UpdateCategory.Title;
+    Category category = (Category)ViewData["category"];
+
+    var name = new FormField()
+    {
+        Label = "Category Name",
+        Field = "name",
+        Type = "text",
+        Value = category.Name
+    };
+    var descirption = new FormField()
+    {
+        Label = "Description",
+        Field = "description",
+        Type = "text",
+        Value = category.Description
+    };
+    var status = new FormField() { Label = "Status", Field = "status", Type = "text", Value = category.Status.ToString() };
+
+
+    var createBtn = new FormField() { Label = "Update Category" };
+
+    var actionLink = $"{Routers.UpdateCategory.Link}?categoryId={category.CategoryId}";
+}
+
+
+
+<div class="flex items-center justify-center flex-1 ">
+    <form method="post" action="@actionLink">
+        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", descirption)
+        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", status)
+
+        <button>Update</button>
+    </form>
+</div>
