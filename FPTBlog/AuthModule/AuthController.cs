@@ -40,6 +40,21 @@ namespace FPTBlog.AuthModule
             return View(Routers.Login.Page);
         }
 
+        [HttpGet("google")]
+        public IActionResult LoginGoogle()
+        {
+            this.HttpContext.Response.Cookies.Append("auth-token", "12345", new CookieOptions()
+            {
+                Expires = DateTime.Now.AddDays(30),
+                SameSite = SameSiteMode.None,
+                Secure = true
+
+            });
+
+            return Redirect(Routers.Home.Link);
+            
+        }
+
         [HttpPost("login")]
         public IActionResult LoginHandler(string username, string password)
         {
