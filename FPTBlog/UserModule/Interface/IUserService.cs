@@ -1,4 +1,6 @@
-﻿using FPTBlog.UserModule.Entity;
+﻿using FPTBlog.UserModule.DTO;
+using FPTBlog.UserModule.Entity;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace FPTBlog.UserModule.Interface
 {
@@ -6,5 +8,7 @@ namespace FPTBlog.UserModule.Interface
     {
         public User GetUserByUsername(string username);
         public bool SaveUser(User user);
+        public bool UpdateUserHandler(UpdateUserDto input, ViewDataDictionary dataView);
+
     }
 }
