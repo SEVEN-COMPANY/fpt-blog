@@ -21,10 +21,20 @@ namespace FPTBlog.UserModule
             this.dB = dB;
             this.UserRepository = userRepository;
         }
+
+        public User GetUserByGoogleId(string googleId)
+        {
+            return this.UserRepository.GetUserByGoogleId(googleId);
+        }
+
+        public User GetUserByUserId(string id)
+        {
+            return this.UserRepository.GetUserByUserId(id);
+        }
+
         public User GetUserByUsername(string username)
         {
-            User user = this.UserRepository.GetUserByUsername(username);
-            return user;
+            return this.UserRepository.GetUserByUsername(username);
         }
 
         public bool SaveUser(User user)

@@ -74,7 +74,7 @@ namespace FPTBlog.AuthModule
                 {
                     return false;
                 }
-                var user = this.UserRepository.GetUserById(token[0]);
+                var user = this.UserRepository.GetUserByUserId(token[0]);
                 if (user == null)
                 {
                     return false;

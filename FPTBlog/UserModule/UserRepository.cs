@@ -26,9 +26,15 @@ namespace FPTBlog.UserModule
             this.Db.User.Add(user);
             return this.Db.SaveChanges() > 0;
         }
-        public User GetUserById(string id)
+        public User GetUserByUserId(string id)
         {
             User user = this.Db.User.FirstOrDefault(item => item.UserId == id);
+            return user;
+        }
+
+        public User GetUserByGoogleId(string googleId)
+        {
+            User user = this.Db.User.FirstOrDefault(item => item.GoogleId == googleId);
             return user;
         }
     }
