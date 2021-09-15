@@ -13,6 +13,7 @@ using FPTBlog.AuthModule.Interface;
 using FPTBlog.Utils;
 using Microsoft.AspNetCore.Http;
 using FPTBlog.Utils.Interface;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace FPTBlog.AuthModule
 {
@@ -23,7 +24,6 @@ namespace FPTBlog.AuthModule
 
 
         private readonly IAuthService AuthService;
-
         private readonly IUserService UserService;
         private readonly IJwtService JwtService;
         public AuthController(IAuthService authService, IJwtService jwtService, IUserService userService)
@@ -41,8 +41,16 @@ namespace FPTBlog.AuthModule
         }
 
         [HttpGet("google")]
-        public IActionResult LoginGoogle()
+        public IActionResult LoginGoogle([FromQuery(Name = "credential")]string credential)
         {
+            Console.WriteLine(credential);
+            JwtSecurityToken jwtToken = this.JwtService.Decode(credential);
+            string id = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
+            User user = this.UserService.GetUserByGoogleId(id);
+            if(user == null){
+                
+            }
+
             this.HttpContext.Response.Cookies.Append("auth-token", "12345", new CookieOptions()
             {
                 Expires = DateTime.Now.AddDays(30),
