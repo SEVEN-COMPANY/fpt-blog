@@ -75,7 +75,7 @@ namespace FPTBlog.BlogModule.Entity
             this.Status = BlogStatus.DRAFT;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Student = new User();
-            this.Lecturer = new User();
+            this.Lecturer = null;
             this.Category = new Category();
             this.BlogTags = new List<BlogTag>();
         }

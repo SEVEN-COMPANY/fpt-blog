@@ -1,8 +1,10 @@
 using System;
 using FluentValidation.Results;
+using FPTBlog.AuthModule;
 using FPTBlog.BlogModule.DTO;
 using FPTBlog.BlogModule.Entity;
 using FPTBlog.BlogModule.Interface;
+using FPTBlog.UserModule.Entity;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
 using FPTBlog.Utils.Locale;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FPTBlog.BlogModule
 {
     [Route("blog")]
+    [ServiceFilter(typeof(AuthGuard))]
     public class BlogController : Controller
     {
         private readonly IUploadFileService UploadFileService;
@@ -26,6 +29,9 @@ namespace FPTBlog.BlogModule
         public IActionResult EditorPage()
         {
             Blog blog = new Blog();
+            User currentUser =  (User)this.ViewData["user"];
+            blog.Student = currentUser;
+            blog.StudentId = currentUser.UserId;
             ViewData["blog"] = blog;
             this.BlogService.SaveBlog(blog);
             return View(Routers.EditorPage.Page);
