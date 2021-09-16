@@ -36,5 +36,10 @@ namespace FPTBlog.TagModule
         {
             return this.tagRepository.UpdateTag(tag);
         }
+
+        public bool DeleteTag(string tagId)
+        {
+            return this.tagRepository.DeleteTag(tagId);
+        }
     }
 }
