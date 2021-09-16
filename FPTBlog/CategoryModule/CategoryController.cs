@@ -8,7 +8,8 @@ using FluentValidation.Results;
 using FPTBlog.Utils.Locale;
 using FPTBlog.Utils;
 using System;
-
+using FPTBlog.BlogModule.Entity;
+using FPTBlog.BlogModule.Interface;
 
 namespace CategoryModule.Controllers
 {
@@ -17,14 +18,15 @@ namespace CategoryModule.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService CategoryService;
+        private readonly IBlogService BlogService;
         private readonly DB DB;
 
-        public CategoryController(ICategoryService categoryService, DB dB)
+        public CategoryController(IBlogService blogService, ICategoryService categoryService, DB dB)
         {
+            this.BlogService = blogService;
             this.CategoryService = categoryService;
             this.DB = dB;
         }
-
 
         [HttpGet("")]
         public IActionResult Category()
@@ -35,13 +37,11 @@ namespace CategoryModule.Controllers
             return View(Routers.Category.Page);
         }
 
-
         [HttpGet("create")]
-        public IActionResult CreateCategory()
+        public IActionResult AddCategoryPage()
         {
             return View(Routers.CreateCategory.Page);
         }
-
 
         [HttpPost("create")]
         public IActionResult HandleCreateCategory(string name, string description, CategoryStatus status)
@@ -79,8 +79,6 @@ namespace CategoryModule.Controllers
             return Redirect(Routers.Category.Link);
         }
 
-
-
         [HttpGet("update")]
         public IActionResult UpdateCategory(string categoryId)
         {
@@ -89,9 +87,8 @@ namespace CategoryModule.Controllers
             return View(Routers.UpdateCategory.Page);
         }
 
-
         [HttpPost("update")]
-        public IActionResult handleUpdateCategory(string categoryId, string name, string description, CategoryStatus status)
+        public IActionResult HandleUpdateCategory(string categoryId, string name, string description, CategoryStatus status)
         {
             var input = new UpdateCategoryDTO()
             {
@@ -133,6 +130,32 @@ namespace CategoryModule.Controllers
 
             ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
+        }
+    
+        [HttpPost("blog/add")]
+        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input){
+            Console.WriteLine(input.BlogId);
+            ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
+            if(!result.IsValid){
+                return "not pass validation";
+            }
+
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if(blog == null){
+
+                return "blog not found";
+            }
+
+            Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
+            if(category == null){
+
+                return "category not found";
+            }
+
+            blog.CategoryId = input.CategoryId;
+            this.BlogService.UpdateBlog(blog);
+            
+            return "ok";
         }
     }
 }
