@@ -1,0 +1,10 @@
+version: "3"
+services:
+        server:
+                build: .
+                image: heaty566/mono-fpt-blog:latest
+                container_name: mono-fpt-blog
+                ports:
+                        - 1000:80
+                volumes:
+                        - ./config:/app/config
