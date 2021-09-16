@@ -10,5 +10,6 @@ namespace FPTBlog.TagModule.Interface
         public Tag GetTagByName(string name); 
         public bool UpdateTag(Tag tag);
         public List<Tag> GetTags();
+        public bool DeleteTag(string tagId);
     }
 }

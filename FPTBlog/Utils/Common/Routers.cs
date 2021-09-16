@@ -19,7 +19,10 @@ namespace FPTBlog.Utils.Common
         public static readonly RouterItem AddTag = new RouterItem() {Page = "/Views/Containers/Tag/AddTag.cshtml", Title = "Add Tag", Link = "/tag/add"};
         public static readonly RouterItem UpdateTag = new RouterItem() {Page = "/Views/Containers/Tag/UpdateTag.cshtml", Title = "Update Tag", Link = "/tag/update"};
         public static readonly RouterItem GetTags = new RouterItem() {Page = "/Views/Containers/Tag/GetTags.cshtml", Title = "Get Tags", Link = "/tag"};
+        public static readonly RouterItem DeleteTag = new RouterItem() {Page = "/Views/Containers/Tag/DeleteTag.cshtml", Title = "Delete Tag", Link = "/tag/delete"};
     
+
+
         // Blog
         public static readonly RouterItem GetBlog = new RouterItem() {Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/blog/get"};
         public static readonly RouterItem GetAllBlogs = new RouterItem() {Page = "/Views/Containers/Blog/GetAllBlogs.cshtml", Title = "Get All Blogs", Link = "/blog/all"};

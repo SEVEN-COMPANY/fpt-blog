@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FluentValidation;
 using FluentValidation.Results;
 using FPTBlog.TagModule.DTO;
 using FPTBlog.TagModule.Entity;
@@ -99,6 +100,19 @@ namespace FPTBlog.TagModule
             this.ViewData["tags"] = tags;
 
             return View(Routers.GetTags.Page);
+        }
+
+        [HttpGet("delete")]
+        public IActionResult DeleteTagHandler(string tagId){
+            Tag tag = this.TagService.GetTagByTagId(tagId);
+            if(tag == null){
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                return View(Routers.GetTags.Page);
+            }
+            this.TagService.DeleteTag(tagId);
+            
+            var message = ValidatorOptions.Global.LanguageManager.GetString(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
+            return Redirect($"{Routers.GetTags.Link}?message={message}");
         }
     }
 }

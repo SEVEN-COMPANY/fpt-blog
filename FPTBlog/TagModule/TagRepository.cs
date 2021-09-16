@@ -49,5 +49,16 @@ namespace FPTBlog.TagModule
 
             return this.Db.SaveChanges() > 0;
         }
+
+        public bool DeleteTag(string tagId)
+        {
+            Tag obj = this.Db.Tag.FirstOrDefault(item => item.TagId == tagId);
+            if(obj == null){
+                return false;
+            }
+
+            this.Db.Tag.Remove(obj);
+            return this.Db.SaveChanges() > 0;
+        }
     }
 }
