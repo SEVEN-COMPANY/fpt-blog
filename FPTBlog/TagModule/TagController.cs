@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using backend.Src.AuthModule;
 using FluentValidation;
 using FluentValidation.Results;
+using FPTBlog.AuthModule;
 using FPTBlog.TagModule.DTO;
 using FPTBlog.TagModule.Entity;
 using FPTBlog.TagModule.Interface;
+using FPTBlog.UserModule.Entity;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace FPTBlog.TagModule
 {
     [Route("tag")]
+    [RoleGuardAttribute(new UserRole[] { UserRole.LECTURER })]
+    [ServiceFilter(typeof(AuthGuard))]
     public class TagController: Controller
     {
         private readonly ITagService TagService;
