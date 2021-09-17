@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.AuthModule;
 using FPTBlog.BlogModule.DTO;
@@ -37,6 +38,15 @@ namespace FPTBlog.BlogModule
             return View(Routers.EditorPage.Page);
         }
 
+        [HttpGet("all")]
+        public IActionResult GetAllBlogsPage(){
+            Console.WriteLine(123);
+            List<Blog> blogs = this.BlogService.GetAllBlogs();
+            Console.WriteLine(blogs.Count);
+            this.ViewData["blogs"] = blogs;
+            return View(Routers.GetAllBlogs.Page);
+        }
+
         [HttpPost("image")]
         public string UploadImageHandler(IFormFile input)
         {
@@ -70,7 +80,6 @@ namespace FPTBlog.BlogModule
 
             return "ok";
         }
-
 
         [HttpPost("")]
         public IActionResult AddBlogHandler([FromBody]AddBlogDto input)

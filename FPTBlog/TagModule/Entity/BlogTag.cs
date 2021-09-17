@@ -1,8 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FPTBlog.TagModule.Entity;
+using FPTBlog.BlogModule.Entity;
 
-namespace FPTBlog.BlogModule.Entity
+namespace FPTBlog.TagModule.Entity
 {
     [Table("tblBlogTag")]
     public class BlogTag

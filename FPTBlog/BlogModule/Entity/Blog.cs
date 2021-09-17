@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.CategoryModule.Entity;
+using FPTBlog.TagModule.Entity;
 using FPTBlog.UserModule.Entity;
 
 namespace FPTBlog.BlogModule.Entity

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using FPTBlog.BlogModule.Entity;
 using FPTBlog.BlogModule.Interface;
@@ -11,6 +12,13 @@ namespace FPTBlog.BlogModule
         public BlogRepository(DB db){
             this.Db = db;
         }
+
+        public List<Blog> GetAllBlogs()
+        {
+            List<Blog> list = this.Db.Blog.ToList();
+            return list;
+        }
+
         public Blog GetBlogByBlogId(string blogId)
         {
             Blog blog = this.Db.Blog.FirstOrDefault(item => item.BlogId == blogId);
