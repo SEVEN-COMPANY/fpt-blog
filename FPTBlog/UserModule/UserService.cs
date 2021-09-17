@@ -61,12 +61,11 @@ namespace FPTBlog.UserModule
             return true;
         }
 
-        public bool ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView)
+        public void ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView)
         {
             User user = (User)dataView["user"];
             user.Password = input.NewPassword;  
             this.dB.SaveChanges();
-            return true;
         }
     }
 }
