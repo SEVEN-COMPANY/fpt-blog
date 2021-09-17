@@ -12,7 +12,6 @@ namespace FPTBlog.UserModule.Interface
         public User GetUserByUserId(string id);
         public User GetUserByGoogleId(string googleId);
         public bool ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView);
-        public bool ComparePassword(string inputPassword, string encryptedPassword);
 
     }
 }

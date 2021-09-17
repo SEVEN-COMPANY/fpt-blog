@@ -22,6 +22,8 @@ namespace FPTBlog.UserModule
     [ServiceFilter(typeof(AuthGuard))]
     public class UserController : Controller
     {
+        private readonly IAuthService AuthService;
+        
         private readonly IUserService UserService;
         public UserController(IUserService UserService)
         {
@@ -61,18 +63,19 @@ namespace FPTBlog.UserModule
         }
 
 
-        [HttpGet("changePass")]
+        [HttpGet("change-password")]
         public IActionResult ChangePass()
         {
             return View(Routers.ChangePass.Page);
         }
 
-        [HttpPost("changePass")]
-        public IActionResult ChangePasswordHandler(string username, string oldPassword, string newPassword, string confirmNewPassword)
+        [HttpPost("change-password")]
+        public IActionResult ChangePasswordHandler(string oldPassword, string newPassword, string confirmNewPassword)
         {
+            User user = (User)this.ViewData["user"];
             var input = new ChangePassDto()
             {
-                Username = username,
+                Username = user.Username,
                 OldPassword = oldPassword,
                 NewPassword = newPassword,
                 ConfirmNewPassword = confirmNewPassword
@@ -82,21 +85,20 @@ namespace FPTBlog.UserModule
             if (!result.IsValid)
             {
                 ServerResponse.MapDetails(result, this.ViewData);
-                return View(Routers.Login.Page);
+                return View(Routers.ChangePass.Page);
             }
 
-            var user = this.UserService.GetUserByUsername(input.Username);
-            if (user == null)
+            if(user == null)
             {
                 ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
-                return View(Routers.Login.Page);
+                return Redirect(Routers.Login.Link);
             }
 
-            var isCorrectPassword = this.UserService.ComparePassword(input.OldPassword, user.Password);
+            var isCorrectPassword = this.AuthService.ComparePassword(oldPassword, user.Password);
             if (!isCorrectPassword)
             {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
-                return View(Routers.Login.Page);
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG, this.ViewData);
+                return Redirect(Routers.ChangePass.Page);
             }
 
             var isChange = this.UserService.ChangePasswordHandler(input, this.ViewData);
@@ -104,7 +106,7 @@ namespace FPTBlog.UserModule
             {
                 return View(Routers.ChangePass.Page);
             }
-            return Redirect(Routers.ChangePass.Link);
+            return Redirect(Routers.Login.Link);
         }
     }
 }

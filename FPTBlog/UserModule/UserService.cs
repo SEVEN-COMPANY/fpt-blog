@@ -42,10 +42,6 @@ namespace FPTBlog.UserModule
             bool res = this.UserRepository.SaveUser(user);
             return res;
         }
-        public bool ComparePassword(string inputPassword, string encryptedPassword)
-        {
-            return BCrypt.Net.BCrypt.Verify(inputPassword, encryptedPassword);
-        }
 
         public bool UpdateUserHandler(UpdateUserDto input, ViewDataDictionary dataView)
         {
@@ -67,15 +63,8 @@ namespace FPTBlog.UserModule
 
         public bool ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView)
         {
-            ValidationResult result = new ChangePassDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
-                ServerResponse.MapDetails(result, dataView);
-                return false;
-            }
-
             User user = (User)dataView["user"];
-            user.Password = input.NewPassword;
+            user.Password = input.NewPassword;  
             this.dB.SaveChanges();
             return true;
         }
