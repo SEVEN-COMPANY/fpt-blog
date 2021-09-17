@@ -44,7 +44,7 @@ namespace FPTBlog.BlogModule
             List<Blog> blogs = this.BlogService.GetAllBlogs();
             Console.WriteLine(blogs.Count);
             this.ViewData["blogs"] = blogs;
-            return View(Routers.GetAllBlogs.Page);
+            return View(Routers.GetBlogs.Page);
         }
 
         [HttpPost("image")]
