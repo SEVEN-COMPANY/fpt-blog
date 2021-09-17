@@ -1,4 +1,6 @@
 @using FPTBlog.TagModule.Entity
+@using FPTBlog.Utils.Common
+@using FPTBlog.Views.ViewModel
 @{
     Tag updateTag = (Tag)ViewData["tag"];
     var name = new FormField() {Label = "Name", Field = "name", Type = "text", Value = updateTag?.Name};

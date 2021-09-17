@@ -59,7 +59,6 @@ namespace FPTBlog.BlogModule.Entity
         [ForeignKey("tblCategory")]
         public string CategoryId {get;set;}
 
-        [Required]
         public virtual Category Category {get;set;}
 
         public ICollection<BlogTag> BlogTags {get;set;}
@@ -75,8 +74,8 @@ namespace FPTBlog.BlogModule.Entity
             this.Status = BlogStatus.DRAFT;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Student = new User();
-            this.Lecturer = new User();
-            this.Category = new Category();
+            this.Lecturer = null;
+            this.Category = null;
             this.BlogTags = new List<BlogTag>();
         }
     }

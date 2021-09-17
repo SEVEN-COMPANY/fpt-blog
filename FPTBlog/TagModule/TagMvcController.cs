@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using backend.Src.AuthModule;
+using FluentValidation;
 using FluentValidation.Results;
+using FPTBlog.AuthModule;
 using FPTBlog.TagModule.DTO;
 using FPTBlog.TagModule.Entity;
 using FPTBlog.TagModule.Interface;
+using FPTBlog.UserModule.Entity;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +15,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace FPTBlog.TagModule
 {
     [Route("tag")]
+<<<<<<< HEAD:FPTBlog/TagModule/TagMvcController.cs
     public class TagMvcController : Controller
+=======
+    [RoleGuardAttribute(new UserRole[] { UserRole.LECTURER })]
+    [ServiceFilter(typeof(AuthGuard))]
+    public class TagController: Controller
+>>>>>>> 1d09fb12ce8f0288164d657b143877db7223dad4:FPTBlog/TagModule/TagController.cs
     {
         private readonly ITagService TagService;
         public TagMvcController(ITagService tagService)
@@ -106,6 +116,19 @@ namespace FPTBlog.TagModule
             this.ViewData["tags"] = tags;
 
             return View(Routers.GetTags.Page);
+        }
+
+        [HttpGet("delete")]
+        public IActionResult DeleteTagHandler(string tagId){
+            Tag tag = this.TagService.GetTagByTagId(tagId);
+            if(tag == null){
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                return View(Routers.GetTags.Page);
+            }
+            this.TagService.DeleteTag(tagId);
+            
+            var message = ValidatorOptions.Global.LanguageManager.GetString(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
+            return Redirect($"{Routers.GetTags.Link}?message={message}");
         }
     }
 }
