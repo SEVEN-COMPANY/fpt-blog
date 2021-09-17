@@ -14,12 +14,12 @@ namespace CategoryModule.Controllers
 {
     [Route("category")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class CategoryController : Controller
+    public class CategoryMvcController : Controller
     {
         private readonly ICategoryService CategoryService;
         private readonly DB DB;
 
-        public CategoryController(ICategoryService categoryService, DB dB)
+        public CategoryMvcController(ICategoryService categoryService, DB dB)
         {
             this.CategoryService = categoryService;
             this.DB = dB;

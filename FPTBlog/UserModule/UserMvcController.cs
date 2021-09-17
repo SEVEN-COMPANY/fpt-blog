@@ -1,18 +1,6 @@
 using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FPTBlog.AuthModule.DTO;
-using System.Threading.Tasks;
-using FluentValidation.Results;
 using FPTBlog.UserModule.Interface;
-using FPTBlog.Utils.Locale;
-using FPTBlog.UserModule.Entity;
-using FPTBlog.AuthModule.Interface;
-using FPTBlog.Utils;
-using Microsoft.AspNetCore.Http;
-using FPTBlog.Utils.Interface;
 using FPTBlog.AuthModule;
 using FPTBlog.UserModule.DTO;
 
@@ -20,10 +8,10 @@ namespace FPTBlog.UserModule
 {
     [Route("user")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class UserController : Controller
+    public class UserMvcController : Controller
     {
         private readonly IUserService UserService;
-        public UserController(IUserService UserService)
+        public UserMvcController(IUserService UserService)
         {
             this.UserService = UserService;
         }

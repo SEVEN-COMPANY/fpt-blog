@@ -5,10 +5,6 @@ using FPTBlog.UserModule.Interface;
 using FPTBlog.Utils;
 using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FPTBlog.UserModule
 {

@@ -19,14 +19,14 @@ namespace FPTBlog.AuthModule
 {
 
     [Route("auth")]
-    public class AuthController : Controller
+    public class AuthMvcController : Controller
     {
 
 
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
         private readonly IJwtService JwtService;
-        public AuthController(IAuthService authService, IJwtService jwtService, IUserService userService)
+        public AuthMvcController(IAuthService authService, IJwtService jwtService, IUserService userService)
         {
             this.AuthService = authService;
             this.UserService = userService;
@@ -41,12 +41,13 @@ namespace FPTBlog.AuthModule
         }
 
         [HttpGet("google")]
-        public IActionResult LoginGoogle([FromQuery(Name = "credential")]string credential)
+        public IActionResult LoginGoogle([FromQuery(Name = "credential")] string credential)
         {
             JwtSecurityToken jwtToken = this.JwtService.Decode(credential);
             string id = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
             User user = this.UserService.GetUserByGoogleId(id);
-            if(user == null){
+            if (user == null)
+            {
                 user = new User();
                 user.UserId = Guid.NewGuid().ToString();
                 user.GoogleId = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
@@ -66,7 +67,7 @@ namespace FPTBlog.AuthModule
             });
 
             return Redirect(Routers.Home.Link);
-            
+
         }
 
         [HttpPost("login")]
