@@ -131,30 +131,34 @@ namespace CategoryModule.Controllers
             ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
         }
-    
+
         [HttpPost("blog/add")]
-        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input){
+        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input)
+        {
             Console.WriteLine(input.BlogId);
             ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
-            if(!result.IsValid){
+            if (!result.IsValid)
+            {
                 return "not pass validation";
             }
 
             Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-            if(blog == null){
+            if (blog == null)
+            {
 
                 return "blog not found";
             }
 
             Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
-            if(category == null){
+            if (category == null)
+            {
 
                 return "category not found";
             }
 
             blog.CategoryId = input.CategoryId;
             this.BlogService.UpdateBlog(blog);
-            
+
             return "ok";
         }
     }

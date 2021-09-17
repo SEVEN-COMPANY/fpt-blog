@@ -32,6 +32,8 @@ using FPTBlog.CategoryModule.Interface;
 using FPTBlog.CategoryModule;
 using FPTBlog.BlogModule.Interface;
 using FPTBlog.BlogModule;
+using FPTBlog.CommentModule;
+using FPTBlog.CommentModule.Interface;
 
 namespace FPTBlog
 {
@@ -59,7 +61,7 @@ namespace FPTBlog
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<AuthGuard>();
-            
+
             // User Module
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -75,6 +77,10 @@ namespace FPTBlog
             // Blog Module
             services.AddScoped<IBlogRepository, BlogRepository>();
             services.AddScoped<IBlogService, BlogService>();
+
+            // Comment Module
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<CommentService, CommentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
