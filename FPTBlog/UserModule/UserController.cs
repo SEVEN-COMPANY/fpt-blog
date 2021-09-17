@@ -59,5 +59,52 @@ namespace FPTBlog.UserModule
             }
             return Redirect(Routers.User.Link);
         }
+
+
+        [HttpGet("changePass")]
+        public IActionResult ChangePass()
+        {
+            return View(Routers.ChangePass.Page);
+        }
+
+        [HttpPost("changePass")]
+        public IActionResult ChangePasswordHandler(string username, string oldPassword, string newPassword, string confirmNewPassword)
+        {
+            var input = new ChangePassDto()
+            {
+                Username = username,
+                OldPassword = oldPassword,
+                NewPassword = newPassword,
+                ConfirmNewPassword = confirmNewPassword
+            };
+
+            ValidationResult result = new ChangePassDtoValidator().Validate(input);
+            if (!result.IsValid)
+            {
+                ServerResponse.MapDetails(result, this.ViewData);
+                return View(Routers.Login.Page);
+            }
+
+            var user = this.UserService.GetUserByUsername(input.Username);
+            if (user == null)
+            {
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
+                return View(Routers.Login.Page);
+            }
+
+            var isCorrectPassword = this.UserService.ComparePassword(input.OldPassword, user.Password);
+            if (!isCorrectPassword)
+            {
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
+                return View(Routers.Login.Page);
+            }
+
+            var isChange = this.UserService.ChangePasswordHandler(input, this.ViewData);
+            if (!isChange)
+            {
+                return View(Routers.ChangePass.Page);
+            }
+            return Redirect(Routers.ChangePass.Link);
+        }
     }
 }
