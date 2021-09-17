@@ -101,11 +101,7 @@ namespace FPTBlog.UserModule
                 return Redirect(Routers.ChangePass.Page);
             }
 
-            var isChange = this.UserService.ChangePasswordHandler(input, this.ViewData);
-            if (!isChange)
-            {
-                return View(Routers.ChangePass.Page);
-            }
+            this.UserService.ChangePasswordHandler(input, this.ViewData);
             return Redirect(Routers.Login.Link);
         }
     }
