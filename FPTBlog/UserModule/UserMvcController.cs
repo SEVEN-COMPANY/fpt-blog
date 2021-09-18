@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using FPTBlog.UserModule.Interface;
 using FPTBlog.AuthModule;
 using FPTBlog.UserModule.DTO;
+using FPTBlog.Utils.Locale;
+using FPTBlog.AuthModule.Interface;
+using FPTBlog.UserModule.Entity;
+using FluentValidation.Results;
 
 namespace FPTBlog.UserModule
 {
