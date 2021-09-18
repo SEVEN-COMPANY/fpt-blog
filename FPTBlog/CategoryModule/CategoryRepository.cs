@@ -47,5 +47,14 @@ namespace FPTBlog.CategoryModule
 
             return this.DB.SaveChanges() > 0;
         }
+
+        public bool DeleteCategory(Category category)
+        {
+            Category obj = this.GetCategoryByCategoryId(category.CategoryId);
+
+            obj.Status = 0;
+
+            return this.DB.SaveChanges() > 0;
+        }
     }
 }

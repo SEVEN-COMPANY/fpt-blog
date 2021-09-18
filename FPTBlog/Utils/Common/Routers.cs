@@ -28,5 +28,6 @@ namespace FPTBlog.Utils.Common
         public static readonly RouterItem Category = new RouterItem() { Page = "/Views/Containers/Category/Category.cshtml", Title = "All Category", Link = "/category" };
         public static readonly RouterItem CreateCategory = new RouterItem() { Page = "/Views/Containers/Category/CreateCategory.cshtml", Title = "Create Category", Link = "/category/create" };
         public static readonly RouterItem UpdateCategory = new RouterItem() { Page = "/Views/Containers/Category/UpdateCategory.cshtml", Title = "Update Category", Link = "/category/update" };
+        public static readonly RouterItem DeleteCategory = new RouterItem() { Page = "/Views/Containers/Category/DeleteCategory.cshtml", Title = "Delete Category", Link = "/category/delete" };
     }
 }

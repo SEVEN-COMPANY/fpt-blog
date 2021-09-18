@@ -10,5 +10,6 @@ namespace FPTBlog.CategoryModule.Interface
         public List<Category> GetCategories();
         public bool SaveCategory(Category category);
         public bool UpdateCategory(Category category);
+        public bool DeleteCategory(Category category);
     }
 }
