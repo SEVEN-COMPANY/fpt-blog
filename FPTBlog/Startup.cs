@@ -22,16 +22,16 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FPTBlog.UserModule.Interface;
-using FPTBlog.UserModule;
-using FPTBlog.AuthModule.Interface;
-using FPTBlog.AuthModule;
-using FPTBlog.TagModule.Interface;
-using FPTBlog.TagModule;
-using FPTBlog.CategoryModule.Interface;
-using FPTBlog.CategoryModule;
-using FPTBlog.BlogModule.Interface;
-using FPTBlog.BlogModule;
+using FPTBlog.Src.UserModule.Interface;
+using FPTBlog.Src.UserModule;
+using FPTBlog.Src.AuthModule.Interface;
+using FPTBlog.Src.AuthModule;
+using FPTBlog.Src.TagModule.Interface;
+using FPTBlog.Src.TagModule;
+using FPTBlog.Src.CategoryModule.Interface;
+using FPTBlog.Src.CategoryModule;
+using FPTBlog.Src.BlogModule.Interface;
+using FPTBlog.Src.BlogModule;
 
 namespace FPTBlog
 {
@@ -59,7 +59,7 @@ namespace FPTBlog
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<AuthGuard>();
-            
+
             // User Module
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
