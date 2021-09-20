@@ -10,11 +10,10 @@ namespace FPTBlog.Src.UserModule
 {
     public class UserService : IUserService
     {
-        private readonly DB dB;
         private readonly IUserRepository UserRepository;
-        public UserService(IUserRepository userRepository, DB dB)
+        public UserService(IUserRepository userRepository)
         {
-            this.dB = dB;
+
             this.UserRepository = userRepository;
         }
 

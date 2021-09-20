@@ -39,9 +39,6 @@ namespace FPTBlog.Src.AuthModule
 
 
             var res = new ServerApiResponse<string>();
-            Console.WriteLine(body.Username);
-            Console.WriteLine(body.Password);
-
 
             ValidationResult result = new LoginUserDtoValidator().Validate(body);
             if (!result.IsValid)
@@ -77,5 +74,34 @@ namespace FPTBlog.Src.AuthModule
             return new ObjectResult(res.getResponse());
         }
 
+        [HttpPost("register")]
+        public IActionResult RegisterHandler([FromBody] RegisterUserDto body)
+        {
+            var res = new ServerApiResponse<string>();
+
+            ValidationResult result = new RegisterUserDtoValidator().Validate(body);
+            if (!result.IsValid)
+            {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            var isExistUser = this.UserService.GetUserByUsername(body.Username);
+            if (isExistUser != null)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "username");
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            var user = new User();
+            user.UserId = Guid.NewGuid().ToString();
+            user.Name = body.Name;
+            user.Username = body.Username;
+            user.CreateDate = DateTime.Now.ToShortDateString();
+            user.Password = this.AuthService.HashingPassword(body.Password);
+            this.UserService.SaveUser(user);
+
+            return new ObjectResult(res.getResponse());
+        }
     }
 }

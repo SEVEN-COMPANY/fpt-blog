@@ -1,14 +1,9 @@
 import { http } from './package/axios';
-
+import { routerLinks, routers } from './package/axios/routes';
+import { ServerResponse } from './package/interface/serverResponse';
 interface LoginUserDto {
-    Username: string;
-    Password: string;
-}
-
-interface Hello {
-    data: {
-        details: LoginUserDto;
-    };
+    username: string;
+    password: string;
 }
 
 const loginForm = document.getElementById('loginForm');
@@ -19,13 +14,11 @@ loginForm?.addEventListener('submit', function (event: Event) {
     const password = document.getElementById('password') as HTMLInputElement;
 
     if (username && password) {
-        http.post('/api/auth/login', { username: username.value, password: password.value })
-            .then((res) => console.log(res))
-            .catch(({ response }) => {
-                const res = response as Hello;
-                console.log(res.data.details.Password);
-                const usernameError = document.getElementById('usernameError') as HTMLInputElement;
-                usernameError.innerHTML = 'Username ' + res.data.details.Username;
-            });
+        const input: LoginUserDto = {
+            username: username.value,
+            password: password.value,
+        };
+
+        http.post<ServerResponse<null>>(routers.loginUser, input).then(() => window.location.assign(routerLinks.home));
     }
 });

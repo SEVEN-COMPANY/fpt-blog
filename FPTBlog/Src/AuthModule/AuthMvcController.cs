@@ -77,41 +77,5 @@ namespace FPTBlog.Src.AuthModule
         {
             return View(Routers.Register.Page);
         }
-
-        [HttpPost("register")]
-        public IActionResult RegisterHandler(string name, string username, string password, string confirmPassword)
-        {
-            var input = new RegisterUserDto()
-            {
-                Name = name,
-                Username = username,
-                Password = password,
-                ConfirmPassword = confirmPassword
-            };
-
-            ValidationResult result = new RegisterUserDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
-                ServerMvcResponse.MapDetails(result, this.ViewData);
-                return View(Routers.Register.Page);
-            }
-
-            var isExistUser = this.UserService.GetUserByUsername(input.Username);
-            if (isExistUser != null)
-            {
-                ServerMvcResponse.SetFieldErrorMessage("username", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
-                return View(Routers.Register.Page);
-            }
-
-            var user = new User();
-            user.UserId = Guid.NewGuid().ToString();
-            user.Name = input.Name;
-            user.Username = input.Username;
-            user.CreateDate = DateTime.Now.ToShortDateString();
-            user.Password = this.AuthService.HashingPassword(input.Password);
-            this.UserService.SaveUser(user);
-
-            return Redirect(Routers.Login.Link);
-        }
     }
 }

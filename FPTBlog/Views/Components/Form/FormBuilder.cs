@@ -11,6 +11,7 @@ namespace FPTBlog.Views.Components.Form
 {
     public class FormBuilder
     {
+
         HttpContext Context;
         Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData;
         public FormBuilder(HttpContext context, Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData)
@@ -19,7 +20,39 @@ namespace FPTBlog.Views.Components.Form
             this.viewData = viewData;
         }
 
+        public IHtmlContent LoadingWave()
+        {
+            TagBuilder wrapperComponent = new TagBuilder("div");
+            wrapperComponent.MergeAttribute("id", "loading");
+            wrapperComponent.AddCssClass(" items-center hidden justify-center space-x-2 fade-in");
+            TagBuilder loadingLine1 = new TagBuilder("div");
+            loadingLine1.AddCssClass("w-2 h-12 bg-tango-500 animation1");
+            TagBuilder loadingLine2 = new TagBuilder("div");
+            loadingLine2.AddCssClass("w-2 h-12 bg-tango-500 animation2");
 
+            wrapperComponent.InnerHtml += loadingLine1.ToString(TagRenderMode.Normal) +
+            loadingLine2.ToString(TagRenderMode.Normal) +
+            loadingLine1.ToString(TagRenderMode.Normal) +
+            loadingLine2.ToString(TagRenderMode.Normal) +
+            loadingLine1.ToString(TagRenderMode.Normal);
+
+            return new HtmlString(wrapperComponent.ToString(TagRenderMode.Normal));
+        }
+
+        public IHtmlContent FieldMessage(string field)
+        {
+            TagBuilder wrapperComponent = new TagBuilder("div");
+            wrapperComponent.AddCssClass("font-semibold ");
+
+            TagBuilder messageComponent = new TagBuilder("p");
+            var message = (string)this.viewData["message"] ?? "";
+            messageComponent.AddCssClass("text-green-500 first-letter");
+            messageComponent.MergeAttribute("id", $"{field.ToUpper()}ERROR");
+            messageComponent.SetInnerText(message);
+
+            return new HtmlString(wrapperComponent.ToString(TagRenderMode.Normal));
+
+        }
         public IHtmlContent Message()
         {
             TagBuilder wrapperComponent = new TagBuilder("div");
@@ -28,11 +61,13 @@ namespace FPTBlog.Views.Components.Form
             TagBuilder messageComponent = new TagBuilder("p");
             var message = (string)this.viewData["message"] ?? "";
             messageComponent.AddCssClass("text-green-500 first-letter");
+            messageComponent.MergeAttribute("id", "MESSAGEERROR");
             messageComponent.SetInnerText(message);
 
             TagBuilder errorComponent = new TagBuilder("p");
             var errorMessage = (string)this.viewData["errorMessage"] ?? "";
             errorComponent.AddCssClass("text-red-500 first-letter");
+            errorComponent.MergeAttribute("id", "ERRORMESSAGEERROR");
             errorComponent.SetInnerText(errorMessage);
 
 
@@ -71,10 +106,11 @@ namespace FPTBlog.Views.Components.Form
             TagBuilder labelComponent = new TagBuilder("label");
             labelComponent.AddCssClass("block font-semibold capitalize");
             labelComponent.SetInnerText(label);
+            labelComponent.MergeAttribute("id", $"{name.ToUpper()}LABEL");
 
 
             TagBuilder errorComponent = new TagBuilder("span");
-            errorComponent.MergeAttribute("id", $"{name}Error");
+            errorComponent.MergeAttribute("id", $"{name.ToUpper()}ERROR");
             errorComponent.AddCssClass("text-red-500 fade-in block");
 
             var errorMessage = (string)this.viewData[$"{name}Error"];
@@ -104,27 +140,28 @@ namespace FPTBlog.Views.Components.Form
         }
 
 
-        public IHtmlContent Button(string label, string type)
+        public IHtmlContent Button(string label, string type = "submit")
         {
             TagBuilder wrapper = new TagBuilder("div");
-            wrapper.AddCssClass("bg-red-500");
 
             TagBuilder button = new TagBuilder("button");
+            button.MergeAttribute("id", "form-btn");
             button.MergeAttribute("type", type);
             button.SetInnerText(label);
             button.AddCssClass("w-full p-2 font-semibold text-white duration-300 bg-blue-600 hover:bg-blue-800 focus:outline-none");
 
             wrapper.InnerHtml += button.ToString(TagRenderMode.Normal);
+            wrapper.InnerHtml += this.LoadingWave();
             return new HtmlString(wrapper.ToString(TagRenderMode.Normal));
         }
 
-        public IHtmlContent FormWrapper(string title, string action, string submitButtonLabel, IHtmlContent[] fields)
+        public IHtmlContent FormWrapper(string title, string formId, string submitButtonLabel, IHtmlContent[] fields)
         {
             TagBuilder formWrapper = new TagBuilder("form");
             formWrapper.AddCssClass("space-y-6");
             formWrapper.MergeAttribute("method", "POST");
-            formWrapper.MergeAttribute("id", "loginForm");
-            formWrapper.MergeAttribute("action", action);
+            formWrapper.MergeAttribute("id", formId);
+
             TagBuilder formTitle = new TagBuilder("h1");
             formTitle.AddCssClass("text-4xl font-semibold text-center");
             formTitle.SetInnerText(title);

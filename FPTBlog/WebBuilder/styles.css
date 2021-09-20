@@ -22,9 +22,6 @@
     animation: FadeIn 1s forwards;
 }
 
-#editor {
-    min-height: 15rem;
-}
 .menu {
     background-color: transparent;
     border: none;
@@ -74,4 +71,25 @@
     /* background-image: url('/images/bg1.jpg'); */
     background-size: cover;
     background-repeat: no-repeat;
+}
+.bg-1 {
+    background-image: url('/images/bg1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.animation1 {
+    animation: Wave 0.4s infinite ease-in alternate;
+}
+.animation2 {
+    animation: Wave 0.4s 0.3s infinite ease-in alternate;
+}
+
+@keyframes Wave {
+    0% {
+        transform: scaleY(0.5);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
 }
