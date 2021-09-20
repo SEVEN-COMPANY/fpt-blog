@@ -76,20 +76,20 @@ namespace FPTBlog.Src.UserModule
             ValidationResult result = new ChangePassDtoValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return View(Routers.ChangePass.Page);
             }
 
             if (user == null)
             {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
+                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
                 return Redirect(Routers.Login.Link);
             }
 
             var isCorrectPassword = this.AuthService.ComparePassword(oldPassword, user.Password);
             if (!isCorrectPassword)
             {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG, this.ViewData);
+                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG, this.ViewData);
                 return Redirect(Routers.ChangePass.Page);
             }
 

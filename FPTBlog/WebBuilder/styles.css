@@ -71,6 +71,7 @@
 
 .bg-2 {
     background-image: url('/images/bg2.png');
-    background-size: 100%;
+    /* background-image: url('/images/bg1.jpg'); */
+    background-size: cover;
     background-repeat: no-repeat;
 }

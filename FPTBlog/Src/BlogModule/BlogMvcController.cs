@@ -81,14 +81,14 @@ namespace FPTBlog.Src.BlogModule
             ValidationResult result = new AddBlogDtoValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return View(Routers.EditorPage.Page);
             }
 
             Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
             if (blog == null)
             {
-                ServerResponse.SetFieldErrorMessage("blogId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                ServerMvcResponse.SetFieldErrorMessage("blogId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return View(Routers.EditorPage.Page);
             }
 

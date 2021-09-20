@@ -56,6 +56,7 @@ namespace FPTBlog.Views.Components.Form
             TagBuilder input = new TagBuilder("input");
             input.AddCssClass("block w-full px-2 py-1 duration-300 border safari rounded-sm outline-none h-9 focus:border-tango-500");
             input.MergeAttribute("name", name);
+            input.MergeAttribute("id", name);
             input.MergeAttribute("type", type);
             input.MergeAttribute("value", value);
             return input.ToString(TagRenderMode.SelfClosing);
@@ -73,6 +74,7 @@ namespace FPTBlog.Views.Components.Form
 
 
             TagBuilder errorComponent = new TagBuilder("span");
+            errorComponent.MergeAttribute("id", $"{name}Error");
             errorComponent.AddCssClass("text-red-500 fade-in block");
 
             var errorMessage = (string)this.viewData[$"{name}Error"];
@@ -121,6 +123,7 @@ namespace FPTBlog.Views.Components.Form
             TagBuilder formWrapper = new TagBuilder("form");
             formWrapper.AddCssClass("space-y-6");
             formWrapper.MergeAttribute("method", "POST");
+            formWrapper.MergeAttribute("id", "loginForm");
             formWrapper.MergeAttribute("action", action);
             TagBuilder formTitle = new TagBuilder("h1");
             formTitle.AddCssClass("text-4xl font-semibold text-center");

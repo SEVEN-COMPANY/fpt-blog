@@ -39,7 +39,7 @@ namespace FPTBlog.Src.AuthModule
             if (!isValid)
             {
                 Controller controller = context.Controller as Controller;
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, controller.ViewData);
+                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, controller.ViewData);
                 context.Result = new ViewResult
                 {
                     ViewName = Routers.Login.Page,

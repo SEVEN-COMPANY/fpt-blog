@@ -56,14 +56,14 @@ namespace FPTBlog.Src.CategoryModule
             ValidationResult result = new CreateCategoryDTOValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return View(Routers.CreateCategory.Page);
             }
 
             var isExistCategory = this.CategoryService.GetCategoryByCategoryName(input.Name);
             if (isExistCategory != null)
             {
-                ServerResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
+                ServerMvcResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
                 return View(Routers.CreateCategory.Page);
             }
 
@@ -75,7 +75,7 @@ namespace FPTBlog.Src.CategoryModule
             category.CreateDate = DateTime.Now.ToShortDateString();
             this.CategoryService.SaveCategory(category);
 
-            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS, this.ViewData);
+            ServerMvcResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
         }
 
@@ -101,14 +101,14 @@ namespace FPTBlog.Src.CategoryModule
             ValidationResult result = new UpdateCategoryDTOValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return this.UpdateCategory(categoryId);
             }
 
             var category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
             if (category == null)
             {
-                ServerResponse.SetFieldErrorMessage("categoryId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                ServerMvcResponse.SetFieldErrorMessage("categoryId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return this.UpdateCategory(categoryId);
             }
 
@@ -117,7 +117,7 @@ namespace FPTBlog.Src.CategoryModule
                 var isExistCategory = this.CategoryService.GetCategoryByCategoryName(input.Name);
                 if (isExistCategory != null)
                 {
-                    ServerResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
+                    ServerMvcResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
                     return this.UpdateCategory(categoryId);
                 }
             }
@@ -128,7 +128,7 @@ namespace FPTBlog.Src.CategoryModule
 
             this.CategoryService.UpdateCategory(category);
 
-            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
+            ServerMvcResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
         }
 
@@ -152,27 +152,27 @@ namespace FPTBlog.Src.CategoryModule
             ValidationResult result = new UpdateCategoryDTOValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return Redirect(Routers.Category.Page);
             }
 
             var category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
             if (category == null)
             {
-                ServerResponse.SetFieldErrorMessage("categoryId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                ServerMvcResponse.SetFieldErrorMessage("categoryId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return Redirect(Routers.Category.Page);
             }
 
             if (category.Status == 0)
             {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, this.ViewData);
+                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, this.ViewData);
                 return Redirect(Routers.Category.Page);
             }
             category.Status = input.Status;
 
             this.CategoryService.DeleteCategory(category);
 
-            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS, this.ViewData);
+            ServerMvcResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
         }
 

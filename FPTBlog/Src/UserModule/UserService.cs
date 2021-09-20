@@ -44,7 +44,7 @@ namespace FPTBlog.Src.UserModule
             ValidationResult result = new UpdateUserDtoValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, dataView);
+                ServerMvcResponse.MapDetails(result, dataView);
                 return false;
             }
 

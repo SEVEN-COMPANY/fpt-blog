@@ -5,6 +5,7 @@ module.exports = {
         createBlog: './src/createBlog.ts',
         navbar: './src/navbar.ts',
         google: './src/google.ts',
+        login: './src/login.ts',
     },
     output: {
         path: __dirname + '/../wwwroot/js',

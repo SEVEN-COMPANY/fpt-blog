@@ -18,7 +18,7 @@ using System.IdentityModel.Tokens.Jwt;
 namespace FPTBlog.Src.AuthModule
 {
 
-    [Route("auth")]
+    [Route("/auth")]
     public class AuthMvcController : Controller
     {
 
@@ -70,47 +70,6 @@ namespace FPTBlog.Src.AuthModule
 
         }
 
-        [HttpPost("login")]
-        public IActionResult LoginHandler(string username, string password)
-        {
-            var input = new LoginUserDto()
-            {
-                Username = username,
-                Password = password
-            };
-
-            ValidationResult result = new LoginUserDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
-                ServerResponse.MapDetails(result, this.ViewData);
-                return View(Routers.Login.Page);
-            }
-
-            var user = this.UserService.GetUserByUsername(input.Username);
-            if (user == null)
-            {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
-                return View(Routers.Login.Page);
-            }
-
-            var isCorrectPassword = this.AuthService.ComparePassword(input.Password, user.Password);
-            if (!isCorrectPassword)
-            {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
-                return View(Routers.Login.Page);
-            }
-
-            var token = this.JwtService.GenerateToken(user.UserId);
-            this.HttpContext.Response.Cookies.Append("auth-token", token, new CookieOptions()
-            {
-                Expires = DateTime.Now.AddDays(30),
-                SameSite = SameSiteMode.None,
-                Secure = true
-
-            });
-
-            return Redirect(Routers.Home.Link);
-        }
 
 
         [HttpGet("register")]
@@ -133,14 +92,14 @@ namespace FPTBlog.Src.AuthModule
             ValidationResult result = new RegisterUserDtoValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return View(Routers.Register.Page);
             }
 
             var isExistUser = this.UserService.GetUserByUsername(input.Username);
             if (isExistUser != null)
             {
-                ServerResponse.SetFieldErrorMessage("username", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
+                ServerMvcResponse.SetFieldErrorMessage("username", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
                 return View(Routers.Register.Page);
             }
 

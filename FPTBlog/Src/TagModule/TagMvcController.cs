@@ -40,14 +40,14 @@ namespace FPTBlog.Src.TagModule
             ValidationResult result = new AddTagDtoValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return View(Routers.AddTag.Page);
             }
 
             var existedTag = this.TagService.GetTagByName(input.Name);
             if (existedTag != null)
             {
-                ServerResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
+                ServerMvcResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
                 return View(Routers.AddTag.Page);
             }
 
@@ -55,7 +55,7 @@ namespace FPTBlog.Src.TagModule
             tag.Name = input.Name;
             this.TagService.SaveTag(tag);
 
-            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS, this.ViewData);
+            ServerMvcResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS, this.ViewData);
             return View(Routers.AddTag.Page);
         }
 
@@ -65,7 +65,7 @@ namespace FPTBlog.Src.TagModule
             Tag tag = this.TagService.GetTagByTagId(tagId);
             if (tag == null)
             {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return View(Routers.UpdateTag.Page);
             }
             ViewData["tag"] = tag;
@@ -84,7 +84,7 @@ namespace FPTBlog.Src.TagModule
             var tag = this.TagService.GetTagByTagId(input.TagId);
             if (tag == null)
             {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return View(Routers.UpdateTag.Page);
             }
             this.ViewData["tag"] = tag;
@@ -92,14 +92,14 @@ namespace FPTBlog.Src.TagModule
             ValidationResult result = new UpdateTagDtoValidator().Validate(input);
             if (!result.IsValid)
             {
-                ServerResponse.MapDetails(result, this.ViewData);
+                ServerMvcResponse.MapDetails(result, this.ViewData);
                 return View(Routers.UpdateTag.Page);
             }
 
             tag.Name = input.Name;
             this.TagService.UpdateTag(tag);
 
-            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
+            ServerMvcResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
             return View(Routers.UpdateTag.Page);
         }
 
@@ -118,7 +118,7 @@ namespace FPTBlog.Src.TagModule
             Tag tag = this.TagService.GetTagByTagId(tagId);
             if (tag == null)
             {
-                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return View(Routers.GetTags.Page);
             }
             this.TagService.DeleteTag(tagId);
