@@ -3,7 +3,6 @@ using FPTBlog.UserModule.Interface;
 using FPTBlog.Utils;
 using System.Linq;
 
-
 namespace FPTBlog.UserModule
 {
     public class UserRepository : IUserRepository

@@ -15,13 +15,17 @@ namespace CategoryModule.Controllers
 {
     [Route("category")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class CategoryController : Controller
+    public class CategoryMvcController : Controller
     {
         private readonly ICategoryService CategoryService;
         private readonly IBlogService BlogService;
         private readonly DB DB;
 
+<<<<<<< HEAD:FPTBlog/CategoryModule/CategoryMvcController.cs
+        public CategoryMvcController(ICategoryService categoryService, DB dB)
+=======
         public CategoryController(IBlogService blogService, ICategoryService categoryService, DB dB)
+>>>>>>> 1d09fb12ce8f0288164d657b143877db7223dad4:FPTBlog/CategoryModule/CategoryController.cs
         {
             this.BlogService = blogService;
             this.CategoryService = categoryService;
@@ -131,7 +135,51 @@ namespace CategoryModule.Controllers
             ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
             return Redirect(Routers.Category.Link);
         }
-    
+
+        [HttpGet("delete")]
+        public IActionResult DeleteCategory(string categoryId)
+        {
+            var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
+            this.ViewData["category"] = category;
+            return View(Routers.DeleteCategory.Page);
+        }
+
+        [HttpPost("delete")]
+        public IActionResult DeleteCategoryHandler(string categoryId, CategoryStatus status)
+        {
+            var input = new UpdateCategoryDTO()
+            {
+                CategoryId = categoryId,
+                Status = status
+            };
+
+            ValidationResult result = new UpdateCategoryDTOValidator().Validate(input);
+            if (!result.IsValid)
+            {
+                ServerResponse.MapDetails(result, this.ViewData);
+                return Redirect(Routers.Category.Page);
+            }
+
+            var category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
+            if (category == null)
+            {
+                ServerResponse.SetFieldErrorMessage("categoryId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+                return Redirect(Routers.Category.Page);
+            }
+
+            if (category.Status==0)
+            {
+                ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, this.ViewData);
+                return Redirect(Routers.Category.Page);
+            }
+            category.Status = input.Status;
+
+            this.CategoryService.DeleteCategory(category);
+
+            ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS, this.ViewData);
+            return Redirect(Routers.Category.Link);
+        }
+
         [HttpPost("blog/add")]
         public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input){
             Console.WriteLine(input.BlogId);

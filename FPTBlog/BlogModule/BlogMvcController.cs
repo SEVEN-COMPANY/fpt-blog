@@ -16,12 +16,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace FPTBlog.BlogModule
 {
     [Route("blog")]
+<<<<<<< HEAD:FPTBlog/BlogModule/BlogMvcController.cs
+    public class BlogMvcController : Controller
+=======
     [ServiceFilter(typeof(AuthGuard))]
     public class BlogController : Controller
+>>>>>>> 1d09fb12ce8f0288164d657b143877db7223dad4:FPTBlog/BlogModule/BlogController.cs
     {
         private readonly IUploadFileService UploadFileService;
         private readonly IBlogService BlogService;
-        public BlogController(IUploadFileService uploadFileService, IBlogService blogService){
+        public BlogMvcController(IUploadFileService uploadFileService, IBlogService blogService)
+        {
             this.UploadFileService = uploadFileService;
             this.BlogService = blogService;
         }
@@ -54,11 +59,13 @@ namespace FPTBlog.BlogModule
         [HttpPost("image")]
         public string UploadImageHandler(IFormFile input)
         {
-            if(this.UploadFileService.CheckFileSize(input, 500)){
+            if (this.UploadFileService.CheckFileSize(input, 500))
+            {
                 return null;
             }
 
-            if(this.UploadFileService.CheckFileExtension(input,new string[]{"png", "jpeg", "gif", "tiff"})){
+            if (this.UploadFileService.CheckFileExtension(input, new string[] { "png", "jpeg", "gif", "tiff" }))
+            {
                 return null;
             }
 
@@ -66,15 +73,16 @@ namespace FPTBlog.BlogModule
         }
 
         [HttpPost("save")]
-        public string HandleOnSave([FromBody]SaveBlogDto input)
+        public string HandleOnSave([FromBody] SaveBlogDto input)
         {
             ValidationResult result = new SaveBlogDtoValidator().Validate(input);
-            if(!result.IsValid)
+            if (!result.IsValid)
             {
                 return "not pass validation";
             }
             Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-            if(blog == null){
+            if (blog == null)
+            {
 
                 return "blog not found";
             }
@@ -86,19 +94,20 @@ namespace FPTBlog.BlogModule
         }
 
         [HttpPost("")]
-        public IActionResult AddBlogHandler([FromBody]AddBlogDto input)
+        public IActionResult AddBlogHandler([FromBody] AddBlogDto input)
         {
             ValidationResult result = new AddBlogDtoValidator().Validate(input);
-            if(!result.IsValid)
+            if (!result.IsValid)
             {
                 ServerResponse.MapDetails(result, this.ViewData);
                 return View(Routers.EditorPage.Page);
             }
 
             Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-            if(blog == null){
+            if (blog == null)
+            {
                 ServerResponse.SetFieldErrorMessage("blogId", CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
-               return View(Routers.EditorPage.Page);
+                return View(Routers.EditorPage.Page);
             }
 
             blog.Title = input.Title;

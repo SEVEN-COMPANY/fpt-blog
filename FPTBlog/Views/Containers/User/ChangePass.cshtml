@@ -1,0 +1,28 @@
+﻿@using FPTBlog.UserModule.Entity
+
+@{
+    ViewData["Title"] = Routers.ChangePass.Title;
+    User user = (User)ViewData["user"];
+
+    var username = new FormField() { Label = "Username", Field = "username", Type = "text", Value = user.Username };
+    var password = new FormField() { Label = "Password", Field = "password", Type = "password" };
+    var newPassword = new FormField() { Label = "New Password", Field = "newPassword", Type = "password" };
+    var confirmNewPassword = new FormField() { Label = "Confirm New Password", Field = "confirmNewPassword", Type = "password" };
+    var changePasswordBtn = new FormField() { Label = "Change Password" };
+}
+
+<div class="flex items-center justify-center flex-1 p-2">
+    <div class="w-full px-4 py-16 border rounded-md shadow-xl md:w-96 fade-in">
+        <form method="post" action="@Routers.ChangePass.Link" class="space-y-6">
+            <h1 class="text-4xl font-semibold text-center">Change Password</h1>
+            <div class="space-y-4">
+                @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", username)
+                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", password)
+                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", newPassword)
+                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", confirmNewPassword)
+            </div>
+            @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", changePasswordBtn)
+        </form>
+    </div>
+</div>

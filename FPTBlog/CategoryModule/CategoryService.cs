@@ -47,5 +47,10 @@ namespace FPTBlog.CategoryModule
         {
             return this.CategoryRepository.UpdateCategory(category);
         }
+
+        public bool DeleteCategory(Category category)
+        {
+            return this.CategoryRepository.DeleteCategory(category);
+        }
     }
 }

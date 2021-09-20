@@ -5,10 +5,6 @@ using FPTBlog.UserModule.Interface;
 using FPTBlog.Utils;
 using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FPTBlog.UserModule
 {
@@ -59,6 +55,13 @@ namespace FPTBlog.UserModule
             user.Phone = input.Phone;
             this.dB.SaveChanges();
             return true;
+        }
+
+        public void ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView)
+        {
+            User user = (User)dataView["user"];
+            user.Password = input.NewPassword;  
+            this.dB.SaveChanges();
         }
     }
 }

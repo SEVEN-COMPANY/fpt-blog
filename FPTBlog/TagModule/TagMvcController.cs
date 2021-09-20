@@ -15,12 +15,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace FPTBlog.TagModule
 {
     [Route("tag")]
+<<<<<<< HEAD:FPTBlog/TagModule/TagMvcController.cs
+    public class TagMvcController : Controller
+=======
     [RoleGuardAttribute(new UserRole[] { UserRole.LECTURER })]
     [ServiceFilter(typeof(AuthGuard))]
     public class TagController: Controller
+>>>>>>> 1d09fb12ce8f0288164d657b143877db7223dad4:FPTBlog/TagModule/TagController.cs
     {
         private readonly ITagService TagService;
-        public TagController(ITagService tagService){
+        public TagMvcController(ITagService tagService)
+        {
             this.TagService = tagService;
         }
 
@@ -33,7 +38,8 @@ namespace FPTBlog.TagModule
         [HttpPost("add")]
         public IActionResult AddTagHandler(string name)
         {
-            var input = new AddTagDto(){
+            var input = new AddTagDto()
+            {
                 Name = name
             };
 
@@ -45,7 +51,8 @@ namespace FPTBlog.TagModule
             }
 
             var existedTag = this.TagService.GetTagByName(input.Name);
-            if(existedTag != null){
+            if (existedTag != null)
+            {
                 ServerResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
                 return View(Routers.AddTag.Page);
             }
@@ -62,7 +69,8 @@ namespace FPTBlog.TagModule
         public IActionResult UpdateTagPage(string tagId)
         {
             Tag tag = this.TagService.GetTagByTagId(tagId);
-            if(tag == null){
+            if (tag == null)
+            {
                 ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return View(Routers.UpdateTag.Page);
             }
@@ -73,20 +81,22 @@ namespace FPTBlog.TagModule
         [HttpPost("update")]
         public IActionResult UpdateTagHandler(string tagId, string name)
         {
-            var input = new UpdateTagDto(){
+            var input = new UpdateTagDto()
+            {
                 TagId = tagId,
                 Name = name
             };
 
             var tag = this.TagService.GetTagByTagId(input.TagId);
-            if(tag == null){
+            if (tag == null)
+            {
                 ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
                 return View(Routers.UpdateTag.Page);
             }
             this.ViewData["tag"] = tag;
 
             ValidationResult result = new UpdateTagDtoValidator().Validate(input);
-            if(!result.IsValid)
+            if (!result.IsValid)
             {
                 ServerResponse.MapDetails(result, this.ViewData);
                 return View(Routers.UpdateTag.Page);
@@ -98,9 +108,10 @@ namespace FPTBlog.TagModule
             ServerResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
             return View(Routers.UpdateTag.Page);
         }
-    
+
         [HttpGet("")]
-        public IActionResult GetTagsPage(){
+        public IActionResult GetTagsPage()
+        {
             List<Tag> tags = this.TagService.GetTags();
             this.ViewData["tags"] = tags;
 

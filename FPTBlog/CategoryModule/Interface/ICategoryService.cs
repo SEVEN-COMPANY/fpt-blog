@@ -13,5 +13,6 @@ namespace FPTBlog.CategoryModule.Interface
         public Category GetCategoryByCategoryName(string name);
         public Category GetCategoryByCategoryId(string categoryId);
         public bool UpdateCategory(Category category);
+        public bool DeleteCategory(Category category);
     }
 }
