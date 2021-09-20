@@ -21,11 +21,7 @@ namespace CategoryModule.Controllers
         private readonly IBlogService BlogService;
         private readonly DB DB;
 
-<<<<<<< HEAD:FPTBlog/CategoryModule/CategoryMvcController.cs
-        public CategoryMvcController(ICategoryService categoryService, DB dB)
-=======
-        public CategoryController(IBlogService blogService, ICategoryService categoryService, DB dB)
->>>>>>> 1d09fb12ce8f0288164d657b143877db7223dad4:FPTBlog/CategoryModule/CategoryController.cs
+        public CategoryMvcController(ICategoryService categoryService, DB dB, IBlogService blogService)
         {
             this.BlogService = blogService;
             this.CategoryService = categoryService;
@@ -167,7 +163,7 @@ namespace CategoryModule.Controllers
                 return Redirect(Routers.Category.Page);
             }
 
-            if (category.Status==0)
+            if (category.Status == 0)
             {
                 ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, this.ViewData);
                 return Redirect(Routers.Category.Page);
@@ -181,28 +177,32 @@ namespace CategoryModule.Controllers
         }
 
         [HttpPost("blog/add")]
-        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input){
+        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input)
+        {
             Console.WriteLine(input.BlogId);
             ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
-            if(!result.IsValid){
+            if (!result.IsValid)
+            {
                 return "not pass validation";
             }
 
             Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-            if(blog == null){
+            if (blog == null)
+            {
 
                 return "blog not found";
             }
 
             Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
-            if(category == null){
+            if (category == null)
+            {
 
                 return "category not found";
             }
 
             blog.CategoryId = input.CategoryId;
             this.BlogService.UpdateBlog(blog);
-            
+
             return "ok";
         }
     }

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.text-first-uppercase::first-letter {
+.first-letter::first-letter {
     text-transform: uppercase;
 }
 

@@ -11,7 +11,7 @@ namespace FPTBlog.UserModule.Interface
         public bool UpdateUserHandler(UpdateUserDto input, ViewDataDictionary dataView);
         public User GetUserByUserId(string id);
         public User GetUserByGoogleId(string googleId);
-        public bool ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView);
+        public void ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView);
 
     }
 }

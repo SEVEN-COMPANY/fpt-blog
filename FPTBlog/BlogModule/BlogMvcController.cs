@@ -15,12 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FPTBlog.BlogModule
 {
     [Route("blog")]
-<<<<<<< HEAD:FPTBlog/BlogModule/BlogMvcController.cs
     public class BlogMvcController : Controller
-=======
-    [ServiceFilter(typeof(AuthGuard))]
-    public class BlogController : Controller
->>>>>>> 1d09fb12ce8f0288164d657b143877db7223dad4:FPTBlog/BlogModule/BlogController.cs
     {
         private readonly IUploadFileService UploadFileService;
         private readonly IBlogService BlogService;
@@ -34,7 +29,7 @@ namespace FPTBlog.BlogModule
         public IActionResult EditorPage()
         {
             Blog blog = new Blog();
-            User currentUser =  (User)this.ViewData["user"];
+            User currentUser = (User)this.ViewData["user"];
             blog.Student = currentUser;
             blog.StudentId = currentUser.UserId;
             ViewData["blog"] = blog;

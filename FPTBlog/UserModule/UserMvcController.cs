@@ -15,7 +15,7 @@ namespace FPTBlog.UserModule
     public class UserMvcController : Controller
     {
         private readonly IAuthService AuthService;
-        
+
         private readonly IUserService UserService;
         public UserMvcController(IUserService UserService)
         {
@@ -80,7 +80,7 @@ namespace FPTBlog.UserModule
                 return View(Routers.ChangePass.Page);
             }
 
-            if(user == null)
+            if (user == null)
             {
                 ServerResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL, this.ViewData);
                 return Redirect(Routers.Login.Link);
