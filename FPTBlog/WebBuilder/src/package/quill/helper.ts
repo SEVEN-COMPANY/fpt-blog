@@ -1,5 +1,7 @@
 import Quill from 'quill';
 import { http } from '../axios';
+import { routers } from '../axios/routes';
+import { ServerResponse } from '../interface/serverResponse';
 
 export function insertToEditor(editor: Quill, url: string) {
     const range = editor.getSelection();
@@ -21,18 +23,17 @@ export function selectLocalImage(editor: Quill, cb: (editor: Quill, input: File)
         }
     };
 }
-export function saveToServer(editor: Quill, file: File) {
+export async function saveToServer(editor: Quill, file: File) {
     const fd = new FormData();
 
     fd.append('image', file);
     const formData = new FormData();
     formData.append('image', file);
 
-    http.post('/upload/image', formData)
-        .then(() => {
-            insertToEditor(editor, 'https://picsum.photos/200/300');
+    http.post<ServerResponse<string>>(routers.uploadImageBlog, formData)
+        .then((res) => {
+            const imageUrl = res.data.data;
+            insertToEditor(editor, imageUrl);
         })
-        .finally(() => {
-            insertToEditor(editor, 'https://picsum.photos/200/300');
-        });
+        .catch((error) => console.log(error));
 }

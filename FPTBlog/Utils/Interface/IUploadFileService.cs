@@ -2,7 +2,7 @@
 
 namespace FPTBlog.Utils.Interface
 {
-    interface IUploadFileService
+    public interface IUploadFileService
     {
         public bool CheckFileSize(IFormFile file, int limit);
         public bool CheckFileExtension(IFormFile file, string[] extensions);

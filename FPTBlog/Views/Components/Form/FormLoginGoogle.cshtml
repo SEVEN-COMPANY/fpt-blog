@@ -1,0 +1,21 @@
+<script>
+    function continueWithNextIdp(notification) {
+        if (notification && notification.credential) {
+            fetch(`/auth/google?credential=${notification.credential}`).then(() => {
+                window.location.href = "/";
+            });
+        }
+    }
+</script>
+
+
+<div class="flex items-center ">
+
+    <div id="g_id_onload" data-client_id="495690914730-4s7m4m4f56eehrma6u112ft1o8gthaus.apps.googleusercontent.com"
+        data-context="signin" data-ux_mode="popup" data-callback="continueWithNextIdp">
+    </div>
+
+    <div class="w-full g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+        data-text="continue_with" data-size="large" data-locale="en" data-logo_alignment="left">
+    </div>
+</div>

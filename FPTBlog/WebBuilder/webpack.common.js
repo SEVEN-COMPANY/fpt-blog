@@ -1,7 +1,14 @@
 var path = require('path');
 
 module.exports = {
-    entry: { createBlog: './src/createBlog.ts' },
+    entry: {
+        createBlog: './src/createBlog.ts',
+        navbar: './src/navbar.ts',
+        google: './src/google.ts',
+        login: './src/login.ts',
+        register: './src/register.ts',
+        common: './src/common.ts',
+    },
     output: {
         path: __dirname + '/../wwwroot/js',
         filename: '[name].js',

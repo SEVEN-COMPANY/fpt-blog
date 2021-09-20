@@ -1,24 +1,36 @@
-﻿using FPTBlog.UserModule.Entity;
+﻿using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Utils.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using FPTBlog.Src.BlogModule.Entity;
 
 namespace FPTBlog.Utils
 {
-    public class DB: DbContext
+    public class DB : DbContext
     {
         private IConfig Config;
         public DB(IConfig config)
         {
             this.Config = config;
         }
-        public DbSet<User> user { set; get; }
+        public DbSet<User> User { set; get; }
+        public DbSet<Tag> Tag { set; get; }
+        public DbSet<Category> Category { set; get; }
+        public DbSet<Blog> Blog { set; get; }
+        public DbSet<BlogTag> BlogTag { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(this.Config.GetEnvByKey("DB_URL"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BlogTag>().HasKey(sc => new { sc.BlogId, sc.TagId });
         }
         public static async Task<Boolean> InitDatabase(IConfig config)
         {

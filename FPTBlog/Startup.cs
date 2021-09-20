@@ -22,10 +22,16 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FPTBlog.UserModule.Interface;
-using FPTBlog.UserModule;
-using FPTBlog.AuthModule.Interface;
-using FPTBlog.AuthModule;
+using FPTBlog.Src.UserModule.Interface;
+using FPTBlog.Src.UserModule;
+using FPTBlog.Src.AuthModule.Interface;
+using FPTBlog.Src.AuthModule;
+using FPTBlog.Src.TagModule.Interface;
+using FPTBlog.Src.TagModule;
+using FPTBlog.Src.CategoryModule.Interface;
+using FPTBlog.Src.CategoryModule;
+using FPTBlog.Src.BlogModule.Interface;
+using FPTBlog.Src.BlogModule;
 
 namespace FPTBlog
 {
@@ -46,11 +52,29 @@ namespace FPTBlog
             services.AddScoped<DB>();
             services.AddScoped<IRedisService, RedisService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IUploadFileService, UploadFileService>();
+
+            // Auth Module
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<AuthGuard>();
+
             // User Module
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+            // Tag Module
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<ITagService, TagService>();
+
+            // Category Module
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
+
+            // Blog Module
+            services.AddScoped<IBlogRepository, BlogRepository>();
+            services.AddScoped<IBlogService, BlogService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

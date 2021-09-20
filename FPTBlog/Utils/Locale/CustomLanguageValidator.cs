@@ -14,6 +14,9 @@ namespace FPTBlog.Utils.Locale
             public const string ERROR_NOT_ALLOW = "ERROR_NOT_ALLOW";
             public const string ERROR_PASSWORD_CONTAIN_CHARACTER = "ERROR_PASSWORD_CONTAIN_CHARACTER";
             public const string ERROR_PASSWORD_CONTAIN_WHITESPACE = "ERROR_PASSWORD_CONTAIN_WHITESPACE";
+            public const string ERROR_OLD_PASSWORD_IS_WRONG = "ERROR_OLD_PASSWORD_IS_WRONG";
+            public const string FILE_TOO_LARGE = "FILE_TOO_LARGE";
+            public const string FILE_WRONG_EXTENSION = "FILE_WRONG_EXTENSION";
         }
 
         public static class MessageKey
@@ -57,6 +60,9 @@ namespace FPTBlog.Utils.Locale
             AddTranslation("en", ErrorMessageKey.ERROR_NOT_ALLOW, "not allow");
             AddTranslation("en", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_CHARACTER, "should contain at least 1 uppercase, 1 lowercase, 1 number");
             AddTranslation("en", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_WHITESPACE, "should not contain white space");
+            AddTranslation("en", ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG, "old password is wrong");
+            AddTranslation("en", ErrorMessageKey.FILE_TOO_LARGE, "file is too large");
+            AddTranslation("en", ErrorMessageKey.FILE_WRONG_EXTENSION, "file is wrong extension");
 
             // VI
             AddTranslation("vi", ErrorMessageKey.ERROR_LOGIN_FAIL, "username hoặc password không đúng");
@@ -69,6 +75,7 @@ namespace FPTBlog.Utils.Locale
             AddTranslation("vi", ErrorMessageKey.ERROR_NOT_ALLOW, "không có quyền");
             AddTranslation("vi", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_CHARACTER, "phải có ít nhất 1 kí tự hoa, 1 kí tự thường, 1 số");
             AddTranslation("vi", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_WHITESPACE, "không được chứa khoảng trắng");
+            AddTranslation("vi", ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG, "mật khẩu cũ không đúng");
 
             // Don't touch me please
             AddTranslation("en", "EmailValidator", "is not a valid email address");

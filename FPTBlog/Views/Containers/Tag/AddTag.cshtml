@@ -1,0 +1,17 @@
+@using FPTBlog.Utils.Common
+@using FPTBlog.Views.ViewModel
+@{
+    var name = new FormField() {Label = "Name", Field = "name", Type = "text"};
+    var addBtn = new FormField(){Label = "Add"};
+}
+
+<div>
+    <h1>Add Tag</h1>
+    <form action="@Routers.AddTag.Link" method="post">
+        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+        <div>
+            @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)
+        </div>
+        @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", addBtn)
+    </form>
+</div>
