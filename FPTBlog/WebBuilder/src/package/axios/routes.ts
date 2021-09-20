@@ -6,4 +6,5 @@ export const routers = {
     loginUser: '/api/auth/login',
     registerUser: '/api/auth/register',
     createBlog: '/api/blog',
+    uploadImageBlog: '/api/blog/image',
 };

@@ -97,6 +97,48 @@ namespace FPTBlog.Views.Components.Form
             return input.ToString(TagRenderMode.SelfClosing);
         }
 
+        public IHtmlContent RadioButton(string name, string label)
+        {
+            TagBuilder wrapperComponent = new TagBuilder("div");
+            wrapperComponent.AddCssClass("flex items-center space-x-2 check-box");
+            var value = (Microsoft.AspNetCore.Mvc.Rendering.SelectList)this.viewData[name];
+            var list = value.Items;
+            foreach (Microsoft.AspNetCore.Mvc.Rendering.SelectListItem item in list)
+            {
+
+                TagBuilder divComponent = new TagBuilder("div");
+                divComponent.AddCssClass("flex items-center ");
+                TagBuilder labelComponent = new TagBuilder("label");
+                labelComponent.AddCssClass("inline-block w-5 h-5 duration-300 mr-1 border-2 rounded-full border-tango-500");
+                labelComponent.MergeAttribute("for", item.Text);
+
+                TagBuilder spanComponent = new TagBuilder("span");
+                spanComponent.AddCssClass("first-letter");
+                spanComponent.SetInnerText(item.Text);
+
+                TagBuilder inputComponent = new TagBuilder("input");
+                inputComponent.AddCssClass("hidden");
+                inputComponent.MergeAttribute("type", "radio");
+                inputComponent.MergeAttribute("name", name);
+                inputComponent.MergeAttribute("id", item.Text);
+                inputComponent.MergeAttribute("value", item.Value);
+
+
+                if ((string)value.SelectedValue == item.Value)
+                {
+                    inputComponent.MergeAttribute("checked", "checked");
+                }
+                divComponent.InnerHtml += inputComponent.ToString(TagRenderMode.SelfClosing) + labelComponent.ToString(TagRenderMode.Normal) + spanComponent.ToString(TagRenderMode.Normal);
+                wrapperComponent.InnerHtml += divComponent.ToString(TagRenderMode.Normal);
+            }
+
+
+
+            var component = this.FieldWrapper(name, label, wrapperComponent.ToString(TagRenderMode.Normal));
+            return new HtmlString(component);
+        }
+
+
         private string FieldWrapper(string name, string label, string componentInside)
         {
             TagBuilder wrapperComponent = new TagBuilder("div");

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using FPTBlog.Src.CategoryModule.DTO;
 using FPTBlog.Src.CategoryModule.Entity;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.CategoryModule.Interface
 {
@@ -14,5 +14,6 @@ namespace FPTBlog.Src.CategoryModule.Interface
         public Category GetCategoryByCategoryId(string categoryId);
         public bool UpdateCategory(Category category);
         public bool DeleteCategory(Category category);
+        public List<SelectListItem> GetRadioStatusList();
     }
 }

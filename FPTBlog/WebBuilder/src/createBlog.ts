@@ -4,34 +4,6 @@ import { http } from './package/axios';
 import { ServerResponse } from './package/interface/serverResponse';
 import { routers } from './package/axios/routes';
 
-// window.onload = async function () {
-//
-//     const btnSend = document.getElementById('send');
-//     const btnSave = document.getElementById('save');
-
-//     btnSend?.addEventListener('click', function () {
-//         const blogId = document.getElementById('blogId');
-//         if (blogId) {
-//             http.post('/blog', {
-//                 BlogId: blogId.innerHTML.trim(),
-//                 Title: 'hello',
-//                 Content: editor.root.innerHTML,
-//             });
-//         }
-//     });
-
-//     btnSave?.addEventListener('click', function () {
-//         const blogId = document.getElementById('blogId');
-//         if (blogId) {
-//             http.post('/blog/save', {
-//                 BlogId: blogId.innerHTML.trim(),
-//                 Title: 'hello',
-//                 Content: editor.root.innerHTML,
-//             });
-//         }
-//     });
-// };
-
 interface CreateNewBlogDto {
     title: string;
     content: string;
