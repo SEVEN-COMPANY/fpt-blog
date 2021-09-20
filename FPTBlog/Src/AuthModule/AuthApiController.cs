@@ -39,10 +39,14 @@ namespace FPTBlog.Src.AuthModule
 
 
             var res = new ServerApiResponse<string>();
+            Console.WriteLine(body.Username);
+            Console.WriteLine(body.Password);
+
 
             ValidationResult result = new LoginUserDtoValidator().Validate(body);
             if (!result.IsValid)
             {
+
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }

@@ -39,29 +39,14 @@ namespace FPTBlog.Src.UserModule
             return res;
         }
 
-        public bool UpdateUserHandler(UpdateUserDto input, ViewDataDictionary dataView)
+        public bool UpdateUser(User user)
         {
-            ValidationResult result = new UpdateUserDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
-                ServerMvcResponse.MapDetails(result, dataView);
-                return false;
-            }
-
-            User user = (User)dataView["user"];
-            user.Name = input.Name;
-            user.Email = input.Email;
-            user.Address = input.Address;
-            user.Phone = input.Phone;
-            this.dB.SaveChanges();
-            return true;
+            return this.UserRepository.UpdateUser(user);
         }
 
-        public void ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView)
+        public bool ChangePasswordHandler(User user)
         {
-            User user = (User)dataView["user"];
-            user.Password = input.NewPassword;
-            this.dB.SaveChanges();
+            return this.UserRepository.ChangePasswordHandler(user);
         }
     }
 }

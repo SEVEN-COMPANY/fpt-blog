@@ -1,4 +1,5 @@
-﻿using FPTBlog.Src.UserModule.Entity;
+﻿using FPTBlog.Src.UserModule.DTO;
+using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils;
 using System.Linq;
@@ -35,6 +36,24 @@ namespace FPTBlog.Src.UserModule
         {
             User user = this.Db.User.FirstOrDefault(item => item.GoogleId == googleId);
             return user;
+        }
+
+        public bool UpdateUser(User user)
+        {
+            User updateUser = this.GetUserByUserId(user.UserId);
+
+            updateUser.Name = user.Name;
+            updateUser.Email = user.Email;
+            updateUser.Phone = user.Phone;
+            updateUser.Address = user.Address;
+            return this.Db.SaveChanges() > 0;
+        }
+
+        public bool ChangePasswordHandler(User user)
+        {
+            User updateUser = this.GetUserByUserId(user.UserId);
+            updateUser.Password = user.Password;
+            return this.Db.SaveChanges() > 0;
         }
     }
 }
