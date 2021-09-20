@@ -65,3 +65,12 @@
     stroke-dashoffset: -134;
     stroke-width: 6;
 }
+.g_id_signin iframe {
+    margin: 0 auto !important;
+}
+
+.bg-2 {
+    background-image: url('/images/bg2.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
