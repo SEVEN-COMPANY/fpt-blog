@@ -1,11 +1,11 @@
-﻿using FPTBlog.TagModule.Entity;
-using FPTBlog.UserModule.Entity;
-using FPTBlog.CategoryModule.Entity;
+﻿using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Utils.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using FPTBlog.BlogModule.Entity;
+using FPTBlog.Src.BlogModule.Entity;
 
 namespace FPTBlog.Utils
 {
@@ -20,7 +20,7 @@ namespace FPTBlog.Utils
         public DbSet<Tag> Tag { set; get; }
         public DbSet<Category> Category { set; get; }
         public DbSet<Blog> Blog { set; get; }
-        public DbSet<BlogTag> BlogTag {get;set;}
+        public DbSet<BlogTag> BlogTag { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,9 +29,9 @@ namespace FPTBlog.Utils
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<BlogTag>().HasKey(sc => new { sc.BlogId, sc.TagId });
-    }
+        {
+            modelBuilder.Entity<BlogTag>().HasKey(sc => new { sc.BlogId, sc.TagId });
+        }
         public static async Task<Boolean> InitDatabase(IConfig config)
         {
             var dbContext = new DB(config);

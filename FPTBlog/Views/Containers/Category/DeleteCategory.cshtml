@@ -1,0 +1,12 @@
+﻿@using FPTBlog.Src.CategoryModule.Entity;
+
+@{
+    ViewData["Title"] = Routers.DeleteCategory.Title;
+    Category category = (Category)ViewData["category"];
+}
+
+<div class="flex items-center justify-center flex-1 ">
+    <h2>Delete this category ?</h2>
+    @* <button href="@{$"{Routers.DeleteCategory.Link}?categoryId={category.CategoryId}"}">Yes</button>
+        <button href="@{$"{Routers.Category.Link}"}>No</button> *@
+</div>

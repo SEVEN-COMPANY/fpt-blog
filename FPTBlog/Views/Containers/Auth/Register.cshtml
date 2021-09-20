@@ -1,42 +1,46 @@
-﻿@{
+﻿@using FPTBlog.Views.Components.Form;
+@using Microsoft.AspNetCore.Html;
+@{
     ViewData["Title"] = Routers.Register.Title;
-    var username = new FormField() { Label = "Username", Field = "username", Type = "text" };
-    var password = new FormField() { Label = "Password", Field = "password", Type = "password" };
-    var name = new FormField() { Label = "Name", Field = "name", Type = "text" };
-    var confirmPassword = new FormField() { Label = "Confirm Password", Field = "confirmPassword", Type = "password" };
-    var registerBtn = new FormField() { Label = "Register" };
+    var formBuilder = new FormBuilder(this.Context, this.ViewData);
 }
 
 
-<div class="flex items-center justify-center flex-1 p-2">
-    <div class="w-full px-4 py-16 border rounded-md shadow-xl md:w-96 fade-in">
-        <form method="post" action="@Routers.Register.Link" class="space-y-6">
-            <h1 class="text-4xl font-semibold text-center">Regsiter Account</h1>
-            <div class="space-y-4">
-                @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
-                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)
-                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", username)
-                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", password)
-                @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", confirmPassword)
-            </div>
-            @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", registerBtn)
-            <div class="space-y-2">
-                <div class="flex items-center space-x-2">
-                    <div class="flex-1 h-0.5 bg-gray-600"></div>
-                    <div class="font-medium text-center opacity-90">
-                        Or
-                    </div>
-                    <div class="flex-1 h-0.5 bg-gray-600"></div>
+<div class="absolute top-0 left-0 z-50 flex items-center justify-center flex-1 w-full min-h-screen p-2 bg-1">
+    <div
+        class="w-full px-2 py-8 space-y-4 bg-white border rounded-md shadow-xl md:px-4 md:py-16 md:w-96 fade-in bg-opacity-90">
+
+        @formBuilder.FormWrapper("Register Account","registerForm", "Sign Up",new IHtmlContent[]
+        {
+        formBuilder.TextField("name","Name"),
+        formBuilder.TextField("username","Username"),
+        formBuilder.PasswordField("password", "Password"),
+        formBuilder.PasswordField("confirmPassword", "Confirm Password")
+        })
+
+        <div class="space-y-2">
+            <div class="flex items-center space-x-2">
+                <div class="flex-1 h-0.5 bg-gray-600"></div>
+                <div class="font-medium text-center opacity-90">
+                    Or
                 </div>
-                <div>
-                    @await Html.PartialAsync("~/Views/Components/Form/FormLoginGoogle.cshtml")
-                </div>
+                <div class="flex-1 h-0.5 bg-gray-600"></div>
             </div>
-        </form>
+            <div>
+                @await Html.PartialAsync("~/Views/Components/Form/FormLoginGoogle.cshtml")
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="@Routers.Login.Link" class="inline-block p-2 font-semibold duration-300 hover:text-tango-500">Login
+                Your Account Instead?</a>
+        </div>
     </div>
 </div>
 
 
 @section Scripts {
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="~/js/register.js"></script>
+
 }
