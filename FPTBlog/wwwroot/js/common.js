@@ -10,6 +10,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/common.ts":
+/*!***********************!*\
+  !*** ./src/common.ts ***!
+  \***********************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar routes_1 = __webpack_require__(/*! ./package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar axios_1 = __webpack_require__(/*! ./package/axios */ \"./src/package/axios/index.ts\");\r\nvar getCurrentUser = function () {\r\n    axios_1.http.get(routes_1.routers.getUser).then(function (res) {\r\n        var user = document.getElementById('user');\r\n        var auth = document.getElementById('auth');\r\n        var userAvatar = document.getElementById('user-avatar');\r\n        if (user && userAvatar) {\r\n            user.classList.remove('hidden');\r\n            user.classList.add('flex');\r\n            userAvatar.src = res.data.data.avatarUrl;\r\n        }\r\n        if (auth) {\r\n            auth.classList.add('hidden');\r\n            auth.classList.remove('md:flex');\r\n        }\r\n    });\r\n};\r\ngetCurrentUser();\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/common.ts?");
+
+/***/ }),
+
 /***/ "./src/package/axios/index.ts":
 /*!************************************!*\
   !*** ./src/package/axios/index.ts ***!
@@ -37,16 +47,6 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /***/ ((__unused_webpack_module, exports) => {
 
 eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.routers = exports.routerLinks = void 0;\r\nexports.routerLinks = {\r\n    home: '/',\r\n    loginForm: '/auth/login',\r\n};\r\nexports.routers = {\r\n    loginUser: '/api/auth/login',\r\n    getUser: '/api/user',\r\n    registerUser: '/api/auth/register',\r\n    createBlog: '/api/blog',\r\n    uploadImageBlog: '/api/blog/image',\r\n};\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/axios/routes.ts?");
-
-/***/ }),
-
-/***/ "./src/register.ts":
-/*!*************************!*\
-  !*** ./src/register.ts ***!
-  \*************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ./package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ./package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar registerForm = document.getElementById('registerForm');\r\nregisterForm === null || registerForm === void 0 ? void 0 : registerForm.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var username = document.getElementById('username');\r\n    var password = document.getElementById('password');\r\n    var name = document.getElementById('name');\r\n    var confirmPassword = document.getElementById('confirmPassword');\r\n    if (username && password && name && confirmPassword) {\r\n        var input = {\r\n            username: username.value,\r\n            password: password.value,\r\n            name: name.value,\r\n            confirmPassword: confirmPassword.value,\r\n        };\r\n        axios_1.http.post(routes_1.routers.registerUser, input).then(function () { return window.location.assign(routes_1.routerLinks.loginForm); });\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/register.ts?");
 
 /***/ })
 
@@ -81,7 +81,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/register.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/common.ts");
 /******/ 	
 /******/ })()
 ;

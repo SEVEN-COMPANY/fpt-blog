@@ -72,7 +72,7 @@ namespace FPTBlog.Src.UserModule.Entity
             this.Name = "";
             this.Phone = "";
             this.Address = "";
-            this.AvatarUrl = "";
+            this.AvatarUrl = "https://picsum.photos/64/64";
             this.Status = UserStatus.ENABLE;
             this.Role = UserRole.STUDENT;
             this.CreateDate = DateTime.Now.ToShortDateString();

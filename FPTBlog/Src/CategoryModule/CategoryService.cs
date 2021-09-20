@@ -60,5 +60,18 @@ namespace FPTBlog.Src.CategoryModule
             SelectListItem inactive = new SelectListItem() { Value = ((int)CategoryStatus.INACTIVE).ToString(), Text = "inactive" };
             return new List<SelectListItem>() { active, inactive };
         }
+
+        public List<SelectListItem> GetRadioCategoryList()
+        {
+            var categories = new List<SelectListItem>();
+
+            var list = this.CategoryRepository.GetCategories();
+            foreach (var item in list)
+            {
+                categories.Add(new SelectListItem() { Value = item.CategoryId, Text = item.Name });
+            }
+
+            return categories;
+        }
     }
 }

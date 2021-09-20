@@ -15,5 +15,6 @@ namespace FPTBlog.Src.CategoryModule.Interface
         public bool UpdateCategory(Category category);
         public bool DeleteCategory(Category category);
         public List<SelectListItem> GetRadioStatusList();
+        public List<SelectListItem> GetRadioCategoryList();
     }
 }
