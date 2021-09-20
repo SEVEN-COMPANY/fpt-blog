@@ -8,10 +8,10 @@ namespace FPTBlog.Src.UserModule.Interface
     {
         public User GetUserByUsername(string username);
         public bool SaveUser(User user);
-        public bool UpdateUserHandler(UpdateUserDto input, ViewDataDictionary dataView);
+        public bool UpdateUser(User user);
         public User GetUserByUserId(string id);
         public User GetUserByGoogleId(string googleId);
-        public void ChangePasswordHandler(ChangePassDto input, ViewDataDictionary dataView);
+        public bool ChangePasswordHandler(User user);
 
     }
 }
