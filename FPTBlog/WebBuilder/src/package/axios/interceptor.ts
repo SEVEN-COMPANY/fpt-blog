@@ -50,9 +50,8 @@ export function responseSuccessInterceptor(response: AxiosResponse<any>) {
         if (message) {
             message.innerHTML = response?.data?.details?.message;
         }
-
-        return response;
     }
+    return response;
 }
 
 export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>>) {

@@ -7,6 +7,7 @@ module.exports = {
         google: './src/google.ts',
         login: './src/login.ts',
         register: './src/register.ts',
+        common: './src/common.ts',
     },
     output: {
         path: __dirname + '/../wwwroot/js',

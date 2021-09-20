@@ -9,17 +9,17 @@ using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using FPTBlog.Utils;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.CategoryModule
 {
     public class CategoryService : ICategoryService
     {
-        private readonly DB DB;
         private readonly ICategoryRepository CategoryRepository;
 
-        public CategoryService(DB dB, ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository)
         {
-            this.DB = dB;
+
             this.CategoryRepository = categoryRepository;
         }
 
@@ -51,6 +51,27 @@ namespace FPTBlog.Src.CategoryModule
         public bool DeleteCategory(Category category)
         {
             return this.CategoryRepository.DeleteCategory(category);
+        }
+
+
+        public List<SelectListItem> GetRadioStatusList()
+        {
+            SelectListItem active = new SelectListItem() { Value = ((int)CategoryStatus.ACTIVE).ToString(), Text = "active" };
+            SelectListItem inactive = new SelectListItem() { Value = ((int)CategoryStatus.INACTIVE).ToString(), Text = "inactive" };
+            return new List<SelectListItem>() { active, inactive };
+        }
+
+        public List<SelectListItem> GetRadioCategoryList()
+        {
+            var categories = new List<SelectListItem>();
+
+            var list = this.CategoryRepository.GetCategories();
+            foreach (var item in list)
+            {
+                categories.Add(new SelectListItem() { Value = item.CategoryId, Text = item.Name });
+            }
+
+            return categories;
         }
     }
 }

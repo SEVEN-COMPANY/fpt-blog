@@ -1,3 +1,4 @@
+
 using System;
 using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
@@ -15,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FPTBlog.Src.BlogModule
 {
     [Route("/api/blog")]
-    [ServiceFilter(typeof(AuthGuard))]
+    // [ServiceFilter(typeof(AuthGuard))]
     public class BlogApiController : Controller
     {
         private readonly IUploadFileService UploadFileService;
@@ -27,24 +28,25 @@ namespace FPTBlog.Src.BlogModule
         }
 
         [HttpPost("image")]
-        public IActionResult UploadImageHandler(IFormFile input)
+        public IActionResult UploadImageHandler(IFormFile image)
         {
+
             var res = new ServerApiResponse<string>();
 
-            if (this.UploadFileService.CheckFileSize(input, 500))
+            if (!this.UploadFileService.CheckFileSize(image, 5))
             {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_TOO_LARGE);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if (this.UploadFileService.CheckFileExtension(input, new string[] { "png", "jpeg", "gif", "tiff" }))
+            if (!this.UploadFileService.CheckFileExtension(image, new string[] { "jpg", "png", "jpeg", "gif", "tiff" }))
             {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_TOO_LARGE);
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_WRONG_EXTENSION);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
 
-            res.data = this.UploadFileService.Upload(input);
+            res.data = this.UploadFileService.Upload(image);
             return new ObjectResult(res.getResponse());
         }
 
@@ -75,6 +77,7 @@ namespace FPTBlog.Src.BlogModule
         [HttpPost("")]
         public IActionResult AddBlogHandler([FromBody] AddBlogDto input)
         {
+
             var res = new ServerApiResponse<string>();
             ValidationResult result = new AddBlogDtoValidator().Validate(input);
             if (!result.IsValid)

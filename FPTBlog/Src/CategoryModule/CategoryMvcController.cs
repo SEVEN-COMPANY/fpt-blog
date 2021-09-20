@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.DTO;
@@ -10,6 +11,8 @@ using FPTBlog.Utils;
 using System;
 using FPTBlog.Src.BlogModule.Entity;
 using FPTBlog.Src.BlogModule.Interface;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace FPTBlog.Src.CategoryModule
 {
@@ -19,65 +22,33 @@ namespace FPTBlog.Src.CategoryModule
     {
         private readonly ICategoryService CategoryService;
         private readonly IBlogService BlogService;
-        private readonly DB DB;
 
-        public CategoryMvcController(ICategoryService categoryService, DB dB, IBlogService blogService)
+
+        public CategoryMvcController(ICategoryService categoryService, IBlogService blogService)
         {
             this.BlogService = blogService;
             this.CategoryService = categoryService;
-            this.DB = dB;
         }
 
         [HttpGet("")]
         public IActionResult Category()
         {
-            var categories = this.CategoryService.GetCategories();
+            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), CategoryStatus.ACTIVE.ToString());
+            this.ViewData["status"] = list;
 
-            this.ViewData["categories"] = categories;
             return View(Routers.Category.Page);
         }
 
         [HttpGet("create")]
         public IActionResult AddCategoryPage()
         {
+            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), CategoryStatus.ACTIVE.ToString());
+            this.ViewData["status"] = list;
+
             return View(Routers.CreateCategory.Page);
         }
 
-        [HttpPost("create")]
-        public IActionResult HandleCreateCategory(string name, string description, CategoryStatus status)
-        {
-            var input = new CreateCategoryDTO()
-            {
-                Name = name,
-                Description = description,
-                Status = status
-            };
 
-            ValidationResult result = new CreateCategoryDTOValidator().Validate(input);
-            if (!result.IsValid)
-            {
-                ServerMvcResponse.MapDetails(result, this.ViewData);
-                return View(Routers.CreateCategory.Page);
-            }
-
-            var isExistCategory = this.CategoryService.GetCategoryByCategoryName(input.Name);
-            if (isExistCategory != null)
-            {
-                ServerMvcResponse.SetFieldErrorMessage("name", CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, this.ViewData);
-                return View(Routers.CreateCategory.Page);
-            }
-
-            var category = new Category();
-            category.CategoryId = Guid.NewGuid().ToString();
-            category.Name = input.Name;
-            category.Description = input.Description;
-            category.Status = input.Status;
-            category.CreateDate = DateTime.Now.ToShortDateString();
-            this.CategoryService.SaveCategory(category);
-
-            ServerMvcResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS, this.ViewData);
-            return Redirect(Routers.Category.Link);
-        }
 
         [HttpGet("update")]
         public IActionResult UpdateCategory(string categoryId)

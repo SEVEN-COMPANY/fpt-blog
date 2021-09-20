@@ -4,6 +4,8 @@ export const routerLinks = {
 };
 export const routers = {
     loginUser: '/api/auth/login',
+    getUser: '/api/user',
     registerUser: '/api/auth/register',
     createBlog: '/api/blog',
+    uploadImageBlog: '/api/blog/image',
 };

@@ -93,3 +93,7 @@
         transform: scaleY(1);
     }
 }
+
+.check-box div input:checked ~ label {
+    @apply bg-tango-500;
+}

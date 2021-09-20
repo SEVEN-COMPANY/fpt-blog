@@ -13,9 +13,9 @@ namespace FPTBlog.Src.BlogModule.DTO
     {
         public AddBlogDtoValidator()
         {
-            RuleFor(x => x.BlogId).NotNull().NotEmpty();
-            RuleFor(x => x.Title).NotNull().NotEmpty().MaximumLength(40);
-            RuleFor(x => x.Content).NotNull().NotEmpty();
+            RuleFor(x => x.BlogId).NotEmpty().NotNull().NotEmpty();
+            RuleFor(x => x.Title).NotEmpty().NotNull().NotEmpty().MaximumLength(40);
+            RuleFor(x => x.Content).NotEmpty().NotNull().NotEmpty();
         }
     }
 }
