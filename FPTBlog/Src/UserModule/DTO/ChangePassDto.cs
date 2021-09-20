@@ -38,10 +38,18 @@ namespace FPTBlog.Src.UserModule.DTO
 
                 foreach (char c in value)
                 {
-                    if (char.IsUpper(c)) hasUpperCaseLetter = true;
-                    if (char.IsLower(c)) hasLowerCaseLetter = true;
-                    if (char.IsDigit(c)) hasDecimalDigit = true;
-                    if (char.IsWhiteSpace(c)) hasWhiteSpace = true;
+                    if (char.IsUpper(c)) { 
+                        hasUpperCaseLetter = true;
+                    }
+                    if (char.IsLower(c)) { 
+                        hasLowerCaseLetter = true;
+                    }
+                    if (char.IsDigit(c)) { 
+                        hasDecimalDigit = true;
+                    }
+                    if (char.IsWhiteSpace(c)) { 
+                        hasWhiteSpace = true;
+                    }
                 }
 
                 if (!hasDecimalDigit || !hasLowerCaseLetter || !hasUpperCaseLetter)
