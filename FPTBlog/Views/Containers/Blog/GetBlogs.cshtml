@@ -1,0 +1,11 @@
+@using FPTBlog.BlogModule.Entity
+@{
+    var blogs = (List<Blog>)this.ViewData["blogs"];
+}
+
+<ul>
+    @foreach (var blog in blogs)
+    {
+        <li>@blog.BlogId</li>
+    }
+</ul>

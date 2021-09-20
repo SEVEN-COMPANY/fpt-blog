@@ -39,11 +39,15 @@ namespace FPTBlog.BlogModule
         }
 
         [HttpGet("all")]
-        public IActionResult GetAllBlogsPage(){
-            Console.WriteLine(123);
-            List<Blog> blogs = this.BlogService.GetAllBlogs();
-            Console.WriteLine(blogs.Count);
+        public IActionResult GetBlogsPage(string categoryId){
+            List<Blog> blogs = this.BlogService.GetBlogs();
             this.ViewData["blogs"] = blogs;
+            return View(Routers.GetBlogs.Page);
+        }
+
+        [HttpGet("all/category")]
+        public IActionResult GetBlogsByCategoryPage(){
+
             return View(Routers.GetBlogs.Page);
         }
 

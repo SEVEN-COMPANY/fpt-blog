@@ -11,9 +11,9 @@ namespace FPTBlog.BlogModule
             this.BlogRepository = blogRepository;
         }
 
-        public List<Blog> GetAllBlogs()
+        public List<Blog> GetBlogs()
         {
-            return this.BlogRepository.GetAllBlogs();
+            return this.BlogRepository.GetBlogs();
         }
 
         public Blog GetBlogByBlogId(string blogId)
@@ -29,6 +29,11 @@ namespace FPTBlog.BlogModule
         public bool UpdateBlog(Blog blog)
         {
             return this.BlogRepository.UpdateBlog(blog);
+        }
+
+        public List<Blog> GetBlogsByCategory(string categoryId)
+        {
+            return this.BlogRepository.GetBlogsByCategory(categoryId);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace FPTBlog.BlogModule
             this.Db = db;
         }
 
-        public List<Blog> GetAllBlogs()
+        public List<Blog> GetBlogs()
         {
             List<Blog> list = this.Db.Blog.ToList();
             return list;
@@ -42,6 +42,11 @@ namespace FPTBlog.BlogModule
             obj.Content = blog.Content;
 
             return this.Db.SaveChanges() > 0;
+        }
+
+        public List<Blog> GetBlogsByCategory(string categoryId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
