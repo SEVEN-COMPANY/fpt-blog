@@ -8,7 +8,7 @@ namespace FPTBlog.Src.CategoryModule.Entity
     public enum CategoryStatus
     {
         ACTIVE = 1,
-        INACTIVE = 0
+        INACTIVE = 2
     }
 
     [Table("tblCategory")]

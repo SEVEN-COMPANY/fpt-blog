@@ -8,6 +8,7 @@ namespace FPTBlog.Src.CategoryModule.DTO
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public CategoryStatus Status { get; set; }
     }
 
     public class CreateCategoryDTOValidator : AbstractValidator<CreateCategoryDTO>
@@ -15,7 +16,8 @@ namespace FPTBlog.Src.CategoryModule.DTO
         public CreateCategoryDTOValidator()
         {
             RuleFor(x => x.Name).NotEmpty().NotNull().Length(CategoryValidator.NAME_MIN, CategoryValidator.NAME_MAX);
-            RuleFor(x => x.Description).NotEmpty().NotNull().Length(CategoryValidator.DECRIPTION_MIN, CategoryValidator.DECRIPTION_MAX);
+            RuleFor(x => x.Description).NotEmpty().NotNull().Length(CategoryValidator.DESCRIPTION_MIN, CategoryValidator.DESCRIPTION_MAX);
+            RuleFor(x => x.Status).NotEmpty().NotNull().IsInEnum();
         }
     }
 }
