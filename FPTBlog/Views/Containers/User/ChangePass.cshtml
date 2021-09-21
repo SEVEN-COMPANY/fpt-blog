@@ -1,4 +1,4 @@
-﻿@using FPTBlog.UserModule.Entity
+﻿@using FPTBlog.Src.UserModule.Entity
 
 @{
     ViewData["Title"] = Routers.ChangePass.Title;
@@ -7,7 +7,13 @@
     var username = new FormField() { Label = "Username", Field = "username", Type = "text", Value = user.Username };
     var password = new FormField() { Label = "Password", Field = "password", Type = "password" };
     var newPassword = new FormField() { Label = "New Password", Field = "newPassword", Type = "password" };
-    var confirmNewPassword = new FormField() { Label = "Confirm New Password", Field = "confirmNewPassword", Type = "password" };
+    var confirmNewPassword = new FormField()
+    {
+        Label = "Confirm New Password",
+        Field = "confirmNewPassword",
+        Type =
+    "password"
+    };
     var changePasswordBtn = new FormField() { Label = "Change Password" };
 }
 

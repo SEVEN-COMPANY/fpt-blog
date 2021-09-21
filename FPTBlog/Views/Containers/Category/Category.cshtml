@@ -1,5 +1,10 @@
-<div class="text-center">
-    @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
+@{
+
+    var formBuilder = new FormBuilder(this.Context, this.ViewData);
+}
+
+<div class="">
+
     <a href="/category/create">create</a>
     <a href="/category/update?categoryId=d96be284-329c-4005-a001-8b0fc653e714">update</a>
     <a href="/category/delete?categoryID=d96be284-329c-4005-a001-8b0fc653e714">delete</a>
