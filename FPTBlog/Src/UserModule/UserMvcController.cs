@@ -35,39 +35,6 @@ namespace FPTBlog.Src.UserModule
             return View(Routers.UpdateUser.Page);
         }
 
-        [HttpPost("update")]
-        public IActionResult UpdateUserHandler(string name, string email, string address, string phone, string avartarUrl)
-        {
-            User currentUser = (User)this.ViewData["user"];
-            var input = new UpdateUserDto()
-            {
-                Name = name,
-                Email = email,
-                Phone = phone,
-                Address = address
-            };
-
-            ValidationResult result = new UpdateUserDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
-                ServerMvcResponse.MapDetails(result, this.ViewData);
-                return this.UpdateUser();
-            }
-            var user = this.UserService.GetUserByUserId(currentUser.UserId);
-            user.Name = input.Name;
-            user.Email = input.Name;
-            user.Phone = input.Phone;
-            user.Address = input.Address;
-
-            var isUpdate = this.UserService.UpdateUser(user);
-            if (!isUpdate)
-            {
-                return View(Routers.UpdateUser.Page);
-            }
-            ServerMvcResponse.SetMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS, this.ViewData);
-            return Redirect(Routers.User.Link);
-        }
-
 
         [HttpGet("change-password")]
         public IActionResult ChangePass()
