@@ -11,6 +11,7 @@ using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.TagModule
 {
@@ -45,7 +46,7 @@ namespace FPTBlog.Src.TagModule
         [HttpGet("")]
         public IActionResult GetTagsPage()
         {
-            List<Tag> tags = this.TagService.GetTags();
+            SelectList tags = new SelectList(this.TagService.GetRadioStatusList(), TagStatus.ACTIVE.ToString());
             this.ViewData["tags"] = tags;
 
             return View(Routers.GetTags.Page);

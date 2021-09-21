@@ -48,8 +48,6 @@ namespace FPTBlog.Src.CategoryModule
             return View(Routers.CreateCategory.Page);
         }
 
-
-
         [HttpGet("update")]
         public IActionResult UpdateCategory(string categoryId)
         {
