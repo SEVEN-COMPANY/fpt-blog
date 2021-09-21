@@ -35,6 +35,34 @@ namespace FPTBlog.Src.UserModule
             res.data = user;
             return new ObjectResult(res.getResponse());
         }
+
+        [HttpPut("")]
+        public IActionResult UpdateUserHandler([FromBody] UpdateUserDto input)
+        {
+            var res = new ServerApiResponse<User>();
+
+
+            User currentUser = (User)this.ViewData["user"];
+
+            ValidationResult result = new UpdateUserDtoValidator().Validate(input);
+            if (!result.IsValid)
+            {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            var user = this.UserService.GetUserByUserId(currentUser.UserId);
+            user.Name = input.Name;
+            user.Email = input.Name;
+            user.Phone = input.Phone;
+            user.Address = input.Address;
+            this.UserService.UpdateUser(user);
+            res.data = user;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+
     }
 
 }

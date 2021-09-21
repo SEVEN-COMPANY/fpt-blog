@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.TagModule
 {
-    
+
     [ApiController]
     [Route("/api/tag")]
     public class TagApiController : Controller
@@ -20,7 +20,7 @@ namespace FPTBlog.Src.TagModule
         }
 
         [HttpPost("")]
-        public ObjectResult AddTagHandler([FromBody]AddTagDto input)
+        public ObjectResult AddTagHandler([FromBody] AddTagDto input)
         {
             var res = new ServerApiResponse<Tag>();
 
@@ -48,7 +48,7 @@ namespace FPTBlog.Src.TagModule
         }
 
         [HttpPut("")]
-        public IActionResult UpdateTagHandler([FromBody]UpdateTagDto input)
+        public IActionResult UpdateTagHandler([FromBody] UpdateTagDto input)
         {
             var res = new ServerApiResponse<Tag>();
 
