@@ -61,7 +61,9 @@ namespace FPTBlog.Src.AuthModule
                 foreach (var parts in values)
                 {
                     var cookieArray = parts.Trim().Split('=');
-                    cookies.Add(cookieArray[0], cookieArray[1]);
+                    if(cookieArray.Length >= 2){
+                        cookies.Add(cookieArray[0], cookieArray[1]);
+                    }
                 }
 
                 if (!cookies.TryGetValue("auth-token", out _))
