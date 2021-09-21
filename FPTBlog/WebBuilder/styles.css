@@ -97,3 +97,7 @@
 .check-box div input:checked ~ label {
     @apply bg-tango-500;
 }
+
+.safari {
+    -webkit-appearance: none;
+}

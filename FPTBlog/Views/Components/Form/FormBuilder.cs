@@ -9,13 +9,14 @@ using System.Web.Mvc;
 
 namespace FPTBlog.Views.Components.Form
 {
-    public class FormBuilder
+    public class FormBuilder : FormHelper
     {
 
         HttpContext Context;
         Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData;
-        public FormBuilder(HttpContext context, Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData)
+        public FormBuilder(HttpContext context, Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData) : base(context, viewData)
         {
+
             this.Context = context;
             this.viewData = viewData;
         }
@@ -75,27 +76,47 @@ namespace FPTBlog.Views.Components.Form
             return new HtmlString(wrapperComponent.ToString(TagRenderMode.Normal));
         }
 
-        private string TextFieldCore(string name, string type)
+        public IHtmlContent CheckboxButton(string name, string label)
         {
-            var value = "";
-            try
+            TagBuilder wrapperComponent = new TagBuilder("div");
+            wrapperComponent.AddCssClass("flex items-center space-x-2 check-box ");
+            var value = (Microsoft.AspNetCore.Mvc.Rendering.SelectList)this.viewData[name];
+            var list = value.Items;
+            foreach (Microsoft.AspNetCore.Mvc.Rendering.SelectListItem item in list)
             {
-                value = (string)this.Context.Request.Form[name];
+
+                TagBuilder divComponent = new TagBuilder("div");
+                divComponent.AddCssClass("flex items-center");
+                TagBuilder labelComponent = new TagBuilder("label");
+                labelComponent.AddCssClass("h-5 w-5 border-2 border-tango duration-300 mr-2 rounded-sm");
+                labelComponent.MergeAttribute("for", item.Text);
+
+                TagBuilder spanComponent = new TagBuilder("span");
+                spanComponent.AddCssClass("first-letter");
+                spanComponent.SetInnerText(item.Text);
+
+                TagBuilder inputComponent = new TagBuilder("input");
+                inputComponent.AddCssClass("hidden");
+                inputComponent.MergeAttribute("type", "checkbox");
+                inputComponent.MergeAttribute("name", name);
+                inputComponent.MergeAttribute("id", item.Text);
+                inputComponent.MergeAttribute("value", item.Value);
+
+
+                if ((string)value.SelectedValue == item.Value)
+                {
+                    inputComponent.MergeAttribute("checked", "checked");
+                }
+                divComponent.InnerHtml += inputComponent.ToString(TagRenderMode.SelfClosing) + labelComponent.ToString(TagRenderMode.Normal) + spanComponent.ToString(TagRenderMode.Normal);
+                wrapperComponent.InnerHtml += divComponent.ToString(TagRenderMode.Normal);
             }
-            catch (System.Exception)
-            {
-
-            }
 
 
-            TagBuilder input = new TagBuilder("input");
-            input.AddCssClass("block w-full px-2 py-1 duration-300 border safari rounded-sm outline-none h-9 focus:border-tango-500");
-            input.MergeAttribute("name", name);
-            input.MergeAttribute("id", name);
-            input.MergeAttribute("type", type);
-            input.MergeAttribute("value", value);
-            return input.ToString(TagRenderMode.SelfClosing);
+
+            var component = this.FieldWrapper(name, label, wrapperComponent.ToString(TagRenderMode.Normal));
+            return new HtmlString(component);
         }
+
 
         public IHtmlContent RadioButton(string name, string label)
         {
@@ -138,35 +159,6 @@ namespace FPTBlog.Views.Components.Form
             return new HtmlString(component);
         }
 
-
-        private string FieldWrapper(string name, string label, string componentInside)
-        {
-            TagBuilder wrapperComponent = new TagBuilder("div");
-            wrapperComponent.AddCssClass("flex flex-col flex-1 space-y-1");
-
-
-            TagBuilder labelComponent = new TagBuilder("label");
-            labelComponent.AddCssClass("block font-semibold capitalize");
-            labelComponent.SetInnerText(label);
-            labelComponent.MergeAttribute("id", $"{name.ToUpper()}LABEL");
-
-
-            TagBuilder errorComponent = new TagBuilder("span");
-            errorComponent.MergeAttribute("id", $"{name.ToUpper()}ERROR");
-            errorComponent.AddCssClass("text-red-500 fade-in block");
-
-            var errorMessage = (string)this.viewData[$"{name}Error"];
-            if (errorMessage != null)
-            {
-                var formatErrorMessage = label + " " + errorMessage;
-                errorComponent.SetInnerText(formatErrorMessage);
-
-            }
-
-
-            wrapperComponent.InnerHtml += labelComponent.ToString(TagRenderMode.Normal) + componentInside + errorComponent.ToString(TagRenderMode.Normal);
-            return wrapperComponent.ToString(TagRenderMode.Normal);
-        }
 
         public IHtmlContent TextField(string name, string label)
         {
