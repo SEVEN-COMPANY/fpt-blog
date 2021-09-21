@@ -1,10 +1,14 @@
 const theme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: ['./../Views/**/*.cshtml', './../wwwroot/**/*.js'],
+    purge: ['./../Views/**/*.cshtml', './../wwwroot/**/*.js', './../Views/**/*.cs'],
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {},
+        minHeight: {
+            ...theme.minHeight,
+            120: '30rem',
+        },
         colors: {
             ...theme.colors,
             tango: {

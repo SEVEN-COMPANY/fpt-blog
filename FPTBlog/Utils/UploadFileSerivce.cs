@@ -7,7 +7,8 @@ namespace FPTBlog.Utils
 {
     public class UploadFileService : IUploadFileService
     {
-        readonly string folderUrl = "/public/image/";
+        readonly string pathUrl = "/public/image/";
+        readonly string folderUrl = "/wwwroot/public/image/";
         public static string[] imageExtension = { "png", "jpg", "jpeg" };
         public bool CheckFileExtension(IFormFile file, string[] extensions)
         {
@@ -25,6 +26,7 @@ namespace FPTBlog.Utils
 
         public bool CheckFileSize(IFormFile file, int limit)
         {
+
             // Unit: MB
             return file.Length < limit * 1024 * 1024;
         }
@@ -47,7 +49,7 @@ namespace FPTBlog.Utils
                     file.CopyTo(fileStream);
                     fileStream.Flush();
                 }
-                return folderUrl + fortmatFileName;
+                return pathUrl + fortmatFileName;
             }
             catch (Exception e)
             {

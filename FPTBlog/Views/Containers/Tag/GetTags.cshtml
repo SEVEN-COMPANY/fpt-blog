@@ -1,31 +1,41 @@
-@using FPTBlog.TagModule.Entity
+@using FPTBlog.Src.TagModule.Entity
+@using FPTBlog.Utils.Common
 @{
     List<Tag> tags = (List<Tag>)ViewData["tags"];
 }
 
+
 <div>
     <h1>All Tags</h1>
+    <span class="text-green-500">@Context.Request.Query["message"]</span>
+
+
     @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
     <table border="1">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Update</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
 
-        <tbody>
+        @* <tbody>
             @foreach (var tag in tags)
             {
-                var updateLink = $"{@Routers.UpdateTag.Link}?tagId={@tag.TagId}";
-                
-                <tr>
-                    <td>@tag.Name</td>
-                    <td>
-                        <a href="@updateLink">Update</a>
-                    </td>
-                </tr>
+            var updateLink = $"{@Routers.UpdateTag.Link}?tagId={@tag.TagId}";
+            var deleteLink = $"{@Routers.DeleteTag.Link}?tagId={@tag.TagId}";
+
+            <tr>
+            <td>@tag.Name</td>
+            <td>
+            <a href="@updateLink">Update</a>
+            </td>
+            <td>
+            <a href="@deleteLink">Delete</a>
+            </td>
+            </tr>
             }
-        </tbody>
+            </tbody> *@
     </table>
 </div>

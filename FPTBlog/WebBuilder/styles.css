@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.text-first-uppercase::first-letter {
+.first-letter::first-letter {
     text-transform: uppercase;
 }
 
@@ -22,9 +22,6 @@
     animation: FadeIn 1s forwards;
 }
 
-#editor {
-    min-height: 15rem;
-}
 .menu {
     background-color: transparent;
     border: none;
@@ -64,4 +61,43 @@
     stroke-dasharray: 90 207;
     stroke-dashoffset: -134;
     stroke-width: 6;
+}
+.g_id_signin iframe {
+    margin: 0 auto !important;
+}
+
+.bg-2 {
+    background-image: url('/images/bg2.png');
+    /* background-image: url('/images/bg1.jpg'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.bg-1 {
+    background-image: url('/images/bg1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.animation1 {
+    animation: Wave 0.4s infinite ease-in alternate;
+}
+.animation2 {
+    animation: Wave 0.4s 0.3s infinite ease-in alternate;
+}
+
+@keyframes Wave {
+    0% {
+        transform: scaleY(0.5);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+.check-box div input:checked ~ label {
+    @apply bg-tango-500;
+}
+
+.safari {
+    -webkit-appearance: none;
 }
