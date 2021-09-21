@@ -20,7 +20,6 @@ namespace FPTBlog.Utils
         public DbSet<Tag> Tag { set; get; }
         public DbSet<Category> Category { set; get; }
         public DbSet<Blog> Blog { set; get; }
-        public DbSet<BlogTag> BlogTag { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,7 +29,19 @@ namespace FPTBlog.Utils
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BlogTag>().HasKey(sc => new { sc.BlogId, sc.TagId });
+            modelBuilder.Entity<BlogTag>().HasKey(item => new { item.BlogId, item.TagId });
+
+            modelBuilder.Entity<BlogTag>()
+                .HasOne(x => x.Blog)
+                .WithMany(x => x.BlogTags)
+                .HasForeignKey(x => x.BlogId);
+
+            modelBuilder.Entity<BlogTag>()
+                .HasOne(x => x.Tag)
+                .WithMany(x => x.BlogTags)
+                .HasForeignKey(x => x.TagId);
+
+            base.OnModelCreating(modelBuilder);
         }
         public static async Task<Boolean> InitDatabase(IConfig config)
         {

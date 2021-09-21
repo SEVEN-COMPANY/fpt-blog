@@ -27,6 +27,7 @@ namespace FPTBlog.Utils.Locale
             public const string MESSAGE_UPDATE_SUCCESS = "MESSAGE_UPDATE_SUCCESS";
             public const string MESSAGE_ADD_SUCCESS = "MESSAGE_ADD_SUCCESS";
             public const string MESSAGE_DELETE_SUCCESS = "MESSAGE_DELETE_SUCCESS";
+            public const string MESSAGE_SAVE_SUCCESS = "MESSAGE_SAVE_SUCCESS";
         }
         public CustomLanguageValidator()
         {

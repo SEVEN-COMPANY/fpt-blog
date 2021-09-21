@@ -16,7 +16,6 @@ namespace FPTBlog.Views.Components.Form
         Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData;
         public FormBuilder(HttpContext context, Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData) : base(context, viewData)
         {
-
             this.Context = context;
             this.viewData = viewData;
         }

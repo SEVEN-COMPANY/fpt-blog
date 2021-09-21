@@ -33,11 +33,11 @@ namespace FPTBlog.Src.CategoryModule
         }
 
 
-        [HttpPost("create")]
+        [HttpPost("")]
         public IActionResult HandleCreateCategory([FromBody] CreateCategoryDTO input)
         {
 
-            var res = new ServerApiResponse<string>();
+            var res = new ServerApiResponse<Category>();
             ValidationResult result = new CreateCategoryDTOValidator().Validate(input);
             if (!result.IsValid)
             {
@@ -56,10 +56,9 @@ namespace FPTBlog.Src.CategoryModule
             category.CategoryId = Guid.NewGuid().ToString();
             category.Name = input.Name;
             category.Description = input.Description;
-            category.Status = input.Status;
-            category.CreateDate = DateTime.Now.ToShortDateString();
             this.CategoryService.SaveCategory(category);
 
+            res.data = category;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
