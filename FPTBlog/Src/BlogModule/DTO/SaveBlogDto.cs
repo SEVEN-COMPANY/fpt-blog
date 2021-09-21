@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FluentValidation;
 
 namespace FPTBlog.Src.BlogModule.DTO
@@ -13,9 +14,9 @@ namespace FPTBlog.Src.BlogModule.DTO
     {
         public SaveBlogDtoValidator()
         {
-            RuleFor(x => x.BlogId).NotEmpty().NotNull().NotEmpty();
-            RuleFor(x => x.Title).NotEmpty().NotNull().NotEmpty().MaximumLength(40);
-            RuleFor(x => x.Content).NotEmpty().NotNull().NotEmpty();
+            RuleFor(x => x.BlogId).NotEmpty().NotNull();
+            RuleFor(x => x.Title).NotEmpty().NotNull().MaximumLength(40);
+            RuleFor(x => x.Content).NotEmpty().NotNull();
         }
     }
 }

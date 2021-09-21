@@ -25,7 +25,7 @@ namespace FPTBlog.Src.TagModule.Entity
         [StringLength(20)]
         public string CreateDate { get; set; }
 
-        public ICollection<BlogTag> BlogTags { get; set; }
+        public virtual ICollection<BlogTag> BlogTags { get; set; }
         public Tag()
         {
             this.TagId = Guid.NewGuid().ToString();
