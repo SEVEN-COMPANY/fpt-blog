@@ -56,6 +56,7 @@ namespace FPTBlog.Src.CategoryModule
         //     return View(Routers.UpdateCategory.Page);
         // }
 
+
         [HttpPost("blog/add")]
         public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input)
         {

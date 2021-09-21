@@ -48,7 +48,6 @@ namespace FPTBlog.Src.BlogModule.Entity
         [ForeignKey("tblUser")]
         public string StudentId { get; set; }
 
-        [Required]
         public virtual User Student { get; set; }
 
         [ForeignKey("tblUser")]
@@ -61,7 +60,7 @@ namespace FPTBlog.Src.BlogModule.Entity
 
         public virtual Category Category { get; set; }
 
-        public ICollection<BlogTag> BlogTags { get; set; }
+        public virtual ICollection<BlogTag> BlogTags { get; set; }
 
         public Blog()
         {
@@ -74,7 +73,7 @@ namespace FPTBlog.Src.BlogModule.Entity
             this.Dislike = 0;
             this.Status = BlogStatus.DRAFT;
             this.CreateDate = DateTime.Now.ToShortDateString();
-            this.Student = new User();
+            this.Student = null;
             this.Lecturer = null;
             this.Category = null;
             this.BlogTags = new List<BlogTag>();

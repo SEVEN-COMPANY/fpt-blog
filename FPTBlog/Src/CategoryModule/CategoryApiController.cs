@@ -40,10 +40,10 @@ namespace FPTBlog.Src.CategoryModule
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("create")]
+        [HttpPost("")]
         public ObjectResult HandleCreateCategory([FromBody] CreateCategoryDTO body)
         {
-            var res = new ServerApiResponse<string>();
+            var res = new ServerApiResponse<Category>();
             ValidationResult result = new CreateCategoryDTOValidator().Validate(body);
             if (!result.IsValid)
             {
@@ -66,6 +66,7 @@ namespace FPTBlog.Src.CategoryModule
             category.CreateDate = DateTime.Now.ToShortDateString();
             this.CategoryService.SaveCategory(category);
 
+            res.data = category;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
