@@ -18,6 +18,9 @@
 .fade-in {
     animation: FadeIn 0.3s;
 }
+.fade-in-long {
+    animation: FadeIn 0.7s;
+}
 .fade-in-menu {
     animation: FadeIn 1s forwards;
 }
@@ -96,4 +99,16 @@
 
 .check-box div input:checked ~ label {
     @apply bg-tango-500;
+}
+
+.safari {
+    -webkit-appearance: none;
+}
+.admin-dashboard {
+    -moz-transition: height 0.5s;
+    -ms-transition: height 0.5s;
+    -o-transition: height 0.5s;
+    -webkit-transition: height 0.5s;
+    transition: height 0.5s;
+    height: 40px;
 }

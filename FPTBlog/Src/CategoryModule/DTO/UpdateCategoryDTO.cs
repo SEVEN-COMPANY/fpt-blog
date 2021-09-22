@@ -18,7 +18,7 @@ namespace FPTBlog.Src.CategoryModule.DTO
         {
             RuleFor(x => x.CategoryId).NotEmpty().NotNull().Length(CategoryValidator.CATEGORY_ID_MIN, CategoryValidator.CATEGORY_ID_MAX);
             RuleFor(x => x.Name).NotEmpty().NotNull().Length(CategoryValidator.NAME_MIN, CategoryValidator.NAME_MAX);
-            RuleFor(x => x.Description).NotEmpty().NotNull().Length(CategoryValidator.DECRIPTION_MIN, CategoryValidator.DECRIPTION_MAX);
+            RuleFor(x => x.Description).NotEmpty().NotNull().Length(CategoryValidator.DESCRIPTION_MIN, CategoryValidator.DESCRIPTION_MAX);
             RuleFor(x => x.Status).NotEmpty().NotNull().IsInEnum();
         }
     }

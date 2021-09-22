@@ -19,15 +19,19 @@ namespace FPTBlog.Src.TagModule.Entity
         public string Name { get; set; }
 
         [Required]
+        public TagStatus Status { get; set; }
+
+        [Required]
         [StringLength(20)]
         public string CreateDate { get; set; }
 
-        public ICollection<BlogTag> BlogTags { get; set; }
+        public virtual ICollection<BlogTag> BlogTags { get; set; }
         public Tag()
         {
             this.TagId = Guid.NewGuid().ToString();
             this.Name = "";
             this.CreateDate = DateTime.Now.ToShortDateString();
+            this.Status = TagStatus.ACTIVE;
             this.BlogTags = new List<BlogTag>();
         }
 
@@ -36,5 +40,11 @@ namespace FPTBlog.Src.TagModule.Entity
             return "Tag: \n TagId: " + TagId + " \nName: " + Name
             + " \nCreateDate: " + CreateDate;
         }
+    }
+
+    public enum TagStatus
+    {
+        ACTIVE = 1,
+        INACTIVE = 0
     }
 }

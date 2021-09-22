@@ -8,7 +8,7 @@ namespace FPTBlog.Src.CategoryModule.Entity
     public enum CategoryStatus
     {
         ACTIVE = 1,
-        INACTIVE = 0
+        INACTIVE = 2
     }
 
     [Table("tblCategory")]
@@ -39,7 +39,7 @@ namespace FPTBlog.Src.CategoryModule.Entity
             this.CategoryId = Guid.NewGuid().ToString();
             this.Name = "";
             this.Description = "";
-            this.Status = CategoryStatus.INACTIVE;
+            this.Status = CategoryStatus.ACTIVE;
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
 
