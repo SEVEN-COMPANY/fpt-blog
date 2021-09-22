@@ -19,7 +19,8 @@ namespace FPTBlog.Src.BlogModule
         public bool AddTagToBlog(Blog blog, List<Tag> tags)
         {
             List<BlogTag> blogTags = new List<BlogTag>();
-            foreach(Tag tag in tags){
+            foreach (Tag tag in tags)
+            {
                 BlogTag blogTag = new BlogTag();
                 blogTag.BlogId = blog.BlogId;
                 blogTag.Blog = blog;
@@ -38,10 +39,10 @@ namespace FPTBlog.Src.BlogModule
         }
 
         public List<Tag> GetTagFromBlog(Blog blog)
-        {   
+        {
             List<Tag> tags = (from Tag in this.Db.Tag
-                        where Tag.BlogTags.Any(bt => bt.BlogId == blog.BlogId)
-                        select Tag).ToList();
+                              where Tag.BlogTags.Any(bt => bt.BlogId == blog.BlogId)
+                              select Tag).ToList();
             return tags;
         }
 
@@ -74,6 +75,29 @@ namespace FPTBlog.Src.BlogModule
             obj.Content = blog.Content;
 
             return this.Db.SaveChanges() > 0;
+        }
+
+        public List<Blog> GetBlogsByTag(int currentPage, int pageSize, string name)
+        {
+            List<Blog> blogs = (from BlogTag in this.Db.BlogTag
+                                join Tag in this.Db.Tag
+                                on BlogTag.TagId equals Tag.TagId
+                                join Blog in this.Db.Blog
+                                on BlogTag.BlogId equals Blog.BlogId
+                                where Tag.Name.Equals(name)
+                                select Blog).Take((pageSize + 1) * currentPage).Skip(currentPage * pageSize).ToList();
+            return blogs;
+        }
+        public int GetBlogsByTagCount(string name)
+        {
+            int count = (from BlogTag in this.Db.BlogTag
+                         join Tag in this.Db.Tag
+                         on BlogTag.TagId equals Tag.TagId
+                         join Blog in this.Db.Blog
+                         on BlogTag.BlogId equals Blog.BlogId
+                         where Tag.Name.Equals(name)
+                         select Blog).Count();
+            return count;
         }
     }
 }
