@@ -43,6 +43,7 @@ namespace FPTBlog.Src.CategoryModule
         [HttpPost("")]
         public ObjectResult HandleCreateCategory([FromBody] CreateCategoryDTO body)
         {
+
             var res = new ServerApiResponse<Category>();
             ValidationResult result = new CreateCategoryDTOValidator().Validate(body);
             if (!result.IsValid)

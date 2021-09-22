@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace FPTBlog.Src.CategoryModule
 {
-    [Route("category")]
+    [Route("/admin/category")]
     [ServiceFilter(typeof(AuthGuard))]
     public class CategoryMvcController : Controller
     {
@@ -30,31 +30,32 @@ namespace FPTBlog.Src.CategoryModule
             this.CategoryService = categoryService;
         }
 
-        // [HttpGet("")]
-        // public IActionResult Category()
-        // {
-        //     SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), CategoryStatus.ACTIVE.ToString());
-        //     this.ViewData["status"] = list;
+        [HttpGet("")]
+        public IActionResult Category()
+        {
+            var categories = this.CategoryService.GetCategories();
+            this.ViewData["categories"] = categories;
+            return View(Routers.Category.Page);
+        }
 
-        //     return View(Routers.Category.Page);
-        // }
+        [HttpGet("create")]
+        public IActionResult AddCategoryPage()
+        {
+            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
+            this.ViewData["status"] = list;
 
-        // [HttpGet("create")]
-        // public IActionResult AddCategoryPage()
-        // {
-        //     SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), CategoryStatus.ACTIVE.ToString());
-        //     this.ViewData["status"] = list;
+            return View(Routers.CreateCategory.Page);
+        }
 
-        //     return View(Routers.CreateCategory.Page);
-        // }
-
-        // [HttpGet("update")]
-        // public IActionResult UpdateCategory(string categoryId)
-        // {
-        //     var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
-        //     this.ViewData["category"] = category;
-        //     return View(Routers.UpdateCategory.Page);
-        // }
+        [HttpGet("update")]
+        public IActionResult UpdateCategory(string categoryId)
+        {
+            var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
+            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
+            this.ViewData["status"] = list;
+            this.ViewData["category"] = category;
+            return View(Routers.UpdateCategory.Page);
+        }
 
 
         [HttpPost("blog/add")]

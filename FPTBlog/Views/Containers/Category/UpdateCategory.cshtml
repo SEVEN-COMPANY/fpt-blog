@@ -1,40 +1,34 @@
 @using FPTBlog.Src.CategoryModule.Entity
+@using FPTBlog.Views.Components.Form;
+@using Microsoft.AspNetCore.Html;
 
 @{
-    ViewData["Title"] = Routers.UpdateCategory.Title;
+    ViewData["Title"] = Routers.CreateCategory.Title;
+    var formBuilder = new FormBuilder(this.Context, this.ViewData);
+
     Category category = (Category)ViewData["category"];
-
-    var name = new FormField()
-    {
-        Label = "Category Name",
-        Field = "name",
-        Type = "text",
-        Value = category.Name
-    };
-    var descirption = new FormField()
-    {
-        Label = "Description",
-        Field = "description",
-        Type = "text",
-        Value = category.Description
-    };
-    var status = new FormField() { Label = "Status", Field = "status", Type = "text", Value = category.Status.ToString() };
-
-
-    var createBtn = new FormField() { Label = "Update Category" };
-
-    var actionLink = $"{Routers.UpdateCategory.Link}?categoryId={category.CategoryId}";
 }
 
 
+<div class="flex flex-1 bg-big-stone-500">
+    <div class="w-56 p-2 ">
+        @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
 
-<div class="flex items-center justify-center flex-1 ">
-    <form method="post" action="@actionLink">
-        @await Html.PartialAsync("~/Views/Components/Form/FormMsg.cshtml")
-        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", name)
-        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", descirption)
-        @await Html.PartialAsync("~/Views/Components/Form/TextFiled.cshtml", status)
+    </div>
+    <div class="flex-1 p-2 bg-gray-100">
 
-        <button>Update</button>
-    </form>
+        <div class="max-w-md px-2 py-16 border-2 rounded-sm">
+            @formBuilder.FormWrapper("Update Category", "updateCategoryForm","Create ", new IHtmlContent[] {
+            formBuilder.TextField("name","Name", category.Name),
+            formBuilder.TextField("description","Description",category.Description),
+            formBuilder.RadioButton("status", "Status", ((int)category.Status).ToString()),
+            formBuilder.TextFieldHidden("categoryId", category.CategoryId),
+            })
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+<script src="~/js/adminCommon.js"></script>
+<script src="~/js/updateCategory.js"></script>
+}

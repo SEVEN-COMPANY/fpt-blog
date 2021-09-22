@@ -8,6 +8,9 @@ module.exports = {
         login: './src/login.ts',
         register: './src/register.ts',
         common: './src/common.ts',
+        createCategory: './src/category/create.ts',
+        updateCategory: './src/category/update.ts',
+        adminCommon: './src/adminCommon.ts',
     },
     output: {
         path: __dirname + '/../wwwroot/js',

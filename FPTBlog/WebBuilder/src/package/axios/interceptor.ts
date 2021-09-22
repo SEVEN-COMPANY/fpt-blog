@@ -46,7 +46,7 @@ export function responseSuccessInterceptor(response: AxiosResponse<any>) {
     handleCommonResponse();
 
     if (response?.data?.details?.message) {
-        const message = document.getElementById('message');
+        const message = document.getElementById('MESSAGEERROR');
         if (message) {
             message.innerHTML = response?.data?.details?.message;
         }
