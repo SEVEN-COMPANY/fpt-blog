@@ -2,10 +2,6 @@
 using FluentValidation.Results;
 using FPTBlog.Utils.Locale;
 using FPTBlog.Utils.Validator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FPTBlog.Src.UserModule.DTO
 {
