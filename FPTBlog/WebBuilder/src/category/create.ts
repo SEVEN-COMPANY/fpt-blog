@@ -23,12 +23,13 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
     const name = document.getElementById('name') as HTMLInputElement;
     const description = document.getElementById('description') as HTMLInputElement;
 
-    if (name && description && status) {
+    if (name != null && description != null && status != null) {
         const input: CreateCategoryDto = {
             name: name.value,
             description: description.value,
             status: status,
         };
+
         http.post<ServerResponse<null>>(routers.category.create, input).then(() => {
             name.value = '';
             description.value = '';
