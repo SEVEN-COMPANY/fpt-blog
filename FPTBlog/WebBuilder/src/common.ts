@@ -12,7 +12,7 @@ interface User {
     userId: string;
     username: string;
 }
-console.log('dsad');
+
 const getCurrentUser = () => {
     http.get<ServerResponse<User>>(routers.getUser).then((res) => {
         const name = document.getElementById('user-name');

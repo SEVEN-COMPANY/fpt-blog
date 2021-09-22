@@ -5,14 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FPTBlog</title>
-    <link href="~/style/styles.css" rel="stylesheet" />
     @await RenderSectionAsync("Styles", required: false)
+    <link href="~/style/styles.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="flex flex-col min-h-screen">
         @* @await Html.PartialAsync("~/Views/Components/Navbar.cshtml") *@
-        <main class="z-10 flex flex-1">
+        <main class="z-10 main">
             @RenderBody()
         </main>
     </div>

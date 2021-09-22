@@ -11,6 +11,8 @@ module.exports = {
         createCategory: './src/category/create.ts',
         updateCategory: './src/category/update.ts',
         adminCommon: './src/adminCommon.ts',
+        changePassword: './src/user/changePassword.ts',
+        updateUser: './src/user/updateUser.ts',
     },
     output: {
         path: __dirname + '/../wwwroot/js',

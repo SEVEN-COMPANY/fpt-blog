@@ -54,7 +54,7 @@ namespace FPTBlog.Src.UserModule
 
             var user = this.UserService.GetUserByUserId(currentUser.UserId);
             user.Name = input.Name;
-            user.Email = input.Name;
+            user.Email = input.Email;
             user.Phone = input.Phone;
             user.Address = input.Address;
             this.UserService.UpdateUser(user);
@@ -66,6 +66,7 @@ namespace FPTBlog.Src.UserModule
         [HttpPost("change-password")]
         public IActionResult ChangePasswordHandler([FromBody] ChangePassDto body)
         {
+
 
             var res = new ServerApiResponse<string>();
             User user = (User)this.ViewData["user"];

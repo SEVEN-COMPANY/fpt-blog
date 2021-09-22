@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="~/ui/admin/app.css">
 
 }
+@await Html.PartialAsync("~/Views/Components/NavDashboardMobile.cshtml")
 <div class="flex flex-1 overflow-hidden bg-big-stone-500">
     @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
     <div class="content ">
@@ -20,7 +21,7 @@
             </h2>
         </div>
         <div class="grid grid-cols-12 gap-4 mt-5">
-            <div class="col-span-4">
+            <div class="col-span-12 md:col-span-4">
 
                 <div class="intro-y box">
                     <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
@@ -70,7 +71,7 @@
 
             </div>
 
-            <div class="col-span-8 intro-y box">
+            <div class="col-span-12 md:col-span-8 intro-y box">
                 <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row">
                     <h2 class="mr-auto text-base font-medium">
                         Category
