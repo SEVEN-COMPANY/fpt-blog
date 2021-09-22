@@ -56,12 +56,13 @@ export function responseSuccessInterceptor(response: AxiosResponse<any>) {
 
 export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>>) {
     handleCommonResponse();
+
     if (error.response?.data?.details) {
         const details = error.response.data.details;
-
         for (const key in details) {
             const label = document.getElementById(`${key.toUpperCase()}LABEL`);
             const error = document.getElementById(`${key.toUpperCase()}ERROR`);
+
             if (label && error) {
                 error.innerHTML = `${label.innerHTML} ${details[key]}`;
             } else if (error && (key === 'errorMessage' || key === 'message')) {

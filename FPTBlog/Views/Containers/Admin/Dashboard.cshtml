@@ -1,19 +1,20 @@
-<div class="flex flex-1 bg-big-stone-500">
-    <div class="w-56 p-2 ">
-        @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
+@section Styles {
 
+
+<link rel="stylesheet" href="~/ui/admin/app.css">
+
+}
+<div class="flex flex-1 overflow-hidden bg-big-stone-500">
+    @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
+    <div class="flex-1 content content--dashboard ">
     </div>
-    <div class="flex-1 p-2 bg-gray-100">
 
-
-        <div>
-
-        </div>
-    </div>
+</div>
 </div>
 
 @section Scripts {
 
 <script src="~/js/adminCommon.js"></script>
+<script src="~/ui/admin/app.js"></script>
 
 }
