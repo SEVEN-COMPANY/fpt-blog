@@ -16,7 +16,6 @@ namespace FPTBlog.Views.Components.Form
         Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData;
         public FormBuilder(HttpContext context, Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary viewData) : base(context, viewData)
         {
-
             this.Context = context;
             this.viewData = viewData;
         }
@@ -39,7 +38,18 @@ namespace FPTBlog.Views.Components.Form
 
             return new HtmlString(wrapperComponent.ToString(TagRenderMode.Normal));
         }
+        public IHtmlContent TextFieldHidden(string name, string value = "")
+        {
 
+            TagBuilder input = new TagBuilder("input");
+            input.AddCssClass("w-0 h-0 hidden invisible m-0 p-0");
+            input.MergeAttribute("name", name);
+            input.MergeAttribute("id", name);
+            input.MergeAttribute("readonly", "readonly");
+            input.MergeAttribute("type", "text");
+            input.MergeAttribute("value", value);
+            return new HtmlString(input.ToString(TagRenderMode.SelfClosing));
+        }
         public IHtmlContent FieldMessage(string field)
         {
             TagBuilder wrapperComponent = new TagBuilder("div");
@@ -61,13 +71,13 @@ namespace FPTBlog.Views.Components.Form
 
             TagBuilder messageComponent = new TagBuilder("p");
             var message = (string)this.viewData["message"] ?? "";
-            messageComponent.AddCssClass("text-green-500 first-letter");
+            messageComponent.AddCssClass("text-green-500 first-letter fade-in");
             messageComponent.MergeAttribute("id", "MESSAGEERROR");
             messageComponent.SetInnerText(message);
 
             TagBuilder errorComponent = new TagBuilder("p");
             var errorMessage = (string)this.viewData["errorMessage"] ?? "";
-            errorComponent.AddCssClass("text-red-500 first-letter");
+            errorComponent.AddCssClass("text-red-500 first-letter fade-in");
             errorComponent.MergeAttribute("id", "ERRORMESSAGEERROR");
             errorComponent.SetInnerText(errorMessage);
 
@@ -118,7 +128,7 @@ namespace FPTBlog.Views.Components.Form
         }
 
 
-        public IHtmlContent RadioButton(string name, string label)
+        public IHtmlContent RadioButton(string name, string label, string defaultValue = "")
         {
             TagBuilder wrapperComponent = new TagBuilder("div");
             wrapperComponent.AddCssClass("flex items-center space-x-2 check-box");
@@ -144,7 +154,15 @@ namespace FPTBlog.Views.Components.Form
                 inputComponent.MergeAttribute("id", item.Text);
                 inputComponent.MergeAttribute("value", item.Value);
 
+                if (defaultValue != "")
+                {
 
+                    if (defaultValue == item.Value)
+                    {
+                        inputComponent.MergeAttribute("checked", "checked");
+                    }
+                }
+                else
                 if ((string)value.SelectedValue == item.Value)
                 {
                     inputComponent.MergeAttribute("checked", "checked");
@@ -160,9 +178,9 @@ namespace FPTBlog.Views.Components.Form
         }
 
 
-        public IHtmlContent TextField(string name, string label)
+        public IHtmlContent TextField(string name, string label, string defaultValue = "")
         {
-            var input = this.TextFieldCore(name, "text");
+            var input = this.TextFieldCore(name, "text", defaultValue);
             var component = this.FieldWrapper(name, label, input);
             return new HtmlString(component);
         }
@@ -223,8 +241,7 @@ namespace FPTBlog.Views.Components.Form
         public IHtmlContent FormWrapper(string title, string formId, string submitButtonLabel, IHtmlContent[] fields)
         {
             TagBuilder formWrapper = new TagBuilder("form");
-            formWrapper.AddCssClass("space-y-6");
-            formWrapper.MergeAttribute("method", "POST");
+            formWrapper.AddCssClass("space-y-6 fade-in");
             formWrapper.MergeAttribute("id", formId);
 
             TagBuilder formTitle = new TagBuilder("h1");

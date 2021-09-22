@@ -28,7 +28,7 @@ namespace FPTBlog.Src.TagModule
 
         public Tag GetTagByTagId(string tagId)
         {
-            var tag = this.Db.Tag.FirstOrDefault(item => item.TagId == tagId);
+            var tag = this.Db.Tag.Find(tagId);
             return tag;
         }
 

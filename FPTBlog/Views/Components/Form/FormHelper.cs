@@ -17,16 +17,26 @@ namespace FPTBlog.Views.Components.Form
         }
 
 
-        protected string TextFieldCore(string name, string type)
+        protected string TextFieldCore(string name, string type, string defaultValue = "")
         {
             var value = "";
-            try
+
+            if (defaultValue != "")
             {
-                value = (string)this.Context.Request.Form[name];
+                value = defaultValue;
             }
-            catch (System.Exception)
+            else
             {
 
+
+                try
+                {
+                    value = (string)this.Context.Request.Form[name];
+                }
+                catch (System.Exception)
+                {
+
+                }
             }
 
 
@@ -38,6 +48,7 @@ namespace FPTBlog.Views.Components.Form
             input.MergeAttribute("value", value);
             return input.ToString(TagRenderMode.SelfClosing);
         }
+
 
         protected string FieldWrapper(string name, string label, string componentInside)
         {

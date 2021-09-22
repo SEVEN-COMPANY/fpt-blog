@@ -16,7 +16,7 @@ namespace FPTBlog.Src.CategoryModule.DTO
         public CreateCategoryDTOValidator()
         {
             RuleFor(x => x.Name).NotEmpty().NotNull().Length(CategoryValidator.NAME_MIN, CategoryValidator.NAME_MAX);
-            RuleFor(x => x.Description).NotEmpty().NotNull().Length(CategoryValidator.DECRIPTION_MIN, CategoryValidator.DECRIPTION_MAX);
+            RuleFor(x => x.Description).NotEmpty().NotNull().Length(CategoryValidator.DESCRIPTION_MIN, CategoryValidator.DESCRIPTION_MAX);
             RuleFor(x => x.Status).NotEmpty().NotNull().IsInEnum();
         }
     }

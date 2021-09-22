@@ -36,6 +36,5 @@ namespace FPTBlog.Src.BlogModule
 
             return View(Routers.EditorPage.Page);
         }
-
     }
 }

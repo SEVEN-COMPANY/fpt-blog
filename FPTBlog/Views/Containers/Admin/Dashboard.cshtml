@@ -1,0 +1,20 @@
+@section Styles {
+
+
+<link rel="stylesheet" href="~/ui/admin/app.css">
+
+}
+<div class="flex flex-1 overflow-hidden bg-big-stone-500">
+    @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
+    <div class="flex-1 content content--dashboard ">
+    </div>
+
+</div>
+</div>
+
+@section Scripts {
+
+<script src="~/js/adminCommon.js"></script>
+<script src="~/ui/admin/app.js"></script>
+
+}
