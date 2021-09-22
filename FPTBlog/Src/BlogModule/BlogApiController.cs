@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.BlogModule.DTO;
@@ -61,6 +62,8 @@ namespace FPTBlog.Src.BlogModule
         [HttpPost("")]
         public IActionResult SaveBlogHandler(){
             Blog blog = new Blog();
+            blog.Student = (User)this.ViewData["user"];
+            blog.StudentId = ((User)this.ViewData["user"]).UserId;
             this.BlogService.SaveBlog(blog);
             var res = new ServerApiResponse<Blog>();
             res.data = blog;
@@ -96,6 +99,92 @@ namespace FPTBlog.Src.BlogModule
             
             res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("category")]
+        public IActionResult AddCategoryToBlog([FromBody] UpdateCategoryOfBlogDto input){
+            var res = new ServerApiResponse<Blog>();
+            ValidationResult result = new UpdateCategoryOfBlogDtoValidator().Validate(input);
+            if (!result.IsValid)
+            {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if (blog == null)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
+            if (category == null)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "categoryId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            blog.CategoryId = category.CategoryId;
+            blog.Category = category;
+
+            this.BlogService.UpdateBlog(blog);
+
+            res.data = blog;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("tag")]
+        public IActionResult AddTagToBlog([FromBody]UpdateTagsOfBlogDto input){
+            var res = new ServerApiResponse<Blog>();
+            ValidationResult result = new UpdateTagsOfBlogDtoValidator().Validate(input);
+            if (!result.IsValid)
+            {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if (blog == null)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            List<Tag> currentTags = this.BlogService.GetTagFromBlog(blog);
+            List<Tag> newTags = new List<Tag>();
+            foreach(string tagId in input.Tags){
+                Tag tag = this.TagService.GetTagByTagId(tagId);
+                newTags.Add(tag);
+            }
+            
+            // Thêm những tag mà người dùng vừa thêm mới
+            List<Tag> addTags = new List<Tag>();
+            foreach(Tag newTag in newTags){
+                if(!currentTags.Contains(newTag)){
+                    addTags.Add(newTag);
+                }
+            }
+            if(addTags.Count > 0){
+                this.BlogService.AddTagToBlog(blog, addTags);
+            }
+
+            // Xóa những tag mà người dùng đã remove ra khỏi blog
+            List<Tag> removeTags = new List<Tag>();
+            foreach(Tag curTag in currentTags){
+                if(!newTags.Contains(curTag)){
+                    removeTags.Add(curTag);
+                }
+            }
+            if(removeTags.Count > 0){
+                this.BlogService.RemoveTagFromBlog(removeTags);
+            }
+
+            
+            res.data = blog;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
     }

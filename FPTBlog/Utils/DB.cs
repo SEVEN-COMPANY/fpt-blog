@@ -20,6 +20,7 @@ namespace FPTBlog.Utils
         public DbSet<Tag> Tag { set; get; }
         public DbSet<Category> Category { set; get; }
         public DbSet<Blog> Blog { set; get; }
+        public DbSet<BlogTag> BlogTag {get;set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
