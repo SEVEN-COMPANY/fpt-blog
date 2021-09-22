@@ -12,5 +12,8 @@ namespace FPTBlog.Src.BlogModule.Interface
         public List<Tag> GetTagFromBlog(Blog blog);
         public bool RemoveTagFromBlog(List<Tag> tags);
         public bool AddTagToBlog(Blog blog, List<Tag> tags);
+        public List<Blog> GetBlogsByTag(int currentPage, int pageSize, string name);
+        public int GetBlogsByTagCount(string name);
+        public int CalculateBlogPoint(Blog blog);
     }
 }

@@ -7,7 +7,7 @@ using FPTBlog.Utils.Locale;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FluentValidation.Results;
-
+using System;
 
 namespace FPTBlog.Src.UserModule
 {
@@ -20,9 +20,10 @@ namespace FPTBlog.Src.UserModule
         private readonly IAuthService AuthService;
 
         private readonly IUserService UserService;
-        public UserApiController(IUserService UserService)
+        public UserApiController(IUserService userService, IAuthService authService)
         {
-            this.UserService = UserService;
+            this.UserService = userService;
+            this.AuthService = authService;
         }
 
         [HttpGet("")]
@@ -53,7 +54,7 @@ namespace FPTBlog.Src.UserModule
 
             var user = this.UserService.GetUserByUserId(currentUser.UserId);
             user.Name = input.Name;
-            user.Email = input.Name;
+            user.Email = input.Email;
             user.Phone = input.Phone;
             user.Address = input.Address;
             this.UserService.UpdateUser(user);
@@ -62,6 +63,34 @@ namespace FPTBlog.Src.UserModule
             return new ObjectResult(res.getResponse());
         }
 
+        [HttpPost("change-password")]
+        public IActionResult ChangePasswordHandler([FromBody] ChangePassDto body)
+        {
+
+
+            var res = new ServerApiResponse<string>();
+            User user = (User)this.ViewData["user"];
+
+            ValidationResult result = new ChangePassDtoValidator().Validate(body);
+            if (!result.IsValid)
+            {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+
+            var isCorrectPassword = this.AuthService.ComparePassword(body.OldPassword, user.Password);
+            if (!isCorrectPassword)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            user.Password = this.AuthService.HashingPassword(body.NewPassword);
+            this.UserService.ChangePasswordHandler(user);
+
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
 
     }
 
