@@ -1,3 +1,4 @@
+using System;
 using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.UserModule.Interface;
@@ -25,6 +26,7 @@ namespace FPTBlog.Src.UserModule
         [HttpGet("")]
         public IActionResult GetUser()
         {
+
             return View(Routers.User.Page);
         }
 

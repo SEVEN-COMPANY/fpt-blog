@@ -1,0 +1,67 @@
+<div class="mobile-menu md:hidden">
+    <div class="mobile-menu-bar">
+        <a href="/" class="flex mr-auto">
+            <h1 class="text-3xl font-semibold text-tango-500">FPT Blog</h1>
+        </a>
+        <a href="javascript:;" id="mobile-menu-toggler"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-8 h-8 text-gray-600 transform -rotate-90 feather feather-bar-chart-2 dark:text-white">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg> </a>
+    </div>
+    <ul class="hidden py-5 mobile-menu-box" style="display: block;">
+
+
+        <li>
+            <a href="@Routers.Category.Link" class="menu">
+                <div class="side-menu__icon"> <i data-feather="inbox"></i> </div>
+                <div class="menu__title"> Category </div>
+            </a>
+        </li>
+
+        <li class="my-6 menu__devider"></li>
+
+
+
+        <li>
+            <div class="menu">
+                <div class="side-menu__icon"> <i data-feather="users"></i> </div>
+                <div class="menu__title"> User
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-chevron-down menu__sub-icon ">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <ul class="">
+
+                <li>
+                    <a href="@Routers.User.Link" class="menu">
+                        <div class="side-menu__icon"> <i data-feather="user"></i> </div>
+                        <div class="menu__title"> Profile </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Routers.UpdateUser.Link" class="menu">
+                        <div class="side-menu__icon"> <i data-feather="edit"></i> </div>
+                        <div class="menu__title">Update Account</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Routers.ChangePass.Link" class="menu">
+                        <div class="side-menu__icon"> <i data-feather="lock"></i> </div>
+                        <div class="menu__title">Change Password</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+    </ul>
+</div>

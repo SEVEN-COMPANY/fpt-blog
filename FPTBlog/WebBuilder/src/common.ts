@@ -15,19 +15,21 @@ interface User {
 
 const getCurrentUser = () => {
     http.get<ServerResponse<User>>(routers.getUser).then((res) => {
-        const user = document.getElementById('user');
-        const auth = document.getElementById('auth');
+        const name = document.getElementById('user-name');
+
+        const username = document.getElementById('user-username');
         const userAvatar = document.getElementById('user-avatar') as HTMLImageElement;
-        if (user && userAvatar) {
-            user.classList.remove('hidden');
-            user.classList.add('flex');
+
+        if (name !== null && userAvatar !== null && username !== null) {
+            name.innerHTML = res.data.data.name;
+            username.innerHTML = res.data.data.username;
             userAvatar.src = res.data.data.avatarUrl;
         }
 
-        if (auth) {
-            auth.classList.add('hidden');
-            auth.classList.remove('md:flex');
-        }
+        // if (createDate) {
+        //     createDate.classList.add('hidden');
+        //     createDate.classList.remove('md:flex');
+        // }
     });
 };
 
