@@ -43,6 +43,7 @@ namespace FPTBlog.Src.BlogModule
             return this.BlogRepository.UpdateBlog(blog);
         }
 
+
         public List<Blog> GetBlogsByTag(int currentPage, int pageSize, string name)
         {
             return this.BlogRepository.GetBlogsByTag(currentPage, pageSize, name);
@@ -51,6 +52,11 @@ namespace FPTBlog.Src.BlogModule
         public int GetBlogsByTagCount(string name)
         {
             return this.BlogRepository.GetBlogsByTagCount(name);
+
+        public int CalculateBlogPoint(Blog blog)
+        {
+            int result = blog.Like - blog.Dislike + (blog.View / 10);
+            return result;
         }
     }
 }
