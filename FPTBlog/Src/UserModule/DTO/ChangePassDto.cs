@@ -7,7 +7,6 @@ namespace FPTBlog.Src.UserModule.DTO
 {
     public class ChangePassDto
     {
-        public string Username { get; set; }
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }
         public string ConfirmNewPassword { get; set; }
@@ -17,7 +16,6 @@ namespace FPTBlog.Src.UserModule.DTO
     {
         public ChangePassDtoValidator()
         {
-            RuleFor(x => x.Username).NotEmpty().NotNull().Length(UserValidator.USERNAME_MIN, UserValidator.USERNAME_MAX);
             RuleFor(x => x.OldPassword).NotEmpty().NotNull().Length(UserValidator.PASSWORD_MIN, UserValidator.PASSWORD_MAX);
             RuleFor(x => x.NewPassword).NotEmpty().NotNull().Length(UserValidator.PASSWORD_MIN, UserValidator.PASSWORD_MAX)
             .Custom((value, context) =>
@@ -34,16 +32,20 @@ namespace FPTBlog.Src.UserModule.DTO
 
                 foreach (char c in value)
                 {
-                    if (char.IsUpper(c)) { 
+                    if (char.IsUpper(c))
+                    {
                         hasUpperCaseLetter = true;
                     }
-                    if (char.IsLower(c)) { 
+                    if (char.IsLower(c))
+                    {
                         hasLowerCaseLetter = true;
                     }
-                    if (char.IsDigit(c)) { 
+                    if (char.IsDigit(c))
+                    {
                         hasDecimalDigit = true;
                     }
-                    if (char.IsWhiteSpace(c)) { 
+                    if (char.IsWhiteSpace(c))
+                    {
                         hasWhiteSpace = true;
                     }
                 }

@@ -37,11 +37,11 @@ namespace FPTBlog.Src.UserModule
 
 
         [HttpGet("change-password")]
-        public IActionResult ChangePass()
+        public IActionResult ChangePassPage()
         {
             return View(Routers.ChangePass.Page);
         }
 
-        
+
     }
 }
