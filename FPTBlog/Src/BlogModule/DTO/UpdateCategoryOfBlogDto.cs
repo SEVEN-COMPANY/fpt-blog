@@ -2,15 +2,15 @@ using FluentValidation;
 
 namespace FPTBlog.Src.BlogModule.DTO
 {
-    public class AddCategoryToBlogDto
+    public class UpdateCategoryOfBlogDto
     {
         public string BlogId { get; set; }
         public string CategoryId { get; set; }
     }
 
-    public class AddCategoryToBlogDtoValidator : AbstractValidator<AddCategoryToBlogDto>
+    public class UpdateCategoryOfBlogDtoValidator : AbstractValidator<UpdateCategoryOfBlogDto>
     {
-        public AddCategoryToBlogDtoValidator()
+        public UpdateCategoryOfBlogDtoValidator()
         {
             RuleFor(x => x.BlogId).NotEmpty().NotNull();
             RuleFor(x => x.CategoryId).NotEmpty().NotNull();

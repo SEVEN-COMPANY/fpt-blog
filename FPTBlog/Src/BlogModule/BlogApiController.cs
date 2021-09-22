@@ -103,9 +103,9 @@ namespace FPTBlog.Src.BlogModule
         }
 
         [HttpPost("category")]
-        public IActionResult AddCategoryToBlog([FromBody] AddCategoryToBlogDto input){
+        public IActionResult AddCategoryToBlog([FromBody] UpdateCategoryOfBlogDto input){
             var res = new ServerApiResponse<Blog>();
-            ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
+            ValidationResult result = new UpdateCategoryOfBlogDtoValidator().Validate(input);
             if (!result.IsValid)
             {
                 res.mapDetails(result);
@@ -137,9 +137,9 @@ namespace FPTBlog.Src.BlogModule
         }
 
         [HttpPost("tag")]
-        public IActionResult AddTagToBlog([FromBody]AddTagToBlogDto input){
+        public IActionResult AddTagToBlog([FromBody]UpdateTagsOfBlogDto input){
             var res = new ServerApiResponse<Blog>();
-            ValidationResult result = new AddTagToBlogDtoValidator().Validate(input);
+            ValidationResult result = new UpdateTagsOfBlogDtoValidator().Validate(input);
             if (!result.IsValid)
             {
                 res.mapDetails(result);
@@ -170,7 +170,7 @@ namespace FPTBlog.Src.BlogModule
             if(addTags.Count > 0){
                 this.BlogService.AddTagToBlog(blog, addTags);
             }
-            
+
             // Xóa những tag mà người dùng đã remove ra khỏi blog
             List<Tag> removeTags = new List<Tag>();
             foreach(Tag curTag in currentTags){

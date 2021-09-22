@@ -3,15 +3,15 @@ using FluentValidation;
 
 namespace FPTBlog.Src.BlogModule.DTO
 {
-    public class AddTagToBlogDto
+    public class UpdateTagsOfBlogDto
     {
         public string BlogId { get; set; }
         public List<string> Tags{get;set;}
     }
 
-    public class AddTagToBlogDtoValidator : AbstractValidator<AddTagToBlogDto>
+    public class UpdateTagsOfBlogDtoValidator : AbstractValidator<UpdateTagsOfBlogDto>
     {
-        public AddTagToBlogDtoValidator()
+        public UpdateTagsOfBlogDtoValidator()
         {
             RuleFor(x => x.BlogId).NotEmpty().NotNull();
             RuleFor(x => x.Tags).NotEmpty().NotNull();
