@@ -13,6 +13,7 @@ let status = 1;
 const createCategoryForm = document.getElementById('createCategoryForm');
 const statusList = document.querySelectorAll('input[name="status"]');
 statusList.forEach((radio) => {
+    console.log('hello');
     radio.addEventListener('click', function () {
         status = Number((radio as HTMLInputElement).value);
     });
@@ -22,7 +23,7 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
     event.preventDefault();
     const name = document.getElementById('name') as HTMLInputElement;
     const description = document.getElementById('description') as HTMLInputElement;
-
+    console.log(status);
     if (name != null && description != null && status != null) {
         const input: CreateCategoryDto = {
             name: name.value,
