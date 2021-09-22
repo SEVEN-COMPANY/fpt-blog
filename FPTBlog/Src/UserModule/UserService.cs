@@ -43,9 +43,9 @@ namespace FPTBlog.Src.UserModule
             return this.UserRepository.UpdateUser(user);
         }
 
-        public bool ChangePasswordHandler(User user)
+        public void ChangePasswordHandler(User user)
         {
-            return this.UserRepository.ChangePasswordHandler(user);
+            this.UserRepository.ChangePasswordHandler(user);
         }
     }
 }

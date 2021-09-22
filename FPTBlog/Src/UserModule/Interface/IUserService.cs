@@ -11,7 +11,7 @@ namespace FPTBlog.Src.UserModule.Interface
         public bool UpdateUser(User user);
         public User GetUserByUserId(string id);
         public User GetUserByGoogleId(string googleId);
-        public bool ChangePasswordHandler(User user);
+        public void ChangePasswordHandler(User user);
 
     }
 }
