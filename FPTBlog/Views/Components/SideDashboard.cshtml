@@ -1,0 +1,49 @@
+@using FPTBlog.Views.Components.Dashboard
+@{
+    DashboardBuilder dashboardBuilder = new DashboardBuilder();
+
+
+
+
+
+    List<SelectListItem> postList = new List<SelectListItem>()
+{
+new SelectListItem()
+{
+Text = "Check",
+Value = Routers.AdminDashboard.Link
+}
+};
+    List<SelectListItem> categoryList = new List<SelectListItem>()
+{
+new SelectListItem()
+{
+Text = "List All",
+Value = Routers.Category.Link
+},
+new SelectListItem()
+{
+Text = "Create Category",
+Value = Routers.CreateCategory.Link
+}
+};
+
+
+}
+
+
+<div class="space-y-4">
+    <div class="px-4 py-1">
+        <h1 class="text-3xl font-semibold text-tango-500">FPT Blog</h1>
+    </div>
+    <div class="w-full h-0.5 opacity-40 bg-gray-600">
+
+    </div>
+    <div class="space-y-2">
+        @dashboardBuilder.SideMenuGroup("Posts","/icons/post-icon.svg",1, postList)
+        @dashboardBuilder.SideMenuGroup("Categories","/icons/category-icon.svg",2, categoryList)
+        @dashboardBuilder.SideMenuGroup("Posts","/icons/post-icon.svg",3, postList)
+        @dashboardBuilder.SideMenuGroup("Posts","/icons/post-icon.svg",4, postList)
+    </div>
+
+</div>

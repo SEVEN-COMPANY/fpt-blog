@@ -1,12 +1,65 @@
-@{
+@using FPTBlog.Views.Components.Form;
+@using FPTBlog.Views.Components.Table;
+@using Microsoft.AspNetCore.Html;
+@using FPTBlog.Src.CategoryModule.Entity;
 
-    var formBuilder = new FormBuilder(this.Context, this.ViewData);
+
+@{
+    ViewData["Title"] = Routers.Category.Title;
+    var categories = ViewData["categories"] as List<Category>;
+
+
+    var tableBuilder = new TableBuilder();
+
+    var rows = new List<IHtmlContent>();
+
+    foreach (var item in categories)
+    {
+        var badgeStatus = item.Status == CategoryStatus.ACTIVE ? "green" : "red";
+        var bagdeContent = item.Status == CategoryStatus.ACTIVE ? "Active" : "Inactive";
+
+        var row = tableBuilder.Row(new IHtmlContent[] {
+tableBuilder.BodyCol(item.CategoryId),
+tableBuilder.BodyCol(item.Name),
+tableBuilder.BodyCol(item.Description),
+tableBuilder.BodyColBadge(bagdeContent,badgeStatus),
+tableBuilder.BodyCol(item.CreateDate),
+tableBuilder.BodyColLink("Edit", $"{Routers.UpdateCategory.Link}?categoryId={item.CategoryId}","indigo"),
+});
+        rows.Add(row);
+    }
+
 }
 
-<div class="">
 
-    <a href="/category/create">create</a>
-    <a href="/category/update?categoryId=d96be284-329c-4005-a001-8b0fc653e714">update</a>
-    <a href="/category/delete?categoryID=d96be284-329c-4005-a001-8b0fc653e714">delete</a>
-    <br>
+<div class="flex flex-1 bg-big-stone-500">
+    <div class="w-56 p-2 ">
+        @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
+
+    </div>
+    <div class="flex-1 px-2 py-8 space-y-2 bg-gray-100 border-2 rounded-sm">
+        <h1 class="text-4xl font-semibold">Category List</h1>
+        <div class="fade-in">
+            @tableBuilder.Table(new IHtmlContent[] {
+            tableBuilder.TableHead(new IHtmlContent[] {
+            tableBuilder.Row(new IHtmlContent[] {
+            tableBuilder.HeaderCol("CategoryID"),
+            tableBuilder.HeaderCol("Name"),
+            tableBuilder.HeaderCol("Description"),
+            tableBuilder.HeaderCol("Status"),
+            tableBuilder.HeaderCol("Create Date"),
+            tableBuilder.HeaderCol(""),
+            })
+            }),
+            tableBuilder.TableBody(rows)
+            })
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+
+<script src="~/js/adminCommon.js"></script>
+<script src="~/js/createCategory.js"></script>
+
+}
