@@ -77,5 +77,22 @@ namespace FPTBlog.Src.AuthModule
         {
             return View(Routers.Register.Page);
         }
+
+        [HttpGet("logout")]
+        [ServiceFilter(typeof(AuthGuard))]
+        public IActionResult LogoutHandler()
+        {
+
+            var res = new ServerApiResponse<string>();
+            this.HttpContext.Response.Cookies.Append("auth-token", "", new CookieOptions()
+            {
+                Expires = DateTime.Now.AddDays(-1),
+                SameSite = SameSiteMode.None,
+                Secure = true
+
+            });
+
+            return Redirect(Routers.Login.Link);
+        }
     }
 }

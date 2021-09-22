@@ -52,6 +52,7 @@ namespace FPTBlog.Src.BlogModule
         public int GetBlogsByTagCount(string name)
         {
             return this.BlogRepository.GetBlogsByTagCount(name);
+        }
 
         public int CalculateBlogPoint(Blog blog)
         {
