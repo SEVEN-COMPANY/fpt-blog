@@ -42,5 +42,11 @@ namespace FPTBlog.Src.BlogModule
         {
             return this.BlogRepository.UpdateBlog(blog);
         }
+
+        public int CalculateBlogPoint(Blog blog)
+        {
+            int result = blog.Like - blog.Dislike + (blog.View / 10);
+            return result;
+        }
     }
 }
