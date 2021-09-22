@@ -1,4 +1,5 @@
-﻿using FPTBlog.Src.AuthModule.Interface;
+﻿using System;
+using FPTBlog.Src.AuthModule.Interface;
 
 
 namespace FPTBlog.Src.AuthModule
@@ -12,6 +13,8 @@ namespace FPTBlog.Src.AuthModule
 
         public bool ComparePassword(string inputPassword, string encryptedPassword)
         {
+            Console.WriteLine(inputPassword);
+            Console.WriteLine(encryptedPassword);
             return BCrypt.Net.BCrypt.Verify(inputPassword, encryptedPassword);
         }
     }
