@@ -128,6 +128,8 @@ namespace FPTBlog.Src.BlogModule
             blog.CategoryId = category.CategoryId;
             blog.Category = category;
 
+            this.BlogService.UpdateBlog(blog);
+
             res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
