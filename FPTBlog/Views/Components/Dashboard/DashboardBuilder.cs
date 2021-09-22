@@ -33,7 +33,7 @@ namespace FPTBlog.Views.Components.Dashboard
             btnArrowMenu.AddCssClass("duration-300 transform");
 
             TagBuilder btnArrowImage = new TagBuilder("img");
-            btnArrowImage.MergeAttribute("src", "/icons/arrow-icon.svg");
+            btnArrowImage.MergeAttribute("src", "/svg/arrow-icon.svg");
             btnArrowImage.MergeAttribute("alt", "arrow");
 
             btnArrowMenu.InnerHtml = btnArrowImage.ToString(TagRenderMode.SelfClosing);
