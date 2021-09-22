@@ -29,7 +29,7 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
     const description = document.getElementById('description') as HTMLInputElement;
     const categoryId = document.getElementById('categoryId') as HTMLInputElement;
 
-    if (name && description && status) {
+    if (name != null && description != null && status != null) {
         const input: UpdateCategoryDto = {
             name: name.value,
             description: description.value,

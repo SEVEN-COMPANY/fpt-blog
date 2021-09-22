@@ -117,13 +117,7 @@ namespace FPTBlog.Views.Components.Table
 
             return new HtmlString(table.ToString(TagRenderMode.Normal));
         }
-        public IHtmlContent TableStatus(IHtmlContent[] cols)
-        {
 
-
-
-            return new HtmlString("gello");
-        }
 
     }
 }

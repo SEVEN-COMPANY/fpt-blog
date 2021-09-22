@@ -1,49 +1,107 @@
-@using FPTBlog.Views.Components.Dashboard
-@{
-    DashboardBuilder dashboardBuilder = new DashboardBuilder();
-
-
-
-
-
-    List<SelectListItem> postList = new List<SelectListItem>()
-{
-new SelectListItem()
-{
-Text = "Check",
-Value = Routers.AdminDashboard.Link
-}
-};
-    List<SelectListItem> categoryList = new List<SelectListItem>()
-{
-new SelectListItem()
-{
-Text = "List All",
-Value = Routers.Category.Link
-},
-new SelectListItem()
-{
-Text = "Create Category",
-Value = Routers.CreateCategory.Link
-}
-};
-
-
-}
-
-
-<div class="space-y-4">
-    <div class="px-4 py-1">
+<nav class="side-nav">
+    <a href="" class="flex items-center mt-3 intro-x">
         <h1 class="text-3xl font-semibold text-tango-500">FPT Blog</h1>
-    </div>
-    <div class="w-full h-0.5 opacity-40 bg-gray-600">
 
-    </div>
-    <div class="space-y-2">
-        @dashboardBuilder.SideMenuGroup("Posts","/icons/post-icon.svg",1, postList)
-        @dashboardBuilder.SideMenuGroup("Categories","/icons/category-icon.svg",2, categoryList)
-        @dashboardBuilder.SideMenuGroup("Posts","/icons/post-icon.svg",3, postList)
-        @dashboardBuilder.SideMenuGroup("Posts","/icons/post-icon.svg",4, postList)
-    </div>
+    </a>
+    <div class="my-6 side-nav__devider"></div>
+    <ul>
+        <li>
+            <a href="javascript:;.html" class="side-menu ">
+                <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+                <div class="side-menu__title">
+                    Dashboard
+                    <div class="transform rotate-180 side-menu__sub-icon"> <i data-feather="chevron-down"></i>
+                    </div>
+                </div>
+            </a>
+            <ul class="side-menu__sub-open">
+                <li>
+                    <a href="index.html" class="side-menu side-menu--active">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Overview 1 </div>
+                    </a>
+                </li>
 
-</div>
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="side-menu-light-post.html" class="side-menu">
+                <div class="side-menu__icon"> <i data-feather="file-text"></i> </div>
+                <div class="side-menu__title"> Post </div>
+            </a>
+        </li>
+        <li>
+            <a href="@Routers.Category.Link" class="side-menu">
+                <div class="side-menu__icon"> <i data-feather="inbox"></i> </div>
+                <div class="side-menu__title"> Category </div>
+            </a>
+        </li>
+        <li class="my-6 side-nav__devider"></li>
+
+        <li>
+            <a href="javascript:;" class="side-menu">
+                <div class="side-menu__icon"> <i data-feather="users"></i> </div>
+                <div class="side-menu__title">
+                    Users
+                    <div class="side-menu__sub-icon "> <i data-feather="chevron-down"></i> </div>
+                </div>
+            </a>
+            <ul class="">
+                <li>
+                    <a href="side-menu-light-users-layout-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Layout 1 </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="side-menu-light-users-layout-2.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Layout 2 </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="side-menu-light-users-layout-3.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Layout 3 </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="side-menu">
+                <div class="side-menu__icon"> <i data-feather="trello"></i> </div>
+                <div class="side-menu__title">
+                    Profile
+                    <div class="side-menu__sub-icon "> <i data-feather="chevron-down"></i> </div>
+                </div>
+            </a>
+            <ul class="">
+                <li>
+                    <a href="side-menu-light-profile-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Overview 1 </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="side-menu-light-profile-overview-2.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Overview 2 </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="side-menu-light-profile-overview-3.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title"> Overview 3 </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="my-6 side-nav__devider"></li>
+
+
+
+    </ul>
+</nav>
