@@ -6,6 +6,10 @@ exports.routerLinks = {
     loginForm: '/auth/login',
 };
 exports.routers = {
+    category: {
+        create: '/api/category',
+        update: '/api/category/update',
+    },
     loginUser: '/api/auth/login',
     getUser: '/api/user',
     registerUser: '/api/auth/register',

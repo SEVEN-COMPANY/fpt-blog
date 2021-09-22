@@ -41,7 +41,7 @@ function responseSuccessInterceptor(response) {
     var _a, _b, _c, _d;
     handleCommonResponse();
     if ((_b = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.details) === null || _b === void 0 ? void 0 : _b.message) {
-        var message = document.getElementById('message');
+        var message = document.getElementById('MESSAGEERROR');
         if (message) {
             message.innerHTML = (_d = (_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c.details) === null || _d === void 0 ? void 0 : _d.message;
         }
