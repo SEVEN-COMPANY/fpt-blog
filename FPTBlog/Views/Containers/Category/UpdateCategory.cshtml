@@ -10,25 +10,84 @@
 }
 
 
-<div class="flex flex-1 bg-big-stone-500">
-    <div class="w-56 p-2 ">
-        @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
 
-    </div>
-    <div class="flex-1 p-2 bg-gray-100">
+@section Styles {
 
-        <div class="max-w-md px-2 py-16 border-2 rounded-sm">
-            @formBuilder.FormWrapper("Update Category", "updateCategoryForm","Create ", new IHtmlContent[] {
-            formBuilder.TextField("name","Name", category.Name),
-            formBuilder.TextField("description","Description",category.Description),
-            formBuilder.RadioButton("status", "Status", ((int)category.Status).ToString()),
-            formBuilder.TextFieldHidden("categoryId", category.CategoryId),
-            })
+
+<link rel="stylesheet" href="~/ui/admin/app.css">
+
+}
+
+<div class="flex flex-1 overflow-hidden bg-big-stone-500">
+    @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
+    <div class="content ">
+        @await Html.PartialAsync("~/Views/Components/AuthAdmin.cshtml")
+        <div class="flex items-center mt-8 intro-y">
+            <a class="mr-auto text-lg font-medium" href="@Routers.Category.Link">
+                Catagory Management
+            </a>
+        </div>
+        <div class="grid grid-cols-12 gap-4 mt-5">
+            <div class="col-span-4">
+
+                <div class="intro-y box">
+                    <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
+                        <h3 class="mr-auto text-base font-medium">
+                            Update Category
+                        </h3>
+
+                    </div>
+                    <div id="vertical-form" class="p-5">
+                        <form class="space-y-4 preview" id="updateCategoryForm">
+
+                            <div class="mt-2 text-green-500 pristine-error fade-in first-letter" id="MESSAGEERROR">
+                            </div>
+                            <input id="categoryId" class="hidden" name="categoryId" value="@category.CategoryId">
+                            <div>
+                                <label for="name" class="form-label" id="NAMELABEL">Name</label>
+                                <input id="name" name="name" type="text" class="form-control" value="@category.Name">
+                                <div class="mt-2 pristine-error text-primary-3" id="NAMEERROR"></div>
+                            </div>
+                            <div>
+                                <label for="description" class="form-label" id="DESCRIPTIONLABEL">Description</label>
+                                <input id="description" name="description" type="text" class="form-control"
+                                    value="@category.Description">
+                                <div class="mt-2 pristine-error text-primary-3" id="DESCRIPTIONERROR"></div>
+                            </div>
+
+                            <div>
+                                <label>Status</label>
+                                <div class="flex flex-col mt-2 sm:flex-row">
+                                    <div class="mr-2 form-check">
+                                        <input id="status-active" class="form-check-input" type="radio" name="status"
+                                            value="1" @(category.Status == CategoryStatus.ACTIVE ? "checked" : "")>
+                                        <label class="form-check-label" for="radio-switch-4">Active</label>
+                                    </div>
+                                    <div class="mt-2 mr-2 form-check sm:mt-0">
+                                        <input id="status-inactive" class="form-check-input" type="radio" name="status"
+                                            value="0" @(category.Status == CategoryStatus.INACTIVE ? "checked" : "")>
+                                        <label class="form-check-label" for="radio-switch-5">Inactive</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", "Create New")
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
     </div>
+
 </div>
 
 @section Scripts {
 <script src="~/js/adminCommon.js"></script>
+<script src="~/ui/admin/app.js"></script>
 <script src="~/js/updateCategory.js"></script>
 }

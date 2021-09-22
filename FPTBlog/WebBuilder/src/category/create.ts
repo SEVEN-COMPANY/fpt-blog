@@ -29,6 +29,9 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
             description: description.value,
             status: status,
         };
-        http.post<ServerResponse<null>>(routers.category.create, input);
+        http.post<ServerResponse<null>>(routers.category.create, input).then(() => {
+            name.value = '';
+            description.value = '';
+        });
     }
 });

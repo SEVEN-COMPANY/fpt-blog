@@ -1,5 +1,5 @@
 <nav class="side-nav">
-    <a href="" class="flex items-center pt-4 pl-5 mt-3 intro-x">
+    <a href="" class="flex items-center mt-3 intro-x">
         <h1 class="text-3xl font-semibold text-tango-500">FPT Blog</h1>
 
     </a>
@@ -32,7 +32,12 @@
                 <div class="side-menu__title"> Post </div>
             </a>
         </li>
-
+        <li>
+            <a href="@Routers.Category.Link" class="side-menu">
+                <div class="side-menu__icon"> <i data-feather="inbox"></i> </div>
+                <div class="side-menu__title"> Category </div>
+            </a>
+        </li>
         <li class="my-6 side-nav__devider"></li>
 
         <li>
@@ -95,23 +100,7 @@
         </li>
 
         <li class="my-6 side-nav__devider"></li>
-        <li>
-            <a href="@Routers.Category.Link" class="side-menu">
-                <div class="side-menu__icon"> <i data-feather="inbox"></i> </div>
-                <div class="side-menu__title">
-                    Category
-                    <div class="side-menu__sub-icon "> <i data-feather="chevron-down"></i> </div>
-                </div>
-            </a>
-            <ul class="">
-                <li>
-                    <a href="side-menu-light-loading-icon.html" class="side-menu">
-                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                        <div class="side-menu__title"> Loading Icon </div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+
 
 
     </ul>
