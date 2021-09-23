@@ -16,6 +16,13 @@ namespace FPTBlog.Src.BlogModule
             this.Db = db;
         }
 
+        public List<BlogTag> GetBlogTags()
+        {
+            List<BlogTag> list = this.Db.BlogTag.ToList();
+            return list;
+        }
+
+
         public bool AddTagToBlog(Blog blog, List<Tag> tags)
         {
             List<BlogTag> blogTags = new List<BlogTag>();

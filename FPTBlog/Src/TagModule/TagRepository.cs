@@ -3,6 +3,7 @@ using System.Linq;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Utils;
+using FPTBlog.Src.BlogModule.Entity;
 
 namespace FPTBlog.Src.TagModule
 {
@@ -18,6 +19,14 @@ namespace FPTBlog.Src.TagModule
         {
             List<Tag> list = this.Db.Tag.ToList();
             return list;
+        }
+
+        public int GetQualityBlogOfTag(string tagId)
+        {
+            List<BlogTag> listBlogByTag = (from BlogTag in this.Db.BlogTag
+                                           where tagId.CompareTo(BlogTag.TagId) == 0
+                                           select BlogTag).ToList();
+            return listBlogByTag.Count();
         }
 
         public Tag GetTagByName(string name)

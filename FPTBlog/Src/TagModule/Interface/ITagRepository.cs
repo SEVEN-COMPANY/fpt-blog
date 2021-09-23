@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.BlogModule.Entity;
 
 namespace FPTBlog.Src.TagModule.Interface
 {
@@ -11,5 +12,6 @@ namespace FPTBlog.Src.TagModule.Interface
         public bool UpdateTag(Tag tag);
         public List<Tag> GetTags();
         public bool DeleteTag(string tagId);
+        public int GetQualityBlogOfTag(string tagId);
     }
 }

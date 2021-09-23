@@ -1,4 +1,5 @@
 using FluentValidation.Results;
+using System.Collections.Generic;
 using FPTBlog.Src.TagModule.DTO;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
@@ -44,6 +45,16 @@ namespace FPTBlog.Src.TagModule
 
             res.data = tag;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpGet("all")]
+        public ObjectResult GetQualityBlogOfTagHandler()
+        {
+            var res = new ServerApiResponse<object>();
+            var listTag = this.TagService.GetTagsWithCount();
+            res.data = listTag;
+
             return new ObjectResult(res.getResponse());
         }
 

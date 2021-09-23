@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using FPTBlog.Src.BlogModule.Entity;
 namespace FPTBlog.Src.TagModule
 {
     public class TagService : ITagService
@@ -13,9 +13,21 @@ namespace FPTBlog.Src.TagModule
             this.TagRepository = tagRepository;
         }
 
-        public List<Tag> GetTags()
+        public List<IDictionary<string, object>> GetTagsWithCount()
         {
-            return this.TagRepository.GetTags();
+            var list = new List<IDictionary<string, object>>();
+            var tags = this.TagRepository.GetTags();
+
+            foreach (Tag item in tags)
+            {
+                var tagWithCount = new Dictionary<string, object>();
+                tagWithCount.Add("tag", item);
+                tagWithCount.Add("quantity", this.TagRepository.GetQualityBlogOfTag(item.TagId));
+                list.Add(tagWithCount);
+            }
+
+            return list;
+
         }
 
         public Tag GetTagByName(string name)
@@ -27,6 +39,7 @@ namespace FPTBlog.Src.TagModule
         {
             return this.TagRepository.GetTagByTagId(tagId);
         }
+
 
         public bool SaveTag(Tag tag)
         {
@@ -52,7 +65,7 @@ namespace FPTBlog.Src.TagModule
 
         public List<SelectListItem> GetRadioCategoryList()
         {
-             var tags = new List<SelectListItem>();
+            var tags = new List<SelectListItem>();
 
             var list = this.TagRepository.GetTags();
             foreach (var item in list)
