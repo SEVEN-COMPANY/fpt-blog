@@ -57,6 +57,14 @@ namespace FPTBlog.Src.BlogModule
         {
             return this.BlogRepository.GetAllBlogsAndCount(currentPage, pageSize);
         }
+        public (List<Blog>, int) GetBlogsByCategoryAndCount(int currentPage, int pageSize, string name)
+        {
+            return this.BlogRepository.GetBlogsByCategoryAndCount(currentPage, pageSize, name);
+        }
 
+        public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status)
+        {
+            return this.BlogRepository.GetBlogsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
+        }
     }
 }

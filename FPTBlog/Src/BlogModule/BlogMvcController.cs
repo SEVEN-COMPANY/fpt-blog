@@ -28,13 +28,63 @@ namespace FPTBlog.Src.BlogModule
             this.CategoryService = categoryService;
         }
 
-        [HttpGet("")]
+        [HttpGet("editor")]
         public IActionResult EditorPage()
         {
             SelectList list = new SelectList(this.CategoryService.GetRadioCategoryList());
             this.ViewData["categoryId"] = list;
 
             return View(Routers.EditorPage.Page);
+        }
+
+        [HttpGet("")]
+        public IActionResult GetAllBlogs(int pageSize, int pageIndex)
+        {
+            var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, pageIndex);
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+
+            return Json(new{
+                blogs = blogs,
+                total = total
+            });
+        }
+
+        [HttpGet("tag")]
+        public IActionResult GetBlogsByTagName(int pageSize, int pageIndex, string name)
+        {
+            var (blogs, total) = this.BlogService.GetBlogsByTagAndCount(pageSize, pageIndex, name);
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+            
+            return Json(new{
+                blogs = blogs,
+                total = total
+            });
+        }
+
+        [HttpGet("category")]
+        public IActionResult GetBlogsByCategoryName(int pageSize, int pageIndex, string name){
+            var (blogs, total) = this.BlogService.GetBlogsByCategoryAndCount(pageSize, pageIndex, name);
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+            
+             return Json(new{
+                blogs = blogs,
+                total = total
+            });
+        }
+
+        [HttpGet("student")]
+        public IActionResult GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status){
+            var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+            
+             return Json(new{
+                blogs = blogs,
+                total = total
+            });
         }
     }
 }

@@ -190,32 +190,30 @@ namespace FPTBlog.Src.BlogModule
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+    
+        [HttpPost("post")]
+        public IActionResult PostBlog([FromBody]PostBlogDto input){
+            var res = new ServerApiResponse<Blog>();
+            ValidationResult result = new PostBlogDtoValidator().Validate(input);
+            if (!result.IsValid)
+            {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
 
-        [HttpGet("tag")]
-        public IActionResult GetBlogByTagName(int pageSize, int page, string name)
-        {
-            IDictionary<string, object> dataRes = new Dictionary<string, object>();
-            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if (blog == null)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
 
-            var (blogs, total) = this.BlogService.GetBlogsByTagAndCount(pageSize, page - 1, name);
-            dataRes.Add("blogs", blogs);
-            dataRes.Add("total", total);
-            res.data = dataRes;
+            blog.Status = BlogStatus.WAIT;
+            this.BlogService.UpdateBlog(blog);
+
+            res.data = blog;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_POSTED_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
-
-        [HttpGet("")]
-        public IActionResult GetAllBlogs(int pageSize, int page){
-            IDictionary<string, object> dataRes = new Dictionary<string, object>();
-            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
-
-            var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, page);
-            dataRes.Add("blogs", blogs);
-            dataRes.Add("total", total);
-            
-            res.data = dataRes;
-            return new ObjectResult(res.getResponse());
-        }
-
     }
 }
