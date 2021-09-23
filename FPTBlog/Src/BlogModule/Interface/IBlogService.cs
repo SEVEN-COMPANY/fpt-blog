@@ -16,5 +16,6 @@ namespace FPTBlog.Src.BlogModule.Interface
         public (List<Blog>, int) GetBlogsByCategoryAndCount(int currentPage, int pageSize, string name);
         public int CalculateBlogPoint(Blog blog);
         public (List<Blog>, int) GetAllBlogsAndCount(int currentPage, int pageSize);
+        public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status);
     }
 }

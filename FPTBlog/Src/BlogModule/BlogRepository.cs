@@ -112,5 +112,15 @@ namespace FPTBlog.Src.BlogModule
             int count = query.Count();
             return (blogs, count);
         }
+
+        public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status)
+        {
+            var query = (from Blog in this.Db.Blog
+                         where Blog.StudentId.Equals(studentId) && Blog.Status == status
+                         select Blog);
+            List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            int count = query.Count();
+            return (blogs, count);             
+        }
     }
 }
