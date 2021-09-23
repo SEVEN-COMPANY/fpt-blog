@@ -190,5 +190,30 @@ namespace FPTBlog.Src.BlogModule
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+    
+        [HttpPost("post")]
+        public IActionResult PostBlog([FromBody]PostBlogDto input){
+            var res = new ServerApiResponse<Blog>();
+            ValidationResult result = new PostBlogDtoValidator().Validate(input);
+            if (!result.IsValid)
+            {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if (blog == null)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            blog.Status = BlogStatus.WAIT;
+            this.BlogService.UpdateBlog(blog);
+
+            res.data = blog;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_POSTED_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
     }
 }
