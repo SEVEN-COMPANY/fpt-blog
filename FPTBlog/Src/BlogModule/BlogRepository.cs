@@ -83,5 +83,28 @@ namespace FPTBlog.Src.BlogModule
 
             return this.Db.SaveChanges() > 0;
         }
+
+        public (List<Blog>, int) GetBlogsByTagAndCount(int currentPage, int pageSize, string name)
+        {
+            var query = (from BlogTag in this.Db.BlogTag
+                         join Tag in this.Db.Tag
+                         on BlogTag.TagId equals Tag.TagId
+                         join Blog in this.Db.Blog
+                         on BlogTag.BlogId equals Blog.BlogId
+                         where Tag.Name.Equals(name)
+                         select Blog);
+            List<Blog> blogs = query.Take((pageSize + 1) * currentPage).Skip(currentPage * pageSize).ToList();
+            int count = query.Count();
+            return (blogs, count);
+        }
+        public (List<Blog>, int) GetAllBlogsAndCount(int currentPage, int pageSize)
+        {
+            var query = (from Blog in this.Db.Blog
+                        orderby Blog.Like - Blog.Dislike + (Blog.View / 10)
+                        select Blog);
+            var blogs = query.Take((pageSize + 1) * currentPage).Skip(currentPage * pageSize).ToList();
+            int count = query.Count();
+            return (blogs, count);
+        }
     }
 }

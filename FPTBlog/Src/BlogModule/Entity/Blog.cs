@@ -39,6 +39,10 @@ namespace FPTBlog.Src.BlogModule.Entity
         public int Dislike { get; set; }
 
         [Required]
+        [Range(0, Int32.MaxValue)]
+        public int View { get; set; }
+
+        [Required]
         public BlogStatus Status { get; set; }
 
         [Required]
@@ -71,6 +75,7 @@ namespace FPTBlog.Src.BlogModule.Entity
             this.ReadTime = 1;
             this.Like = 0;
             this.Dislike = 0;
+            this.View = 0;
             this.Status = BlogStatus.DRAFT;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Student = null;
