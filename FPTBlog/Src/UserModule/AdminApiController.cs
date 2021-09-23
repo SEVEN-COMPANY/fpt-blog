@@ -38,7 +38,13 @@ namespace FPTBlog.Src.UserModule
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
-            this.UserService.BlockUserByAdminHandler(body.UserIdBlock);
+            User blockUser = this.UserService.GetUserByUserId(body.UserIdBlock);
+            if ((int)blockUser.Role == 1)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            this.UserService.BlockUserByAdminHandler(blockUser);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
