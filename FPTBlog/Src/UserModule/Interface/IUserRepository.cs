@@ -1,4 +1,5 @@
-﻿using FPTBlog.Src.UserModule.Entity;
+﻿using System.Collections.Generic;
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.UserModule.Interface
 {
@@ -10,5 +11,6 @@ namespace FPTBlog.Src.UserModule.Interface
         public User GetUserByGoogleId(string googleId);
         public bool UpdateUser(User user);
         public bool ChangePasswordHandler(User user);
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search);
     }
 }

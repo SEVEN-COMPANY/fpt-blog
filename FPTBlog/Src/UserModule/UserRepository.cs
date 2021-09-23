@@ -2,6 +2,7 @@
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FPTBlog.Src.UserModule
@@ -55,5 +56,14 @@ namespace FPTBlog.Src.UserModule
             updateUser.Password = user.Password;
             return this.Db.SaveChanges() > 0;
         }
+
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search)
+        {
+            var query = this.Db.User.Where(x => x.Name.Contains(search) || x.Email.Contains(search));
+            List<User> users = query.Take((pageSize + 1) * currentPage).Skip(currentPage * pageSize).ToList();
+            int count = query.Count();
+            return (users, count);
+        }
+
     }
 }

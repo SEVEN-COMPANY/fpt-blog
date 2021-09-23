@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using System.Collections.Generic;
+using FluentValidation.Results;
 using FPTBlog.Src.UserModule.DTO;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
@@ -46,6 +47,11 @@ namespace FPTBlog.Src.UserModule
         public void ChangePasswordHandler(User user)
         {
             this.UserRepository.ChangePasswordHandler(user);
+        }
+
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search)
+        {
+            return this.UserRepository.GetUsersByPageAndCount(currentPage, pageSize, search);
         }
     }
 }

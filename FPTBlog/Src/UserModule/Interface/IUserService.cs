@@ -1,4 +1,5 @@
-﻿using FPTBlog.Src.UserModule.DTO;
+﻿using System.Collections.Generic;
+using FPTBlog.Src.UserModule.DTO;
 using FPTBlog.Src.UserModule.Entity;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -12,6 +13,6 @@ namespace FPTBlog.Src.UserModule.Interface
         public User GetUserByUserId(string id);
         public User GetUserByGoogleId(string googleId);
         public void ChangePasswordHandler(User user);
-
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search);
     }
 }
