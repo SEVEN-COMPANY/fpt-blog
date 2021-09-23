@@ -5,6 +5,8 @@ using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils;
 using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Collections.Generic;
+
 
 namespace FPTBlog.Src.UserModule
 {
@@ -46,6 +48,11 @@ namespace FPTBlog.Src.UserModule
         public void ChangePasswordHandler(User user)
         {
             this.UserRepository.ChangePasswordHandler(user);
+        }
+
+        public (List<User>, int) GetUsers()
+        {
+            return this.UserRepository.GetUsers();
         }
     }
 }

@@ -27,9 +27,17 @@ namespace FPTBlog.Src.UserModule
 
 
         [HttpGet("")]
+        public IActionResult GetUsers()
+        {
+            var (users, count) = this.UserService.GetUsers();
+            this.ViewData["users"] = users;
+            this.ViewData["count"] = count;
+            return View(Routers.AdminDashboard.Page);
+        }
+
+        [HttpGet("")]
         public IActionResult GetUser()
         {
-
             return View(Routers.AdminDashboard.Page);
         }
 
