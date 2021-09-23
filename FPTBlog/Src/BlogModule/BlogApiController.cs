@@ -191,31 +191,5 @@ namespace FPTBlog.Src.BlogModule
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpGet("tag")]
-        public IActionResult GetBlogByTagName(int pageSize, int page, string name)
-        {
-            IDictionary<string, object> dataRes = new Dictionary<string, object>();
-            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
-
-            var (blogs, total) = this.BlogService.GetBlogsByTagAndCount(pageSize, page - 1, name);
-            dataRes.Add("blogs", blogs);
-            dataRes.Add("total", total);
-            res.data = dataRes;
-            return new ObjectResult(res.getResponse());
-        }
-
-        [HttpGet("")]
-        public IActionResult GetAllBlogs(int pageSize, int page){
-            IDictionary<string, object> dataRes = new Dictionary<string, object>();
-            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
-
-            var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, page);
-            dataRes.Add("blogs", blogs);
-            dataRes.Add("total", total);
-            
-            res.data = dataRes;
-            return new ObjectResult(res.getResponse());
-        }
-
     }
 }

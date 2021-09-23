@@ -28,7 +28,7 @@ namespace FPTBlog.Src.BlogModule
             this.CategoryService = categoryService;
         }
 
-        [HttpGet("")]
+        [HttpGet("editor")]
         public IActionResult EditorPage()
         {
             SelectList list = new SelectList(this.CategoryService.GetRadioCategoryList());
@@ -36,5 +36,26 @@ namespace FPTBlog.Src.BlogModule
 
             return View(Routers.EditorPage.Page);
         }
+
+        [HttpGet("")]
+        public IActionResult GetAllBlogs(int pageSize, int page)
+        {
+            var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, page);
+            
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+
+            return View();
+        }
+
+        [HttpGet("tag")]
+        public IActionResult GetBlogByTagName(int pageSize, int page, string name)
+        {
+            var (blogs, total) = this.BlogService.GetBlogsByTagAndCount(pageSize, page - 1, name);
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+            return View();
+        }
+
     }
 }
