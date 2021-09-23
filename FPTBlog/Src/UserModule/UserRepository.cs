@@ -3,6 +3,7 @@ using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace FPTBlog.Src.UserModule
 {
@@ -54,6 +55,16 @@ namespace FPTBlog.Src.UserModule
             User updateUser = this.GetUserByUserId(user.UserId);
             updateUser.Password = user.Password;
             return this.Db.SaveChanges() > 0;
+        }
+
+        public (List<User>, int) GetUsers()
+        {
+            List<User> users = this.Db.User.ToList();
+            foreach (User user in users)
+            {
+                user.Password = "";
+            }
+            return (users, users.Count);
         }
     }
 }
