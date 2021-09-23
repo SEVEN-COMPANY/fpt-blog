@@ -12,6 +12,7 @@ namespace FPTBlog.Src.UserModule.Interface
         public User GetUserByUserId(string id);
         public User GetUserByGoogleId(string googleId);
         public void ChangePasswordHandler(User user);
+        public void BlockUserByAdminHandler(string blockUserId);
 
     }
 }

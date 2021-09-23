@@ -55,5 +55,12 @@ namespace FPTBlog.Src.UserModule
             updateUser.Password = user.Password;
             return this.Db.SaveChanges() > 0;
         }
+
+        public bool BlockUserByAdminHandler(User user)
+        {
+            User blockedUser = this.GetUserByUserId(user.UserId);
+            blockedUser.Status = 0;
+            return this.Db.SaveChanges() > 0;
+        }
     }
 }
