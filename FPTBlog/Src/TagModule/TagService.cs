@@ -18,7 +18,7 @@ namespace FPTBlog.Src.TagModule
             var list = new List<IDictionary<string, object>>();
             var tags = this.TagRepository.GetTags();
 
-            foreach (var item in tags)
+            foreach (Tag item in tags)
             {
                 var tagWithCount = new Dictionary<string, object>();
                 tagWithCount.Add("tag", item);

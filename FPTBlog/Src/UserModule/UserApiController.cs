@@ -77,6 +77,11 @@ namespace FPTBlog.Src.UserModule
                 return new BadRequestObjectResult(res.getResponse());
             }
 
+            if (user.GoogleId != null)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
 
             var isCorrectPassword = this.AuthService.ComparePassword(body.OldPassword, user.Password);
             if (!isCorrectPassword)
