@@ -12,7 +12,8 @@ namespace FPTBlog.Src.BlogModule.Interface
         public List<Tag> GetTagFromBlog(Blog blog);
         public bool RemoveTagFromBlog(List<Tag> tags);
         public bool AddTagToBlog(Blog blog, List<Tag> tags);
-        public (List<Blog>, int) GetBlogsByTagAndCount(int currentPage, int pageSize, string name);
-        public (List<Blog>, int) GetAllBlogsAndCount(int currentPage, int pageSize);
+        public (List<Blog>, int) GetBlogsByTagAndCount(int pageSize, int pageIndex, string name);
+        public (List<Blog>, int) GetBlogsByCategoryAndCount(int pageSize, int pageIndex, string name);
+        public (List<Blog>, int) GetAllBlogsAndCount(int pageSize, int pageIndex);
     }
 }

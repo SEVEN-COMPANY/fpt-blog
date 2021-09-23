@@ -190,6 +190,5 @@ namespace FPTBlog.Src.BlogModule
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
-
     }
 }

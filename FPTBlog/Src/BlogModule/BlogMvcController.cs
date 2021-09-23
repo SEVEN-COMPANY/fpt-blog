@@ -38,23 +38,41 @@ namespace FPTBlog.Src.BlogModule
         }
 
         [HttpGet("")]
-        public IActionResult GetAllBlogs(int pageSize, int page)
+        public IActionResult GetAllBlogs(int pageSize, int pageIndex)
         {
-            var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, page);
-            
+            var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, pageIndex);
             this.ViewData["blogs"] = blogs;
             this.ViewData["total"] = total;
 
-            return View();
+            return Json(new{
+                blogs = blogs,
+                total = total
+            });
         }
 
         [HttpGet("tag")]
-        public IActionResult GetBlogByTagName(int pageSize, int page, string name)
+        public IActionResult GetBlogByTagName(int pageSize, int pageIndex, string name)
         {
-            var (blogs, total) = this.BlogService.GetBlogsByTagAndCount(pageSize, page - 1, name);
+            var (blogs, total) = this.BlogService.GetBlogsByTagAndCount(pageSize, pageIndex, name);
             this.ViewData["blogs"] = blogs;
             this.ViewData["total"] = total;
-            return View();
+            
+            return Json(new{
+                blogs = blogs,
+                total = total
+            });
+        }
+
+        [HttpGet("category")]
+        public IActionResult GetBlogByCategoryName(int pageSize, int pageIndex, string name){
+            var (blogs, total) = this.BlogService.GetBlogsByCategoryAndCount(pageSize, pageIndex, name);
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+            
+             return Json(new{
+                blogs = blogs,
+                total = total
+            });
         }
 
     }
