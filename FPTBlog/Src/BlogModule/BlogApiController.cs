@@ -155,7 +155,7 @@ namespace FPTBlog.Src.BlogModule
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
             }
-
+        
             List<Tag> currentTags = this.BlogService.GetTagFromBlog(blog);
             List<Tag> newTags = new List<Tag>();
             foreach (string tagId in input.Tags)
@@ -173,10 +173,7 @@ namespace FPTBlog.Src.BlogModule
                     addTags.Add(newTag);
                 }
             }
-            if (addTags.Count > 0)
-            {
-                this.BlogService.AddTagToBlog(blog, addTags);
-            }
+            this.BlogService.AddTagToBlog(blog, addTags);
 
             // Xóa những tag mà người dùng đã remove ra khỏi blog
             List<Tag> removeTags = new List<Tag>();
@@ -187,11 +184,7 @@ namespace FPTBlog.Src.BlogModule
                     removeTags.Add(curTag);
                 }
             }
-            if (removeTags.Count > 0)
-            {
-                this.BlogService.RemoveTagFromBlog(removeTags);
-            }
-
+            this.BlogService.RemoveTagFromBlog(removeTags);
 
             res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);

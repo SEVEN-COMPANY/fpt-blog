@@ -36,8 +36,6 @@ namespace FPTBlog.Src.AuthModule
         [HttpPost("login")]
         public ObjectResult LoginHandler([FromBody] LoginUserDto body)
         {
-
-
             var res = new ServerApiResponse<string>();
 
             ValidationResult result = new LoginUserDtoValidator().Validate(body);
