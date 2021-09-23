@@ -66,5 +66,12 @@ namespace FPTBlog.Src.UserModule
             }
             return (users, users.Count);
         }
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search)
+        {
+            var query = this.Db.User.Where(x => x.Name.Contains(search) || x.Email.Contains(search));
+            List<User> users = query.Take((pageSize + 1) * currentPage).Skip(currentPage * pageSize).ToList();
+            int count = query.Count();
+            return (users, count);
+        }
     }
 }
