@@ -5,6 +5,8 @@ using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils;
 using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Collections.Generic;
+
 
 namespace FPTBlog.Src.UserModule
 {
@@ -50,8 +52,17 @@ namespace FPTBlog.Src.UserModule
 
         public void BlockUserByAdminHandler(User user)
         {
-            User blockedUser = this.GetUserByUserId(user.UserId);
+            User blockedUser = this.UserRepository.GetUserByUserId(user.UserId);
             this.UserRepository.BlockUserByAdminHandler(blockedUser);
+        }
+
+        public (List<User>, int) GetUsers()
+        {
+            return this.UserRepository.GetUsers();
+        }
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search)
+        {
+            return this.UserRepository.GetUsersByPageAndCount(currentPage, pageSize, search);
         }
     }
 }

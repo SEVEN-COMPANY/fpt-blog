@@ -21,6 +21,7 @@ namespace FPTBlog.Utils.Locale
 
         public static class MessageKey
         {
+            public const string MESSAGE_POSTED_SUCCESS = "MESSAGE_POSTED_SUCCESS";
             public const string MESSAGE_LOGIN_SUCCESS = "MESSAGE_LOGIN_SUCCESS";
             public const string MESSAGE_REGISTER_SUCCESS = "MESSAGE_REGISTER_SUCCESS";
             public const string MESSAGE_LOGOUT_SUCCESS = "MESSAGE_LOGOUT_SUCCESS";
@@ -34,12 +35,14 @@ namespace FPTBlog.Utils.Locale
 
             // Success message
             // EN
+            AddTranslation("en", MessageKey.MESSAGE_POSTED_SUCCESS, "post success");
             AddTranslation("en", MessageKey.MESSAGE_LOGIN_SUCCESS, "login success");
             AddTranslation("en", MessageKey.MESSAGE_REGISTER_SUCCESS, "register success");
             AddTranslation("en", MessageKey.MESSAGE_LOGOUT_SUCCESS, "logout success");
             AddTranslation("en", MessageKey.MESSAGE_UPDATE_SUCCESS, "update success");
             AddTranslation("en", MessageKey.MESSAGE_ADD_SUCCESS, "add success");
             AddTranslation("en", MessageKey.MESSAGE_DELETE_SUCCESS, "delete success");
+            AddTranslation("en", MessageKey.MESSAGE_SAVE_SUCCESS, "save success");
 
             // VI
             AddTranslation("vi", MessageKey.MESSAGE_LOGIN_SUCCESS, "đăng nhập thành công");

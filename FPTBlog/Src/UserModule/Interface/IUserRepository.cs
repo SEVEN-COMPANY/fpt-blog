@@ -1,4 +1,5 @@
 ﻿using FPTBlog.Src.UserModule.Entity;
+using System.Collections.Generic;
 
 namespace FPTBlog.Src.UserModule.Interface
 {
@@ -11,5 +12,8 @@ namespace FPTBlog.Src.UserModule.Interface
         public bool UpdateUser(User user);
         public bool ChangePasswordHandler(User user);
         public bool BlockUserByAdminHandler(User user);
+        public (List<User>, int) GetUsers();
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search);
+
     }
 }
