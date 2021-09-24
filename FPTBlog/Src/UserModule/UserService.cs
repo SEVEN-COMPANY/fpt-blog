@@ -50,6 +50,12 @@ namespace FPTBlog.Src.UserModule
             this.UserRepository.ChangePasswordHandler(user);
         }
 
+        public void BlockUserByAdminHandler(User user)
+        {
+            User blockedUser = this.UserRepository.GetUserByUserId(user.UserId);
+            this.UserRepository.BlockUserByAdminHandler(blockedUser);
+        }
+
         public (List<User>, int) GetUsers()
         {
             return this.UserRepository.GetUsers();

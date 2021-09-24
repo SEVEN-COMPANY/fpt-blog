@@ -57,6 +57,13 @@ namespace FPTBlog.Src.UserModule
             return this.Db.SaveChanges() > 0;
         }
 
+        public bool BlockUserByAdminHandler(User user)
+        {
+            User blockedUser = this.GetUserByUserId(user.UserId);
+            blockedUser.Status = 0;
+            return this.Db.SaveChanges() > 0;
+        }
+
         public (List<User>, int) GetUsers()
         {
             List<User> users = this.Db.User.ToList();
