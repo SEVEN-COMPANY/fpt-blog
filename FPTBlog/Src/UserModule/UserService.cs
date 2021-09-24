@@ -54,5 +54,9 @@ namespace FPTBlog.Src.UserModule
         {
             return this.UserRepository.GetUsers();
         }
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search)
+        {
+            return this.UserRepository.GetUsersByPageAndCount(currentPage, pageSize, search);
+        }
     }
 }

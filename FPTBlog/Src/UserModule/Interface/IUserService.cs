@@ -15,5 +15,6 @@ namespace FPTBlog.Src.UserModule.Interface
         public User GetUserByGoogleId(string googleId);
         public void ChangePasswordHandler(User user);
         public (List<User>, int) GetUsers();
+        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search);
     }
 }
