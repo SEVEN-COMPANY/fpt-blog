@@ -155,7 +155,7 @@ namespace FPTBlog.Src.BlogModule
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
             }
-        
+
             List<Tag> currentTags = this.BlogService.GetTagFromBlog(blog);
             List<Tag> newTags = new List<Tag>();
             foreach (string tagId in input.Tags)
@@ -190,9 +190,10 @@ namespace FPTBlog.Src.BlogModule
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
-    
+
         [HttpPost("post")]
-        public IActionResult PostBlog([FromBody]PostBlogDto input){
+        public IActionResult PostBlog([FromBody] PostBlogDto input)
+        {
             var res = new ServerApiResponse<Blog>();
             ValidationResult result = new PostBlogDtoValidator().Validate(input);
             if (!result.IsValid)

@@ -1,42 +1,41 @@
-@using FPTBlog.Views.Components.Form;
-@using Microsoft.AspNetCore.Html;
-
 @{
-    ViewData["Title"] = Routers.Login.Title;
-    var formBuilder = new FormBuilder(this.Context, this.ViewData);
+      ViewData["Title"] = Routers.Login.Title;
 }
 
 
-<div class="absolute top-0 left-0 z-50 flex items-center justify-center flex-1 w-full min-h-screen p-2 bg-1">
-    <div
-        class="w-full px-2 py-8 space-y-4 bg-white border rounded-md shadow-xl md:px-4 md:py-16 md:w-96 fade-in bg-opacity-90">
-        @formBuilder.FormWrapper("Login Account", "loginForm", "Sign In",new IHtmlContent[]
-        {
-        formBuilder.TextField("username","Username"),
-        formBuilder.PasswordField("password", "Password")
-        })
 
-        <div class="space-y-2">
-            <div class="flex items-center space-x-2">
-                <div class="flex-1 h-0.5 bg-gray-600"></div>
-                <div class="font-medium text-center opacity-90">
-                    Or
-                </div>
-                <div class="flex-1 h-0.5 bg-gray-600"></div>
+<div class="fixed top-0 left-0 flex items-center justify-center w-full min-h-screen bg-1">
+      @* Content Start *@
+      <div
+            class="w-full px-2 py-8 space-y-4 bg-white border rounded-md shadow-xl md:px-4 md:py-16 md:w-96 fade-in bg-opacity-90">
+            <h1 class="text-4xl font-semibold text-center">Login Account</h1>
+            @* Form Start *@
+            <form class="space-y-6 fade-in" id="loginForm">
+                  @await Html.PartialAsync("../../Components/Form/User/TextField.cshtml",
+                  new {Label="Username",Name="username", Type="text", Value=""})
+                  @await Html.PartialAsync("../../Components/Form/User/TextField.cshtml",
+                  new {Label="Password", Name="passord", Type="password", Value=""})
+                  @await Html.PartialAsync("../../Components/Form/User/FormBtn.cshtml",
+                  new {Label="Sign In" })
+            </form>
+            @* Form End *@
+
+            @* Support Start *@
+            <div class="space-y-2">
+                  @await Html.PartialAsync("../../Components/Form/User/FormDivider.cshtml")
+                  @await Html.PartialAsync("../../Components/Form/User/FormGoogle.cshtml")
+                  @await Html.PartialAsync("../../Components/Form/User/FormBottomLink.cshtml",
+                  new {Label="Register New Account Instead?", Link = Routers.Register.Link})
             </div>
-            <div>
-                @await Html.PartialAsync("~/Views/Components/Form/FormLoginGoogle.cshtml")
-            </div>
-            <div class="text-center">
-                <a href="@Routers.Register.Link"
-                    class="inline-block p-2 font-semibold duration-300 hover:text-tango-500">Register New
-                    Account Instead?</a>
-            </div>
-        </div>
-    </div>
+            @* Support End *@
+      </div>
+      @* Content End *@
 </div>
+
+
 @section Scripts {
+
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="~/js/login.js"></script>
+<script src="/js/auth-login.js"></script>
 
 }

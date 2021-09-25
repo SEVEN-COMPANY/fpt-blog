@@ -2,17 +2,8 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        createBlog: './src/createBlog.ts',
-        navbar: './src/navbar.ts',
-        google: './src/google.ts',
-        login: './src/login.ts',
-        register: './src/register.ts',
-        common: './src/common.ts',
-        createCategory: './src/category/create.ts',
-        updateCategory: './src/category/update.ts',
-        adminCommon: './src/adminCommon.ts',
-        changePassword: './src/user/changePassword.ts',
-        updateUser: './src/user/updateUser.ts',
+        'auth-login': ['./src/auth/login.ts'],
+        'auth-register': ['./src/auth/register.ts'],
     },
     output: {
         path: __dirname + '/../wwwroot/js',

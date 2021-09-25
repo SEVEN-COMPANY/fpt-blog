@@ -1,1 +1,0 @@
-(()=>{"use strict";var t=document.getElementById("nav-btn");null==t||t.addEventListener("click",(function(){var t=document.getElementById("nav-menu");t&&(t.classList.toggle("opacity-100"),t.classList.toggle("z-20"))}))})();
