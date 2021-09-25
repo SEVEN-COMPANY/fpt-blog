@@ -10,6 +10,7 @@ namespace FPTBlog.Utils.Locale
             public const string ERROR_UPDATE_FAIL = "ERROR_UPDATE_FAIL";
             public const string ERROR_DELETE_FAIL = "ERROR_DELETE_FAIL";
             public const string ERROR_WRONG = "ERROR_WRONG";
+            public const string ERROR_DISSABLED_ACCOUNT = "ERROR_DISSABLED_ACCOUNT";
             public const string ERROR_NOT_FOUND = "ERROR_NOT_FOUND";
             public const string ERROR_NOT_ALLOW = "ERROR_NOT_ALLOW";
             public const string ERROR_PASSWORD_CONTAIN_CHARACTER = "ERROR_PASSWORD_CONTAIN_CHARACTER";
@@ -60,6 +61,7 @@ namespace FPTBlog.Utils.Locale
             AddTranslation("en", ErrorMessageKey.ERROR_UPDATE_FAIL, "update fail");
             AddTranslation("en", ErrorMessageKey.ERROR_DELETE_FAIL, "delete fail");
             AddTranslation("en", ErrorMessageKey.ERROR_WRONG, "is wrong");
+            AddTranslation("en", ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, "your account has been disabled, if you have a problem please contact");
             AddTranslation("en", ErrorMessageKey.ERROR_NOT_FOUND, "is not found");
             AddTranslation("en", ErrorMessageKey.ERROR_NOT_ALLOW, "not allow");
             AddTranslation("en", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_CHARACTER, "should contain at least 1 uppercase, 1 lowercase, 1 number");
@@ -75,6 +77,7 @@ namespace FPTBlog.Utils.Locale
             AddTranslation("vi", ErrorMessageKey.ERROR_UPDATE_FAIL, "cập nhật không thành công");
             AddTranslation("vi", ErrorMessageKey.ERROR_DELETE_FAIL, "xóa không thành công");
             AddTranslation("vi", ErrorMessageKey.ERROR_WRONG, "không đúng");
+            AddTranslation("vi", ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, "tài khoản của bạn đã bị vô hiệu hóa, nếu bạn có vấn đề muốn phản hồi, xin hãy liên lạc");
             AddTranslation("vi", ErrorMessageKey.ERROR_NOT_FOUND, "không tìm thấy");
             AddTranslation("vi", ErrorMessageKey.ERROR_NOT_ALLOW, "không có quyền");
             AddTranslation("vi", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_CHARACTER, "phải có ít nhất 1 kí tự hoa, 1 kí tự thường, 1 số");
