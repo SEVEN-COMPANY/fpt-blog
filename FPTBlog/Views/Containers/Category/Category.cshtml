@@ -1,4 +1,5 @@
 @using FPTBlog.Src.CategoryModule.Entity;
+
 @{
     ViewData["Title"] = Routers.Category.Title;
     var categories = ViewData["categories"] as List<Category>;
@@ -10,7 +11,6 @@
 <link rel="stylesheet" href="~/ui/admin/app.css">
 
 }
-@await Html.PartialAsync("~/Views/Components/NavDashboardMobile.cshtml")
 <div class="flex flex-1 overflow-hidden bg-big-stone-500">
     @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
     <div class="content ">
@@ -21,7 +21,7 @@
             </h2>
         </div>
         <div class="grid grid-cols-12 gap-4 mt-5">
-            <div class="col-span-12 md:col-span-4">
+            <div class="col-span-4">
 
                 <div class="intro-y box">
                     <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
@@ -52,12 +52,12 @@
                                     <div class="mr-2 form-check">
                                         <input id="status-active" class="form-check-input" type="radio" name="status"
                                             value="1" checked>
-                                        <label class="form-check-label" for="status-active">Active</label>
+                                        <label class="form-check-label" for="radio-switch-4">Active</label>
                                     </div>
                                     <div class="mt-2 mr-2 form-check sm:mt-0">
                                         <input id="status-inactive" class="form-check-input" type="radio" name="status"
-                                            value="2">
-                                        <label class="form-check-label" for="status-inactive">Inactive</label>
+                                            value="0">
+                                        <label class="form-check-label" for="radio-switch-5">Inactive</label>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
 
             </div>
 
-            <div class="col-span-12 md:col-span-8 intro-y box">
+            <div class="col-span-8 intro-y box">
                 <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row">
                     <h2 class="mr-auto text-base font-medium">
                         Category
@@ -102,49 +102,49 @@
                                     @foreach (var item in categories)
                                     {
                                         var link = $"{Routers.UpdateCategory.Link}?categoryId={item.CategoryId}";
-                                        <tr class="hover:bg-gray-200">
-                                            <td class="border">@item.CategoryId</td>
-                                            <td class="border">@item.Name</td>
-                                            <td class="border">@item.Description</td>
-                                            <td class="border">
+                                                    <tr class="hover:bg-gray-200">
+                                                        <td class="border">@item.CategoryId</td>
+                                                        <td class="border">@item.Name</td>
+                                                        <td class="border">@item.Description</td>
+                                                        <td class="border">
 
                                                 @if (item.Status == CategoryStatus.ACTIVE)
                                                 {
-                                                    <div class="flex items-center text-theme-20">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                            <div class="flex items-center text-theme-20">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                                     class="w-4 h-4 mr-2 feather feather-check-square">
-                                                            <polyline points="9 11 12 14 22 4"></polyline>
-                                                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                                            </path>
-                                                        </svg> Active
-                                                    </div>
+                                                                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                                                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                                                                    </path>
+                                                                                </svg> Active
+                                                                            </div>
                                                 }
                                                 else
                                                 {
-                                                    <div class="flex items-center text-theme-21">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                            <div class="flex items-center text-theme-21">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                                                     class="w-4 h-4 mr-2 feather feather-check-square">
-                                                            <polyline points="9 11 12 14 22 4"></polyline>
-                                                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                                            </path>
-                                                        </svg> Inactive
-                                                    </div>
+                                                                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                                                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                                                                    </path>
+                                                                                </svg> Inactive
+                                                                            </div>
                                                 }
 
 
 
-                                            </td>
-                                            <td class="border">@item.CreateDate</td>
-                                            <td class="border">
-                                                <a href="@link" class="mb-2 mr-1 btn btn-primary"> <i data-feather="edit-2"
+                                                        </td>
+                                                        <td class="border">@item.CreateDate</td>
+                                                        <td class="border">
+                                                            <a href="@link" class="mb-2 mr-1 btn btn-primary"> <i data-feather="edit-2"
                                                     class="w-5 h-5"></i> </a>
 
-                                            </td>
-                                        </tr>
+                                                        </td>
+                                                    </tr>
                                     }
                                 </tbody>
                             </table>

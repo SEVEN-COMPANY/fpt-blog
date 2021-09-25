@@ -53,6 +53,12 @@ namespace FPTBlog.Src.AuthModule
                 return new BadRequestObjectResult(res.getResponse());
             }
 
+            if ((int)user.Status == 0)
+            {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_DISSABLED_ACCOUNT);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
             var isCorrectPassword = this.AuthService.ComparePassword(body.Password, user.Password);
             if (!isCorrectPassword)
             {
