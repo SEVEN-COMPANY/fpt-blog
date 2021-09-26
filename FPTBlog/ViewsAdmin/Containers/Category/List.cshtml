@@ -1,0 +1,134 @@
+@using FPTBlog.Src.CategoryModule.Entity
+@using FPTBlog.Utils.Common
+
+
+@{
+    var categories = (List<Category>)this.ViewData["categories"];
+}
+
+<main class="z-10 main">
+    @await Html.PartialAsync("../../Components/Navbar/NavbarMobile.cshtml")
+    <div class="flex flex-1 overflow-hidden ">
+        @await Html.PartialAsync("../../Components/Navbar/NavbarSideMenu.cshtml")
+        <div class="content">
+            @await Html.PartialAsync("../../Components/Navbar/NavbarTop.cshtml")
+            <div class="flex items-center mt-8 intro-y">
+                <h2 class="mr-auto text-lg font-medium">
+                    Catagory Management
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-12 gap-4 mt-5">
+                <div class="col-span-12 md:col-span-4">
+                    @* Form Start *@
+                    <div class="intro-y box">
+                        <div
+                            class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
+                            <h2 class="mr-auto text-base font-medium">
+                                Create Category
+                            </h2>
+                        </div>
+                        <div id="vertical-form" class="p-5">
+                            @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                            <form class="space-y-4 preview" id="createCategoryForm">
+                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                                new { Name = "name", Label = "Name", Type = "text", Value = "" })
+                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                                new { Name = "description", Label = "Description", Type = "text", Value
+                                = "" })
+                                @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+                                new { Name = "description", Label = "Description", Value = true })
+                                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                                new { Label = "Create New" })
+                            </form>
+                        </div>
+                    </div>
+                    @* Form End *@
+                </div>
+                <div class="col-span-12 md:col-span-8">
+                    @* Table Start *@
+                    <div class="col-span-12 md:col-span-8 intro-y box">
+                        <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row">
+                            <h2 class="mr-auto text-base font-medium">
+                                List
+                            </h2>
+
+                        </div>
+                        <div class="p-5" id="hoverable-table">
+                            <div class="preview" style="display: block; opacity: 1;">
+                                <div class="overflow-x-auto">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                                    ID
+                                                </th>
+                                                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                                    Name
+                                                </th>
+                                                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                                    Description
+                                                </th>
+                                                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                                    Status
+                                                </th>
+                                                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                                    Create Date
+                                                </th>
+                                                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                                    Edit
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in categories)
+                                            {
+                                                var link =
+                                                $"{RoutersAdmin.UpdateCategory.Link}?categoryId={item.CategoryId}";
+
+                                                <tr class="hover:bg-gray-200">
+                                                    <td class="border">@item.CategoryId</td>
+                                                    <td class="border">@item.Name</td>
+                                                    <td class="border">@item.Description</td>
+                                                    <td class="border">
+                                                        @await Html.PartialAsync(
+                                                    "../../Components/Table/TableStatus.cshtml",
+                                                    item.Status == CategoryStatus.ACTIVE)
+                                                    </td>
+                                                    <td class="border">@item.CreateDate</td>
+                                                    <td class="border">
+                                                        <a href="@link" class="mb-2 mr-1 btn btn-primary">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="w-5 h-5 feather feather-edit-2">
+                                                                <path
+                                                                d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z">
+                                                                </path>
+                                                            </svg>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    @* Table End *@
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</main>
+@section Scripts {
+<script src="https://heaty566.github.io/script-service/fptscript/app.js"></script>
+<script src="/js/category-create.js"></script>
+}

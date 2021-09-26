@@ -14,70 +14,60 @@ using FPTBlog.Src.BlogModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
-namespace FPTBlog.Src.CategoryModule
-{
+namespace FPTBlog.Src.CategoryModule {
     [Route("/admin/category")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class CategoryMvcController : Controller
-    {
+    public class CategoryMvcController : Controller {
         private readonly ICategoryService CategoryService;
         private readonly IBlogService BlogService;
 
 
-        public CategoryMvcController(ICategoryService categoryService, IBlogService blogService)
-        {
+        public CategoryMvcController(ICategoryService categoryService, IBlogService blogService) {
             this.BlogService = blogService;
             this.CategoryService = categoryService;
         }
 
         [HttpGet("")]
-        public IActionResult Category()
-        {
+        public IActionResult Category() {
             var categories = this.CategoryService.GetCategories();
             this.ViewData["categories"] = categories;
-            return View(Routers.Category.Page);
+            return View(RoutersAdmin.Category.Page);
         }
 
         [HttpGet("create")]
-        public IActionResult AddCategoryPage()
-        {
+        public IActionResult AddCategoryPage() {
             SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
             this.ViewData["status"] = list;
 
-            return View(Routers.CreateCategory.Page);
+            return View(RoutersAdmin.CreateCategory.Page);
         }
 
         [HttpGet("update")]
-        public IActionResult UpdateCategory(string categoryId)
-        {
+        public IActionResult UpdateCategory(string categoryId) {
             var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
             SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
             this.ViewData["status"] = list;
             this.ViewData["category"] = category;
-            return View(Routers.UpdateCategory.Page);
+            return View(RoutersAdmin.UpdateCategory.Page);
         }
 
 
         [HttpPost("blog/add")]
-        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input)
-        {
+        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input) {
             Console.WriteLine(input.BlogId);
             ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 return "not pass validation";
             }
 
             Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-            if (blog == null)
-            {
+            if (blog == null) {
 
                 return "blog not found";
             }
 
             Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
-            if (category == null)
-            {
+            if (category == null) {
 
                 return "category not found";
             }

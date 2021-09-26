@@ -8,39 +8,32 @@ using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FluentValidation.Results;
 
-namespace FPTBlog.Src.UserModule
-{
+namespace FPTBlog.Src.UserModule {
     [Route("api/admin")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class AdminApiController : Controller
-    {
+    public class AdminApiController : Controller {
         private readonly IAuthService AuthService;
 
         private readonly IUserService UserService;
-        public AdminApiController(IUserService userService, IAuthService authService)
-        {
+        public AdminApiController(IUserService userService, IAuthService authService) {
             this.UserService = userService;
             this.AuthService = authService;
         }
         [HttpPost("block")]
-        public IActionResult BlockUserHandler([FromBody] BlockUserDto body)
-        {
+        public IActionResult BlockUserHandler([FromBody] BlockUserDto body) {
             var res = new ServerApiResponse<BlockUserDto>();
-            User admin = (User)this.ViewData["user"];
-            if (((int)admin.Role) != 1)
-            {
+            User admin = (User) this.ViewData["user"];
+            if (((int) admin.Role) != 1) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
             ValidationResult result = new BlockUserDtoValidator().Validate(body);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
             User blockUser = this.UserService.GetUserByUserId(body.UserIdBlock);
-            if ((int)blockUser.Role == 1)
-            {
+            if ((int) blockUser.Role == 1) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }

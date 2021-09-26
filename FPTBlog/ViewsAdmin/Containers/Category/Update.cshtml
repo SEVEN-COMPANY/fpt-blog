@@ -1,0 +1,61 @@
+@using FPTBlog.Src.CategoryModule.Entity
+
+
+
+@{
+    Category category = (Category)ViewData["category"];
+}
+
+<main class="z-10 main">
+    @await Html.PartialAsync("../../Components/Navbar/NavbarMobile.cshtml")
+    <div class="flex flex-1 overflow-hidden ">
+        @await Html.PartialAsync("../../Components/Navbar/NavbarSideMenu.cshtml")
+        <div class="content">
+            @await Html.PartialAsync("../../Components/Navbar/NavbarTop.cshtml")
+            <div class="flex items-center mt-8 intro-y">
+                <h2 class="mr-auto text-lg font-medium">
+                    Category Management
+                </h2>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mt-5">
+                <div class="col-span-12">
+                    <div class="max-w-sm intro-y box ">
+                        <div
+                            class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
+                            <h3 class="mr-auto text-base font-medium">
+                                Update Category
+                            </h3>
+
+                        </div>
+                        <div id="vertical-form" class="p-5">
+                            @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                            <form class="space-y-4 preview" id="updateCategoryForm">
+                                <input id="categoryId" class="hidden" name="categoryId" value="@category.CategoryId">
+
+
+                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                                new { Name = "name", Label = "Name", Type = "text", Value = category.Name })
+
+                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                                new { Name = "description", Label = "Description", Type = "text", Value
+                                = category.Description })
+
+                                @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+                                new { Name = "description", Label = "Description", Value = category.Status ==
+                                CategoryStatus.ACTIVE })
+
+                                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                                new { Label = "Update Category" })
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+@section Scripts {
+<script src="https://heaty566.github.io/script-service/fptscript/app.js"></script>
+<script src="/js/category-update.js"></script>
+}

@@ -1,73 +1,28 @@
-@{
-    ViewData["Title"] = Routers.UpdateUser.Title;
-    var user = (User)ViewData["user"];
-}
-
-@section Styles {
+@await Html.PartialAsync("../../Components/User/Navbar/Navbar.cshtml")
 
 
-<link rel="stylesheet" href="~/ui/admin/app.css">
+<script>
+    const navBtn = document.getElementById('nav-btn');
 
-}
-@* public string Name { get; set; }
-    public string Email { get; set; }
-    public string Address { get; set; }
-    public string Phone { get; set; } *@
+    navBtn?.addEventListener('click', function () {
+        const navBtn1 = document.getElementById('nav-btn-1');
+        const navBtn2 = document.getElementById('nav-btn-2');
+        const navBtn3 = document.getElementById('nav-btn-3');
+        const navBg = document.getElementById('nav-bg');
+        const navMenu = document.getElementById('nav-menu');
 
-@await Html.PartialAsync("~/Views/Components/NavDashboardMobile.cshtml")
-<div class="flex flex-1 overflow-hidden bg-big-stone-500">
-    @await Html.PartialAsync("~/Views/Components/SideDashboard.cshtml")
-    <div class="content ">
-        @await Html.PartialAsync("~/Views/Components/AuthAdmin.cshtml")
-        <div class="grid grid-cols-12 gap-4 mt-5">
-            <div class="col-span-12 sm:col-span-8 md:col-span-6 lg:col-span-4">
+        if (navBtn1 !== null && navBtn2 !== null && navBtn3 !== null && navBg !== null && navMenu !== null) {
+            navBg.classList.toggle('z-40');
+            navBg.classList.toggle('z-0');
+            navBg.classList.toggle('opacity-0');
+            navMenu.classList.toggle('-translate-x-full');
+            navBtn1.classList.toggle('translate-y-3.5');
+            navBtn1.classList.toggle('rotate-45');
+            navBtn2.classList.toggle('-translate-x-2');
+            navBtn2.classList.toggle('opacity-0');
+            navBtn3.classList.toggle('-translate-y-2');
+            navBtn3.classList.toggle('-rotate-45');
+        }
+    });
 
-                <div class="intro-y box">
-                    <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
-                        <h3 class="mr-auto text-base font-medium">
-                            Update User Information
-                        </h3>
-                    </div>
-                    <div id="vertical-form" class="p-5">
-                        <form class="space-y-4 preview" id="updateUserForm">
-                            <div class="mt-2 text-green-500 pristine-error fade-in first-letter" id="MESSAGEERROR">
-                            </div>
-                            <div>
-                                <label for="name" class="form-label" id="NAMELABEL">Name</label>
-                                <input id="name" name="name" type="text" class="form-control" value="@user.Name">
-                                <div class="mt-2 pristine-error text-primary-3" id="NAMEERROR"></div>
-                            </div>
-                            <div>
-                                <label for="email" class="form-label" id="EMAILLABEL">Email</label>
-                                <input id="email" name="email" type="text" class="form-control" value="@user.Email">
-                                <div class="mt-2 pristine-error text-primary-3" id="EMAILERROR"></div>
-                            </div>
-                            <div>
-                                <label for="address" class="form-label" id="ADDRESSLABEL">Address</label>
-                                <input id="address" name="address" type="text" class="form-control"
-                                    value="@user.Address">
-                                <div class="mt-2 pristine-error text-primary-3" id="ADDRESSERROR"></div>
-                            </div>
-                            <div>
-                                <label for="phone" class="form-label" id="PHONELABEL">Phone</label>
-                                <input id="phone" name="phone" type="text" class="form-control" value="@user.Phone">
-                                <div class="mt-2 pristine-error text-primary-3" id="PHONEERROR"></div>
-                            </div>
-                            <div>
-                                @await Html.PartialAsync("~/Views/Components/Form/FormBtn.cshtml", "Update Account")
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-<script src="~/js/adminCommon.js"></script>
-<script src="~/ui/admin/app.js"></script>
-<script src="~/js/updateUser.js"></script>
-}
+</script>

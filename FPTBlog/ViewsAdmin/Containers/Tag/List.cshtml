@@ -1,0 +1,74 @@
+@using FPTBlog.Src.TagModule.Entity
+@{
+    var listTags = (List<IDictionary<string, object>>)this.ViewData["tags"];
+
+
+}
+
+<main class="z-10 main">
+    @await Html.PartialAsync("../../Components/Navbar/NavbarMobile.cshtml")
+    <div class="flex flex-1 overflow-hidden ">
+        @await Html.PartialAsync("../../Components/Navbar/NavbarSideMenu.cshtml")
+        <div class="content">
+            @await Html.PartialAsync("../../Components/Navbar/NavbarTop.cshtml")
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                ID
+                            </th>
+                            <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                Name
+                            </th>
+                            <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                Status
+                            </th>
+                            <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                Total of post
+                            </th>
+                            <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                Create Date
+                            </th>
+                            <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                View Post
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var listTagItem in listTags)
+                        {
+                            var quantity = listTagItem["quantity"];
+                            var tag = (Tag)listTagItem["tag"];
+
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">@tag.TagId</td>
+                                <td class="border">@tag.Name</td>
+                                <td class="border">
+                                    @await Html.PartialAsync(
+                                "../../Components/Table/TableStatus.cshtml",
+                                tag.Status == TagStatus.ACTIVE)
+
+                                </td>
+                                <td class="border">
+                                    @quantity
+                                </td>
+                                <td class="border">@tag.CreateDate</td>
+                                <td class="border">
+                                    <button class="mb-2 mr-1 btn btn-primary">
+                                        <i data-feather="eye" class="w-5 h-5"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+@section Scripts {
+<script src="https://heaty566.github.io/script-service/fptscript/app.js"></script>
+
+}

@@ -4,8 +4,8 @@ import { ServerResponse } from '../interface/serverResponse';
 export function requestInterceptor(req: AxiosRequestConfig) {
     const btn = document.getElementById('form-btn');
     const loading = document.getElementById('loading');
-    const message = document.getElementById('message');
-    const errorMessage = document.getElementById('errorMessage');
+    const message = document.getElementById('MESSAGEERROR');
+    const errorMessage = document.getElementById('ERRORMESSAGEERROR');
 
     for (const key in req.data) {
         const error = document.getElementById(`${key.toUpperCase()}ERROR`);
@@ -60,12 +60,13 @@ export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>
     if (error.response?.data?.details) {
         const details = error.response.data.details;
         for (const key in details) {
-            const label = document.getElementById(`${key.toUpperCase()}LABEL`);
             const error = document.getElementById(`${key.toUpperCase()}ERROR`);
 
-            if (label && error) {
-                error.innerHTML = `${label.innerHTML} ${details[key]}`;
-            } else if (error && (key === 'errorMessage' || key === 'message')) {
+            if (error) {
+                error.innerHTML = `${error.getAttribute('data-label')} ${details[key]}`;
+            }
+
+            if (error && (key === 'errorMessage' || key === 'message')) {
                 error.innerHTML = `${details[key]}`;
             }
         }

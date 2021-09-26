@@ -5,53 +5,43 @@ using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Utils;
 using FPTBlog.Src.BlogModule.Entity;
 
-namespace FPTBlog.Src.TagModule
-{
-    public class TagRepository : ITagRepository
-    {
+namespace FPTBlog.Src.TagModule {
+    public class TagRepository : ITagRepository {
         private readonly DB Db;
-        public TagRepository(DB Db)
-        {
+        public TagRepository(DB Db) {
             this.Db = Db;
         }
 
-        public List<Tag> GetTags()
-        {
+        public List<Tag> GetTags() {
             List<Tag> list = this.Db.Tag.ToList();
             return list;
         }
 
-        public int GetQualityBlogOfTag(string tagId)
-        {
+        public int GetQualityBlogOfTag(string tagId) {
             List<BlogTag> listBlogByTag = (from BlogTag in this.Db.BlogTag
                                            where tagId.CompareTo(BlogTag.TagId) == 0
                                            select BlogTag).ToList();
             return listBlogByTag.Count();
         }
 
-        public Tag GetTagByName(string name)
-        {
+        public Tag GetTagByName(string name) {
             var tag = this.Db.Tag.FirstOrDefault(item => item.Name == name);
             return tag;
         }
 
-        public Tag GetTagByTagId(string tagId)
-        {
+        public Tag GetTagByTagId(string tagId) {
             var tag = this.Db.Tag.Find(tagId);
             return tag;
         }
 
-        public bool SaveTag(Tag tag)
-        {
+        public bool SaveTag(Tag tag) {
             this.Db.Tag.Add(tag);
             return this.Db.SaveChanges() > 0;
         }
 
-        public bool UpdateTag(Tag tag)
-        {
+        public bool UpdateTag(Tag tag) {
             Tag obj = this.Db.Tag.FirstOrDefault(item => item.TagId == tag.TagId);
-            if (obj == null)
-            {
+            if (obj == null) {
                 return false;
             }
 
@@ -60,11 +50,9 @@ namespace FPTBlog.Src.TagModule
             return this.Db.SaveChanges() > 0;
         }
 
-        public bool DeleteTag(string tagId)
-        {
+        public bool DeleteTag(string tagId) {
             Tag obj = this.Db.Tag.FirstOrDefault(item => item.TagId == tagId);
-            if (obj == null)
-            {
+            if (obj == null) {
                 return false;
             }
 

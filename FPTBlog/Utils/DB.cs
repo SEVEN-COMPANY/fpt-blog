@@ -7,29 +7,34 @@ using System;
 using System.Threading.Tasks;
 using FPTBlog.Src.BlogModule.Entity;
 
-namespace FPTBlog.Utils
-{
-    public class DB : DbContext
-    {
+namespace FPTBlog.Utils {
+    public class DB : DbContext {
         private IConfig Config;
-        public DB(IConfig config)
-        {
+        public DB(IConfig config) {
             this.Config = config;
         }
-        public DbSet<User> User { set; get; }
-        public DbSet<Tag> Tag { set; get; }
-        public DbSet<Category> Category { set; get; }
-        public DbSet<Blog> Blog { set; get; }
-        public DbSet<BlogTag> BlogTag {get;set;}
+        public DbSet<User> User {
+            set; get;
+        }
+        public DbSet<Tag> Tag {
+            set; get;
+        }
+        public DbSet<Category> Category {
+            set; get;
+        }
+        public DbSet<Blog> Blog {
+            set; get;
+        }
+        public DbSet<BlogTag> BlogTag {
+            get; set;
+        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(this.Config.GetEnvByKey("DB_URL"));
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<BlogTag>().HasKey(item => new { item.BlogId, item.TagId });
 
             modelBuilder.Entity<BlogTag>()
@@ -44,12 +49,10 @@ namespace FPTBlog.Utils
 
             base.OnModelCreating(modelBuilder);
         }
-        public static async Task<Boolean> InitDatabase(IConfig config)
-        {
+        public static async Task<Boolean> InitDatabase(IConfig config) {
             var dbContext = new DB(config);
             bool result = await dbContext.Database.EnsureCreatedAsync();
-            if (result)
-            {
+            if (result) {
                 Console.WriteLine("Database created");
             }
 

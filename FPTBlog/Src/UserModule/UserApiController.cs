@@ -10,28 +10,24 @@ using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 
-namespace FPTBlog.Src.UserModule
-{
+namespace FPTBlog.Src.UserModule {
     [Route("/api/user")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class UserApiController : Controller
-    {
+    public class UserApiController : Controller {
 
 
         private readonly IAuthService AuthService;
 
         private readonly IUserService UserService;
-        public UserApiController(IUserService userService, IAuthService authService)
-        {
+        public UserApiController(IUserService userService, IAuthService authService) {
             this.UserService = userService;
             this.AuthService = authService;
         }
 
         [HttpGet("")]
-        public IActionResult GetUser()
-        {
+        public IActionResult GetUser() {
             var res = new ServerApiResponse<User>();
-            var user = (User)this.ViewData["user"];
+            var user = (User) this.ViewData["user"];
             user.Password = "";
 
             res.data = user;
@@ -39,16 +35,14 @@ namespace FPTBlog.Src.UserModule
         }
 
         [HttpPut("")]
-        public IActionResult UpdateUserHandler([FromBody] UpdateUserDto input)
-        {
+        public IActionResult UpdateUserHandler([FromBody] UpdateUserDto input) {
             var res = new ServerApiResponse<User>();
 
 
-            User currentUser = (User)this.ViewData["user"];
+            User currentUser = (User) this.ViewData["user"];
 
             ValidationResult result = new UpdateUserDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -65,29 +59,25 @@ namespace FPTBlog.Src.UserModule
         }
 
         [HttpPost("change-password")]
-        public IActionResult ChangePasswordHandler([FromBody] ChangePassDto body)
-        {
+        public IActionResult ChangePasswordHandler([FromBody] ChangePassDto body) {
 
 
             var res = new ServerApiResponse<string>();
-            User user = (User)this.ViewData["user"];
+            User user = (User) this.ViewData["user"];
 
             ValidationResult result = new ChangePassDtoValidator().Validate(body);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if (user.GoogleId != null)
-            {
+            if (user.GoogleId != null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var isCorrectPassword = this.AuthService.ComparePassword(body.OldPassword, user.Password);
-            if (!isCorrectPassword)
-            {
+            if (!isCorrectPassword) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -99,12 +89,10 @@ namespace FPTBlog.Src.UserModule
         }
 
         [HttpGet("search")]
-        public IActionResult GetUsersByPage(int pageSize, int page, string search)
-        {
+        public IActionResult GetUsersByPage(int pageSize, int page, string search) {
             IDictionary<string, object> dataRes = new Dictionary<string, object>();
             ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
-            if (search == null)
-            {
+            if (search == null) {
                 search = "";
             }
             var (users, total) = this.UserService.GetUsersByPageAndCount(pageSize, page - 1, search);

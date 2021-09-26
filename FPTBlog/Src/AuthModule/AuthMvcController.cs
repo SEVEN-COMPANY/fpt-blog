@@ -15,19 +15,16 @@ using Microsoft.AspNetCore.Http;
 using FPTBlog.Utils.Interface;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace FPTBlog.Src.AuthModule
-{
+namespace FPTBlog.Src.AuthModule {
 
     [Route("/auth")]
-    public class AuthMvcController : Controller
-    {
+    public class AuthMvcController : Controller {
 
 
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
         private readonly IJwtService JwtService;
-        public AuthMvcController(IAuthService authService, IJwtService jwtService, IUserService userService)
-        {
+        public AuthMvcController(IAuthService authService, IJwtService jwtService, IUserService userService) {
             this.AuthService = authService;
             this.UserService = userService;
             this.JwtService = jwtService;
@@ -35,32 +32,28 @@ namespace FPTBlog.Src.AuthModule
 
 
         [HttpGet("login")]
-        public IActionResult LoginPage()
-        {
+        public IActionResult LoginPage() {
             return View(Routers.Login.Page);
         }
 
         [HttpGet("google")]
-        public IActionResult LoginGoogle([FromQuery(Name = "credential")] string credential)
-        {
+        public IActionResult LoginGoogle([FromQuery(Name = "credential")] string credential) {
             JwtSecurityToken jwtToken = this.JwtService.Decode(credential);
-            string id = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
+            string id = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
             User user = this.UserService.GetUserByGoogleId(id);
-            if (user == null)
-            {
+            if (user == null) {
                 user = new User();
                 user.UserId = Guid.NewGuid().ToString();
-                user.GoogleId = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
-                user.Name = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "name");
-                user.Email = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "email");
-                user.AvatarUrl = (string)this.JwtService.GetDataFromJwtToken(jwtToken, "picture");
+                user.GoogleId = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
+                user.Name = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "name");
+                user.Email = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "email");
+                user.AvatarUrl = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "picture");
                 user.Role = UserRole.STUDENT;
                 this.UserService.SaveUser(user);
             }
 
             var token = this.JwtService.GenerateToken(user.UserId);
-            this.HttpContext.Response.Cookies.Append("auth-token", token, new CookieOptions()
-            {
+            this.HttpContext.Response.Cookies.Append("auth-token", token, new CookieOptions() {
                 Expires = DateTime.Now.AddDays(30),
                 SameSite = SameSiteMode.None,
                 Secure = true
@@ -73,19 +66,16 @@ namespace FPTBlog.Src.AuthModule
 
 
         [HttpGet("register")]
-        public IActionResult RegisterPage()
-        {
+        public IActionResult RegisterPage() {
             return View(Routers.Register.Page);
         }
 
         [HttpGet("logout")]
         [ServiceFilter(typeof(AuthGuard))]
-        public IActionResult LogoutHandler()
-        {
+        public IActionResult LogoutHandler() {
 
             var res = new ServerApiResponse<string>();
-            this.HttpContext.Response.Cookies.Append("auth-token", "", new CookieOptions()
-            {
+            this.HttpContext.Response.Cookies.Append("auth-token", "", new CookieOptions() {
                 Expires = DateTime.Now.AddDays(-1),
                 SameSite = SameSiteMode.None,
                 Secure = true
