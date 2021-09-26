@@ -13,27 +13,23 @@ using System;
 using FPTBlog.Src.BlogModule.Interface;
 
 
-namespace FPTBlog.Src.CategoryModule
-{
+namespace FPTBlog.Src.CategoryModule {
     [Route("/api/category")]
     // [ServiceFilter(typeof(AuthGuard))]
 
-    public class CategoryApiController : Controller
-    {
+    public class CategoryApiController : Controller {
 
         private readonly ICategoryService CategoryService;
         private readonly IBlogService BlogService;
 
 
-        public CategoryApiController(ICategoryService categoryService, IBlogService blogService)
-        {
+        public CategoryApiController(ICategoryService categoryService, IBlogService blogService) {
             this.BlogService = blogService;
             this.CategoryService = categoryService;
         }
 
         [HttpGet("")]
-        public ObjectResult GetCategories()
-        {
+        public ObjectResult GetCategories() {
             var res = new ServerApiResponse<List<Category>>();
             List<Category> list = this.CategoryService.GetCategories();
             res.data = list;
@@ -41,20 +37,17 @@ namespace FPTBlog.Src.CategoryModule
         }
 
         [HttpPost("")]
-        public ObjectResult HandleCreateCategory([FromBody] CreateCategoryDTO body)
-        {
+        public ObjectResult HandleCreateCategory([FromBody] CreateCategoryDTO body) {
 
             var res = new ServerApiResponse<Category>();
             ValidationResult result = new CreateCategoryDTOValidator().Validate(body);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var isExistCategory = this.CategoryService.GetCategoryByCategoryName(body.Name);
-            if (isExistCategory != null)
-            {
+            if (isExistCategory != null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "name");
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -73,29 +66,24 @@ namespace FPTBlog.Src.CategoryModule
         }
 
         [HttpPost("update")]
-        public ObjectResult HandleUpdateCategory([FromBody] UpdateCategoryDTO body)
-        {
+        public ObjectResult HandleUpdateCategory([FromBody] UpdateCategoryDTO body) {
             var res = new ServerApiResponse<string>();
 
             ValidationResult result = new UpdateCategoryDTOValidator().Validate(body);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var category = this.CategoryService.GetCategoryByCategoryId(body.CategoryId);
-            if (category == null)
-            {
+            if (category == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "categoryId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            if (category.Name != body.Name)
-            {
+            if (category.Name != body.Name) {
                 var isExistCategory = this.CategoryService.GetCategoryByCategoryName(body.Name);
-                if (isExistCategory != null)
-                {
+                if (isExistCategory != null) {
                     res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "name");
                     return new BadRequestObjectResult(res.getResponse());
                 }

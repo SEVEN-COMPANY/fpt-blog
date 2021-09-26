@@ -1,0 +1,9 @@
+@{
+      var error = $"{Model.Name.ToUpper()}ERROR";
+}
+
+<div>
+      <label for="@Model.Name" class="form-label">@Model.Label</label>
+      <input id="@Model.Name" name="@Model.Name" type="@Model.Type" class="form-control" value="@Model.Value">
+      <div class="mt-2 pristine-error text-primary-3 fade-in" id="@error" data-label="@Model.Label"></div>
+</div>

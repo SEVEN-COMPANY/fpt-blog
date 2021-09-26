@@ -4,6 +4,7 @@ module.exports = {
     entry: {
         'auth-login': ['./src/auth/login.ts'],
         'auth-register': ['./src/auth/register.ts'],
+        'category-create': ['./src/category/create.ts'],
     },
     output: {
         path: __dirname + '/../wwwroot/js',

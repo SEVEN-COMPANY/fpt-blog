@@ -9,29 +9,31 @@
             class="w-full px-4 py-8 mx-2 space-y-4 bg-white border rounded-md shadow-xl md:px-4 md:py-16 md:w-96 fade-in bg-opacity-90">
             <h1 class="text-4xl font-semibold text-center">Register Account</h1>
             @* Form Start *@
+
+            @await Html.PartialAsync("../../Components/User/Form/FormMsg.cshtml")
             <form class="space-y-6 fade-in" id="registerForm">
-                  @await Html.PartialAsync("../../Components/Form/User/TextField.cshtml",
+                  @await Html.PartialAsync("../../Components/User/Form/TextField.cshtml",
                   new {Label="Name",Name="name", Type="text", Value=""})
 
-                  @await Html.PartialAsync("../../Components/Form/User/TextField.cshtml",
+                  @await Html.PartialAsync("../../Components/User/Form/TextField.cshtml",
                   new {Label="Username",Name="username", Type="text", Value=""})
 
-                  @await Html.PartialAsync("../../Components/Form/User/TextField.cshtml",
+                  @await Html.PartialAsync("../../Components/User/Form/TextField.cshtml",
                   new {Label="Password", Name="password", Type="password", Value=""})
 
-                  @await Html.PartialAsync("../../Components/Form/User/TextField.cshtml",
+                  @await Html.PartialAsync("../../Components/User/Form/TextField.cshtml",
                   new {Label="Confirm Password", Name="confirmPassword", Type="password", Value=""})
 
-                  @await Html.PartialAsync("../../Components/Form/User/FormBtn.cshtml",
+                  @await Html.PartialAsync("../../Components/User/Form/FormBtn.cshtml",
                   new {Label="Sign Up" })
             </form>
             @* Form End *@
 
             @* Support Start *@
             <div class="space-y-2">
-                  @await Html.PartialAsync("../../Components/Form/User/FormDivider.cshtml")
-                  @await Html.PartialAsync("../../Components/Form/User/FormGoogle.cshtml")
-                  @await Html.PartialAsync("../../Components/Form/User/FormBottomLink.cshtml",
+                  @await Html.PartialAsync("../../Components/User/Form/FormDivider.cshtml")
+                  @await Html.PartialAsync("../../Components/User/Form/FormGoogle.cshtml")
+                  @await Html.PartialAsync("../../Components/User/Form/FormBottomLink.cshtml",
                   new {Label="Login Your Account Instead?", Link = Routers.Login.Link})
             </div>
             @* Support End *@
