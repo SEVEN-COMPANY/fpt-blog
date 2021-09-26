@@ -14,34 +14,27 @@ using FPTBlog.Utils.Interface;
 using FPTBlog.Utils.Locale;
 using FPTBlog.Utils.Common;
 
-namespace FPTBlog.Src.AuthModule
-{
-    public class AuthGuard : IActionFilter
-    {
+namespace FPTBlog.Src.AuthModule {
+    public class AuthGuard : IActionFilter {
         private readonly IJwtService JWTService;
         private readonly IUserRepository UserRepository;
-        public AuthGuard(IJwtService jwtService, IUserRepository userRepository)
-        {
+        public AuthGuard(IJwtService jwtService, IUserRepository userRepository) {
 
             this.JWTService = jwtService;
             this.UserRepository = userRepository;
         }
 
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
+        public void OnActionExecuted(ActionExecutedContext context) {
 
 
         }
 
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
+        public void OnActionExecuting(ActionExecutingContext context) {
             bool isValid = this.GuardHandler(context);
-            if (!isValid)
-            {
+            if (!isValid) {
                 Controller controller = context.Controller as Controller;
                 ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, controller.ViewData);
-                context.Result = new ViewResult
-                {
+                context.Result = new ViewResult {
                     ViewName = Routers.Login.Page,
                 };
                 return;
@@ -49,54 +42,45 @@ namespace FPTBlog.Src.AuthModule
             }
         }
 
-        public bool GuardHandler(ActionExecutingContext context)
-        {
+        public bool GuardHandler(ActionExecutingContext context) {
 
-            try
-            {
+            try {
                 var cookies = new Dictionary<string, string>();
-                var values = ((string)context.HttpContext.Request.Headers["Cookie"]).Split(',', ';');
+                var values = ((string) context.HttpContext.Request.Headers["Cookie"]).Split(',', ';');
 
 
-                foreach (var parts in values)
-                {
+                foreach (var parts in values) {
                     var cookieArray = parts.Trim().Split('=');
-                    if(cookieArray.Length >= 2){
+                    if (cookieArray.Length >= 2) {
                         cookies.Add(cookieArray[0], cookieArray[1]);
                     }
                 }
 
-                if (!cookies.TryGetValue("auth-token", out _))
-                {
+                if (!cookies.TryGetValue("auth-token", out _)) {
                     return false;
                 }
                 var token = this.JWTService.VerifyToken(cookies["auth-token"]).Split(";");
 
-                if (token[0] == null)
-                {
+                if (token[0] == null) {
                     return false;
                 }
                 var user = this.UserRepository.GetUserByUserId(token[0]);
-                if (user == null)
-                {
+                if (user == null) {
                     return false;
                 }
                 Controller controller = context.Controller as Controller;
                 controller.ViewData["user"] = user;
 
                 // check user's role
-                if (context.ActionArguments.TryGetValue("roles", out _))
-                {
+                if (context.ActionArguments.TryGetValue("roles", out _)) {
                     UserRole[] roles = context.ActionArguments["roles"] as UserRole[];
-                    if (!roles.Contains(user.Role))
-                    {
+                    if (!roles.Contains(user.Role)) {
                         return false;
                     }
                 }
 
                 // check user status
-                if (user.Status == UserStatus.DISABLE)
-                {
+                if (user.Status == UserStatus.DISABLE) {
                     return false;
                 }
 
@@ -104,8 +88,7 @@ namespace FPTBlog.Src.AuthModule
                 return true;
 
             }
-            catch (Exception error)
-            {
+            catch (Exception error) {
                 Console.WriteLine(error);
                 return false;
             }

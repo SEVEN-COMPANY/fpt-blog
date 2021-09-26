@@ -1,20 +1,17 @@
 @using FPTBlog.Src.CategoryModule.Entity
+@using FPTBlog.Utils.Common
 
-@section Styles {
-<link rel="stylesheet" href="https://heaty566.github.io/script-service/fptscript/app.css">
-}
 
 @{
-    this.ViewData["Title"] = Routers.Category.Title;
     var categories = (List<Category>)this.ViewData["categories"];
 }
 
 <main class="z-10 main">
-    @await Html.PartialAsync("../../../Components/Admin/Navbar/NavbarMobile.cshtml")
+    @await Html.PartialAsync("../../Components/Navbar/NavbarMobile.cshtml")
     <div class="flex flex-1 overflow-hidden ">
-        @await Html.PartialAsync("../../../Components/Admin/Navbar/NavbarSideMenu.cshtml")
+        @await Html.PartialAsync("../../Components/Navbar/NavbarSideMenu.cshtml")
         <div class="content">
-            @await Html.PartialAsync("../../../Components/Admin/Navbar/NavbarTop.cshtml")
+            @await Html.PartialAsync("../../Components/Navbar/NavbarTop.cshtml")
             <div class="flex items-center mt-8 intro-y">
                 <h2 class="mr-auto text-lg font-medium">
                     Catagory Management
@@ -32,16 +29,16 @@
                             </h2>
                         </div>
                         <div id="vertical-form" class="p-5">
-                            @await Html.PartialAsync("../../../Components/Admin/Form/FormMsg.cshtml")
+                            @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
                             <form class="space-y-4 preview" id="createCategoryForm">
-                                @await Html.PartialAsync("../../../Components/Admin/Form/TextField.cshtml",
+                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                                 new { Name = "name", Label = "Name", Type = "text", Value = "" })
-                                @await Html.PartialAsync("../../../Components/Admin/Form/TextField.cshtml",
+                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                                 new { Name = "description", Label = "Description", Type = "text", Value
                                 = "" })
-                                @await Html.PartialAsync("../../../Components/Admin/Form/StatusField.cshtml",
+                                @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
                                 new { Name = "description", Label = "Description", Value = true })
-                                @await Html.PartialAsync("../../../Components/Admin/Form/FormBtn.cshtml",
+                                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                                 new { Label = "Create New" })
                             </form>
                         </div>
@@ -88,7 +85,7 @@
                                             @foreach (var item in categories)
                                             {
                                                 var link =
-                                                $"{Routers.UpdateCategory.Link}?categoryId={item.CategoryId}";
+                                                $"{RoutersAdmin.UpdateCategory.Link}?categoryId={item.CategoryId}";
 
                                                 <tr class="hover:bg-gray-200">
                                                     <td class="border">@item.CategoryId</td>
@@ -96,7 +93,7 @@
                                                     <td class="border">@item.Description</td>
                                                     <td class="border">
                                                         @await Html.PartialAsync(
-                                                    "../../../Components/Admin/Table/TableStatus.cshtml",
+                                                    "../../Components/Table/TableStatus.cshtml",
                                                     item.Status == CategoryStatus.ACTIVE)
                                                     </td>
                                                     <td class="border">@item.CreateDate</td>

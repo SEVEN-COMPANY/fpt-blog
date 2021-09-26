@@ -16,59 +16,50 @@ using Microsoft.AspNetCore.Http;
 using FPTBlog.Utils.Interface;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace FPTBlog.Src.AuthModule
-{
+namespace FPTBlog.Src.AuthModule {
     [Route("/api/auth")]
 
-    public class AuthApiController : Controller
-    {
+    public class AuthApiController : Controller {
 
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
         private readonly IJwtService JwtService;
-        public AuthApiController(IAuthService authService, IJwtService jwtService, IUserService userService)
-        {
+        public AuthApiController(IAuthService authService, IJwtService jwtService, IUserService userService) {
             this.AuthService = authService;
             this.UserService = userService;
             this.JwtService = jwtService;
         }
 
         [HttpPost("login")]
-        public ObjectResult LoginHandler([FromBody] LoginUserDto body)
-        {
+        public ObjectResult LoginHandler([FromBody] LoginUserDto body) {
             var res = new ServerApiResponse<string>();
 
             ValidationResult result = new LoginUserDtoValidator().Validate(body);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
 
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var user = this.UserService.GetUserByUsername(body.Username);
-            if (user == null)
-            {
+            if (user == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if ((int)user.Status == 0)
-            {
+            if ((int) user.Status == 0) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_DISSABLED_ACCOUNT);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var isCorrectPassword = this.AuthService.ComparePassword(body.Password, user.Password);
-            if (!isCorrectPassword)
-            {
+            if (!isCorrectPassword) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_LOGIN_FAIL);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var token = this.JwtService.GenerateToken(user.UserId);
-            this.HttpContext.Response.Cookies.Append("auth-token", token, new CookieOptions()
-            {
+            this.HttpContext.Response.Cookies.Append("auth-token", token, new CookieOptions() {
                 Expires = DateTime.Now.AddDays(30),
                 SameSite = SameSiteMode.None,
                 Secure = true
@@ -79,20 +70,17 @@ namespace FPTBlog.Src.AuthModule
         }
 
         [HttpPost("register")]
-        public IActionResult RegisterHandler([FromBody] RegisterUserDto body)
-        {
+        public IActionResult RegisterHandler([FromBody] RegisterUserDto body) {
             var res = new ServerApiResponse<string>();
 
             ValidationResult result = new RegisterUserDtoValidator().Validate(body);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var isExistUser = this.UserService.GetUserByUsername(body.Username);
-            if (isExistUser != null)
-            {
+            if (isExistUser != null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "username");
                 return new BadRequestObjectResult(res.getResponse());
             }
