@@ -21,10 +21,6 @@ namespace FPTBlog.Utils.Common {
         // Admin
         public static readonly RouterItem AdminDashboard = new RouterItem() { Page = "/Views/Containers/Admin/Dashboard.cshtml", Title = "Change Pass", Link = "/admin" };
 
-        // Tag
-        public static readonly RouterItem AddTag = new RouterItem() { Page = "/Views/Containers/Tag/AddTag.cshtml", Title = "Add Tag", Link = "/tag/add" };
-        public static readonly RouterItem UpdateTag = new RouterItem() { Page = "/Views/Containers/Tag/UpdateTag.cshtml", Title = "Update Tag", Link = "/tag/update" };
-        public static readonly RouterItem GetTags = new RouterItem() { Page = "/Views/Containers/Tag/GetTags.cshtml", Title = "Get Tags", Link = "/tag" };
 
         // Blog
         public static readonly RouterItem GetBlog = new RouterItem() { Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/blog/get" };

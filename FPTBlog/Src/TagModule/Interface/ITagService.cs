@@ -3,10 +3,8 @@ using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.BlogModule.Entity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FPTBlog.Src.TagModule.Interface
-{
-    public interface ITagService
-    {
+namespace FPTBlog.Src.TagModule.Interface {
+    public interface ITagService {
         public bool SaveTag(Tag tag);
         public Tag GetTagByTagId(string tagId);
         public Tag GetTagByName(string name);

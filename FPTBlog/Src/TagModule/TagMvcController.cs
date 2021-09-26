@@ -13,43 +13,36 @@ using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FPTBlog.Src.TagModule
-{
-    [Route("tag")]
-    public class TagMvcController : Controller
-    {
+namespace FPTBlog.Src.TagModule {
+    [Route("admin/tag")]
+    public class TagMvcController : Controller {
         private readonly ITagService TagService;
-        public TagMvcController(ITagService tagService)
-        {
+        public TagMvcController(ITagService tagService) {
             this.TagService = tagService;
         }
 
         [HttpGet("add")]
-        public IActionResult AddTagPage()
-        {
-            return View(Routers.AddTag.Page);
+        public IActionResult AddTagPage() {
+            return View(RoutersAdmin.AddTag.Page);
         }
 
         [HttpGet("update")]
-        public IActionResult UpdateTagPage(string tagId)
-        {
+        public IActionResult UpdateTagPage(string tagId) {
             Tag tag = this.TagService.GetTagByTagId(tagId);
-            if (tag == null)
-            {
+            if (tag == null) {
                 ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
-                return View(Routers.UpdateTag.Page);
+                return View(RoutersAdmin.UpdateTag.Page);
             }
             ViewData["tag"] = tag;
-            return View(Routers.UpdateTag.Page);
+            return View(RoutersAdmin.UpdateTag.Page);
         }
 
         [HttpGet("")]
-        public IActionResult GetTagsPage()
-        {
-            SelectList tags = new SelectList(this.TagService.GetRadioStatusList(), TagStatus.ACTIVE.ToString());
-            this.ViewData["tags"] = tags;
+        public IActionResult GetTagsPage() {
+            var listTag = this.TagService.GetTagsWithCount();
+            ViewData["tags"] = listTag;
 
-            return View(Routers.GetTags.Page);
+            return View(RoutersAdmin.GetTags.Page);
         }
     }
 }
