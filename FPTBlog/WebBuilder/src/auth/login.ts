@@ -13,12 +13,14 @@ loginForm?.addEventListener('submit', function (event: Event) {
     const username = document.getElementById('username') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
 
-    if (username && password) {
+    if (username !== null && password !== null) {
         const input: LoginUserDto = {
             username: username.value,
             password: password.value,
         };
 
         http.post<ServerResponse<null>>(routers.loginUser, input).then(() => window.location.assign(routerLinks.home));
+    } else {
+        console.log('login form wrong');
     }
 });

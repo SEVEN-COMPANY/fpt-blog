@@ -14,78 +14,68 @@ using FPTBlog.Src.BlogModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
-namespace FPTBlog.Src.CategoryModule
-{
-    [Route("/admin/category")]
-    [ServiceFilter(typeof(AuthGuard))]
-    public class CategoryMvcController : Controller
-    {
-        private readonly ICategoryService CategoryService;
-        private readonly IBlogService BlogService;
+namespace FPTBlog.Src.CategoryModule {
+      [Route("/admin/category")]
+      [ServiceFilter(typeof(AuthGuard))]
+      public class CategoryMvcController : Controller {
+            private readonly ICategoryService CategoryService;
+            private readonly IBlogService BlogService;
 
 
-        public CategoryMvcController(ICategoryService categoryService, IBlogService blogService)
-        {
-            this.BlogService = blogService;
-            this.CategoryService = categoryService;
-        }
-
-        [HttpGet("")]
-        public IActionResult Category()
-        {
-            var categories = this.CategoryService.GetCategories();
-            this.ViewData["categories"] = categories;
-            return View(Routers.Category.Page);
-        }
-
-        [HttpGet("create")]
-        public IActionResult AddCategoryPage()
-        {
-            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
-            this.ViewData["status"] = list;
-
-            return View(Routers.CreateCategory.Page);
-        }
-
-        [HttpGet("update")]
-        public IActionResult UpdateCategory(string categoryId)
-        {
-            var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
-            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
-            this.ViewData["status"] = list;
-            this.ViewData["category"] = category;
-            return View(Routers.UpdateCategory.Page);
-        }
-
-
-        [HttpPost("blog/add")]
-        public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input)
-        {
-            Console.WriteLine(input.BlogId);
-            ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
-                return "not pass validation";
+            public CategoryMvcController(ICategoryService categoryService, IBlogService blogService) {
+                  this.BlogService = blogService;
+                  this.CategoryService = categoryService;
             }
 
-            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-            if (blog == null)
-            {
-
-                return "blog not found";
+            [HttpGet("")]
+            public IActionResult Category() {
+                  var categories = this.CategoryService.GetCategories();
+                  this.ViewData["categories"] = categories;
+                  return View(Routers.Category.Page);
             }
 
-            Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
-            if (category == null)
-            {
+            [HttpGet("create")]
+            public IActionResult AddCategoryPage() {
+                  SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
+                  this.ViewData["status"] = list;
 
-                return "category not found";
+                  return View(Routers.CreateCategory.Page);
             }
 
-            blog.CategoryId = input.CategoryId;
-            this.BlogService.UpdateBlog(blog);
+            [HttpGet("update")]
+            public IActionResult UpdateCategory(string categoryId) {
+                  var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
+                  SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
+                  this.ViewData["status"] = list;
+                  this.ViewData["category"] = category;
+                  return View(Routers.UpdateCategory.Page);
+            }
 
-            return "ok";
-        }
-    }
+
+            [HttpPost("blog/add")]
+            public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input) {
+                  Console.WriteLine(input.BlogId);
+                  ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
+                  if (!result.IsValid) {
+                        return "not pass validation";
+                  }
+
+                  Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+                  if (blog == null) {
+
+                        return "blog not found";
+                  }
+
+                  Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
+                  if (category == null) {
+
+                        return "category not found";
+                  }
+
+                  blog.CategoryId = input.CategoryId;
+                  this.BlogService.UpdateBlog(blog);
+
+                  return "ok";
+            }
+      }
 }

@@ -18,7 +18,7 @@ registerForm?.addEventListener('submit', function (event: Event) {
     const name = document.getElementById('name') as HTMLInputElement;
     const confirmPassword = document.getElementById('confirmPassword') as HTMLInputElement;
 
-    if (username && password && name && confirmPassword) {
+    if (username !== null && password !== null && name !== null && confirmPassword !== null) {
         const input: RegisterUserDto = {
             username: username.value,
             password: password.value,
@@ -27,5 +27,7 @@ registerForm?.addEventListener('submit', function (event: Event) {
         };
 
         http.post<ServerResponse<null>>(routers.registerUser, input).then(() => window.location.assign(routerLinks.loginForm));
+    } else {
+        console.log('register form wrong');
     }
 });
