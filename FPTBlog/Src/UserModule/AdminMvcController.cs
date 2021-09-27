@@ -20,7 +20,7 @@ namespace FPTBlog.Src.UserModule {
 
 
 
-        [HttpGet("")]
+        [HttpGet("list")]
         public IActionResult GetUsers() {
             var (users, count) = this.UserService.GetUsers();
             this.ViewData["users"] = users;
