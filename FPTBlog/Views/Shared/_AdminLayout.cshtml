@@ -5,15 +5,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Management System | FPT Blog</title>
-    <link rel="stylesheet" href="https://heaty566.github.io/script-service/fptscript/app.css">
+    <link rel="stylesheet" href="https://heaty566.github.io/script-service/midone/rubick/style.css">
+    @* <link href="/style/app.css" rel="stylesheet" /> *@
     <link href="/style/styles.css" rel="stylesheet" />
 </head>
 
 <body>
     <main class="relative">
-        @RenderBody()
+        <div class="z-10 main">
+            @await Html.PartialAsync("../../ViewsAdmin/Components/Navbar/NavbarMobile.cshtml")
+            <div class="flex flex-1 overflow-hidden ">
+                @await Html.PartialAsync("../../ViewsAdmin/Components/Navbar/NavbarSideMenu.cshtml")
+                <div class="content">
+                    @await Html.PartialAsync("../../ViewsAdmin/Components/Navbar/NavbarTop.cshtml")
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
     </main>
-
+    <script src="https://heaty566.github.io/script-service/midone/tinker/app.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

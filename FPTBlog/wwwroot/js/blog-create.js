@@ -10,6 +10,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/blog/create.ts":
+/*!****************************!*\
+  !*** ./src/blog/create.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar createBlogForm = document.getElementById('createNewPost');\r\ncreateBlogForm === null || createBlogForm === void 0 ? void 0 : createBlogForm.addEventListener('click', function (event) {\r\n    axios_1.http.post(routes_1.routers.blog.create).then(function (res) {\r\n        console.log(res.data);\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/blog/create.ts?");
+
+/***/ }),
+
 /***/ "./src/package/axios/index.ts":
 /*!************************************!*\
   !*** ./src/package/axios/index.ts ***!
@@ -37,16 +47,6 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /***/ ((__unused_webpack_module, exports) => {
 
 eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.routers = exports.routerLinks = void 0;\r\nexports.routerLinks = {\r\n    home: '/',\r\n    loginForm: '/auth/login',\r\n};\r\nexports.routers = {\r\n    category: {\r\n        create: '/api/category',\r\n        update: '/api/category/update',\r\n    },\r\n    blog: {\r\n        create: '/api/blog',\r\n    },\r\n    user: {\r\n        changePassword: '/api/user/change-password',\r\n        update: '/api/user',\r\n    },\r\n    tag: {\r\n        getAll: '/api/tag/all',\r\n    },\r\n    loginUser: '/api/auth/login',\r\n    getUser: '/api/user',\r\n    registerUser: '/api/auth/register',\r\n    createBlog: '/api/blog',\r\n    uploadImageBlog: '/api/blog/image',\r\n};\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/axios/routes.ts?");
-
-/***/ }),
-
-/***/ "./src/user/changePassword.ts":
-/*!************************************!*\
-  !*** ./src/user/changePassword.ts ***!
-  \************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar changeUserPassword = document.getElementById('changeUserPasswordForm');\r\nchangeUserPassword === null || changeUserPassword === void 0 ? void 0 : changeUserPassword.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var oldPassword = document.getElementById('oldPassword');\r\n    var newPassword = document.getElementById('newPassword');\r\n    var confirmNewPassword = document.getElementById('confirmNewPassword');\r\n    if (oldPassword !== null && newPassword !== null && confirmNewPassword !== null) {\r\n        var input = {\r\n            oldPassword: oldPassword.value,\r\n            newPassword: newPassword.value,\r\n            confirmNewPassword: confirmNewPassword.value,\r\n        };\r\n        axios_1.http.post(routes_1.routers.user.changePassword, input);\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/user/changePassword.ts?");
 
 /***/ })
 
@@ -81,7 +81,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/user/changePassword.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/blog/create.ts");
 /******/ 	
 /******/ })()
 ;

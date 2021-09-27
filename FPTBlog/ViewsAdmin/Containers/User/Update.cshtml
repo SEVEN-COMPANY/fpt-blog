@@ -1,56 +1,44 @@
 @using FPTBlog.Src.UserModule.Entity
-
-
-
 @{
     var user = (User)this.ViewData["user"];
 }
 
-<main class="z-10 main">
-    @await Html.PartialAsync("../../Components/Navbar/NavbarMobile.cshtml")
-    <div class="flex flex-1 overflow-hidden ">
-        @await Html.PartialAsync("../../Components/Navbar/NavbarSideMenu.cshtml")
-        <div class="content">
-            @await Html.PartialAsync("../../Components/Navbar/NavbarTop.cshtml")
-            <div class="flex items-center mt-8 intro-y">
-                <h2 class="mr-auto text-lg font-medium">
-                    User Management
-                </h2>
+
+<div class="flex items-center mt-8 intro-y">
+    <h2 class="mr-auto text-lg font-medium">
+        User Management
+    </h2>
+</div>
+
+<div class="grid grid-cols-12 gap-4 mt-5">
+    <div class="col-span-12">
+        <div class="max-w-sm intro-y box ">
+            <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
+                <h3 class="mr-auto text-base font-medium">
+                    Update User
+                </h3>
+
             </div>
-            <div class="grid grid-cols-12 gap-4 mt-5">
-                <div class="col-span-12">
-                    <div class="max-w-sm intro-y box ">
-                        <div
-                            class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
-                            <h3 class="mr-auto text-base font-medium">
-                                Update User
-                            </h3>
+            <div id="vertical-form" class="p-5">
+                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                <form class="space-y-4 preview" id="updateUserForm">
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "name", Label = "Name", Type = "text", Value = user.Name })
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "email", Label = "Email", Type = "text", Value = user.Email })
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "address", Label = "address", Type = "text", Value = user.Name })
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "phone", Label = "Phone", Type = "text", Value = user.Phone })
+                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                    new { Label = "Update Information" })
+                </form>
 
-                        </div>
-                        <div id="vertical-form" class="p-5">
-                            @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
-                            <form class="space-y-4 preview" id="updateUserForm">
-                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                                new { Name = "name", Label = "Name", Type = "text", Value = user.Name })
-                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                                new { Name = "email", Label = "Email", Type = "text", Value = user.Email })
-                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                                new { Name = "address", Label = "address", Type = "text", Value = user.Name })
-                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                                new { Name = "phone", Label = "Phone", Type = "text", Value = user.Phone })
-                                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                                new { Label = "Update Information" })
-                            </form>
-
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
+
     </div>
-</main>
+</div>
 @section Scripts {
-<script src="https://heaty566.github.io/script-service/fptscript/app.js"></script>
 <script src="/js/user-update.js"></script>
 }

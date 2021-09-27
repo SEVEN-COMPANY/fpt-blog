@@ -7,34 +7,28 @@ using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FPTBlog.Src.TagModule
-{
+namespace FPTBlog.Src.TagModule {
 
     [ApiController]
     [Route("/api/tag")]
-    public class TagApiController : Controller
-    {
+    public class TagApiController : Controller {
         private readonly ITagService TagService;
-        public TagApiController(ITagService tagService)
-        {
+        public TagApiController(ITagService tagService) {
             this.TagService = tagService;
         }
 
         [HttpPost("")]
-        public ObjectResult AddTagHandler([FromBody] AddTagDto input)
-        {
+        public ObjectResult AddTagHandler([FromBody] AddTagDto input) {
             var res = new ServerApiResponse<Tag>();
 
             ValidationResult result = new AddTagDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             var existedTag = this.TagService.GetTagByName(input.Name);
-            if (existedTag != null)
-            {
+            if (existedTag != null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "name");
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -49,8 +43,7 @@ namespace FPTBlog.Src.TagModule
         }
 
         [HttpGet("all")]
-        public ObjectResult GetQualityBlogOfTagHandler()
-        {
+        public ObjectResult GetQualityBlogOfTagHandler() {
             var res = new ServerApiResponse<object>();
             var listTag = this.TagService.GetTagsWithCount();
             res.data = listTag;
@@ -59,21 +52,18 @@ namespace FPTBlog.Src.TagModule
         }
 
         [HttpPut("")]
-        public IActionResult UpdateTagHandler([FromBody] UpdateTagDto input)
-        {
+        public IActionResult UpdateTagHandler([FromBody] UpdateTagDto input) {
             var res = new ServerApiResponse<Tag>();
 
             var tag = this.TagService.GetTagByTagId(input.TagId);
-            if (tag == null)
-            {
+            if (tag == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "tagId");
                 return new BadRequestObjectResult(res.getResponse());
             }
             this.ViewData["tag"] = tag;
 
             ValidationResult result = new UpdateTagDtoValidator().Validate(input);
-            if (!result.IsValid)
-            {
+            if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
