@@ -10,6 +10,7 @@ namespace FPTBlog.Utils.Common {
 
         public static readonly RouterItem Register = new RouterItem() { Page = "/Views/Containers/Auth/Register.cshtml", Title = "Register", Link = "/auth/register" };
         public static readonly RouterItem Login = new RouterItem() { Page = "/Views/Containers/Auth/Login.cshtml", Title = "Login", Link = "/auth/login" };
+        public static readonly RouterItem Logout = new RouterItem() { Page = "/Views/Containers/Auth/Login.cshtml", Title = "Login", Link = "/auth/logout" };
 
         // Post
         public static readonly RouterItem GetMyPost = new RouterItem() { Page = "/Views/Containers/Post/MyList.cshtml", Title = "Login", Link = "/admin/tag/add" };
