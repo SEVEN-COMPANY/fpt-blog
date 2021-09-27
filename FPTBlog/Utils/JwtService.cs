@@ -6,7 +6,6 @@ using System.Security.Claims;
 using System.Text;
 using FPTBlog.Utils.Interface;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 
 namespace FPTBlog.Utils {
     public class JwtService : IJwtService {

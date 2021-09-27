@@ -1,7 +1,5 @@
-namespace FPTBlog.Utils.Interface
-{
-    public interface IConfig
-    {
+namespace FPTBlog.Utils.Interface {
+    public interface IConfig {
         public string GetEnvByKey(string name);
     }
 }

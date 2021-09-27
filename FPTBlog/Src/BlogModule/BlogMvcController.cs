@@ -1,15 +1,10 @@
-using System;
-using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
-using FPTBlog.Src.BlogModule.DTO;
 using FPTBlog.Src.BlogModule.Entity;
 using FPTBlog.Src.BlogModule.Interface;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
-using FPTBlog.Utils.Locale;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

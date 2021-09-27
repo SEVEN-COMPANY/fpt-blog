@@ -7,7 +7,6 @@ using FPTBlog.Utils.Locale;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FluentValidation.Results;
-using System;
 using System.Collections.Generic;
 
 namespace FPTBlog.Src.UserModule {

@@ -2,40 +2,46 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FPTBlog.Src.CategoryModule.Entity
-{
+namespace FPTBlog.Src.CategoryModule.Entity {
 
-    public enum CategoryStatus
-    {
+    public enum CategoryStatus {
         ACTIVE = 1,
         INACTIVE = 2
     }
 
     [Table("tblCategory")]
-    public class Category
-    {
+    public class Category {
         [Key]
         [Required]
         [StringLength(40)]
-        public string CategoryId { set; get; }
+        public string CategoryId {
+            set; get;
+        }
 
         [Required]
         [StringLength(50)]
-        public string Name { set; get; }
+        public string Name {
+            set; get;
+        }
 
         [Required]
         [StringLength(500)]
-        public string Description { set; get; }
+        public string Description {
+            set; get;
+        }
 
         [Required]
-        public CategoryStatus Status { get; set; }
+        public CategoryStatus Status {
+            get; set;
+        }
 
         [Required]
         [StringLength(50)]
-        public string CreateDate { set; get; }
+        public string CreateDate {
+            set; get;
+        }
 
-        public Category()
-        {
+        public Category() {
             this.CategoryId = Guid.NewGuid().ToString();
             this.Name = "";
             this.Description = "";
@@ -43,8 +49,7 @@ namespace FPTBlog.Src.CategoryModule.Entity
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "Category: \nCategoryId: " + CategoryId + " \nName: " + Name + " \nDescription: " + Description +
             " \nCreateDate: " + CreateDate + " \nStatus: " + Status;
         }

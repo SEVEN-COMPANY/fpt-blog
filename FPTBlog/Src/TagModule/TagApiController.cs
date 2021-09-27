@@ -1,5 +1,4 @@
 using FluentValidation.Results;
-using System.Collections.Generic;
 using FPTBlog.Src.TagModule.DTO;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;

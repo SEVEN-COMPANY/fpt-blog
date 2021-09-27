@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Reflection;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils.Interface;

@@ -1,9 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 
-namespace FPTBlog.Utils.Interface
-{
-    public interface IJwtService
-    {
+namespace FPTBlog.Utils.Interface {
+    public interface IJwtService {
         public string GenerateToken(string data);
 
         public string VerifyToken(string token);

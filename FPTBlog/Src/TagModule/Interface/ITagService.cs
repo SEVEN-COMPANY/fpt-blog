@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
-using FPTBlog.Src.BlogModule.Entity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.TagModule.Interface {

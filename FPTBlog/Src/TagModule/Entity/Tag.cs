@@ -4,30 +4,37 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.BlogModule.Entity;
 
-namespace FPTBlog.Src.TagModule.Entity
-{
+namespace FPTBlog.Src.TagModule.Entity {
     [Table("tblTag")]
-    public class Tag
-    {
+    public class Tag {
         [Key]
         [Required]
         [StringLength(40)]
-        public string TagId { get; set; }
+        public string TagId {
+            get; set;
+        }
 
         [Required]
         [StringLength(30)]
-        public string Name { get; set; }
+        public string Name {
+            get; set;
+        }
 
         [Required]
-        public TagStatus Status { get; set; }
+        public TagStatus Status {
+            get; set;
+        }
 
         [Required]
         [StringLength(20)]
-        public string CreateDate { get; set; }
+        public string CreateDate {
+            get; set;
+        }
 
-        public virtual ICollection<BlogTag> BlogTags { get; set; }
-        public Tag()
-        {
+        public virtual ICollection<BlogTag> BlogTags {
+            get; set;
+        }
+        public Tag() {
             this.TagId = Guid.NewGuid().ToString();
             this.Name = "";
             this.CreateDate = DateTime.Now.ToShortDateString();
@@ -35,15 +42,13 @@ namespace FPTBlog.Src.TagModule.Entity
             this.BlogTags = new List<BlogTag>();
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "Tag: \n TagId: " + TagId + " \nName: " + Name
             + " \nCreateDate: " + CreateDate;
         }
     }
 
-    public enum TagStatus
-    {
+    public enum TagStatus {
         ACTIVE = 1,
         INACTIVE = 0
     }

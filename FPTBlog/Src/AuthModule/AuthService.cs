@@ -1,5 +1,4 @@
-﻿using System;
-using FPTBlog.Src.AuthModule.Interface;
+﻿using FPTBlog.Src.AuthModule.Interface;
 
 
 namespace FPTBlog.Src.AuthModule {

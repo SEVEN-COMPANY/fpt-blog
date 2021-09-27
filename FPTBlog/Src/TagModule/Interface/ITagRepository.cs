@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
-using FPTBlog.Src.BlogModule.Entity;
+
 
 namespace FPTBlog.Src.TagModule.Interface {
     public interface ITagRepository {

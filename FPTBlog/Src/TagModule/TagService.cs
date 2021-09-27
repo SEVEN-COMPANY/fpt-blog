@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using FPTBlog.Src.BlogModule.Entity;
+
 namespace FPTBlog.Src.TagModule {
     public class TagService : ITagService {
         private readonly ITagRepository TagRepository;

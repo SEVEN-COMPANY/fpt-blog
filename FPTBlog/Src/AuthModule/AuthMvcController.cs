@@ -1,16 +1,9 @@
 ﻿using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using FPTBlog.Src.AuthModule.DTO;
-using System.Threading.Tasks;
-using FluentValidation.Results;
 using FPTBlog.Src.UserModule.Interface;
-using FPTBlog.Utils.Locale;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.AuthModule.Interface;
-using FPTBlog.Utils;
 using Microsoft.AspNetCore.Http;
 using FPTBlog.Utils.Interface;
 using System.IdentityModel.Tokens.Jwt;

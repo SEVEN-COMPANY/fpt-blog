@@ -5,69 +5,100 @@ using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.BlogModule.Entity
-{
+namespace FPTBlog.Src.BlogModule.Entity {
     [Table("tblBlog")]
-    public class Blog
-    {
+    public class Blog {
         [Key]
         [Required]
         [StringLength(40)]
-        public string BlogId { get; set; }
+        public string BlogId {
+            get; set;
+        }
 
         [Required]
         [StringLength(40)]
-        public string Title { get; set; }
+        public string Title {
+            get; set;
+        }
 
         [Required]
-        public string Content { get; set; }
+        public string Content {
+            get; set;
+        }
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string Description {
+            get; set;
+        }
 
         [Required]
         [Range(1, 60)]
-        public int ReadTime { get; set; }
+        public int ReadTime {
+            get; set;
+        }
 
         [Required]
         [Range(0, Int32.MaxValue)]
-        public int Like { get; set; }
+        public int Like {
+            get; set;
+        }
 
         [Required]
         [Range(0, Int32.MaxValue)]
-        public int Dislike { get; set; }
+        public int Dislike {
+            get; set;
+        }
 
         [Required]
         [Range(0, Int32.MaxValue)]
-        public int View { get; set; }
+        public int View {
+            get; set;
+        }
 
         [Required]
-        public BlogStatus Status { get; set; }
+        public BlogStatus Status {
+            get; set;
+        }
 
         [Required]
         [StringLength(20)]
-        public string CreateDate { get; set; }
+        public string CreateDate {
+            get; set;
+        }
 
         [ForeignKey("tblUser")]
-        public string StudentId { get; set; }
+        public string StudentId {
+            get; set;
+        }
 
-        public virtual User Student { get; set; }
+        public virtual User Student {
+            get; set;
+        }
 
         [ForeignKey("tblUser")]
-        public string LecturerId { get; set; }
+        public string LecturerId {
+            get; set;
+        }
 
-        public virtual User Lecturer { get; set; }
+        public virtual User Lecturer {
+            get; set;
+        }
 
         [ForeignKey("tblCategory")]
-        public string CategoryId { get; set; }
+        public string CategoryId {
+            get; set;
+        }
 
-        public virtual Category Category { get; set; }
+        public virtual Category Category {
+            get; set;
+        }
 
-        public virtual ICollection<BlogTag> BlogTags { get; set; }
+        public virtual ICollection<BlogTag> BlogTags {
+            get; set;
+        }
 
-        public Blog()
-        {
+        public Blog() {
             this.BlogId = Guid.NewGuid().ToString();
             this.Title = "Title";
             this.Content = "<p>Content</p>";
@@ -85,8 +116,7 @@ namespace FPTBlog.Src.BlogModule.Entity
         }
     }
 
-    public enum BlogStatus
-    {
+    public enum BlogStatus {
         DRAFT = 0,
         WAIT = 1,
         APPROVED = 2,

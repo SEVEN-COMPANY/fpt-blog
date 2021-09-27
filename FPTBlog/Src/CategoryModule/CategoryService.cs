@@ -1,14 +1,6 @@
 using System.Collections.Generic;
-using System;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.Entity;
-using FPTBlog.Src.CategoryModule.DTO;
-using FPTBlog.Utils.Common;
-using FPTBlog.Utils.Locale;
-using FPTBlog.Utils;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.CategoryModule {
