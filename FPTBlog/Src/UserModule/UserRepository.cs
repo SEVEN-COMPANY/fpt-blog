@@ -1,5 +1,4 @@
-﻿using FPTBlog.Src.UserModule.DTO;
-using FPTBlog.Src.UserModule.Entity;
+﻿using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils;
 using System.Linq;

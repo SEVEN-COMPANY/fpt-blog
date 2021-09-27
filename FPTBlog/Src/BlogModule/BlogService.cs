@@ -18,8 +18,8 @@ namespace FPTBlog.Src.BlogModule {
             return this.BlogRepository.GetBlogByBlogId(blogId);
         }
 
-        public List<Tag> GetTagFromBlog(Blog blog) {
-            return this.BlogRepository.GetTagFromBlog(blog);
+        public List<Tag> GetTagsFromBlog(Blog blog) {
+            return this.BlogRepository.GetTagsFromBlog(blog);
         }
 
         public bool RemoveTagFromBlog(List<Tag> tags) {

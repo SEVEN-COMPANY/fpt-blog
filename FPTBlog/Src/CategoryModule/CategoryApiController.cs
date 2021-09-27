@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.DTO;
 using FPTBlog.Src.CategoryModule.Entity;
-using FPTBlog.Src.AuthModule;
 using FPTBlog.Utils.Common;
 using FluentValidation.Results;
 using FPTBlog.Utils.Locale;

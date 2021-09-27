@@ -8,6 +8,7 @@ module.exports = {
         minHeight: {
             ...theme.minHeight,
             120: '30rem',
+            9.5: '2.375rem',
         },
         spacing: {
             ...theme.spacing,

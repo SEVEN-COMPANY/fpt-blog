@@ -1,5 +1,6 @@
 
-using System;
+
+using System.Linq;
 using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
@@ -124,9 +125,24 @@ namespace FPTBlog.Src.BlogModule {
             return new ObjectResult(res.getResponse());
         }
 
+        [HttpGet("tag")]
+        public IActionResult GetTagsByBlogId(string blogId) {
+            var res = new ServerApiResponse<List<Tag>>();
+
+            Blog blog = this.BlogService.GetBlogByBlogId(blogId);
+            if (blog == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            var tags = this.BlogService.GetTagsFromBlog(blog);
+            res.data = tags;
+            return new ObjectResult(res.getResponse());
+        }
+
         [HttpPost("tag")]
         public IActionResult AddTagToBlog([FromBody] UpdateTagsOfBlogDto input) {
-            var res = new ServerApiResponse<Blog>();
+            var res = new ServerApiResponse<List<Tag>>();
             ValidationResult result = new UpdateTagsOfBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
@@ -139,10 +155,10 @@ namespace FPTBlog.Src.BlogModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            List<Tag> currentTags = this.BlogService.GetTagFromBlog(blog);
+            List<Tag> currentTags = this.BlogService.GetTagsFromBlog(blog);
             List<Tag> newTags = new List<Tag>();
-            foreach (string tagId in input.Tags) {
-                Tag tag = this.TagService.GetTagByTagId(tagId);
+            foreach (string tagName in input.Tags) {
+                Tag tag = this.TagService.GetTagByName(tagName);
                 newTags.Add(tag);
             }
 
@@ -161,10 +177,12 @@ namespace FPTBlog.Src.BlogModule {
                 if (!newTags.Contains(curTag)) {
                     removeTags.Add(curTag);
                 }
+                this.BlogService.RemoveTagFromBlog(removeTags);
             }
-            this.BlogService.RemoveTagFromBlog(removeTags);
 
-            res.data = blog;
+            var tags = blog.BlogTags.Select(item => item.Tag).ToList();
+
+            res.data = tags;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }

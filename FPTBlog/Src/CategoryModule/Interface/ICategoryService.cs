@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using FPTBlog.Src.CategoryModule.DTO;
 using FPTBlog.Src.CategoryModule.Entity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

@@ -1,10 +1,5 @@
-﻿using FluentValidation.Results;
-using FPTBlog.Src.UserModule.DTO;
-using FPTBlog.Src.UserModule.Entity;
+﻿using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
-using FPTBlog.Utils;
-using FPTBlog.Utils.Common;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Collections.Generic;
 
 

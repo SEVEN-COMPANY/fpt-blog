@@ -1,9 +1,6 @@
-namespace FPTBlog.Utils.Locale
-{
-    public class CustomLanguageValidator : FluentValidation.Resources.LanguageManager
-    {
-        public static class ErrorMessageKey
-        {
+namespace FPTBlog.Utils.Locale {
+    public class CustomLanguageValidator : FluentValidation.Resources.LanguageManager {
+        public static class ErrorMessageKey {
             public const string ERROR_LOGIN_FAIL = "ERROR_LOGIN_FAIL";
             public const string ERROR_EXISTED = "ERROR_EXISTED ";
             public const string ERROR_FAIL_TO_SAVE = "ERROR_FAIL_TO_SAVE";
@@ -20,8 +17,7 @@ namespace FPTBlog.Utils.Locale
             public const string FILE_WRONG_EXTENSION = "FILE_WRONG_EXTENSION";
         }
 
-        public static class MessageKey
-        {
+        public static class MessageKey {
             public const string MESSAGE_POSTED_SUCCESS = "MESSAGE_POSTED_SUCCESS";
             public const string MESSAGE_LOGIN_SUCCESS = "MESSAGE_LOGIN_SUCCESS";
             public const string MESSAGE_REGISTER_SUCCESS = "MESSAGE_REGISTER_SUCCESS";
@@ -31,8 +27,7 @@ namespace FPTBlog.Utils.Locale
             public const string MESSAGE_DELETE_SUCCESS = "MESSAGE_DELETE_SUCCESS";
             public const string MESSAGE_SAVE_SUCCESS = "MESSAGE_SAVE_SUCCESS";
         }
-        public CustomLanguageValidator()
-        {
+        public CustomLanguageValidator() {
 
             // Success message
             // EN

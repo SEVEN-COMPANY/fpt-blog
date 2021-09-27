@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using FPTBlog.Src.BlogModule.Entity;
+
 namespace FPTBlog.Src.TagModule {
     public class TagService : ITagService {
         private readonly ITagRepository TagRepository;
@@ -25,11 +25,18 @@ namespace FPTBlog.Src.TagModule {
 
         }
 
+
+
+
+
         public List<Tag> getAllTag() {
             var tags = this.TagRepository.GetTags();
             return tags;
         }
-
+        public List<Tag> GetTagsByName(string name) {
+            var tags = this.TagRepository.GetTagsByName(name);
+            return tags;
+        }
         public Tag GetTagByName(string name) {
             return this.TagRepository.GetTagByName(name);
         }
