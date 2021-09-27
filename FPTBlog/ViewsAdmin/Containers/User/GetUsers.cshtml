@@ -1,0 +1,51 @@
+@using FPTBlog.Src.CategoryModule.Entity
+@using FPTBlog.Utils.Common
+
+
+@{
+    var users = (List<User>)this.ViewData["users"];
+    var count = (int)this.ViewData["count"];
+}
+
+<div class="flex items-center mt-8 intro-y">
+    <h2 class="mr-auto text-lg font-medium">
+        User Management
+    </h2>
+</div>
+
+<div class="overflow-x-auto">
+    @* Table Start *@
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">User ID</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Username</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Email</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Phone</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Address</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Role</th>
+                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Create Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in users)
+            {
+                <tr>
+                    <td class="border-b dark:border-dark-5">@item.UserId</td>
+                    <td class="border-b dark:border-dark-5">@item.Name</td>
+                    <td class="border-b dark:border-dark-5">@item.Username</td>
+                    <td class="border-b dark:border-dark-5">@item.Email</td>
+                    <td class="border-b dark:border-dark-5">@item.Phone</td>
+                    <td class="border-b dark:border-dark-5">@item.Address</td>
+                    <td class="border-b dark:border-dark-5">@await Html.PartialAsync(
+                    "../../Components/Table/TableStatus.cshtml",
+                    item.Status == UserStatus.ENABLE)</td>
+                    <td class="border-b dark:border-dark-5">@item.Role</td>
+                    <td class="border-b dark:border-dark-5">@item.CreateDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

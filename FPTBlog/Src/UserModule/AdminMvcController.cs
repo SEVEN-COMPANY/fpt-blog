@@ -25,13 +25,13 @@ namespace FPTBlog.Src.UserModule {
             var (users, count) = this.UserService.GetUsers();
             this.ViewData["users"] = users;
             this.ViewData["count"] = count;
-            return View(Routers.AdminDashboard.Page);
+            return View(RoutersAdmin.GetUsers.Page);
         }
 
-        [HttpGet("")]
-        public IActionResult GetUser() {
-            return View(Routers.AdminDashboard.Page);
-        }
+        // [HttpGet("")]
+        // public IActionResult GetUser() {
+        //     return View(Routers.AdminDashboard.Page);
+        // }
 
         [HttpGet("update")]
         public IActionResult UpdateUser() {
