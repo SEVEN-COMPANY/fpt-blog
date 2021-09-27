@@ -23,18 +23,14 @@
         </button>
     </div>
     <div class="relative">
-        <input
+        <input autocomplete="off"
             class="block w-full px-2 py-1 duration-300 border rounded-sm outline-none safari h-9 focus:border-tango-500"
             id="@Model.Name" name="@Model.Name" type="text" value="" />
-        <ul class="absolute left-0 w-full p-1 text-xs border top-full" id="@result">
-            <li class="p-1 ">
-                <button class="block w-full p-1 text-left duration-300 hover:bg-tango-200">
-                    Hello
-                </button>
-            </li>
+        <ul class="absolute left-0 z-20 w-full text-xs bg-white border shadow-lg top-full" id="@result">
 
         </ul>
     </div>
+
 
     <span class="block text-red-500 fade-in" id="@error" data-label="@Model.Label"></span>
 </div>
