@@ -1,3 +1,4 @@
+using System;
 using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.BlogModule.DTO;
@@ -26,12 +27,22 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpGet("editor")]
-        public IActionResult EditorPage() {
-            SelectList list = new SelectList(this.CategoryService.GetRadioCategoryList());
-            this.ViewData["categoryId"] = list;
+        public IActionResult EditorPage(string blogId) {
+            SelectList list = new SelectList(this.CategoryService.GetCategoryDropList());
+            this.ViewData["categories"] = list;
 
-            return View(Routers.EditorPage.Page);
+            return View(Routers.GetBlogEditor.Page);
         }
+        [HttpGet("me")]
+        public IActionResult GetMyBlogsWithStatus(int pageSize, int pageIndex, BlogStatus status) {
+            var user = (User) this.ViewData["user"];
+            var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, user.UserId, status);
+            this.ViewData["blogs"] = blogs;
+            this.ViewData["total"] = total;
+
+            return View(Routers.GetMyPost.Page);
+        }
+
 
         [HttpGet("")]
         public IActionResult GetAllBlogs(int pageSize, int pageIndex) {
@@ -68,6 +79,7 @@ namespace FPTBlog.Src.BlogModule {
                 total = total
             });
         }
+
 
         [HttpGet("student")]
         public IActionResult GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status) {

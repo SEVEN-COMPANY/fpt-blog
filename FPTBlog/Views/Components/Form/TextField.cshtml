@@ -1,0 +1,10 @@
+@{
+    var error = $"{Model.Name.ToUpper()}ERROR";
+}
+
+<div class="flex flex-col flex-1 space-y-1">
+    <label class="block font-semibold capitalize">@Model.Label</label>
+    <input class="block w-full px-2 py-1 duration-300 border rounded-sm outline-none safari h-9 focus:border-tango-500"
+        id="@Model.Name" name="@Model.Name" type="@Model.Type" value="@Model.Value" />
+    <span class="block text-red-500 fade-in" id="@error" data-label="@Model.Label"></span>
+</div>

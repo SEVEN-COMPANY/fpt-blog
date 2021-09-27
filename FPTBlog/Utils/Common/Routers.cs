@@ -11,6 +11,9 @@ namespace FPTBlog.Utils.Common {
         public static readonly RouterItem Register = new RouterItem() { Page = "/Views/Containers/Auth/Register.cshtml", Title = "Register", Link = "/auth/register" };
         public static readonly RouterItem Login = new RouterItem() { Page = "/Views/Containers/Auth/Login.cshtml", Title = "Login", Link = "/auth/login" };
 
+        // Post
+        public static readonly RouterItem GetMyPost = new RouterItem() { Page = "/Views/Containers/Post/MyList.cshtml", Title = "Login", Link = "/admin/tag/add" };
+
         // User
         public static readonly RouterItem Home = new RouterItem() { Page = "/Views/Containers/Auth/Login.cshtml", Title = "Home", Link = "/auth/login" };
         public static readonly RouterItem User = new RouterItem() { Page = "/Views/Containers/User/User.cshtml", Title = "User", Link = "/user" };
@@ -25,7 +28,7 @@ namespace FPTBlog.Utils.Common {
         // Blog
         public static readonly RouterItem GetBlog = new RouterItem() { Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/blog/get" };
         public static readonly RouterItem GetAllBlogs = new RouterItem() { Page = "/Views/Containers/Blog/GetAllBlogs.cshtml", Title = "Get All Blogs", Link = "/blog/all" };
-        public static readonly RouterItem EditorPage = new RouterItem() { Page = "/Views/Containers/Blog/EditorPage.cshtml", Title = "Write Your Blog", Link = "/blog" };
+        public static readonly RouterItem GetBlogEditor = new RouterItem() { Page = "/Views/Containers/Post/Editor.cshtml", Title = "Write Your Blog", Link = "/blog/editor" };
 
 
 

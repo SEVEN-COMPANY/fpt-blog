@@ -7,9 +7,15 @@ export const routers = {
         create: '/api/category',
         update: '/api/category/update',
     },
+    blog: {
+        create: '/api/blog',
+    },
     user: {
         changePassword: '/api/user/change-password',
         update: '/api/user',
+    },
+    tag: {
+        getAll: '/api/tag/all',
     },
     loginUser: '/api/auth/login',
     getUser: '/api/user',

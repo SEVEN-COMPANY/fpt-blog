@@ -10,7 +10,9 @@
 </head>
 
 <body>
-    <main class="relative">
+    <main class="relative flex flex-col min-h-screen">
+        @await Html.PartialAsync("../Components/Navbar/Navbar.cshtml")
+
         @RenderBody()
     </main>
 

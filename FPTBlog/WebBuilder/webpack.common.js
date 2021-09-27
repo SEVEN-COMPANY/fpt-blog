@@ -4,10 +4,13 @@ module.exports = {
     entry: {
         'auth-login': ['./src/auth/login.ts'],
         'auth-register': ['./src/auth/register.ts'],
+        'auth-update': ['./src/auth/login.ts'],
         'user-update': ['./src/user/update.ts'],
         'user-changePassword': ['./src/user/changePassword.ts'],
         'category-create': ['./src/category/create.ts'],
         'category-update': ['./src/category/update.ts'],
+        'blog-create': ['./src/blog/create.ts'],
+        'blog-editor': ['./src/blog/editor.ts'],
     },
     output: {
         path: __dirname + '/../wwwroot/js',

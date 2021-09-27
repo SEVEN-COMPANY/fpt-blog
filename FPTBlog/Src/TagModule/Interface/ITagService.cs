@@ -14,5 +14,7 @@ namespace FPTBlog.Src.TagModule.Interface {
         public List<SelectListItem> GetRadioStatusList();
         public List<SelectListItem> GetRadioCategoryList();
 
+
+        public List<Tag> getAllTag();
     }
 }
