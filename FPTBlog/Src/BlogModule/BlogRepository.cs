@@ -38,7 +38,7 @@ namespace FPTBlog.Src.BlogModule {
             return blog;
         }
 
-        public List<Tag> GetTagFromBlog(Blog blog) {
+        public List<Tag> GetTagsFromBlog(Blog blog) {
             List<Tag> tags = (from Tag in this.Db.Tag
                               where Tag.BlogTags.Any(bt => bt.BlogId == blog.BlogId)
                               select Tag).ToList();

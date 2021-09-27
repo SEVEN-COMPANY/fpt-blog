@@ -30,11 +30,15 @@ namespace FPTBlog.Src.BlogModule {
         public IActionResult EditorPage(string blogId) {
             SelectList list = new SelectList(this.CategoryService.GetCategoryDropList());
             this.ViewData["categories"] = list;
+            var blog = this.BlogService.GetBlogByBlogId(blogId);
+            this.ViewData["blog"] = blog;
 
             return View(Routers.GetBlogEditor.Page);
         }
         [HttpGet("me")]
-        public IActionResult GetMyBlogsWithStatus(int pageSize, int pageIndex, BlogStatus status) {
+        public IActionResult GetMyBlogsWithStatus(BlogStatus status, int pageSize = 12, int pageIndex = 1) {
+
+
             var user = (User) this.ViewData["user"];
             var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, user.UserId, status);
             this.ViewData["blogs"] = blogs;

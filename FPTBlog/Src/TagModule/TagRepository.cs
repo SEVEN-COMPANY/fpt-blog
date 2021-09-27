@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FPTBlog.Src.TagModule.Entity;
@@ -14,6 +15,10 @@ namespace FPTBlog.Src.TagModule {
 
         public List<Tag> GetTags() {
             List<Tag> list = this.Db.Tag.ToList();
+            return list;
+        }
+        public List<Tag> GetTagsByName(string name) {
+            List<Tag> list = this.Db.Tag.Where(item => item.Name.Contains(name)).ToList();
             return list;
         }
 
@@ -33,6 +38,7 @@ namespace FPTBlog.Src.TagModule {
             var tag = this.Db.Tag.Find(tagId);
             return tag;
         }
+
 
         public bool SaveTag(Tag tag) {
             this.Db.Tag.Add(tag);

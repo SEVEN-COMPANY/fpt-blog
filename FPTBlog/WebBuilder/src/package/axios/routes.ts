@@ -9,6 +9,8 @@ export const routers = {
     },
     blog: {
         create: '/api/blog',
+        addNewTagToBlog: '/api/blog/tag',
+        getTagOfBlog: (blogId: string) => `/api/blog/tag?blogId=${blogId}`,
     },
     user: {
         changePassword: '/api/user/change-password',
@@ -16,10 +18,11 @@ export const routers = {
     },
     tag: {
         getAll: '/api/tag/all',
+        getByName: (name: string) => `/api/tag?name=${name}`,
     },
     loginUser: '/api/auth/login',
     getUser: '/api/user',
     registerUser: '/api/auth/register',
-    createBlog: '/api/blog',
+    saveBlog: '/api/blog/save',
     uploadImageBlog: '/api/blog/image',
 };

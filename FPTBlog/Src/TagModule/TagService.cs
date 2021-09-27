@@ -25,11 +25,18 @@ namespace FPTBlog.Src.TagModule {
 
         }
 
+
+
+
+
         public List<Tag> getAllTag() {
             var tags = this.TagRepository.GetTags();
             return tags;
         }
-
+        public List<Tag> GetTagsByName(string name) {
+            var tags = this.TagRepository.GetTagsByName(name);
+            return tags;
+        }
         public Tag GetTagByName(string name) {
             return this.TagRepository.GetTagByName(name);
         }

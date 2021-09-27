@@ -50,6 +50,14 @@ namespace FPTBlog.Src.TagModule {
 
             return new ObjectResult(res.getResponse());
         }
+        [HttpGet("")]
+        public ObjectResult GetTagByName(string name = "") {
+            var res = new ServerApiResponse<object>();
+            var listTag = this.TagService.GetTagsByName(name);
+            res.data = listTag;
+
+            return new ObjectResult(res.getResponse());
+        }
 
         [HttpPut("")]
         public IActionResult UpdateTagHandler([FromBody] UpdateTagDto input) {
