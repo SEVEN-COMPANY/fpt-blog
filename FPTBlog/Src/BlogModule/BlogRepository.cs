@@ -74,9 +74,7 @@ namespace FPTBlog.Src.BlogModule {
             var query = (from Blog in this.Db.Blog
                          orderby Blog.Like - Blog.Dislike + (Blog.View / 10)
                          select Blog);
-            var blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            int count = query.Count();
-            return (blogs, count);
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
         }
 
         public (List<Blog>, int) GetBlogsByTagAndCount(int pageSize, int pageIndex, string name) {
@@ -87,10 +85,7 @@ namespace FPTBlog.Src.BlogModule {
                          on BlogTag.BlogId equals Blog.BlogId
                          where Tag.Name.Equals(name)
                          select Blog);
-            List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            int count = query.Count();
-
-            return (blogs, count);
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
         }
 
         public (List<Blog>, int) GetBlogsByCategoryAndCount(int pageSize, int pageIndex, string name) {
@@ -99,15 +94,18 @@ namespace FPTBlog.Src.BlogModule {
                          on Category.CategoryId equals Blog.CategoryId
                          where Category.Name.Equals(name)
                          select Blog);
-            List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            int count = query.Count();
-            return (blogs, count);
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
         }
 
         public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status) {
             var query = (from Blog in this.Db.Blog
                          where Blog.StudentId.Equals(studentId) && Blog.Status == status
                          select Blog);
+
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
+        }
+
+        private (List<Blog>, int) GetBlogsAndCountFromQuery(IQueryable<Blog> query, int pageSize, int pageIndex){
             List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (blogs, count);
