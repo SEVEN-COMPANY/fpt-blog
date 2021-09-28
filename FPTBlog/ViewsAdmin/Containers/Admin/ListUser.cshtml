@@ -17,13 +17,15 @@
 <form action="@RoutersAdmin.GetUsers.Link" class="space-y-4 preview">
     <div class="flex items-start space-x-2">
         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-        new { Name = "name", Label = "Name", Type = "text", Value = (string)this.Context.Request.Query["name"] ?? "" })
+        new { Name = "name", Label = "Name", Type = "text", Value = (string)this.Context.Request.Query["name"] ?? ""
+        , PlaceHolder= "" })
         @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
         new { Name = "status", Label = "Status", Value = this.Context.Request.Query["status"] ==
         ((int)UserStatus.ENABLE).ToString() })
     </div>
-    <input type="text" name="pageSize" value="12" readonly class="hidden" />
-    <input type="text" name="pageIndex" value="0" readonly class="hidden" />
+
+    @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml", new {Value = 12, Name = "pageSize"})
+    @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml", new {Value = 0, Name = "pageIndex"})
 
     @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
     new { Label = "Search" })
@@ -31,7 +33,7 @@
 
 <div class="overflow-x-auto">
     @* Table Start *@
-    <table class="table">
+    <table class="table box intro-y">
         <thead>
             <tr>
                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">User ID</th>

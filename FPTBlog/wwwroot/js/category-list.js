@@ -10,13 +10,13 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/blog/create.ts":
-/*!****************************!*\
-  !*** ./src/blog/create.ts ***!
-  \****************************/
+/***/ "./src/category/list.ts":
+/*!******************************!*\
+  !*** ./src/category/list.ts ***!
+  \******************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar createBlogForm = document.getElementById('createNewPost');\r\ncreateBlogForm === null || createBlogForm === void 0 ? void 0 : createBlogForm.addEventListener('click', function (event) {\r\n    axios_1.http.post(routes_1.routers.blog.create).then(function (res) {\r\n        console.log(res.data);\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/blog/create.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar pagination_1 = __webpack_require__(/*! ../package/helper/pagination */ \"./src/package/helper/pagination.ts\");\r\n(0, pagination_1.pageChange)('listCategoryForm');\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar status = 1;\r\nvar createCategoryForm = document.getElementById('createCategoryForm');\r\nvar statusList = document.querySelectorAll('input[name=\"status\"]');\r\nstatusList.forEach(function (radio) {\r\n    radio.addEventListener('click', function () {\r\n        status = Number(radio.value);\r\n    });\r\n});\r\ncreateCategoryForm === null || createCategoryForm === void 0 ? void 0 : createCategoryForm.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var name = document.getElementById('name');\r\n    var description = document.getElementById('description');\r\n    console.log(name);\r\n    console.log(name.value);\r\n    console.log(description);\r\n    console.log(description.value);\r\n    if (name != null && description != null && status != null) {\r\n        var input = {\r\n            name: name.value,\r\n            description: description.value,\r\n            status: status,\r\n        };\r\n        axios_1.http.post(routes_1.routers.category.create, input).then();\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/category/list.ts?");
 
 /***/ }),
 
@@ -47,6 +47,16 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /***/ ((__unused_webpack_module, exports) => {
 
 eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.routers = exports.routerLinks = void 0;\r\nexports.routerLinks = {\r\n    home: '/',\r\n    loginForm: '/auth/login',\r\n};\r\nexports.routers = {\r\n    category: {\r\n        create: '/api/category',\r\n        update: '/api/category/update',\r\n    },\r\n    blog: {\r\n        create: '/api/blog',\r\n        addNewTagToBlog: '/api/blog/tag',\r\n        getTagOfBlog: function (blogId) { return \"/api/blog/tag?blogId=\" + blogId; },\r\n    },\r\n    user: {\r\n        changePassword: '/api/user/change-password',\r\n        update: '/api/user',\r\n    },\r\n    tag: {\r\n        getAll: '/api/tag/all',\r\n        getByName: function (name) { return \"/api/tag?name=\" + name; },\r\n    },\r\n    loginUser: '/api/auth/login',\r\n    getUser: '/api/user',\r\n    registerUser: '/api/auth/register',\r\n    saveBlog: '/api/blog/save',\r\n    uploadImageBlog: '/api/blog/image',\r\n};\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/axios/routes.ts?");
+
+/***/ }),
+
+/***/ "./src/package/helper/pagination.ts":
+/*!******************************************!*\
+  !*** ./src/package/helper/pagination.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.pageChange = void 0;\r\nvar pageChange = function (formId) {\r\n    var paginationSize = document.getElementById('pagination-size');\r\n    var paginationBtn = document.getElementById('pagination-btn');\r\n    paginationSize === null || paginationSize === void 0 ? void 0 : paginationSize.addEventListener('change', function (_) {\r\n        var option = paginationSize.options[paginationSize.selectedIndex];\r\n        var pageSizeInput = document.getElementById('pageSize');\r\n        pageSizeInput.value = option.value;\r\n        var form = document.getElementById(formId);\r\n        form.submit();\r\n    });\r\n    var pageBtn = paginationBtn === null || paginationBtn === void 0 ? void 0 : paginationBtn.getElementsByTagName('button');\r\n    if (pageBtn) {\r\n        var _loop_1 = function (index) {\r\n            var element = pageBtn[index];\r\n            element.addEventListener('click', function (_) {\r\n                var pageSizeInput = document.getElementById('indexPage');\r\n                var value = element.getAttribute('data-index');\r\n                if (value) {\r\n                    pageSizeInput.value = value;\r\n                }\r\n                var form = document.getElementById(formId);\r\n                form.submit();\r\n            });\r\n        };\r\n        for (var index = 0; index < pageBtn.length; index++) {\r\n            _loop_1(index);\r\n        }\r\n    }\r\n};\r\nexports.pageChange = pageChange;\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/helper/pagination.ts?");
 
 /***/ })
 
@@ -81,7 +91,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/blog/create.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/category/list.ts");
 /******/ 	
 /******/ })()
 ;
