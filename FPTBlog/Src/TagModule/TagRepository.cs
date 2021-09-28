@@ -65,5 +65,13 @@ namespace FPTBlog.Src.TagModule {
             this.Db.Tag.Remove(obj);
             return this.Db.SaveChanges() > 0;
         }
+
+        public (List<Tag>, int) GetTagsWithFilter(int pageSize, int pageIndex, TagStatus status, string name) {
+            var query = (from Tag in this.Db.Tag
+                         where Tag.Name.Contains(name) && Tag.Status == status
+                         select Tag);
+            List<Tag> tags = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            return (tags, tags.Count);
+        }
     }
 }
