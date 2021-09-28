@@ -89,5 +89,12 @@ namespace FPTBlog.Src.BlogModule {
                 total = total
             });
         }
+
+        [HttpGet("blogId")]
+        public IActionResult GetBlogByBlogId(string blogId) {
+            var blog = this.BlogService.GetBlogByBlogId(blogId);
+            this.ViewData["blog"] = blog;
+            return View(Routers.GetBlog.Page);
+        }
     }
 }
