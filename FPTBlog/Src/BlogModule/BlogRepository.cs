@@ -136,7 +136,7 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         public List<Blog> GetAllWaitBlogs() {
-            List<Blog> blogs = this.Db.Blog.Where(x => x.Status.Equals("WAIT")).ToList();
+            List<Blog> blogs = this.Db.Blog.Where(x => ((int) x.Status) == 1).ToList();
             return blogs;
         }
     }
