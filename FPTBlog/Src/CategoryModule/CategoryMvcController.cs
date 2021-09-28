@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.DTO;
@@ -22,8 +23,18 @@ namespace FPTBlog.Src.CategoryModule {
         }
 
         [HttpGet("")]
-        public IActionResult Category() {
-            var categories = this.CategoryService.GetCategories();
+        public IActionResult Category(int pageSize, int indexPage, string name = "") {
+            Console.WriteLine(pageSize);
+            Console.WriteLine(indexPage);
+            Console.WriteLine(name);
+            if (pageSize == 0 || indexPage < 0) {
+                return Redirect($"{RoutersAdmin.Category.Link}?pageSize=12&indexPage=0&name=");
+            }
+
+
+            var categories = this.CategoryService.GetCategories(indexPage, pageSize, name);
+
+            Console.WriteLine(categories.Count);
             this.ViewData["categories"] = categories;
             return View(RoutersAdmin.Category.Page);
         }

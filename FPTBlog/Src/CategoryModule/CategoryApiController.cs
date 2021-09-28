@@ -27,13 +27,13 @@ namespace FPTBlog.Src.CategoryModule {
             this.CategoryService = categoryService;
         }
 
-        [HttpGet("")]
-        public ObjectResult GetCategories() {
-            var res = new ServerApiResponse<List<Category>>();
-            List<Category> list = this.CategoryService.GetCategories();
-            res.data = list;
-            return new ObjectResult(res.getResponse());
-        }
+        // [HttpGet("")]
+        // public ObjectResult GetCategories() {
+        //     var res = new ServerApiResponse<List<Category>>();
+        //     List<Category> list = this.CategoryService.GetCategories();
+        //     res.data = list;
+        //     return new ObjectResult(res.getResponse());
+        // }
 
         [HttpPost("")]
         public ObjectResult HandleCreateCategory([FromBody] CreateCategoryDTO body) {

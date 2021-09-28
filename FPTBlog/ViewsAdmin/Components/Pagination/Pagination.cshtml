@@ -1,0 +1,55 @@
+@{
+    var currentPage = 0;
+}
+
+<div class="flex flex-wrap items-center col-span-12 intro-y sm:flex-row sm:flex-nowrap">
+    <ul class="pagination">
+        <li>
+            <button type="button" class="pagination__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevrons-left">
+                    <polyline points="11 17 6 12 11 7"></polyline>
+                    <polyline points="18 17 13 12 18 7"></polyline>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="pagination__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+        </li>
+        <li><button type="button" class="pagination__link">1</button></li>
+        <li><button type="button" class="pagination__link pagination__link--active">2</button></li>
+        <li><button type="button" class="pagination__link">3</button></li>
+        <li>
+            <button type="button" class="pagination__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevron-right">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="pagination__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevrons-right">
+                    <polyline points="13 17 18 12 13 7"></polyline>
+                    <polyline points="6 17 11 12 6 7"></polyline>
+                </svg>
+            </button>
+        </li>
+    </ul>
+    <select class="w-20 mt-3 form-select box sm:mt-0" id="pagination-size">
+        <option>10</option>
+        <option>25</option>
+        <option>35</option>
+        <option>50</option>
+    </select>
+</div>
