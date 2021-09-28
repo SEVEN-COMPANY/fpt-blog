@@ -10,9 +10,9 @@ namespace FPTBlog.Src.TagModule {
             this.TagRepository = tagRepository;
         }
 
-        public List<IDictionary<string, object>> GetTagsWithCount() {
+        public List<IDictionary<string, object>> GetTagsWithCountAndFilter(int pageSize, int pageIndex, TagStatus status, string name) {
             var list = new List<IDictionary<string, object>>();
-            var tags = this.TagRepository.GetTags();
+            var (tags, count) = this.TagRepository.GetTagsWithFilter(pageSize, pageIndex, status, name);
 
             foreach (Tag item in tags) {
                 var tagWithCount = new Dictionary<string, object>();
@@ -23,6 +23,19 @@ namespace FPTBlog.Src.TagModule {
 
             return list;
 
+        }
+
+        public List<IDictionary<string, object>> GetTagsWithCount() {
+            var list = new List<IDictionary<string, object>>();
+            var tags = this.TagRepository.GetTags();
+
+            foreach (Tag item in tags) {
+                var tagWithCount = new Dictionary<string, object>();
+                tagWithCount.Add("tag", item);
+                tagWithCount.Add("quantity", this.TagRepository.GetQualityBlogOfTag(item.TagId));
+                list.Add(tagWithCount);
+            }
+            return list;
         }
 
 

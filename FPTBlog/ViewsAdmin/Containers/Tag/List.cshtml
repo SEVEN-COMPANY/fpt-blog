@@ -11,6 +11,22 @@
     </h2>
 </div>
 
+@await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+<form action="@RoutersAdmin.GetTags.Link" class="space-y-4 preview">
+    <div class="flex items-start space-x-2">
+        @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+        new { Name = "name", Label = "Name", Type = "text", Value = (string)this.Context.Request.Query["name"] ?? "" })
+        @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+        new { Name = "status", Label = "Status", Value = this.Context.Request.Query["status"] ==
+        ((int)TagStatus.ACTIVE).ToString() })
+    </div>
+    <input type="text" name="pageSize" value="12" readonly class="hidden" />
+    <input type="text" name="pageIndex" value="0" readonly class="hidden" />
+
+    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+    new { Label = "Search" })
+</form>
+
 <div class="overflow-x-auto">
     <table class="table">
         <thead>
