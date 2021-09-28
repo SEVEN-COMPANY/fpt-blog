@@ -47,7 +47,7 @@
 - Nguyễn Lương Hoàng Nam
      - Gmail: monkeynam208@gmail.com
      - Linkedin: https://linkedin.com/in/truongbinhtan
-     - Github: https://github.com/MonkiNam
+     - Github: https://www.linkedin.com/in/monkinam
 
 ## Project Picture
 
