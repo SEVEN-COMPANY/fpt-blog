@@ -49,6 +49,7 @@ namespace FPTBlog.Src.TagModule {
 
             return new ObjectResult(res.getResponse());
         }
+
         [HttpGet("")]
         public ObjectResult GetTagByName(string name = "") {
             var res = new ServerApiResponse<object>();

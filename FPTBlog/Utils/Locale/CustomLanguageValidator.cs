@@ -1,31 +1,31 @@
 namespace FPTBlog.Utils.Locale {
     public class CustomLanguageValidator : FluentValidation.Resources.LanguageManager {
         public static class ErrorMessageKey {
-            public const string ERROR_LOGIN_FAIL = "ERROR_LOGIN_FAIL";
-            public const string ERROR_EXISTED = "ERROR_EXISTED ";
-            public const string ERROR_FAIL_TO_SAVE = "ERROR_FAIL_TO_SAVE";
-            public const string ERROR_UPDATE_FAIL = "ERROR_UPDATE_FAIL";
-            public const string ERROR_DELETE_FAIL = "ERROR_DELETE_FAIL";
-            public const string ERROR_WRONG = "ERROR_WRONG";
-            public const string ERROR_DISSABLED_ACCOUNT = "ERROR_DISSABLED_ACCOUNT";
-            public const string ERROR_NOT_FOUND = "ERROR_NOT_FOUND";
-            public const string ERROR_NOT_ALLOW = "ERROR_NOT_ALLOW";
-            public const string ERROR_PASSWORD_CONTAIN_CHARACTER = "ERROR_PASSWORD_CONTAIN_CHARACTER";
-            public const string ERROR_PASSWORD_CONTAIN_WHITESPACE = "ERROR_PASSWORD_CONTAIN_WHITESPACE";
-            public const string ERROR_OLD_PASSWORD_IS_WRONG = "ERROR_OLD_PASSWORD_IS_WRONG";
-            public const string FILE_TOO_LARGE = "FILE_TOO_LARGE";
-            public const string FILE_WRONG_EXTENSION = "FILE_WRONG_EXTENSION";
+            public static string ERROR_LOGIN_FAIL = "ERROR_LOGIN_FAIL";
+            public static string ERROR_EXISTED = "ERROR_EXISTED ";
+            public static string ERROR_FAIL_TO_SAVE = "ERROR_FAIL_TO_SAVE";
+            public static string ERROR_UPDATE_FAIL = "ERROR_UPDATE_FAIL";
+            public static string ERROR_DELETE_FAIL = "ERROR_DELETE_FAIL";
+            public static string ERROR_WRONG = "ERROR_WRONG";
+            public static string ERROR_DISSABLED_ACCOUNT = "ERROR_DISSABLED_ACCOUNT";
+            public static string ERROR_NOT_FOUND = "ERROR_NOT_FOUND";
+            public static string ERROR_NOT_ALLOW = "ERROR_NOT_ALLOW";
+            public static string ERROR_PASSWORD_CONTAIN_CHARACTER = "ERROR_PASSWORD_CONTAIN_CHARACTER";
+            public static string ERROR_PASSWORD_CONTAIN_WHITESPACE = "ERROR_PASSWORD_CONTAIN_WHITESPACE";
+            public static string ERROR_OLD_PASSWORD_IS_WRONG = "ERROR_OLD_PASSWORD_IS_WRONG";
+            public static string FILE_TOO_LARGE = "FILE_TOO_LARGE";
+            public static string FILE_WRONG_EXTENSION = "FILE_WRONG_EXTENSION";
         }
 
         public static class MessageKey {
-            public const string MESSAGE_POSTED_SUCCESS = "MESSAGE_POSTED_SUCCESS";
-            public const string MESSAGE_LOGIN_SUCCESS = "MESSAGE_LOGIN_SUCCESS";
-            public const string MESSAGE_REGISTER_SUCCESS = "MESSAGE_REGISTER_SUCCESS";
-            public const string MESSAGE_LOGOUT_SUCCESS = "MESSAGE_LOGOUT_SUCCESS";
-            public const string MESSAGE_UPDATE_SUCCESS = "MESSAGE_UPDATE_SUCCESS";
-            public const string MESSAGE_ADD_SUCCESS = "MESSAGE_ADD_SUCCESS";
-            public const string MESSAGE_DELETE_SUCCESS = "MESSAGE_DELETE_SUCCESS";
-            public const string MESSAGE_SAVE_SUCCESS = "MESSAGE_SAVE_SUCCESS";
+            public static string MESSAGE_POSTED_SUCCESS = "MESSAGE_POSTED_SUCCESS";
+            public static string MESSAGE_LOGIN_SUCCESS = "MESSAGE_LOGIN_SUCCESS";
+            public static string MESSAGE_REGISTER_SUCCESS = "MESSAGE_REGISTER_SUCCESS";
+            public static string MESSAGE_LOGOUT_SUCCESS = "MESSAGE_LOGOUT_SUCCESS";
+            public static string MESSAGE_UPDATE_SUCCESS = "MESSAGE_UPDATE_SUCCESS";
+            public static string MESSAGE_ADD_SUCCESS = "MESSAGE_ADD_SUCCESS";
+            public static string MESSAGE_DELETE_SUCCESS = "MESSAGE_DELETE_SUCCESS";
+            public static string MESSAGE_SAVE_SUCCESS = "MESSAGE_SAVE_SUCCESS";
         }
         public CustomLanguageValidator() {
 

@@ -8,8 +8,8 @@ namespace FPTBlog.Src.BlogModule.Interface {
         public bool SaveBlog(Blog blog);
         public bool UpdateBlog(Blog blog);
         public List<Tag> GetTagsFromBlog(Blog blog);
-        public bool RemoveTagFromBlog(List<Tag> tags);
-        public bool AddTagToBlog(Blog blog, List<Tag> tags);
+        public bool RemoveTagFromBlog(Blog blog, Tag tag);
+        public bool AddTagToBlog(Blog blog, Tag tag);
         public (List<Blog>, int) GetBlogsByTagAndCount(int currentPage, int pageSize, string name);
         public (List<Blog>, int) GetBlogsByCategoryAndCount(int currentPage, int pageSize, string name);
         public int CalculateBlogPoint(Blog blog);
