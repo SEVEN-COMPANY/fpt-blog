@@ -139,7 +139,7 @@ namespace FPTBlog.Src.BlogModule {
 
         [HttpPost("tag")]
         public IActionResult AddTagToBlog([FromBody] ToggleTagToBlogDto input) {
-            var res = new ServerApiResponse<Blog>();
+            var res = new ServerApiResponse<List<Tag>>();
             ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
@@ -152,6 +152,8 @@ namespace FPTBlog.Src.BlogModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
+            // check coi tag name có không, nếu không thì tạo mới
+
             Tag tag = this.TagService.GetTagByName(input.TagName);
             if(tag == null){
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "tagName");
@@ -159,8 +161,8 @@ namespace FPTBlog.Src.BlogModule {
             }
 
             this.BlogService.AddTagToBlog(blog, tag);
-
-            res.data = blog;
+            List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
+            res.data = tags;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
