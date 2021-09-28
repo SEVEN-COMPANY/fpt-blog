@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FPTBlog.Src.BlogModule.Entity;
 using FPTBlog.Src.BlogModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.BlogModule {
     public class BlogService : IBlogService {
@@ -52,5 +53,14 @@ namespace FPTBlog.Src.BlogModule {
         public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status) {
             return this.BlogRepository.GetBlogsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         }
+
+        public bool LikeBlog(Blog blog, User user) {
+            return this.BlogRepository.LikeBlog(blog, user);
+        }
+
+        public List<Blog> GetAllWaitBlogs() {
+            return this.BlogRepository.GetAllWaitBlogs();
+        }
+
     }
 }

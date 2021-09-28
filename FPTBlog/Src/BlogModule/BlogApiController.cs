@@ -155,7 +155,7 @@ namespace FPTBlog.Src.BlogModule {
             // check coi tag name có không, nếu không thì tạo mới
 
             Tag tag = this.TagService.GetTagByName(input.TagName);
-            if(tag == null){
+            if (tag == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "tagName");
                 return new NotFoundObjectResult(res.getResponse());
             }
@@ -168,8 +168,8 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpPut("tag")]
-        public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToBlogDto input){
-             var res = new ServerApiResponse<Blog>();
+        public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToBlogDto input) {
+            var res = new ServerApiResponse<Blog>();
             ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
@@ -183,7 +183,7 @@ namespace FPTBlog.Src.BlogModule {
             }
 
             Tag tag = this.TagService.GetTagByName(input.TagName);
-            if(tag == null){
+            if (tag == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "tagName");
                 return new NotFoundObjectResult(res.getResponse());
             }
@@ -215,6 +215,27 @@ namespace FPTBlog.Src.BlogModule {
 
             res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_POSTED_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("like")]
+        public IActionResult LikeBlog([FromBody] LikeBlogDto input) {
+            var res = new ServerApiResponse<Blog>();
+            ValidationResult result = new LikeBlogDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if (blog == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.BlogService.LikeBlog(blog, user);
+            res.data = blog;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
     }
