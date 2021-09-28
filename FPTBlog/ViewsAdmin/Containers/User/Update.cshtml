@@ -1,7 +1,7 @@
 @using FPTBlog.Src.UserModule.Entity
 @{
     var user = (User)this.ViewData["user"];
-    var hello = (string)this.Context.Request.Form["hello"] ?? "te";
+    var hello = (string)this.Context.Request.Query["hello"] ?? "te";
 }
 
 
