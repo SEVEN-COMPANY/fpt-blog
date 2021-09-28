@@ -26,12 +26,30 @@ namespace FPTBlog.Src.BlogModule {
             SelectList list = new SelectList(this.CategoryService.GetCategoryDropList());
             this.ViewData["categories"] = list;
             var blog = this.BlogService.GetBlogByBlogId(blogId);
+            if (blog == null) {
+                return Redirect(Routers.Home.Link);
+            }
             this.ViewData["blog"] = blog;
 
             return View(Routers.GetBlogEditor.Page);
         }
+
+        [HttpGet("preview")]
+        public IActionResult PreviewPage(string blogId) {
+            var blog = this.BlogService.GetBlogByBlogId(blogId);
+            if (blog == null) {
+                return Redirect(Routers.Home.Link);
+            }
+
+            this.ViewData["blog"] = blog;
+
+            return View(Routers.GetBlogPreview.Page);
+        }
+
+
+
         [HttpGet("me")]
-        public IActionResult GetMyBlogsWithStatus(BlogStatus status, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetMyBlogsWithStatus(int pageSize = 12, int pageIndex = 0) {
 
 
             var user = (User) this.ViewData["user"];
@@ -39,7 +57,7 @@ namespace FPTBlog.Src.BlogModule {
             this.ViewData["drafts"] = blogs;
             this.ViewData["totalDraft"] = total;
 
-            return View(Routers.GetMyPost.Page);
+            return View(Routers.GetMyDraft.Page);
         }
 
         [HttpGet("")]

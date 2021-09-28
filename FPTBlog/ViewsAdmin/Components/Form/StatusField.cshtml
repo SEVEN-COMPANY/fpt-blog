@@ -1,5 +1,22 @@
+@{
+
+    var isLabel = true;
+    try
+    {
+        isLabel = (bool)Model.IsLabel;
+    }
+    catch (System.Exception)
+    {
+
+    }
+
+}
+
 <div>
-      <label>@Model.Label</label>
+      @if (isLabel)
+      {
+        <label>@Model.Label</label>
+      }
       <div class="flex flex-col mt-2 sm:flex-row">
             <div class="mr-2 form-check">
                   <input id="status-active" class="form-check-input" type="radio" name="@Model.Name" value="1"
