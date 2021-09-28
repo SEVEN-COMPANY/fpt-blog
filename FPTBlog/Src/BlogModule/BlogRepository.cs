@@ -18,17 +18,14 @@ namespace FPTBlog.Src.BlogModule {
         }
 
 
-        public bool AddTagToBlog(Blog blog, List<Tag> tags) {
-            List<BlogTag> blogTags = new List<BlogTag>();
-            foreach (Tag tag in tags) {
+        public bool AddTagToBlog(Blog blog, Tag tag) {
                 BlogTag blogTag = new BlogTag();
                 blogTag.BlogId = blog.BlogId;
                 blogTag.Blog = blog;
                 blogTag.TagId = tag.TagId;
                 blogTag.Tag = tag;
-                blogTags.Add(blogTag);
-            }
-            this.Db.BlogTag.AddRange(blogTags);
+
+            this.Db.BlogTag.Add(blogTag);
             return this.Db.SaveChanges() > 0;
         }
 
@@ -44,12 +41,10 @@ namespace FPTBlog.Src.BlogModule {
             return tags;
         }
 
-        public bool RemoveTagFromBlog(List<Tag> tags) {
-            List<BlogTag> blogTags = (from BlogTag in this.Db.BlogTag
-                                      where tags.Contains(BlogTag.Tag)
-                                      select BlogTag).ToList();
+        public bool RemoveTagFromBlog(Blog blog, Tag tag) {
+            BlogTag blogTag = this.Db.BlogTag.FirstOrDefault(item => item.BlogId == blog.BlogId && item.TagId == tag.TagId);
 
-            this.Db.BlogTag.RemoveRange(blogTags);
+            this.Db.BlogTag.Remove(blogTag);
 
             return this.Db.SaveChanges() > 0;
         }

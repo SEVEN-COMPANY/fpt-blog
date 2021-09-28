@@ -42,7 +42,6 @@ namespace FPTBlog.Src.BlogModule {
             return View(Routers.GetMyPost.Page);
         }
 
-
         [HttpGet("")]
         public IActionResult GetAllBlogs(int pageSize, int pageIndex) {
             var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, pageIndex);
@@ -78,7 +77,6 @@ namespace FPTBlog.Src.BlogModule {
                 total = total
             });
         }
-
 
         [HttpGet("student")]
         public IActionResult GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status) {
