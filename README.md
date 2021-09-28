@@ -4,7 +4,7 @@
 
 [![Grocery Store Logo](doc/logo.svg)](https://fptblog.vinhnhan.com)
 
-## [Live Demo](https://fptblog.vinhnhan.com)
+## [Live Demo](https://fptblog.vinhnhan.com) - [Live Document](https://fptblog.vinhnhan.com)
 
 # FPT BLog - ASP.NET + Entity Framework
 
@@ -36,16 +36,24 @@
      - Gmail: thaithinhbanzai79@gmail.com
      - Linkedin: https://www.linkedin.com/in/thaithinhfgc
      - Github: https://github.com/thaithinhfgc
-- Trần Minh Thuận | Backend
-     - Gmail: minhthuan1912001@gmail.com
-     - Linkedin: https://www.linkedin.com/in/tranminhthuan19
-     - Github: https://github.com/TranMinhThuanFPTU
-- Trương Bỉnh Tân | Backend
+- Cao Chí Hải | Backend
+     - Gmail: haicao2805@gmail.com
+     - Linkedin: https://www.linkedin.com/in/cao-chi-hai
+     - Github: https://github.com/haicao2805
+- Trương Bỉnh Tân | Backend + Frontend
      - Gmail: tantruong2303@gmail.com
      - Linkedin: https://linkedin.com/in/truongbinhtan
      - Github: https://github.com/tantruong2303
+- Nguyễn Lương Hoàng Nam
+     - Gmail: monkeynam208@gmail.com
+     - Linkedin: https://linkedin.com/in/truongbinhtan
+     - Github: https://github.com/MonkiNam
 
 ## Project Picture
+
+### Login Page
+
+[![Grocery Store Logo](doc/login-page.jpg)](https://fptblog.vinhnhan.com/auth/login)
 
 ## Bug Report
 
