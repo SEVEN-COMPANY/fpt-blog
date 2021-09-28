@@ -3,6 +3,7 @@ using System.Linq;
 using FPTBlog.Src.BlogModule.Entity;
 using FPTBlog.Src.BlogModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Utils;
 
 namespace FPTBlog.Src.BlogModule {
@@ -107,10 +108,31 @@ namespace FPTBlog.Src.BlogModule {
             return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
         }
 
-        private (List<Blog>, int) GetBlogsAndCountFromQuery(IQueryable<Blog> query, int pageSize, int pageIndex){
+        private (List<Blog>, int) GetBlogsAndCountFromQuery(IQueryable<Blog> query, int pageSize, int pageIndex) {
             List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (blogs, count);
+        }
+
+        public bool LikeBlog(Blog blog, User user) {
+            LikeBlog obj = this.Db.LikeBlog.FirstOrDefault(item => item.BlogId == blog.BlogId && item.UserId == user.UserId);
+            if (obj == null) {
+                blog.Like += 1;
+                this.Db.Blog.Update(blog);
+                LikeBlog like = new LikeBlog();
+                like.BlogId = blog.BlogId;
+                like.Blog = blog;
+                like.UserId = user.UserId;
+                like.User = user;
+                this.Db.LikeBlog.Add(like);
+                return this.Db.SaveChanges() > 0;
+            }
+
+            blog.Like -= 1;
+            this.Db.Blog.Update(blog);
+            this.Db.LikeBlog.Remove(obj);
+            return this.Db.SaveChanges() > 0;
+
         }
     }
 }

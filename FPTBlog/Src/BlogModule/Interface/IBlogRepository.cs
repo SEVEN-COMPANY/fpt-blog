@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FPTBlog.Src.BlogModule.Entity;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.BlogModule.Interface {
     public interface IBlogRepository {
@@ -14,5 +15,6 @@ namespace FPTBlog.Src.BlogModule.Interface {
         public (List<Blog>, int) GetBlogsByCategoryAndCount(int pageSize, int pageIndex, string name);
         public (List<Blog>, int) GetAllBlogsAndCount(int pageSize, int pageIndex);
         public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status);
+        public bool LikeBlog(Blog blog, User user);
     }
 }
