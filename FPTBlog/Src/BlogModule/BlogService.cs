@@ -58,5 +58,9 @@ namespace FPTBlog.Src.BlogModule {
             return this.BlogRepository.LikeBlog(blog, user);
         }
 
+        public List<Blog> GetAllWaitBlogs() {
+            return this.BlogRepository.GetAllWaitBlogs();
+        }
+
     }
 }

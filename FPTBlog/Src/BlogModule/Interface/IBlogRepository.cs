@@ -16,5 +16,6 @@ namespace FPTBlog.Src.BlogModule.Interface {
         public (List<Blog>, int) GetAllBlogsAndCount(int pageSize, int pageIndex);
         public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status);
         public bool LikeBlog(Blog blog, User user);
+        public List<Blog> GetAllWaitBlogs();
     }
 }

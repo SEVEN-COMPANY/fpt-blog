@@ -134,5 +134,10 @@ namespace FPTBlog.Src.BlogModule {
             return this.Db.SaveChanges() > 0;
 
         }
+
+        public List<Blog> GetAllWaitBlogs() {
+            List<Blog> blogs = this.Db.Blog.Where(x => x.Status.Equals("WAIT")).ToList();
+            return blogs;
+        }
     }
 }
