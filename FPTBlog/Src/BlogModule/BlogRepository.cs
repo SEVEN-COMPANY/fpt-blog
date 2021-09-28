@@ -19,13 +19,16 @@ namespace FPTBlog.Src.BlogModule {
 
 
         public bool AddTagToBlog(Blog blog, Tag tag) {
-                BlogTag blogTag = new BlogTag();
-                blogTag.BlogId = blog.BlogId;
-                blogTag.Blog = blog;
-                blogTag.TagId = tag.TagId;
-                blogTag.Tag = tag;
+            BlogTag blogTag = new BlogTag();
+            blogTag.BlogId = blog.BlogId;
+            blogTag.Blog = blog;
+            blogTag.TagId = tag.TagId;
+            blogTag.Tag = tag;
 
+            blog.BlogTags.Add(blogTag);
+            tag.BlogTags.Add(blogTag);
             this.Db.BlogTag.Add(blogTag);
+
             return this.Db.SaveChanges() > 0;
         }
 
@@ -35,8 +38,12 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         public List<Tag> GetTagsFromBlog(Blog blog) {
-            List<Tag> tags = (from Tag in this.Db.Tag
-                              where Tag.BlogTags.Any(bt => bt.BlogId == blog.BlogId)
+            List<Tag> tags = (from Blog in this.Db.Blog
+                              where Blog.BlogId.Equals(blog.BlogId)
+                              join BlogTag in this.Db.BlogTag
+                              on Blog.BlogId equals BlogTag.BlogId
+                              join Tag in this.Db.Tag
+                              on BlogTag.TagId equals Tag.TagId
                               select Tag).ToList();
             return tags;
         }
