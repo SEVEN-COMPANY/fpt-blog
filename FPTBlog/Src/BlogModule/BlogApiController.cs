@@ -49,7 +49,6 @@ namespace FPTBlog.Src.BlogModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-
             res.data = this.UploadFileService.Upload(image);
             return new ObjectResult(res.getResponse());
         }
