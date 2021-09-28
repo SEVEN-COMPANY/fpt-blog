@@ -9,6 +9,7 @@ namespace FPTBlog.Src.TagModule.Interface {
         public Tag GetTagByName(string name);
         public bool UpdateTag(Tag tag);
         public List<Tag> GetTags();
+        public (List<Tag>, int) GetTagsWithFilter(int pageSize, int pageIndex, TagStatus status, string name);
         public bool DeleteTag(string tagId);
         public int GetQualityBlogOfTag(string tagId);
 

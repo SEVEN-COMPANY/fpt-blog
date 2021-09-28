@@ -5,15 +5,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] | FPT Blog</title>
-    @await RenderSectionAsync("Styles", required: false)
     <link href="/style/styles.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 
 <body>
     <main class="relative flex flex-col min-h-screen">
         @await Html.PartialAsync("../Components/Navbar/Navbar.cshtml")
-
-        @RenderBody()
+        <div class="flex flex-col flex-1 bg-alabaster-600">
+            <div class="flex-1 w-full max-w-6xl pt-20 mx-auto md:p-2 md:w-4/5 bg-alabaster-300 broder">
+                @RenderBody()
+            </div>
+        </div>
     </main>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
