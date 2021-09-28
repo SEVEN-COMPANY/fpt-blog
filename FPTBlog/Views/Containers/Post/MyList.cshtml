@@ -2,24 +2,26 @@
 @{
     @* this.ViewData["blogs"] = blogs;
         this.ViewData["total"] = total; *@
-    var blogs = (List<Blog>)this.ViewData["blogs"];
+    var blogs = (List<Blog>)this.ViewData["drafts"];
     Console.WriteLine(blogs.Count);
 }
 
-<div class="flex flex-col flex-1 bg-alabaster-500">
+<div class="flex flex-col flex-1 bg-alabaster-600">
     <div class="flex-1 w-4/5 p-2 mx-auto space-y-2 bg-alabaster-300 broder">
         <div>
             <button class="p-2 font-medium text-white rounded-sm bg-tango-500" id="createNewPost">New Post</button>
         </div>
-
-        <div class="flex space-x-2">
+        <div>
+            <h1 class="text-2xl font-semibold">My Draft</h1>
+        </div>
+        <div class="flex flex-wrap p-2 border">
             @foreach (var item in blogs)
             {
 
                 var link = $"{Routers.GetBlogEditor.Link}?blogId={item.BlogId}";
 
                 <a href="@link"
-                class="flex flex-col items-center justify-center p-2 duration-300 border rounded-md shadow-xl cursor-pointer hover:bg-alabaster-600 bg-alabaster-500">
+                class="flex flex-col items-center justify-center p-2 m-2 duration-300 border rounded-md shadow-xl cursor-pointer hover:bg-alabaster-600 bg-alabaster-500">
                     <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                         d="M21.3333 45.8662H19.2C18.6109 45.8662 18.1333 46.3438 18.1333 46.9329C18.1333 47.5219 18.6109 47.9995 19.2 47.9995H21.3333C21.9224 47.9995 22.4 47.5219 22.4 46.9329C22.4 46.3438 21.9224 45.8662 21.3333 45.8662Z"

@@ -12,6 +12,10 @@ namespace FPTBlog.Src.CategoryModule {
             this.DB = dB;
         }
 
+        public List<Category> GetCategories(int currentPage, int pageSize, string name) {
+            List<Category> categories = this.DB.Category.Where(item => item.Name.Contains(name)).Take((pageSize + 1) * currentPage).Skip(currentPage * pageSize).ToList();
+            return categories;
+        }
         public List<Category> GetCategories() {
             List<Category> categories = this.DB.Category.ToList();
             return categories;

@@ -39,7 +39,7 @@
         </div>
         @* Form End *@
     </div>
-    <div class="col-span-12 md:col-span-8">
+    <div class="col-span-12 space-y-2 md:col-span-8">
         @* Table Start *@
         <div class="col-span-12 md:col-span-8 intro-y box">
             <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row">
@@ -108,11 +108,10 @@
                         </table>
                     </div>
                 </div>
-
-
             </div>
         </div>
         @* Table End *@
+        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml")
     </div>
 </div>
 
