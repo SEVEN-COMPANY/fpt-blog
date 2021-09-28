@@ -1,5 +1,3 @@
-
-
 using System.Linq;
 using System.Collections.Generic;
 using FluentValidation.Results;
@@ -140,9 +138,9 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpPost("tag")]
-        public IActionResult AddTagToBlog([FromBody] UpdateTagsOfBlogDto input) {
-            var res = new ServerApiResponse<List<Tag>>();
-            ValidationResult result = new UpdateTagsOfBlogDtoValidator().Validate(input);
+        public IActionResult AddTagToBlog([FromBody] ToggleTagToBlogDto input) {
+            var res = new ServerApiResponse<Blog>();
+            ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
@@ -154,34 +152,43 @@ namespace FPTBlog.Src.BlogModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            List<Tag> currentTags = this.BlogService.GetTagsFromBlog(blog);
-            List<Tag> newTags = new List<Tag>();
-            foreach (string tagName in input.Tags) {
-                Tag tag = this.TagService.GetTagByName(tagName);
-                newTags.Add(tag);
+            Tag tag = this.TagService.GetTagByName(input.TagName);
+            if(tag == null){
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "tagName");
+                return new NotFoundObjectResult(res.getResponse());
             }
 
-            // Thêm những tag mà người dùng vừa thêm mới
-            List<Tag> addTags = new List<Tag>();
-            foreach (Tag newTag in newTags) {
-                if (!currentTags.Contains(newTag)) {
-                    addTags.Add(newTag);
-                }
-            }
-            this.BlogService.AddTagToBlog(blog, addTags);
+            this.BlogService.AddTagToBlog(blog, tag);
 
-            // Xóa những tag mà người dùng đã remove ra khỏi blog
-            List<Tag> removeTags = new List<Tag>();
-            foreach (Tag curTag in currentTags) {
-                if (!newTags.Contains(curTag)) {
-                    removeTags.Add(curTag);
-                }
-                this.BlogService.RemoveTagFromBlog(removeTags);
+            res.data = blog;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPut("tag")]
+        public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToBlogDto input){
+             var res = new ServerApiResponse<Blog>();
+            ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
             }
 
-            var tags = blog.BlogTags.Select(item => item.Tag).ToList();
+            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            if (blog == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
 
-            res.data = tags;
+            Tag tag = this.TagService.GetTagByName(input.TagName);
+            if(tag == null){
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "tagName");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            this.BlogService.RemoveTagFromBlog(blog, tag);
+
+            res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }

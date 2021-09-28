@@ -10,8 +10,8 @@ namespace FPTBlog.Src.BlogModule {
             this.BlogRepository = blogRepository;
         }
 
-        public bool AddTagToBlog(Blog blog, List<Tag> tags) {
-            return this.BlogRepository.AddTagToBlog(blog, tags);
+        public bool AddTagToBlog(Blog blog, Tag tag) {
+            return this.BlogRepository.AddTagToBlog(blog, tag);
         }
 
         public Blog GetBlogByBlogId(string blogId) {
@@ -22,8 +22,8 @@ namespace FPTBlog.Src.BlogModule {
             return this.BlogRepository.GetTagsFromBlog(blog);
         }
 
-        public bool RemoveTagFromBlog(List<Tag> tags) {
-            return this.BlogRepository.RemoveTagFromBlog(tags);
+        public bool RemoveTagFromBlog(Blog blog, Tag tag) {
+            return this.BlogRepository.RemoveTagFromBlog(blog, tag);
         }
 
         public bool SaveBlog(Blog blog) {
