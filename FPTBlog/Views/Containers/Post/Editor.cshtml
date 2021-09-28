@@ -13,20 +13,29 @@
     var content = new HtmlString(blog.Content);
 
     this.ViewData["Title"] = blog.Title;
-
+    var previewLink = $"{Routers.GetBlogPreview.Link}?blogId={blog.BlogId}";
 }
 
-<div class="flex-1 ">
+<div class="flex-1 py-8">
 
-    <form class="w-screen px-2 py-8 mx-auto space-y-4 md:max-w-screen-lg" id="createBlogForm">
-        <h1 class="text-2xl font-semibold">Create New Blog</h1>
-        <input value="@blog.BlogId" id="blogId" class="hidden" readonly />
+    <form class="space-y-4" id="createBlogForm">
+        <div class="flex items-center justify-between">
+
+            <h1 class="text-2xl font-semibold">Editor Post</h1>
+
+        </div>
+
+        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+        new {Name="blogId", Value=blog.BlogId})
         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
         new {Name="title", Label="Title", Type="text", Value=blog.Title})
-        @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
-        new {Name="categoryId", Label="Category", Value=blog.CategoryId, List=categories})
-        @await Html.PartialAsync("../../Components/Form/FormSelectBadge.cshtml",
-        new {Name="tag", Label="Tag", Value="", Placeholder ="Enter tag"})
+
+        <div class="flex space-x-2">
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new {Name="categoryId", Label="Category", Value=blog.CategoryId, List=categories})
+            @await Html.PartialAsync("../../Components/Form/FormSelectBadge.cshtml",
+            new {Name="tag", Label="Tag", Value="", Placeholder ="Enter tag"})
+        </div>
 
 
         <div class="flex flex-col flex-1 space-y-1">
@@ -39,16 +48,20 @@
             </div>
         </div>
         <div>
-            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-            new { Label="Save as draft"})
-            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-            new { Label="Upload Post"})
         </div>
+        <div class="flex items-center space-x-4">
+            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+            new { Label="Save Changes"})
+            <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500">
+                Preview
+            </a>
+        </div>
+
     </form>
 </div>
 
-
 @section Scripts {
 <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+<script src="/js/image-resize.min.js"></script>
 <script src="/js/blog-editor.js"></script>
 }

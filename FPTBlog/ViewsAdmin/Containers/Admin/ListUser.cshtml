@@ -13,39 +13,60 @@
     </h2>
 </div>
 
+<div class="p-2 mb-2 box intro-y">
+    @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+    <form action="@RoutersAdmin.GetUsers.Link" class="space-y-4 preview">
+        <div class="flex items-start space-x-2">
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "name", Label = "", Type = "text", Value = (string)this.Context.Request.Query["name"] ?? ""
+            })
+            @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+            new { Name = "status", Label = "", Value = this.Context.Request.Query["status"] ==
+            ((int)UserStatus.ENABLE).ToString() })
+            <input type="text" name="pageSize" value="12" readonly class="hidden" />
+            <input type="text" name="pageIndex" value="0" readonly class="hidden" />
+
+            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+            new { Label = "Search" })
+        </div>
+    </form>
+</div>
+
 <div class="overflow-x-auto">
-    @* Table Start *@
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">User ID</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Username</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Email</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Phone</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Address</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Role</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Create Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in users)
-            {
+    <div class="box intro-y">
+        @* Table Start *@
+        <table class="table">
+            <thead>
                 <tr>
-                    <td class="border-b dark:border-dark-5">@item.UserId</td>
-                    <td class="border-b dark:border-dark-5">@item.Name</td>
-                    <td class="border-b dark:border-dark-5">@item.Username</td>
-                    <td class="border-b dark:border-dark-5">@item.Email</td>
-                    <td class="border-b dark:border-dark-5">@item.Phone</td>
-                    <td class="border-b dark:border-dark-5">@item.Address</td>
-                    <td class="border-b dark:border-dark-5">@await Html.PartialAsync(
-                    "../../Components/Table/TableStatus.cshtml",
-                    item.Status == UserStatus.ENABLE)</td>
-                    <td class="border-b dark:border-dark-5">@item.Role</td>
-                    <td class="border-b dark:border-dark-5">@item.CreateDate</td>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">User ID</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Username</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Email</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Phone</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Address</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Role</th>
+                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Create Date</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in users)
+                {
+                    <tr>
+                        <td class="border-b dark:border-dark-5">@item.UserId</td>
+                        <td class="border-b dark:border-dark-5">@item.Name</td>
+                        <td class="border-b dark:border-dark-5">@item.Username</td>
+                        <td class="border-b dark:border-dark-5">@item.Email</td>
+                        <td class="border-b dark:border-dark-5">@item.Phone</td>
+                        <td class="border-b dark:border-dark-5">@item.Address</td>
+                        <td class="border-b dark:border-dark-5">@await Html.PartialAsync(
+                        "../../Components/Table/TableStatus.cshtml",
+                        item.Status == UserStatus.ENABLE)</td>
+                        <td class="border-b dark:border-dark-5">@item.Role</td>
+                        <td class="border-b dark:border-dark-5">@item.CreateDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -12,6 +12,13 @@ namespace FPTBlog.Src.CategoryModule {
             this.DB = dB;
         }
 
+        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string name, CategoryStatus status) {
+            var query = (from category in this.DB.Category where category.Name.Contains(name) && category.Status == status select category);
+            List<Category> categories = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+
+            return (categories, query.Count());
+        }
         public List<Category> GetCategories() {
             List<Category> categories = this.DB.Category.ToList();
             return categories;

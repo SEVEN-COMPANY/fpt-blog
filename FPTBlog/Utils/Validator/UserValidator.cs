@@ -1,5 +1,5 @@
 namespace FPTBlog.Utils.Validator {
-    public class UserValidator {
+    public static class UserValidator {
         public static readonly int USERNAME_MAX = 30;
         public static readonly int USERNAME_MIN = 5;
         public static readonly int PASSWORD_MAX = 30;

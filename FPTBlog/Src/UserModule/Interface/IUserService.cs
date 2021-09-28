@@ -11,7 +11,7 @@ namespace FPTBlog.Src.UserModule.Interface {
         public User GetUserByGoogleId(string googleId);
         public void ChangePasswordHandler(User user);
         public void BlockUserByAdminHandler(User user);
-        public (List<User>, int) GetUsers();
-        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search);
+        public (List<User>, int) GetUsersWithStatus(int pageSize, int pageIndex, UserStatus status, string name);
+        public (List<User>, int) GetUsersByPageAndCount(int pageSize, int pageIndex, string search);
     }
 }

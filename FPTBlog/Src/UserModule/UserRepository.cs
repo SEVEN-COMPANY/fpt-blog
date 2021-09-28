@@ -3,6 +3,7 @@ using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace FPTBlog.Src.UserModule {
     public class UserRepository : IUserRepository {
@@ -53,16 +54,20 @@ namespace FPTBlog.Src.UserModule {
             return this.Db.SaveChanges() > 0;
         }
 
-        public (List<User>, int) GetUsers() {
-            List<User> users = this.Db.User.ToList();
+        public (List<User>, int) GetUsersWithStatus(int pageSize, int pageIndex, UserStatus status, string name) {
+
+            var query = (from User in this.Db.User
+                         where User.Name.Contains(name) && User.Status == status
+                         select User);
+            List<User> users = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             foreach (User user in users) {
                 user.Password = "";
             }
             return (users, users.Count);
         }
-        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search) {
+        public (List<User>, int) GetUsersByPageAndCount(int pageSize, int pageIndex, string search) {
             var query = this.Db.User.Where(x => x.Name.Contains(search) || x.Email.Contains(search));
-            List<User> users = query.Take((pageSize + 1) * currentPage).Skip(currentPage * pageSize).ToList();
+            List<User> users = query.Take((pageSize + 1) * pageIndex).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (users, count);
         }
