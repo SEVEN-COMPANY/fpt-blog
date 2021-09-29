@@ -1,24 +1,25 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.TagModule.Entity;
 
 namespace FPTBlog.Src.BlogModule.Entity {
-    [Table("tblLikeBlog")]
-    public class LikeBlog {
+    [Table("tblPostTag")]
+    public class PostTag {
         [Key]
-        public string BlogId {
+        public string PostId {
             get; set;
         }
-        public virtual Blog Blog {
+
+        public virtual Post post {
             get; set;
         }
 
         [Key]
-        public string UserId {
+        public string TagId {
             get; set;
         }
 
-        public virtual User User {
+        public virtual Tag Tag {
             get; set;
         }
     }

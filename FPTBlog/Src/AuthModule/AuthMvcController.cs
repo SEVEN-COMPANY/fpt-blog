@@ -42,7 +42,7 @@ namespace FPTBlog.Src.AuthModule {
                 user.Email = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "email");
                 user.AvatarUrl = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "picture");
                 user.Role = UserRole.STUDENT;
-                this.UserService.SaveUser(user);
+                this.UserService.AddUser(user);
             }
 
             var token = this.JwtService.GenerateToken(user.UserId);

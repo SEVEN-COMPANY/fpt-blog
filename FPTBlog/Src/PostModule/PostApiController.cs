@@ -18,14 +18,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace FPTBlog.Src.BlogModule {
-    [Route("/api/blog")]
+    [Route("/api/post")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class BlogApiController : Controller {
+    public class PostApiController : Controller {
         private readonly IUploadFileService UploadFileService;
         private readonly IBlogService BlogService;
         private readonly ICategoryService CategoryService;
         private readonly ITagService TagService;
-        public BlogApiController(IUploadFileService uploadFileService, IBlogService blogService, ICategoryService categoryService, ITagService tagService) {
+        public PostApiController(IUploadFileService uploadFileService, IBlogService blogService, ICategoryService categoryService, ITagService tagService) {
             this.UploadFileService = uploadFileService;
             this.BlogService = blogService;
             this.CategoryService = categoryService;
@@ -53,25 +53,25 @@ namespace FPTBlog.Src.BlogModule {
 
         [HttpPost("")]
         public IActionResult SaveBlogHandler() {
-            Blog blog = new Blog();
+            Post blog = new Post();
             blog.Student = (User) this.ViewData["user"];
             blog.StudentId = ((User) this.ViewData["user"]).UserId;
             this.BlogService.SaveBlog(blog);
-            var res = new ServerApiResponse<Blog>();
+            var res = new ServerApiResponse<Post>();
             res.data = blog;
             return new ObjectResult(res.getResponse());
         }
 
         [HttpPost("save")]
-        public IActionResult SaveBlogHandler([FromBody] SaveBlogDto input) {
-            var res = new ServerApiResponse<Blog>();
+        public IActionResult SaveBlogHandler([FromBody] SavePostDto input) {
+            var res = new ServerApiResponse<Post>();
             ValidationResult result = new SaveBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -92,15 +92,15 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpPost("category")]
-        public IActionResult AddCategoryToBlog([FromBody] UpdateCategoryOfBlogDto input) {
-            var res = new ServerApiResponse<Blog>();
-            ValidationResult result = new UpdateCategoryOfBlogDtoValidator().Validate(input);
+        public IActionResult AddCategoryToBlog([FromBody] UpdateCategoryOfPostDto input) {
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new UpdateCategoryOfPostDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -126,7 +126,7 @@ namespace FPTBlog.Src.BlogModule {
         public IActionResult GetTagsByBlogId(string blogId) {
             var res = new ServerApiResponse<List<Tag>>();
 
-            Blog blog = this.BlogService.GetBlogByBlogId(blogId);
+            Post blog = this.BlogService.GetBlogByBlogId(blogId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new NotFoundObjectResult(res.getResponse());
@@ -138,15 +138,15 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpPost("tag")]
-        public IActionResult AddTagToBlog([FromBody] ToggleTagToBlogDto input) {
+        public IActionResult AddTagToBlog([FromBody] ToggleTagToPostDto input) {
             var res = new ServerApiResponse<List<Tag>>();
-            ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
+            ValidationResult result = new ToggleTagToPostDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -154,7 +154,7 @@ namespace FPTBlog.Src.BlogModule {
 
             // Find tag by name in db, if not found, then create new
             Tag tag = this.TagService.GetTagByName(input.TagName);
-            if(tag == null){
+            if (tag == null) {
                 tag = new Tag();
                 tag.Name = input.TagName;
                 tag.Status = TagStatus.ACTIVE;
@@ -163,8 +163,8 @@ namespace FPTBlog.Src.BlogModule {
 
             List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
             // If the current tags of blog already has this tag name, return
-            foreach(var item in tags){
-                if(item.Name.Equals(tag.Name)){
+            foreach (var item in tags) {
+                if (item.Name.Equals(tag.Name)) {
                     res.data = tags;
                     res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
                     return new ObjectResult(res.getResponse());
@@ -179,15 +179,15 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpPut("tag")]
-        public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToBlogDto input){
-             var res = new ServerApiResponse<List<Tag>>();
-            ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
+        public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToPostDto input) {
+            var res = new ServerApiResponse<List<Tag>>();
+            ValidationResult result = new ToggleTagToPostDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -201,13 +201,13 @@ namespace FPTBlog.Src.BlogModule {
 
             List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
             bool canRemove = false;
-            foreach(var item in tags){
-                if(item.Name.Equals(tag.Name)){
+            foreach (var item in tags) {
+                if (item.Name.Equals(tag.Name)) {
                     canRemove = true;
                 }
             }
 
-            if(canRemove){
+            if (canRemove) {
                 tags.Remove(tag);
                 this.BlogService.RemoveTagFromBlog(blog, tag);
             }
@@ -218,21 +218,21 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpPost("post")]
-        public IActionResult PostBlog([FromBody] PostBlogDto input) {
-            var res = new ServerApiResponse<Blog>();
-            ValidationResult result = new PostBlogDtoValidator().Validate(input);
+        public IActionResult PostBlog([FromBody] SendPostDto input) {
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new SendPostDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            blog.Status = BlogStatus.WAIT;
+            blog.Status = PostStatus.WAIT;
             this.BlogService.UpdateBlog(blog);
 
             res.data = blog;
@@ -241,14 +241,14 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpPost("like")]
-        public IActionResult LikeBlog([FromBody] LikeBlogDto input) {
-            var res = new ServerApiResponse<Blog>();
+        public IActionResult LikeBlog([FromBody] LikePostDto input) {
+            var res = new ServerApiResponse<Post>();
             ValidationResult result = new LikeBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
-            Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
+            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());

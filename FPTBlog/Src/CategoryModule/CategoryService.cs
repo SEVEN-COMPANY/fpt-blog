@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.Entity;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace FPTBlog.Src.CategoryModule {
     public class CategoryService : ICategoryService {
@@ -11,32 +12,24 @@ namespace FPTBlog.Src.CategoryModule {
 
             this.CategoryRepository = categoryRepository;
         }
-
-        public (List<Category>, int) GetCategories(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) {
-            var (categories, total) = this.CategoryRepository.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
-            return (categories, total);
+        public (List<Category>, int) GetCategories() {
+            List<Category> list = (List<Category>) this.CategoryRepository.GetAll();
+            var count = list.Count;
+            return (list, count);
         }
+        public void AddCategory(Category category) => this.CategoryRepository.Add(category);
+        public Category GetCategoryByCategoryId(string categoryId) => this.CategoryRepository.Get(categoryId);
+        public Category GetCategoryByName(string name) => this.CategoryRepository.GetFirstOrDefault(item => item.Name.Equals(name));
+        public void UpdateCategory(Category category) => this.CategoryRepository.Update(category);
+        public void RemoveCategory(Category category) => this.CategoryRepository.Remove(category);
 
-        public bool SaveCategory(Category category) {
-            return this.CategoryRepository.SaveCategory(category);
+        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) {
+            List<Category> list = (List<Category>) this.CategoryRepository.GetAll(item => item.Name.Equals(searchName) && item.Status == searchStatus);
+            var count = list.Count;
+            list = (List<Category>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
+
+            return (list, count);
         }
-
-        public Category GetCategoryByCategoryName(string name) {
-            return this.CategoryRepository.GetCategoryByCategoryName(name);
-        }
-
-        public Category GetCategoryByCategoryId(string categoryId) {
-            return this.CategoryRepository.GetCategoryByCategoryId(categoryId);
-        }
-
-        public bool UpdateCategory(Category category) {
-            return this.CategoryRepository.UpdateCategory(category);
-        }
-
-        public bool DeleteCategory(Category category) {
-            return this.CategoryRepository.DeleteCategory(category);
-        }
-
 
         public List<SelectListItem> GetRadioStatusList() {
             SelectListItem active = new SelectListItem() { Value = ((int) CategoryStatus.ACTIVE).ToString(), Text = "active" };
@@ -47,7 +40,7 @@ namespace FPTBlog.Src.CategoryModule {
         public List<SelectListItem> GetCategoryDropList() {
             var categories = new List<SelectListItem>();
 
-            var list = this.CategoryRepository.GetCategories();
+            var list = this.CategoryRepository.GetAll();
             foreach (var item in list) {
                 categories.Add(new SelectListItem() { Value = item.CategoryId, Text = item.Name });
             }

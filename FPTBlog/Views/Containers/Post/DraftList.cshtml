@@ -2,7 +2,7 @@
 @{
     @* this.ViewData["blogs"] = blogs;
         this.ViewData["total"] = total; *@
-    var blogs = (List<Blog>)this.ViewData["drafts"];
+    var blogs = (List<Post>)this.ViewData["drafts"];
     Console.WriteLine(blogs.Count);
 }
 
@@ -17,7 +17,7 @@
     @foreach (var item in blogs)
     {
 
-        var link = $"{Routers.GetBlogEditor.Link}?blogId={item.BlogId}";
+        var link = $"{Routers.GetBlogEditor.Link}?blogId={item.PostId}";
 
         <a href="@link"
         class="flex flex-col items-center justify-center p-2 m-2 duration-300 border rounded-md shadow-xl cursor-pointer hover:bg-alabaster-600 bg-alabaster-500">

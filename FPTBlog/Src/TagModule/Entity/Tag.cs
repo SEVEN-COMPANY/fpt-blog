@@ -31,7 +31,12 @@ namespace FPTBlog.Src.TagModule.Entity {
             get; set;
         }
 
-        public virtual ICollection<BlogTag> BlogTags {
+        public virtual ICollection<PostTag> PostTags {
+            get; set;
+        }
+
+
+        public virtual int PostCount {
             get; set;
         }
         public Tag() {
@@ -39,7 +44,7 @@ namespace FPTBlog.Src.TagModule.Entity {
             this.Name = "";
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Status = TagStatus.ACTIVE;
-            this.BlogTags = new List<BlogTag>();
+            this.PostTags = new List<PostTag>();
         }
 
         public override string ToString() {

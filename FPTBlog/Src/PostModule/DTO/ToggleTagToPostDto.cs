@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using FluentValidation;
 
 namespace FPTBlog.Src.BlogModule.DTO {
-    public class ToggleTagToBlogDto {
-        public string BlogId {
+    public class ToggleTagToPostDto {
+        public string PostId {
             get; set;
         }
         public string TagName {
@@ -11,9 +11,9 @@ namespace FPTBlog.Src.BlogModule.DTO {
         }
     }
 
-    public class ToggleTagToBlogDtoValidator : AbstractValidator<ToggleTagToBlogDto> {
-        public ToggleTagToBlogDtoValidator() {
-            RuleFor(x => x.BlogId).NotEmpty().NotNull();
+    public class ToggleTagToPostDtoValidator : AbstractValidator<ToggleTagToPostDto> {
+        public ToggleTagToPostDtoValidator() {
+            RuleFor(x => x.PostId).NotEmpty().NotNull();
             RuleFor(x => x.TagName).NotEmpty().NotNull();
         }
     }

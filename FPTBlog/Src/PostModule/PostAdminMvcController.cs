@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Utils.Common;
 
 namespace FPTBlog.Src.BlogModule {
-    [Route("/admin/blog")]
+    [Route("/admin/post")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class BlogAdminMvcController : Controller {
+    public class PostAdminMvcController : Controller {
         private readonly IBlogService BlogService;
-        public BlogAdminMvcController(IBlogService blogService) {
+        public PostAdminMvcController(IBlogService blogService) {
             this.BlogService = blogService;
         }
 

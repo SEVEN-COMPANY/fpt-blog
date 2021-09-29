@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.BlogModule {
-    [Route("blog")]
+    [Route("post")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class BlogMvcController : Controller {
+    public class PostMvcController : Controller {
         private readonly IUploadFileService UploadFileService;
         private readonly IBlogService BlogService;
         private readonly ICategoryService CategoryService;
-        public BlogMvcController(IUploadFileService uploadFileService, IBlogService blogService, ICategoryService categoryService) {
+        public PostMvcController(IUploadFileService uploadFileService, IBlogService blogService, ICategoryService categoryService) {
             this.UploadFileService = uploadFileService;
             this.BlogService = blogService;
             this.CategoryService = categoryService;
@@ -53,7 +53,7 @@ namespace FPTBlog.Src.BlogModule {
 
 
             var user = (User) this.ViewData["user"];
-            var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, user.UserId, BlogStatus.DRAFT);
+            var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, user.UserId, PostStatus.DRAFT);
             this.ViewData["drafts"] = blogs;
             this.ViewData["totalDraft"] = total;
 
@@ -97,7 +97,7 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpGet("student")]
-        public IActionResult GetBlogsOfStudentWithStatus(BlogStatus status, int pageSize = 12, int pageIndex = 0, string studentId = "") {
+        public IActionResult GetBlogsOfStudentWithStatus(PostStatus status, int pageSize = 12, int pageIndex = 0, string studentId = "") {
             var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
             this.ViewData["blogs"] = blogs;
             this.ViewData["total"] = total;

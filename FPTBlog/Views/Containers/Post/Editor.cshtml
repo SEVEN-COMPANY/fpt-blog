@@ -9,11 +9,11 @@
 @{
     SelectList categories = (SelectList)this.ViewData["categories"];
 
-    var blog = (Blog)this.ViewData["blog"];
+    var blog = (Post)this.ViewData["blog"];
     var content = new HtmlString(blog.Content);
 
     this.ViewData["Title"] = blog.Title;
-    var previewLink = $"{Routers.GetBlogPreview.Link}?blogId={blog.BlogId}";
+    var previewLink = $"{Routers.GetBlogPreview.Link}?blogId={blog.PostId}";
 }
 
 <div class="flex-1 py-8">
@@ -26,7 +26,7 @@
         </div>
 
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-        new {Name="blogId", Value=blog.BlogId})
+        new {Name="blogId", Value=blog.PostId})
         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
         new {Name="title", Label="Title", Type="text", Value=blog.Title})
 

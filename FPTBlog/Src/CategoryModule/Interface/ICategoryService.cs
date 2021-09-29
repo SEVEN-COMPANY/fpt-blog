@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.CategoryModule.Interface {
     public interface ICategoryService {
-        public (List<Category>, int) GetCategories(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus);
-        public bool SaveCategory(Category category);
-        public Category GetCategoryByCategoryName(string name);
+        public (List<Category>, int) GetCategories();
+        public void AddCategory(Category category);
+        public Category GetCategoryByName(string name);
         public Category GetCategoryByCategoryId(string categoryId);
-        public bool UpdateCategory(Category category);
-        public bool DeleteCategory(Category category);
+        public void UpdateCategory(Category category);
+        public void RemoveCategory(Category category);
+        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus);
         public List<SelectListItem> GetRadioStatusList();
         public List<SelectListItem> GetCategoryDropList();
     }

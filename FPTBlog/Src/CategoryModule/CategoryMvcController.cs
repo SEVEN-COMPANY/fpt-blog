@@ -29,7 +29,7 @@ namespace FPTBlog.Src.CategoryModule {
                 searchName = "";
             }
 
-            var (categories, total) = this.CategoryService.GetCategories(indexPage, pageSize, searchName, searchStatus);
+            var (categories, total) = this.CategoryService.GetCategoriesAndCount(indexPage, pageSize, searchName, searchStatus);
 
             this.ViewData["categories"] = categories;
             this.ViewData["total"] = total;
