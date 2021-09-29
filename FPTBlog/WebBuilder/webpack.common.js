@@ -5,6 +5,7 @@ module.exports = {
         'auth-login': ['./src/auth/login.ts'],
         'auth-register': ['./src/auth/register.ts'],
         'auth-update': ['./src/auth/login.ts'],
+        'user-list': ['./src/user/list.ts'],
         'user-update': ['./src/user/update.ts'],
         'user-changePassword': ['./src/user/changePassword.ts'],
         'category-create': ['./src/category/create.ts'],
@@ -12,6 +13,7 @@ module.exports = {
         'category-list': ['./src/category/list.ts'],
         'blog-create': ['./src/blog/create.ts'],
         'blog-editor': ['./src/blog/editor.ts'],
+        'tag-list': ['./src/tag/list.ts'],
     },
     output: {
         path: __dirname + '/../wwwroot/js',
