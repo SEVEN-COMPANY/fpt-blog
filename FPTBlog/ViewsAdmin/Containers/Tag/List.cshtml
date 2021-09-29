@@ -32,7 +32,8 @@
                         })
                         @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
                         new { Name = "searchStatus", Label = "Status", Value =
-                        (string) this.Context.Request.Query["searchStatus"] == ((int) TagStatus.ACTIVE).ToString()
+                        ((string) this.Context.Request.Query["searchStatus"] ?? "1" ) == ((int)
+                        TagStatus.ACTIVE).ToString()
                         ,IsLabel = false })
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
                         new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
@@ -43,10 +44,9 @@
                         new { Label = "Search" })
                     </div>
                 </form>
-
-
-
             </div>
+
+
             <div class="p-5" id="hoverable-table">
                 <div class="preview" style="display: block; opacity: 1;">
                     <div class="overflow-x-auto">

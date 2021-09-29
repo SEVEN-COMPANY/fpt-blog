@@ -54,10 +54,10 @@ namespace FPTBlog.Src.UserModule {
             return this.Db.SaveChanges() > 0;
         }
 
-        public (List<User>, int) GetUsersWithStatus(int pageSize, int pageIndex, UserStatus status, string name) {
+        public (List<User>, int) GetUsersWithStatus(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) {
 
             var query = (from User in this.Db.User
-                         where User.Name.Contains(name) && User.Status == status
+                         where User.Name.Contains(searchName) && User.Status == searchStatus
                          select User);
             List<User> users = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             foreach (User user in users) {
