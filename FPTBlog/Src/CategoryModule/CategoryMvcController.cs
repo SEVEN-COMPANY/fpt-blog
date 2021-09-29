@@ -25,16 +25,11 @@ namespace FPTBlog.Src.CategoryModule {
 
         [HttpGet("")]
         public IActionResult Category(string searchName, CategoryStatus searchStatus = CategoryStatus.ACTIVE, int pageSize = 12, int indexPage = 0) {
-
-
             if (searchName == null) {
                 searchName = "";
             }
 
-
-
             var (categories, total) = this.CategoryService.GetCategories(indexPage, pageSize, searchName, searchStatus);
-
 
             this.ViewData["categories"] = categories;
             this.ViewData["total"] = total;

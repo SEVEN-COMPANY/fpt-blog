@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.CategoryModule.Interface {
     public interface ICategoryService {
-        public (List<Category>, int) GetCategories(int pageIndex, int pageSize, string name, CategoryStatus status);
+        public (List<Category>, int) GetCategories(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus);
         public bool SaveCategory(Category category);
         public Category GetCategoryByCategoryName(string name);
         public Category GetCategoryByCategoryId(string categoryId);

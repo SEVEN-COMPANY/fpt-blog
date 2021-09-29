@@ -66,9 +66,9 @@ namespace FPTBlog.Src.TagModule {
             return this.Db.SaveChanges() > 0;
         }
 
-        public (List<Tag>, int) GetTagsWithFilter(int pageSize, int pageIndex, TagStatus status, string name) {
+        public (List<Tag>, int) GetTagsWithFilter(int pageIndex, int pageSize, string searchName, TagStatus searchStatus) {
             var query = (from Tag in this.Db.Tag
-                         where Tag.Name.Contains(name) && Tag.Status == status
+                         where Tag.Name.Contains(searchName) && Tag.Status == searchStatus
                          select Tag);
             List<Tag> tags = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             return (tags, tags.Count);
