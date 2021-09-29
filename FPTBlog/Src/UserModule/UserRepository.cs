@@ -55,15 +55,16 @@ namespace FPTBlog.Src.UserModule {
         }
 
         public (List<User>, int) GetUsersWithStatus(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) {
-
             var query = (from User in this.Db.User
                          where User.Name.Contains(searchName) && User.Status == searchStatus
                          select User);
+
+            var count = query.Count();
             List<User> users = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             foreach (User user in users) {
                 user.Password = "";
             }
-            return (users, users.Count);
+            return (users, count);
         }
         public (List<User>, int) GetUsersByPageAndCount(int pageSize, int pageIndex, string search) {
             var query = this.Db.User.Where(x => x.Name.Contains(search) || x.Email.Contains(search));

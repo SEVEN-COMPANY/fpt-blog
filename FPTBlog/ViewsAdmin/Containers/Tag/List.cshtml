@@ -24,7 +24,7 @@
 
 
                 @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
-                <form action="@RoutersAdmin.GetTags.Link" class="my-2">
+                <form action="@RoutersAdmin.GetTags.Link" id="listTagForm" class="my-2">
                     <div class="flex space-x-2">
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                         new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
@@ -38,7 +38,7 @@
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
                         new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "indexPage",Value = (string) this.Context.Request.Query["indexPage"] ?? "0" })
+                        new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
 
                         @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                         new { Label = "Search" })
@@ -108,12 +108,12 @@
         </div>
         @* Table End *@
         @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
-        new { IndexPage = (string) this.Context.Request.Query["indexPage"]?? "0", PageSize = (string)
+        new { PageIndex = (string) this.Context.Request.Query["pageIndex"]?? "0", PageSize = (string)
         this.Context.Request.Query["pageSize"]?? "12", Total = total })
     </div>
 </div>
 
 @section Scripts {
 
-
+<script src="/js/tag-list.js"></script>
 }
