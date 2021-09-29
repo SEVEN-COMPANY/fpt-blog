@@ -10,19 +10,32 @@ namespace FPTBlog.Utils.Common {
         public T data;
         public IDictionary<string, string> details;
 
-
-
         public ServerApiResponse() {
             this.details = new Dictionary<string, string>();
         }
 
-
-        public void setMessage(string key, string field = "message") {
+        public void setMessage(string key) {
             string value = ValidatorOptions.Global.LanguageManager.GetString(key);
             this.details.Add("message", value);
         }
 
-        public void setErrorMessage(string errorKey, string field = "errorMessage") {
+        public void setMessage(string key, string field) {
+            string value = ValidatorOptions.Global.LanguageManager.GetString(key);
+            this.details.Add(field, value);
+        }
+
+        public void setErrorMessage(string errorKey) {
+            ValidationResult result = new ValidationResult();
+            string errorMessage = ValidatorOptions.Global.LanguageManager.GetString(errorKey);
+            var failure = new ValidationFailure("errorMessage", errorMessage);
+            failure.FormattedMessagePlaceholderValues = new Dictionary<string, object>();
+            failure.FormattedMessagePlaceholderValues.Add("field", "errorMessage");
+
+            result.Errors.Add(failure);
+            mapDetails(result);
+        }
+
+        public void setErrorMessage(string errorKey, string field) {
             ValidationResult result = new ValidationResult();
             string errorMessage = ValidatorOptions.Global.LanguageManager.GetString(errorKey);
             var failure = new ValidationFailure(field, errorMessage);
@@ -86,7 +99,6 @@ namespace FPTBlog.Utils.Common {
 
             res.Add("details", this.details);
             return res;
-
         }
     }
 }

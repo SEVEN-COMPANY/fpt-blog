@@ -26,25 +26,42 @@ namespace FPTBlog.Src.BlogModule {
             SelectList list = new SelectList(this.CategoryService.GetCategoryDropList());
             this.ViewData["categories"] = list;
             var blog = this.BlogService.GetBlogByBlogId(blogId);
+            if (blog == null) {
+                return Redirect(Routers.Home.Link);
+            }
             this.ViewData["blog"] = blog;
 
             return View(Routers.GetBlogEditor.Page);
         }
-        [HttpGet("me")]
-        public IActionResult GetMyBlogsWithStatus(BlogStatus status, int pageSize = 12, int pageIndex = 1) {
 
+        [HttpGet("preview")]
+        public IActionResult PreviewPage(string blogId) {
+            var blog = this.BlogService.GetBlogByBlogId(blogId);
+            if (blog == null) {
+                return Redirect(Routers.Home.Link);
+            }
 
-            var user = (User) this.ViewData["user"];
-            var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, user.UserId, status);
-            this.ViewData["blogs"] = blogs;
-            this.ViewData["total"] = total;
+            this.ViewData["blog"] = blog;
 
-            return View(Routers.GetMyPost.Page);
+            return View(Routers.GetBlogPreview.Page);
         }
 
 
+
+        [HttpGet("me")]
+        public IActionResult GetMyBlogsWithStatus(int pageSize = 12, int pageIndex = 0) {
+
+
+            var user = (User) this.ViewData["user"];
+            var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, user.UserId, BlogStatus.DRAFT);
+            this.ViewData["drafts"] = blogs;
+            this.ViewData["totalDraft"] = total;
+
+            return View(Routers.GetMyDraft.Page);
+        }
+
         [HttpGet("")]
-        public IActionResult GetAllBlogs(int pageSize, int pageIndex) {
+        public IActionResult GetAllBlogs(int pageSize = 12, int pageIndex = 0) {
             var (blogs, total) = this.BlogService.GetAllBlogsAndCount(pageSize, pageIndex);
             this.ViewData["blogs"] = blogs;
             this.ViewData["total"] = total;
@@ -56,7 +73,7 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpGet("tag")]
-        public IActionResult GetBlogsByTagName(int pageSize, int pageIndex, string name) {
+        public IActionResult GetBlogsByTagName(int pageSize = 12, int pageIndex = 0, string name = "") {
             var (blogs, total) = this.BlogService.GetBlogsByTagAndCount(pageSize, pageIndex, name);
             this.ViewData["blogs"] = blogs;
             this.ViewData["total"] = total;
@@ -68,7 +85,7 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         [HttpGet("category")]
-        public IActionResult GetBlogsByCategoryName(int pageSize, int pageIndex, string name) {
+        public IActionResult GetBlogsByCategoryName(int pageSize = 12, int pageIndex = 0, string name = "") {
             var (blogs, total) = this.BlogService.GetBlogsByCategoryAndCount(pageSize, pageIndex, name);
             this.ViewData["blogs"] = blogs;
             this.ViewData["total"] = total;
@@ -79,9 +96,8 @@ namespace FPTBlog.Src.BlogModule {
             });
         }
 
-
         [HttpGet("student")]
-        public IActionResult GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status) {
+        public IActionResult GetBlogsOfStudentWithStatus(BlogStatus status, int pageSize = 12, int pageIndex = 0, string studentId = "") {
             var (blogs, total) = this.BlogService.GetBlogsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
             this.ViewData["blogs"] = blogs;
             this.ViewData["total"] = total;
@@ -90,6 +106,13 @@ namespace FPTBlog.Src.BlogModule {
                 blogs = blogs,
                 total = total
             });
+        }
+
+        [HttpGet("blogId")]
+        public IActionResult GetBlogByBlogId(string blogId) {
+            var blog = this.BlogService.GetBlogByBlogId(blogId);
+            this.ViewData["blog"] = blog;
+            return View(Routers.GetBlog.Page);
         }
     }
 }

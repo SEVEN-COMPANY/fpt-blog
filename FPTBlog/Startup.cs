@@ -34,6 +34,8 @@ using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule;
 using FPTBlog.Src.BlogModule.Interface;
 using FPTBlog.Src.BlogModule;
+using FPTBlog.Utils.Repository;
+using FPTBlog.Utils.Repository.Interface;
 
 namespace FPTBlog {
     public class Startup {
@@ -79,6 +81,8 @@ namespace FPTBlog {
             // Blog Module
             services.AddScoped<IBlogRepository, BlogRepository>();
             services.AddScoped<IBlogService, BlogService>();
+
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

@@ -123,37 +123,33 @@ export function handleSelectBadge(
 
         inputElement?.addEventListener('keyup', async function (event: KeyboardEvent) {
             if (event.code === 'Enter' && currentLabel !== null && currentSelect !== -1) {
-                const input = inputElement as HTMLInputElement;
-                input.value = currentLabel;
-                const value = await handleOnEnter(currentLabel);
-
-                const badgeElement = document.getElementById(`${id}Badge`) as HTMLDivElement;
-
-                if (badgeElement) {
-                    handleRenderBadge(badgeElement, value, handleOnDelete);
-                }
+                // const input = inputElement as HTMLInputElement;
+                // input.value = currentLabel;
+                // const value = await handleOnEnter(currentLabel);
+                // const badgeElement = document.getElementById(`${id}Badge`) as HTMLDivElement;
+                // if (badgeElement) {
+                //     handleRenderBadge(badgeElement, value, handleOnDelete);
+                // }
             } else if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
-                const searchItems = searchResult.getElementsByClassName('search-item');
-                if (searchItems.length) {
-                    if (event.code === 'ArrowDown') {
-                        currentSelect += 1;
-                        if (currentSelect > searchItems.length - 1) currentSelect = 0;
-                    } else if (event.code === 'ArrowUp') {
-                        currentSelect -= 1;
-                        if (currentSelect <= -1) currentSelect = searchItems.length - 1;
-                    }
-
-                    for (let index = 0; index < searchItems.length; index++) {
-                        const element = searchItems[index];
-                        if (currentSelect === index) {
-                            element.classList.add('bg-tango-200');
-
-                            currentLabel = element.textContent;
-                        } else {
-                            element.classList.remove('bg-tango-200');
-                        }
-                    }
-                }
+                // const searchItems = searchResult.getElementsByClassName('search-item');
+                // if (searchItems.length) {
+                //     if (event.code === 'ArrowDown') {
+                //         currentSelect += 1;
+                //         if (currentSelect > searchItems.length - 1) currentSelect = 0;
+                //     } else if (event.code === 'ArrowUp') {
+                //         currentSelect -= 1;
+                //         if (currentSelect <= -1) currentSelect = searchItems.length - 1;
+                //     }
+                //     for (let index = 0; index < searchItems.length; index++) {
+                //         const element = searchItems[index];
+                //         if (currentSelect === index) {
+                //             element.classList.add('bg-tango-200');
+                //             currentLabel = element.textContent;
+                //         } else {
+                //             element.classList.remove('bg-tango-200');
+                //         }
+                //     }
+                // }
             } else {
                 debounce(delayTime, async () => {
                     currentSelect = -1;

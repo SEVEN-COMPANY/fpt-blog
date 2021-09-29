@@ -10,7 +10,7 @@ namespace FPTBlog.Src.UserModule.Entity {
     }
 
     public enum UserStatus {
-        DISABLE = 0,
+        DISABLE = 2,
         ENABLE = 1
     }
 

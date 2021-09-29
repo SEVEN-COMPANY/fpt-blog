@@ -3,6 +3,7 @@ using System.Linq;
 using FPTBlog.Src.BlogModule.Entity;
 using FPTBlog.Src.BlogModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Utils;
 
 namespace FPTBlog.Src.BlogModule {
@@ -18,17 +19,17 @@ namespace FPTBlog.Src.BlogModule {
         }
 
 
-        public bool AddTagToBlog(Blog blog, List<Tag> tags) {
-            List<BlogTag> blogTags = new List<BlogTag>();
-            foreach (Tag tag in tags) {
-                BlogTag blogTag = new BlogTag();
-                blogTag.BlogId = blog.BlogId;
-                blogTag.Blog = blog;
-                blogTag.TagId = tag.TagId;
-                blogTag.Tag = tag;
-                blogTags.Add(blogTag);
-            }
-            this.Db.BlogTag.AddRange(blogTags);
+        public bool AddTagToBlog(Blog blog, Tag tag) {
+            BlogTag blogTag = new BlogTag();
+            blogTag.BlogId = blog.BlogId;
+            blogTag.Blog = blog;
+            blogTag.TagId = tag.TagId;
+            blogTag.Tag = tag;
+
+            blog.BlogTags.Add(blogTag);
+            tag.BlogTags.Add(blogTag);
+            this.Db.BlogTag.Add(blogTag);
+
             return this.Db.SaveChanges() > 0;
         }
 
@@ -38,18 +39,20 @@ namespace FPTBlog.Src.BlogModule {
         }
 
         public List<Tag> GetTagsFromBlog(Blog blog) {
-            List<Tag> tags = (from Tag in this.Db.Tag
-                              where Tag.BlogTags.Any(bt => bt.BlogId == blog.BlogId)
+            List<Tag> tags = (from Blog in this.Db.Blog
+                              where Blog.BlogId.Equals(blog.BlogId)
+                              join BlogTag in this.Db.BlogTag
+                              on Blog.BlogId equals BlogTag.BlogId
+                              join Tag in this.Db.Tag
+                              on BlogTag.TagId equals Tag.TagId
                               select Tag).ToList();
             return tags;
         }
 
-        public bool RemoveTagFromBlog(List<Tag> tags) {
-            List<BlogTag> blogTags = (from BlogTag in this.Db.BlogTag
-                                      where tags.Contains(BlogTag.Tag)
-                                      select BlogTag).ToList();
+        public bool RemoveTagFromBlog(Blog blog, Tag tag) {
+            BlogTag blogTag = this.Db.BlogTag.FirstOrDefault(item => item.BlogId == blog.BlogId && item.TagId == tag.TagId);
 
-            this.Db.BlogTag.RemoveRange(blogTags);
+            this.Db.BlogTag.Remove(blogTag);
 
             return this.Db.SaveChanges() > 0;
         }
@@ -74,9 +77,7 @@ namespace FPTBlog.Src.BlogModule {
             var query = (from Blog in this.Db.Blog
                          orderby Blog.Like - Blog.Dislike + (Blog.View / 10)
                          select Blog);
-            var blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            int count = query.Count();
-            return (blogs, count);
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
         }
 
         public (List<Blog>, int) GetBlogsByTagAndCount(int pageSize, int pageIndex, string name) {
@@ -87,10 +88,7 @@ namespace FPTBlog.Src.BlogModule {
                          on BlogTag.BlogId equals Blog.BlogId
                          where Tag.Name.Equals(name)
                          select Blog);
-            List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            int count = query.Count();
-
-            return (blogs, count);
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
         }
 
         public (List<Blog>, int) GetBlogsByCategoryAndCount(int pageSize, int pageIndex, string name) {
@@ -99,18 +97,47 @@ namespace FPTBlog.Src.BlogModule {
                          on Category.CategoryId equals Blog.CategoryId
                          where Category.Name.Equals(name)
                          select Blog);
-            List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            int count = query.Count();
-            return (blogs, count);
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
         }
 
         public (List<Blog>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, BlogStatus status) {
             var query = (from Blog in this.Db.Blog
                          where Blog.StudentId.Equals(studentId) && Blog.Status == status
                          select Blog);
+
+            return this.GetBlogsAndCountFromQuery(query, pageSize, pageIndex);
+        }
+
+        private (List<Blog>, int) GetBlogsAndCountFromQuery(IQueryable<Blog> query, int pageSize, int pageIndex) {
             List<Blog> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (blogs, count);
+        }
+
+        public bool LikeBlog(Blog blog, User user) {
+            LikeBlog obj = this.Db.LikeBlog.FirstOrDefault(item => item.BlogId == blog.BlogId && item.UserId == user.UserId);
+            if (obj == null) {
+                blog.Like += 1;
+                this.Db.Blog.Update(blog);
+                LikeBlog like = new LikeBlog();
+                like.BlogId = blog.BlogId;
+                like.Blog = blog;
+                like.UserId = user.UserId;
+                like.User = user;
+                this.Db.LikeBlog.Add(like);
+                return this.Db.SaveChanges() > 0;
+            }
+
+            blog.Like -= 1;
+            this.Db.Blog.Update(blog);
+            this.Db.LikeBlog.Remove(obj);
+            return this.Db.SaveChanges() > 0;
+
+        }
+
+        public List<Blog> GetAllWaitBlogs() {
+            List<Blog> blogs = this.Db.Blog.Where(x => ((int) x.Status) == 1).ToList();
+            return blogs;
         }
     }
 }

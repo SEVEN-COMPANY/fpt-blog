@@ -12,8 +12,9 @@ namespace FPTBlog.Src.CategoryModule {
             this.CategoryRepository = categoryRepository;
         }
 
-        public List<Category> GetCategories() {
-            return this.CategoryRepository.GetCategories();
+        public (List<Category>, int) GetCategories(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) {
+            var (categories, total) = this.CategoryRepository.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
+            return (categories, total);
         }
 
         public bool SaveCategory(Category category) {

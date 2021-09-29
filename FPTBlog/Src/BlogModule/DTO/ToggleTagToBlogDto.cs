@@ -2,19 +2,19 @@ using System.Collections.Generic;
 using FluentValidation;
 
 namespace FPTBlog.Src.BlogModule.DTO {
-    public class UpdateTagsOfBlogDto {
+    public class ToggleTagToBlogDto {
         public string BlogId {
             get; set;
         }
-        public List<string> Tags {
+        public string TagName {
             get; set;
         }
     }
 
-    public class UpdateTagsOfBlogDtoValidator : AbstractValidator<UpdateTagsOfBlogDto> {
-        public UpdateTagsOfBlogDtoValidator() {
+    public class ToggleTagToBlogDtoValidator : AbstractValidator<ToggleTagToBlogDto> {
+        public ToggleTagToBlogDtoValidator() {
             RuleFor(x => x.BlogId).NotEmpty().NotNull();
-            RuleFor(x => x.Tags).NotEmpty().NotNull();
+            RuleFor(x => x.TagName).NotEmpty().NotNull();
         }
     }
 }

@@ -21,6 +21,10 @@ export const editor = new Quill('#editor', {
 
             ['clean'], // remove formatting button
         ],
+        imageResize: {
+            displaySize: true,
+        },
     },
+
     theme: 'snow',
 }) as QuillClass;

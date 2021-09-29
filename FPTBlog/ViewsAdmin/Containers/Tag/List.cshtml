@@ -1,8 +1,7 @@
 @using FPTBlog.Src.TagModule.Entity
 @{
     var listTags = (List<IDictionary<string, object>>)this.ViewData["tags"];
-
-
+    var total = (int)this.ViewData["total"];
 }
 
 <div class="flex items-center mt-8 intro-y">
@@ -11,59 +10,107 @@
     </h2>
 </div>
 
-<div class="overflow-x-auto">
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    ID
-                </th>
-                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Name
-                </th>
-                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Status
-                </th>
-                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Total of post
-                </th>
-                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    Create Date
-                </th>
-                <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                    View Post
-                </th>
+<div class="grid grid-cols-12 gap-4 mt-5">
+    <div class="col-span-12 space-y-2 md:col-span-12">
+        @* Table Start *@
+        <div class="col-span-12 md:col-span-8 intro-y box">
+            <div class="p-5 border-b border-gray-200 sm:flex-row">
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var listTagItem in listTags)
-            {
-                var quantity = listTagItem["quantity"];
-                var tag = (Tag)listTagItem["tag"];
+                <div class="flex items-center justify-between">
+                    <h2 class="mr-auto text-base font-medium">
+                        Search List
+                    </h2>
+                </div>
 
-                <tr class="hover:bg-gray-200">
-                    <td class="border">@tag.TagId</td>
-                    <td class="border">@tag.Name</td>
-                    <td class="border">
-                        @await Html.PartialAsync(
-                    "../../Components/Table/TableStatus.cshtml",
-                    tag.Status == TagStatus.ACTIVE)
 
-                    </td>
-                    <td class="border">
-                        @quantity
-                    </td>
-                    <td class="border">@tag.CreateDate</td>
-                    <td class="border">
-                        <button class="mb-2 mr-1 btn btn-primary">
-                            <i data-feather="eye" class="w-5 h-5"></i>
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                <form action="@RoutersAdmin.GetTags.Link" class="my-2">
+                    <div class="flex space-x-2">
+                        @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                        new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+                        this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+                        })
+                        @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+                        new { Name = "searchStatus", Label = "Status", Value =
+                        ((string) this.Context.Request.Query["searchStatus"] ?? "1" ) == ((int)
+                        TagStatus.ACTIVE).ToString()
+                        ,IsLabel = false })
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new { Name = "indexPage",Value = (string) this.Context.Request.Query["indexPage"] ?? "0" })
+
+                        @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                        new { Label = "Search" })
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="p-5" id="hoverable-table">
+                <div class="preview" style="display: block; opacity: 1;">
+                    <div class="overflow-x-auto">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        ID
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Name
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Status
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Total of post
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Create Date
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        View Post
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var listTagItem in listTags)
+                                {
+                                    var quantity = listTagItem["quantity"];
+                                    var tag = (Tag)listTagItem["tag"];
+
+                                    <tr class="hover:bg-gray-200">
+                                        <td class="border">@tag.TagId</td>
+                                        <td class="border">@tag.Name</td>
+                                        <td class="border">
+                                            @await Html.PartialAsync(
+                                        "../../Components/Table/TableStatus.cshtml",
+                                        tag.Status == TagStatus.ACTIVE)
+
+                                        </td>
+                                        <td class="border">
+                                            @quantity
+                                        </td>
+                                        <td class="border">@tag.CreateDate</td>
+                                        <td class="border">
+                                            <button class="mb-2 mr-1 btn btn-primary">
+                                                <i data-feather="eye" class="w-5 h-5"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Table End *@
+        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+        new { IndexPage = (string) this.Context.Request.Query["indexPage"]?? "0", PageSize = (string)
+        this.Context.Request.Query["pageSize"]?? "12", Total = total })
+    </div>
 </div>
 
 @section Scripts {

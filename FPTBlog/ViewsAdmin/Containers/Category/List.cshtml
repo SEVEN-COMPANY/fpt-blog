@@ -4,6 +4,9 @@
 
 @{
     var categories = (List<Category>)this.ViewData["categories"];
+    var total = (int)this.ViewData["total"];
+
+
 }
 
 
@@ -14,38 +17,42 @@
 </div>
 
 <div class="grid grid-cols-12 gap-4 mt-5">
-    <div class="col-span-12 md:col-span-4">
-        @* Form Start *@
-        <div class="intro-y box">
-            <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
-                <h2 class="mr-auto text-base font-medium">
-                    Create Category
-                </h2>
-            </div>
-            <div id="vertical-form" class="p-5">
-                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
-                <form class="space-y-4 preview" id="createCategoryForm">
-                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                    new { Name = "name", Label = "Name", Type = "text", Value = "" })
-                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                    new { Name = "description", Label = "Description", Type = "text", Value
-                    = "" })
-                    @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
-                    new { Name = "description", Label = "Description", Value = true })
-                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                    new { Label = "Create New" })
-                </form>
-            </div>
-        </div>
-        @* Form End *@
-    </div>
-    <div class="col-span-12 md:col-span-8">
+    <div class="col-span-12 space-y-2 md:col-span-12">
         @* Table Start *@
         <div class="col-span-12 md:col-span-8 intro-y box">
-            <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row">
-                <h2 class="mr-auto text-base font-medium">
-                    List
-                </h2>
+            <div class="p-5 border-b border-gray-200 sm:flex-row">
+                <div class="flex items-center justify-between">
+
+                    <h2 class="mr-auto text-base font-medium">
+                        Search List
+                    </h2>
+                    <div class="text-center">
+                        <a href="javascript:;" data-toggle="modal" data-target="#create-category-modal"
+                            class="block btn btn-primary">Create Category</a>
+                    </div>
+                </div>
+
+                <form id="listCategoryForm" class="my-2">
+                    <div class="flex space-x-2">
+                        @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                        new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+                        this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+                        })
+                        @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+                        new { Name = "searchStatus", Label = "Status", Value =
+                        ((string) this.Context.Request.Query["searchStatus"] ?? "1" ) == ((int)
+                        CategoryStatus.ACTIVE).ToString()
+                        ,IsLabel = false })
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new { Name = "indexPage",Value = (string) this.Context.Request.Query["indexPage"] ?? "0" })
+
+                        @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                        new { Label = "Search" })
+                    </div>
+                </form>
+
 
             </div>
             <div class="p-5" id="hoverable-table">
@@ -108,17 +115,49 @@
                         </table>
                     </div>
                 </div>
-
-
             </div>
         </div>
         @* Table End *@
+        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+        new { IndexPage = (string) this.Context.Request.Query["indexPage"]?? "0", PageSize = (string)
+        this.Context.Request.Query["pageSize"]?? "12", Total = total })
     </div>
 </div>
 
+<!-- BEGIN: Slide Over Toggle -->
+<!-- END: Slide Over Toggle -->
+<!-- BEGIN: Slide Over Content -->
+<div id="create-category-modal" class="modal modal-slide-over" data-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"> <a data-dismiss="modal" href="javascript:;"> <i data-feather="x"
+                    class="w-8 h-8 text-gray-500"></i> </a> <!-- BEGIN: Slide Over Header -->
+            <div class="modal-header">
+                <h2 class="mr-auto text-base font-medium">Create Category</h2>
+            </div> <!-- END: Slide Over Header -->
+            <!-- BEGIN: Slide Over Body -->
+            <div class="modal-body">
+                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                <form class="space-y-4 preview" id="createCategoryForm">
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "name", Label = "Name", Type = "text", Value = "" })
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "description", Label = "Description", Type = "text", Value = "" })
+
+                    @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+                    new { Name = "status", Label = "Status", Value = true })
+                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                    new { Label = "Create New" })
+                </form>
+
+            </div>
+            <!-- END: Slide Over Body -->
+
+        </div>
+    </div>
+</div> <!-- END: Slide Over Content -->
 
 
 @section Scripts {
 
-<script src="/js/category-create.js"></script>
+<script src="/js/category-list.js"></script>
 }
