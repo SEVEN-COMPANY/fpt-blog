@@ -17,7 +17,7 @@
     @foreach (var item in posts)
     {
 
-        var link = $"{Routers.GetBlogEditor.Link}?postId={item.PostId}";
+        var link = $"{Routers.PostGetEditor.Link}?postId={item.PostId}";
 
         <a href="@link"
         class="flex flex-col items-center justify-center p-2 m-2 duration-300 border rounded-md shadow-xl cursor-pointer hover:bg-alabaster-600 bg-alabaster-500">

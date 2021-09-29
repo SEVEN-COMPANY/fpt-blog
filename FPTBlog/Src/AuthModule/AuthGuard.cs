@@ -33,7 +33,7 @@ namespace FPTBlog.Src.AuthModule {
                 Controller controller = context.Controller as Controller;
                 ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, controller.ViewData);
                 context.Result = new ViewResult {
-                    ViewName = Routers.Login.Page,
+                    ViewName = Routers.AuthPostLogin.Page,
                 };
                 return;
 

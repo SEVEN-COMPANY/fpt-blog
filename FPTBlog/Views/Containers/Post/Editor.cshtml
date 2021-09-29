@@ -13,7 +13,7 @@
     var content = new HtmlString(post.Content);
 
     this.ViewData["Title"] = post.Title;
-    var previewLink = $"{Routers.GetBlogPreview.Link}?postId={post.PostId}";
+    var previewLink = $"{Routers.PostGetPreview.Link}?postId={post.PostId}";
 }
 
 <div class="flex-1 py-8">

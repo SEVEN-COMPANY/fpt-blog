@@ -1,10 +1,9 @@
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
-using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Utils;
 using FPTBlog.Utils.Repository;
 
@@ -69,7 +68,7 @@ namespace FPTBlog.Src.PostModule {
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (list, count);
-            // return this.GetEntityByPage(query, pageSize, pageIndex);
+
         }
 
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) {
@@ -88,47 +87,6 @@ namespace FPTBlog.Src.PostModule {
             List<Post> blogs = this.Db.Post.Where(item => (item.Status) == PostStatus.WAIT).ToList();
             return (blogs, blogs.Count);
         }
-        // private (List<Post>, int) GetPostsWithCount(IQueryable<Post> query, int pageSize, int pageIndex) {
-        //     List<Post> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-        //     int count = query.Count();
-
-
-        //     return (blogs, count);
-        // }
-
-
-        //     public (List<Post>, int) GetPostsWithCount(int pageSize, int pageIndex) {
-        //         var query = (from Blog in this.Db.Post
-        //                      orderby Blog.Like - Blog.Dislike + (Blog.View / 10)
-        //                      select Blog);
-        //         return this.GetEntityByPage(query, pageSize, pageIndex);
-        //     }
-
-
-
-
-
-
-        //     public void LikeBlog(Post blog, User user) {
-        //         LikePost obj = this.Db.LikeBlog.FirstOrDefault(item => item.PostId == blog.PostId && item.UserId == user.UserId);
-        //         if (obj == null) {
-        //             blog.Like += 1;
-        //             this.Db.Post.Update(blog);
-        //             LikePost like = new LikePost();
-        //             like.PostId = blog.PostId;
-        //             like.Post = blog;
-        //             like.UserId = user.UserId;
-        //             like.User = user;
-        //             this.Db.LikeBlog.Add(like);
-        //             return;
-        //         }
-
-        //         blog.Like -= 1;
-        //         this.Db.Post.Update(blog);
-        //         this.Db.LikeBlog.Remove(obj);
-        //         return;
-
-        //     }
 
     }
 }

@@ -13,21 +13,21 @@ namespace FPTBlog.Src.TagModule {
             this.TagService = tagService;
         }
 
-        [HttpGet("add")]
-        public IActionResult AddTagPage() {
-            return View(RoutersAdmin.AddTag.Page);
-        }
+        // [HttpGet("add")]
+        // public IActionResult AddTagPage() {
+        //     return View(RoutersAdmin.AddTag.Page);
+        // }
 
-        [HttpGet("update")]
-        public IActionResult UpdateTagPage(string tagId) {
-            Tag tag = this.TagService.GetTagByTagId(tagId);
-            if (tag == null) {
-                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
-                return View(RoutersAdmin.UpdateTag.Page);
-            }
-            ViewData["tag"] = tag;
-            return View(RoutersAdmin.UpdateTag.Page);
-        }
+        // [HttpGet("update")]
+        // public IActionResult UpdateTagPage(string tagId) {
+        //     Tag tag = this.TagService.GetTagByTagId(tagId);
+        //     if (tag == null) {
+        //         ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
+        //         return View(RoutersAdmin.UpdateTag.Page);
+        //     }
+        //     ViewData["tag"] = tag;
+        //     return View(RoutersAdmin.UpdateTag.Page);
+        // }
 
         [HttpGet("")]
         public IActionResult GetTagsPage(string searchName, TagStatus searchStatus = TagStatus.ACTIVE, int pageSize = 12, int pageIndex = 0) {
@@ -39,7 +39,7 @@ namespace FPTBlog.Src.TagModule {
             ViewData["tags"] = listTag;
             ViewData["total"] = total;
 
-            return View(RoutersAdmin.GetTags.Page);
+            return View(RoutersAdmin.TagGetTagList.Page);
         }
     }
 }
