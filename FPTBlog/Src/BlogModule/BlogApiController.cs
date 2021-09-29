@@ -15,7 +15,7 @@ using FPTBlog.Utils.Interface;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using System;
 
 namespace FPTBlog.Src.BlogModule {
     [Route("/api/blog")]
@@ -152,24 +152,35 @@ namespace FPTBlog.Src.BlogModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            // check coi tag name có không, nếu không thì tạo mới
-
+            // Find tag by name in db, if not found, then create new
             Tag tag = this.TagService.GetTagByName(input.TagName);
-            if (tag == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "tagName");
-                return new NotFoundObjectResult(res.getResponse());
+            if(tag == null){
+                tag = new Tag();
+                tag.Name = input.TagName;
+                tag.Status = TagStatus.ACTIVE;
+                this.TagService.SaveTag(tag);
+            }
+
+            List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
+            // If the current tags of blog already has this tag name, return
+            foreach(var item in tags){
+                if(item.Name.Equals(tag.Name)){
+                    res.data = tags;
+                    res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+                    return new ObjectResult(res.getResponse());
+                }
             }
 
             this.BlogService.AddTagToBlog(blog, tag);
-            List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
+            tags.Add(tag);
             res.data = tags;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
         [HttpPut("tag")]
-        public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToBlogDto input) {
-            var res = new ServerApiResponse<Blog>();
+        public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToBlogDto input){
+             var res = new ServerApiResponse<List<Tag>>();
             ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
@@ -188,10 +199,21 @@ namespace FPTBlog.Src.BlogModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            this.BlogService.RemoveTagFromBlog(blog, tag);
+            List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
+            bool canRemove = false;
+            foreach(var item in tags){
+                if(item.Name.Equals(tag.Name)){
+                    canRemove = true;
+                }
+            }
 
-            res.data = blog;
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            if(canRemove){
+                tags.Remove(tag);
+                this.BlogService.RemoveTagFromBlog(blog, tag);
+            }
+
+            res.data = tags;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 

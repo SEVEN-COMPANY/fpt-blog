@@ -57,34 +57,5 @@ namespace FPTBlog.Src.CategoryModule {
             this.ViewData["category"] = category;
             return View(RoutersAdmin.UpdateCategory.Page);
         }
-
-
-
-        // check this function, you can delete this function if it needs
-        // [HttpPost("blog/add")]
-        // public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input) {
-        //     Console.WriteLine(input.BlogId);
-        //     ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
-        //     if (!result.IsValid) {
-        //         return "not pass validation";
-        //     }
-
-        //     Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-        //     if (blog == null) {
-
-        //         return "blog not found";
-        //     }
-
-        //     Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
-        //     if (category == null) {
-
-        //         return "category not found";
-        //     }
-
-        //     blog.CategoryId = input.CategoryId;
-        //     this.BlogService.UpdateBlog(blog);
-
-        //     return "ok";
-        // }
     }
 }
