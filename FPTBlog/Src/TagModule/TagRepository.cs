@@ -5,6 +5,7 @@ using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Utils;
 using FPTBlog.Src.BlogModule.Entity;
+using System;
 
 namespace FPTBlog.Src.TagModule {
     public class TagRepository : ITagRepository {
@@ -70,8 +71,10 @@ namespace FPTBlog.Src.TagModule {
             var query = (from Tag in this.Db.Tag
                          where Tag.Name.Contains(searchName) && Tag.Status == searchStatus
                          select Tag);
+            int count = query.Count();
             List<Tag> tags = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            return (tags, tags.Count);
+
+            return (tags, count);
         }
     }
 }

@@ -46,7 +46,7 @@
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
                         new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "indexPage",Value = (string) this.Context.Request.Query["indexPage"] ?? "0" })
+                        new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
 
                         @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                         new { Label = "Search" })
@@ -119,7 +119,7 @@
         </div>
         @* Table End *@
         @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
-        new { IndexPage = (string) this.Context.Request.Query["indexPage"]?? "0", PageSize = (string)
+        new { PageIndex = (string) this.Context.Request.Query["pageIndex"] ?? "0", PageSize = (string)
         this.Context.Request.Query["pageSize"]?? "12", Total = total })
     </div>
 </div>
