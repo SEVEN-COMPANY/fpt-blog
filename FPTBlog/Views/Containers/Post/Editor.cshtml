@@ -1,4 +1,4 @@
-@using FPTBlog.Src.BlogModule.Entity
+@using FPTBlog.Src.PostModule.Entity
 @using FPTBlog.Src.CategoryModule.Entity
 @using Microsoft.AspNetCore.Html
 @section Styles {
@@ -9,11 +9,11 @@
 @{
     SelectList categories = (SelectList)this.ViewData["categories"];
 
-    var blog = (Post)this.ViewData["blog"];
-    var content = new HtmlString(blog.Content);
+    var post = (Post)this.ViewData["post"];
+    var content = new HtmlString(post.Content);
 
-    this.ViewData["Title"] = blog.Title;
-    var previewLink = $"{Routers.GetBlogPreview.Link}?blogId={blog.PostId}";
+    this.ViewData["Title"] = post.Title;
+    var previewLink = $"{Routers.GetBlogPreview.Link}?postId={post.PostId}";
 }
 
 <div class="flex-1 py-8">
@@ -26,13 +26,13 @@
         </div>
 
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-        new {Name="blogId", Value=blog.PostId})
+        new {Name="blogId", Value=post.PostId})
         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-        new {Name="title", Label="Title", Type="text", Value=blog.Title})
+        new {Name="title", Label="Title", Type="text", Value=post.Title})
 
         <div class="flex space-x-2">
             @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
-            new {Name="categoryId", Label="Category", Value=blog.CategoryId, List=categories})
+            new {Name="categoryId", Label="Category", Value=post.CategoryId, List=categories})
             @await Html.PartialAsync("../../Components/Form/FormSelectBadge.cshtml",
             new {Name="tag", Label="Tag", Value="", Placeholder ="Enter tag"})
         </div>

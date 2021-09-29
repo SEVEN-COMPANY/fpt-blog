@@ -1,59 +1,38 @@
 using System.Collections.Generic;
-using FPTBlog.Src.BlogModule.Entity;
-using FPTBlog.Src.BlogModule.Interface;
+using System.Linq;
+using FPTBlog.Src.PostModule.Entity;
+using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.BlogModule {
-    public class PostService : IBlogService {
+namespace FPTBlog.Src.PostModule {
+    public class PostService : IPostService {
         private readonly IPostRepository PostRepository;
-        public PostService(IPostRepository blogRepository) {
-            this.PostRepository = blogRepository;
+        public PostService(IPostRepository postRepository) {
+            this.PostRepository = postRepository;
         }
 
-        public void AddTagToBlog(Post blog, Tag tag) {
-            this.PostRepository.AddTagToPost(blog, tag);
+        public void AddPost(Post post) => this.PostRepository.Add(post);
+        public Post GetPostByPostId(string postId) => this.PostRepository.Get(postId);
+        public void UpdatePost(Post post) => this.PostRepository.Update(post);
+        public void RemovePost(Post post) => this.PostRepository.Remove(post);
+        public void AddTagToPost(Post post, Tag tag) => this.PostRepository.AddTagToPost(post, tag);
+        public void RemoveTagFromPost(Post post, Tag tag) => this.PostRepository.RemoveTagFromPost(post, tag);
+        public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, PostStatus searchStatus){
+            List<Post> list = (List<Post>) this.PostRepository.GetAll(item => item.Status == searchStatus);
+            var count = list.Count;
+            list = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
+
+            return (list, count);
         }
-
-        public Post GetBlogByBlogId(string postId) => this.PostRepository.GetFirstOrDefault(filter: item => item.PostId.Equals(postId), includeProperties: "Student,Category");
-
-
-        public List<Tag> GetTagsFromBlog(Post blog) {
-            return this.PostRepository.GetTagsFromPost(blog);
-        }
-
-        public void RemoveTagFromBlog(Post blog, Tag tag) {
-            this.PostRepository.RemoveTagFromPost(blog, tag);
-        }
-
-        public void AddBlog(Post blog) => this.PostRepository.Add(blog);
-        public void UpdateBlog(Post blog) => this.PostRepository.Update(blog);
-
-
-
-        public (List<Post>, int) GetBlogsByTagAndCount(int pageSize, int pageIndex, string name) {
-            return this.PostRepository.GetPostsByTagWithCount(pageSize, pageIndex, name);
-        }
-        public (List<Post>, int) GetAllBlogsAndCount(int pageSize, int pageIndex) {
-            return this.PostRepository.GetPostsWithCount(pageSize, pageIndex);
-        }
-        public (List<Post>, int) GetBlogsByCategoryAndCount(int pageSize, int pageIndex, string name) {
-            return this.PostRepository.GetBlogsByCategoryWithCount(pageSize, pageIndex, name);
-        }
-
-        public (List<Post>, int) GetBlogsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) {
-            return this.PostRepository.GetBlogsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
-        }
-
-        public void LikeBlog(Post blog, User user) => this.PostRepository.LikeBlog(blog, user);
-
-
-        public (List<Post>, int) GetBlogsWaitWithCount() => this.PostRepository.GetWaitBlogAndCount();
-
-        public int CalculateBlogPoint(Post blog) {
-            int result = blog.Like - blog.Dislike + (blog.View / 10);
+        public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByCategoryWithCount(pageIndex, pageSize, name);
+        public List<Tag> GetTagsFromPost(Post post) => this.PostRepository.GetTagsFromPost(post);
+        public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByTagWithCount(pageIndex, pageSize, name);
+        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageIndex, pageSize, studentId, status);
+        public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
+        public int CalculatePostPoint(Post post) {
+            int result = post.Like - post.Dislike + (post.View / 10);
             return result;
         }
-
     }
 }

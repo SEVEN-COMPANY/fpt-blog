@@ -1,21 +1,22 @@
 using FPTBlog.Src.AuthModule;
-using FPTBlog.Src.BlogModule.Interface;
+using FPTBlog.Src.PostModule.Interface;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Utils.Common;
 
-namespace FPTBlog.Src.BlogModule {
+namespace FPTBlog.Src.PostModule {
     [Route("/admin/post")]
     [ServiceFilter(typeof(AuthGuard))]
     public class PostAdminMvcController : Controller {
-        private readonly IBlogService BlogService;
-        public PostAdminMvcController(IBlogService blogService) {
-            this.BlogService = blogService;
+        private readonly IPostService PostService;
+        public PostAdminMvcController(IPostService postService) {
+            this.PostService = postService;
         }
 
         [HttpGet("wait")]
         public IActionResult GetAllWaitBlogs() {
-            var blogs = this.BlogService.GetAllWaitBlogs();
-            this.ViewData["blogs"] = blogs;
+            var (posts, count) = this.PostService.GetWaitPostsWithCount();
+            this.ViewData["posts"] = posts;
+            this.ViewData["count"] = count;
             return View(Routers.GetAllBlogs.Page);
         }
     }

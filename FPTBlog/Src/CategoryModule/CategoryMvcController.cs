@@ -6,7 +6,6 @@ using FPTBlog.Src.CategoryModule.DTO;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Utils.Common;
-using FPTBlog.Src.BlogModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
@@ -15,11 +14,9 @@ namespace FPTBlog.Src.CategoryModule {
     [ServiceFilter(typeof(AuthGuard))]
     public class CategoryMvcController : Controller {
         private readonly ICategoryService CategoryService;
-        private readonly IBlogService BlogService;
 
 
-        public CategoryMvcController(ICategoryService categoryService, IBlogService blogService) {
-            this.BlogService = blogService;
+        public CategoryMvcController(ICategoryService categoryService) {
             this.CategoryService = categoryService;
         }
 

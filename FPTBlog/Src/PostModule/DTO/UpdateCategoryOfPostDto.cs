@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace FPTBlog.Src.BlogModule.DTO {
+namespace FPTBlog.Src.PostModule.DTO {
     public class UpdateCategoryOfPostDto {
         public string PostId {
             get; set;

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.BlogModule.Entity {
+namespace FPTBlog.Src.PostModule.Entity {
     [Table("tblPost")]
     public class Post {
         [Key]
@@ -94,7 +94,7 @@ namespace FPTBlog.Src.BlogModule.Entity {
             get; set;
         }
 
-        public virtual ICollection<PostTag> BlogTags {
+        public virtual ICollection<PostTag> PostTags {
             get; set;
         }
 
@@ -112,7 +112,7 @@ namespace FPTBlog.Src.BlogModule.Entity {
             this.Student = null;
             this.Lecturer = null;
             this.Category = null;
-            this.BlogTags = new List<PostTag>();
+            this.PostTags = new List<PostTag>();
         }
     }
 

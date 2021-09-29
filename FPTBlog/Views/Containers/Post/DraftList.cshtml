@@ -1,9 +1,9 @@
-@using FPTBlog.Src.BlogModule.Entity
+@using FPTBlog.Src.PostModule.Entity
 @{
     @* this.ViewData["blogs"] = blogs;
         this.ViewData["total"] = total; *@
-    var blogs = (List<Post>)this.ViewData["drafts"];
-    Console.WriteLine(blogs.Count);
+    var posts = (List<Post>)this.ViewData["drafts"];
+    Console.WriteLine(posts.Count);
 }
 
 
@@ -14,7 +14,7 @@
     <h1 class="text-2xl font-semibold">My Draft</h1>
 </div>
 <div class="flex flex-wrap p-2 border">
-    @foreach (var item in blogs)
+    @foreach (var item in posts)
     {
 
         var link = $"{Routers.GetBlogEditor.Link}?blogId={item.PostId}";

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.BlogModule.Entity {
+namespace FPTBlog.Src.PostModule.Entity {
     [Table("tblLikePost")]
     public class LikePost {
         [Key]

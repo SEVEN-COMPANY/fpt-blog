@@ -4,7 +4,7 @@ using System.Linq;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Utils;
-using FPTBlog.Src.BlogModule.Entity;
+using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Utils.Repository;
 namespace FPTBlog.Src.TagModule {
     public class TagRepository : Repository<Tag>, ITagRepository {
@@ -21,7 +21,7 @@ namespace FPTBlog.Src.TagModule {
                 item.PostCount = this.NumberOfPostBelongToTag(item.TagId);
             }
 
-            var pagelist = (List<Tag>) this.GetEntityByPage(list, pageSize, pageIndex);
+            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
             return (pagelist, count);
         }

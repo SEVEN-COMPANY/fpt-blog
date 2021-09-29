@@ -2,9 +2,9 @@ using System.Linq;
 using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
-using FPTBlog.Src.BlogModule.DTO;
-using FPTBlog.Src.BlogModule.Entity;
-using FPTBlog.Src.BlogModule.Interface;
+using FPTBlog.Src.PostModule.DTO;
+using FPTBlog.Src.PostModule.Entity;
+using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
@@ -17,17 +17,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace FPTBlog.Src.BlogModule {
+namespace FPTBlog.Src.PostModule {
     [Route("/api/post")]
     [ServiceFilter(typeof(AuthGuard))]
     public class PostApiController : Controller {
         private readonly IUploadFileService UploadFileService;
-        private readonly IBlogService BlogService;
+        private readonly IPostService PostService;
         private readonly ICategoryService CategoryService;
         private readonly ITagService TagService;
-        public PostApiController(IUploadFileService uploadFileService, IBlogService blogService, ICategoryService categoryService, ITagService tagService) {
+        public PostApiController(IUploadFileService uploadFileService, IPostService postService, ICategoryService categoryService, ITagService tagService) {
             this.UploadFileService = uploadFileService;
-            this.BlogService = blogService;
+            this.PostService = postService;
             this.CategoryService = categoryService;
             this.TagService = tagService;
         }
@@ -53,12 +53,12 @@ namespace FPTBlog.Src.BlogModule {
 
         [HttpPost("")]
         public IActionResult SaveBlogHandler() {
-            Post blog = new Post();
-            blog.Student = (User) this.ViewData["user"];
-            blog.StudentId = ((User) this.ViewData["user"]).UserId;
-            this.BlogService.SaveBlog(blog);
+            Post post = new Post();
+            post.Student = (User) this.ViewData["user"];
+            post.StudentId = ((User) this.ViewData["user"]).UserId;
+            this.PostService.AddPost(post);
             var res = new ServerApiResponse<Post>();
-            res.data = blog;
+            res.data = post;
             return new ObjectResult(res.getResponse());
         }
 
@@ -71,7 +71,7 @@ namespace FPTBlog.Src.BlogModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
+            Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -84,7 +84,7 @@ namespace FPTBlog.Src.BlogModule {
             blog.Student = student;
             blog.StudentId = student.UserId;
 
-            this.BlogService.UpdateBlog(blog);
+            this.PostService.UpdatePost(blog);
 
             res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
@@ -100,7 +100,7 @@ namespace FPTBlog.Src.BlogModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
+            Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -115,7 +115,7 @@ namespace FPTBlog.Src.BlogModule {
             blog.CategoryId = category.CategoryId;
             blog.Category = category;
 
-            this.BlogService.UpdateBlog(blog);
+            this.PostService.UpdatePost(blog);
 
             res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
@@ -126,13 +126,13 @@ namespace FPTBlog.Src.BlogModule {
         public IActionResult GetTagsByBlogId(string blogId) {
             var res = new ServerApiResponse<List<Tag>>();
 
-            Post blog = this.BlogService.GetBlogByBlogId(blogId);
+            Post blog = this.PostService.GetPostByPostId(blogId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            var tags = this.BlogService.GetTagsFromBlog(blog);
+            var tags = this.PostService.GetTagsFromPost(blog);
             res.data = tags;
             return new ObjectResult(res.getResponse());
         }
@@ -146,7 +146,7 @@ namespace FPTBlog.Src.BlogModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
+            Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -158,10 +158,10 @@ namespace FPTBlog.Src.BlogModule {
                 tag = new Tag();
                 tag.Name = input.TagName;
                 tag.Status = TagStatus.ACTIVE;
-                this.TagService.SaveTag(tag);
+                this.TagService.AddTag(tag);
             }
 
-            List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
+            List<Tag> tags = this.PostService.GetTagsFromPost(blog);
             // If the current tags of blog already has this tag name, return
             foreach (var item in tags) {
                 if (item.Name.Equals(tag.Name)) {
@@ -171,7 +171,7 @@ namespace FPTBlog.Src.BlogModule {
                 }
             }
 
-            this.BlogService.AddTagToBlog(blog, tag);
+            this.PostService.AddTagToPost(blog, tag);
             tags.Add(tag);
             res.data = tags;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
@@ -187,7 +187,7 @@ namespace FPTBlog.Src.BlogModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
+            Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -199,7 +199,7 @@ namespace FPTBlog.Src.BlogModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
+            List<Tag> tags = this.PostService.GetTagsFromPost(blog);
             bool canRemove = false;
             foreach (var item in tags) {
                 if (item.Name.Equals(tag.Name)) {
@@ -209,7 +209,7 @@ namespace FPTBlog.Src.BlogModule {
 
             if (canRemove) {
                 tags.Remove(tag);
-                this.BlogService.RemoveTagFromBlog(blog, tag);
+                this.PostService.RemoveTagFromPost(blog, tag);
             }
 
             res.data = tags;
@@ -226,39 +226,39 @@ namespace FPTBlog.Src.BlogModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
+            Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
             blog.Status = PostStatus.WAIT;
-            this.BlogService.UpdateBlog(blog);
+            this.PostService.UpdatePost(blog);
 
             res.data = blog;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_POSTED_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("like")]
-        public IActionResult LikeBlog([FromBody] LikePostDto input) {
-            var res = new ServerApiResponse<Post>();
-            ValidationResult result = new LikeBlogDtoValidator().Validate(input);
-            if (!result.IsValid) {
-                res.mapDetails(result);
-                return new BadRequestObjectResult(res.getResponse());
-            }
-            Post blog = this.BlogService.GetBlogByBlogId(input.PostId);
-            if (blog == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
-                return new NotFoundObjectResult(res.getResponse());
-            }
-            User user = (User) this.ViewData["user"];
+        // [HttpPost("like")]
+        // public IActionResult LikeBlog([FromBody] LikePostDto input) {
+        //     var res = new ServerApiResponse<Post>();
+        //     ValidationResult result = new LikeBlogDtoValidator().Validate(input);
+        //     if (!result.IsValid) {
+        //         res.mapDetails(result);
+        //         return new BadRequestObjectResult(res.getResponse());
+        //     }
+        //     Post blog = this.PostService.GetPostByPostId(input.PostId);
+        //     if (blog == null) {
+        //         res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+        //         return new NotFoundObjectResult(res.getResponse());
+        //     }
+        //     User user = (User) this.ViewData["user"];
 
-            this.BlogService.LikeBlog(blog, user);
-            res.data = blog;
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
-            return new ObjectResult(res.getResponse());
-        }
+        //     this.PostService.LikeBlog(blog, user);
+        //     res.data = blog;
+        //     res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+        //     return new ObjectResult(res.getResponse());
+        // }
     }
 }

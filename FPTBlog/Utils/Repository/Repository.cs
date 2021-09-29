@@ -60,8 +60,8 @@ namespace FPTBlog.Utils.Repository {
         }
 
 
-        public IEnumerable<T> GetEntityByPage(IEnumerable<T> enumrable, int pageSize, int pageIndex) =>
-            enumrable.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+        // public IEnumerable<T> GetEntityByPage(IEnumerable<T> enumrable, int pageSize, int pageIndex) =>
+        //     enumrable.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
         public void Remove(string key) {
             var entity = DbSet.Find(key);

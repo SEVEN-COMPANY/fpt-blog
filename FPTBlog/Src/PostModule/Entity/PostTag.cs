@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.TagModule.Entity;
 
-namespace FPTBlog.Src.BlogModule.Entity {
+namespace FPTBlog.Src.PostModule.Entity {
     [Table("tblPostTag")]
     public class PostTag {
         [Key]

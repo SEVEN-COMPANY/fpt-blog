@@ -1,4 +1,4 @@
-@using FPTBlog.Src.BlogModule.Entity
+@using FPTBlog.Src.PostModule.Entity
 @using FPTBlog.Src.CategoryModule.Entity
 @using Microsoft.AspNetCore.Html
 
@@ -10,12 +10,12 @@
 @{
 
 
-    var blog = (Post)this.ViewData["blog"];
-    var content = new HtmlString(blog.Content);
+    var post = (Post)this.ViewData["post"];
+    var content = new HtmlString(post.Content);
 
-    this.ViewData["Title"] = blog.Title;
-    Console.WriteLine(blog.Student);
-    Console.WriteLine(blog.Category);
+    this.ViewData["Title"] = post.Title;
+    Console.WriteLine(post.Student);
+    Console.WriteLine(post.Category);
 
 }
 
@@ -24,7 +24,7 @@
     @content
 </div>
 <div>
-    @foreach (var item in blog.BlogTags)
+    @foreach (var item in post.PostTags)
     {
         <div>
             @item.Tag.Name

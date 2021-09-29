@@ -5,7 +5,7 @@ using FPTBlog.Utils.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using FPTBlog.Src.BlogModule.Entity;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Utils {
     public class DB : DbContext {
@@ -41,12 +41,12 @@ namespace FPTBlog.Utils {
 
             modelBuilder.Entity<PostTag>()
                 .HasOne(x => x.post)
-                .WithMany(x => x.BlogTags)
+                .WithMany(x => x.PostTags)
                 .HasForeignKey(x => x.PostId);
 
             modelBuilder.Entity<PostTag>()
                 .HasOne(x => x.Tag)
-                .WithMany(x => x.BlogTags)
+                .WithMany(x => x.PostTags)
                 .HasForeignKey(x => x.TagId);
 
             modelBuilder.Entity<LikePost>().HasKey(item => new { item.PostId, item.UserId });

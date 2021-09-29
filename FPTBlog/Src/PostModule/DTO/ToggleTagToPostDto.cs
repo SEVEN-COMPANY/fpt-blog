@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FluentValidation;
 
-namespace FPTBlog.Src.BlogModule.DTO {
+namespace FPTBlog.Src.PostModule.DTO {
     public class ToggleTagToPostDto {
         public string PostId {
             get; set;
