@@ -6,7 +6,7 @@ namespace FPTBlog.Src.CategoryModule.Interface {
         public Category GetCategoryByCategoryName(string name);
         public Category GetCategoryByCategoryId(string categoryId);
 
-        public (List<Category>, int) GetCategoriesAndCount(int currentPage, int pageSize, string name, CategoryStatus status);
+        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus);
         public bool SaveCategory(Category category);
         public List<Category> GetCategories();
         public bool UpdateCategory(Category category);

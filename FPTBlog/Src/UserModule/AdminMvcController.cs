@@ -20,18 +20,14 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("list")]
-        public IActionResult GetUsers(UserStatus status, string name, int pageSize = 12, int pageIndex = 0) {
-            if (status == 0) {
-                status = UserStatus.ENABLE;
+        public IActionResult GetUsers(string searchName, UserStatus searchStatus = UserStatus.ENABLE, int pageSize = 12, int pageIndex = 0) {
+            if (searchName == null) {
+                searchName = "";
             }
 
-            if (name == null) {
-                name = "";
-            }
-
-            var (users, count) = this.UserService.GetUsersWithStatus(pageSize, pageIndex, status, name);
+            var (users, total) = this.UserService.GetUsersWithStatus(pageIndex, pageSize, searchName, searchStatus);
             this.ViewData["users"] = users;
-            this.ViewData["count"] = count;
+            this.ViewData["total"] = total;
             return View(RoutersAdmin.GetUsers.Page);
         }
 
