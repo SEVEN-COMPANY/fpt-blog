@@ -1,9 +1,38 @@
 @{
     var error = $"{Model.Name.ToUpper()}ERROR";
+
+    var isLabel = true;
+    var placeHolder = "";
+    try
+    {
+        isLabel = (bool)Model.IsLabel;
+
+    }
+    catch (System.Exception)
+    {
+
+    }
+
+    try
+    {
+        placeHolder = (string)Model.PlaceHolder;
+    }
+    catch (System.Exception)
+    {
+
+
+    }
+
+
 }
 
 <div>
-    <label for="@Model.Name" class="form-label">@Model.Label</label>
-    <input id="@Model.Name" name="@Model.Name" type="@Model.Type" class="form-control" value="@Model.Value">
+
+    @if (isLabel)
+    {
+        <label for="@Model.Name" class="form-label">@Model.Label</label>
+    }
+    <input id="@Model.Name" name="@Model.Name" type="@Model.Type" class="form-control" value="@Model.Value"
+        placeholder="@placeHolder">
     <div class="mt-2 pristine-error text-primary-3 fade-in first-letter" id="@error" data-label="@Model.Label"></div>
 </div>

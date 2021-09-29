@@ -24,15 +24,15 @@
             <div id="vertical-form" class="p-5">
                 @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
                 <form class="space-y-4 preview" id="updateCategoryForm">
-                    <input id="categoryId" class="hidden" name="categoryId" value="@category.CategoryId">
-
+                    @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                    new {Value = category.CategoryId, Name = "categoryId" })
 
                     @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                    new { Name = "name", Label = "Name", Type = "text", Value = category.Name })
+                    new { Name = "name", Label = "Name", Type = "text", Value = category.Name , PlaceHolder= ""})
 
                     @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                     new { Name = "description", Label = "Description", Type = "text", Value
-                    = category.Description })
+                    = category.Description , PlaceHolder= "" })
 
                     @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
                     new { Name = "description", Label = "Description", Value = category.Status ==

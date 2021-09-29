@@ -28,7 +28,9 @@ namespace FPTBlog.Utils {
         public DbSet<BlogTag> BlogTag {
             get; set;
         }
-
+        public DbSet<LikeBlog> LikeBlog {
+            get; set;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(this.Config.GetEnvByKey("DB_URL"));
@@ -46,6 +48,8 @@ namespace FPTBlog.Utils {
                 .HasOne(x => x.Tag)
                 .WithMany(x => x.BlogTags)
                 .HasForeignKey(x => x.TagId);
+
+            modelBuilder.Entity<LikeBlog>().HasKey(item => new { item.BlogId, item.UserId });
 
             base.OnModelCreating(modelBuilder);
         }

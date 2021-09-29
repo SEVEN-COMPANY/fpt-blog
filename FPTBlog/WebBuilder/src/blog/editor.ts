@@ -5,9 +5,9 @@ import { ServerResponse } from '../package/interface/serverResponse';
 import { routers } from '../package/axios/routes';
 import { handleSelectBadge } from '../package/components/listBadge';
 
-interface AddTagDto {
+interface ToggleTagDto {
     blogId: string;
-    tags: string[];
+    tagName: string;
 }
 interface SaveBlogDto {
     title: string;
@@ -63,9 +63,9 @@ handleSelectBadge(
         const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
 
         if (blogIdElement) {
-            const input: AddTagDto = {
+            const input: ToggleTagDto = {
                 blogId: blogIdElement.value,
-                tags: [label],
+                tagName: label,
             };
 
             const { data } = await http.post<ServerResponse<Tag[]>>(routers.blog.addNewTagToBlog, input);
@@ -75,7 +75,15 @@ handleSelectBadge(
         return [];
     },
     async (label: string) => {
-        return Promise.resolve();
+        const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
+
+        const input: ToggleTagDto = {
+            blogId: blogIdElement.value,
+            tagName: label,
+        };
+
+        await http.put<ServerResponse<Tag[]>>(routers.blog.addNewTagToBlog, input);
+        return;
     },
     500
 );

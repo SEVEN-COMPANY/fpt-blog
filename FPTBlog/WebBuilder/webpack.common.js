@@ -9,6 +9,7 @@ module.exports = {
         'user-changePassword': ['./src/user/changePassword.ts'],
         'category-create': ['./src/category/create.ts'],
         'category-update': ['./src/category/update.ts'],
+        'category-list': ['./src/category/list.ts'],
         'blog-create': ['./src/blog/create.ts'],
         'blog-editor': ['./src/blog/editor.ts'],
     },

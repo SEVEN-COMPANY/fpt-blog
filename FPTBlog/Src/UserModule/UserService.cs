@@ -41,11 +41,11 @@ namespace FPTBlog.Src.UserModule {
             this.UserRepository.BlockUserByAdminHandler(blockedUser);
         }
 
-        public (List<User>, int) GetUsers() {
-            return this.UserRepository.GetUsers();
+        public (List<User>, int) GetUsersWithStatus(int pageSize, int pageIndex, UserStatus status, string name) {
+            return this.UserRepository.GetUsersWithStatus(pageSize, pageIndex, status, name);
         }
-        public (List<User>, int) GetUsersByPageAndCount(int currentPage, int pageSize, string search) {
-            return this.UserRepository.GetUsersByPageAndCount(currentPage, pageSize, search);
+        public (List<User>, int) GetUsersByPageAndCount(int pageSize, int pageIndex, string search) {
+            return this.UserRepository.GetUsersByPageAndCount(pageSize, pageIndex, search);
         }
     }
 }
