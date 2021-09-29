@@ -30,17 +30,14 @@ namespace FPTBlog.Src.TagModule {
         }
 
         [HttpGet("")]
-        public IActionResult GetTagsPage(TagStatus status, string name, int pageSize = 12, int pageIndex = 0) {
-            if (status == 0) {
-                status = TagStatus.ACTIVE;
-            }
-
+        public IActionResult GetTagsPage(string name, TagStatus status = TagStatus.ACTIVE, int pageSize = 12, int pageIndex = 0) {
             if (name == null) {
                 name = "";
             }
 
-            var listTag = this.TagService.GetTagsWithCountAndFilter(pageSize, pageIndex, status, name);
+            var (listTag, total) = this.TagService.GetTagsWithCountAndFilter(pageSize, pageIndex, status, name);
             ViewData["tags"] = listTag;
+            ViewData["total"] = total;
 
             return View(RoutersAdmin.GetTags.Page);
         }
