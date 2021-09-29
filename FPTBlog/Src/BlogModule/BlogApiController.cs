@@ -162,7 +162,6 @@ namespace FPTBlog.Src.BlogModule {
             }
 
             List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
-            Console.WriteLine(tags.Count);
             // If the current tags of blog already has this tag name, return
             foreach(var item in tags){
                 if(item.Name.Equals(tag.Name)){
@@ -181,7 +180,7 @@ namespace FPTBlog.Src.BlogModule {
 
         [HttpPut("tag")]
         public IActionResult RemoveTagFromBlog([FromBody] ToggleTagToBlogDto input){
-             var res = new ServerApiResponse<Blog>();
+             var res = new ServerApiResponse<List<Tag>>();
             ValidationResult result = new ToggleTagToBlogDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
@@ -200,10 +199,21 @@ namespace FPTBlog.Src.BlogModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            this.BlogService.RemoveTagFromBlog(blog, tag);
+            List<Tag> tags = this.BlogService.GetTagsFromBlog(blog);
+            bool canRemove = false;
+            foreach(var item in tags){
+                if(item.Name.Equals(tag.Name)){
+                    canRemove = true;
+                }
+            }
 
-            res.data = blog;
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            if(canRemove){
+                tags.Remove(tag);
+                this.BlogService.RemoveTagFromBlog(blog, tag);
+            }
+
+            res.data = tags;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
