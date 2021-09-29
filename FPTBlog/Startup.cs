@@ -26,6 +26,8 @@ using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.UserModule;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.AuthModule;
+using FPTBlog.Src.CommentModule.Interface;
+using FPTBlog.Src.CommentModule;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Src.TagModule;
 using FPTBlog.Src.CategoryModule.Interface;
@@ -33,20 +35,18 @@ using FPTBlog.Src.CategoryModule;
 using FPTBlog.Src.BlogModule.Interface;
 using FPTBlog.Src.BlogModule;
 
-namespace FPTBlog
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
+namespace FPTBlog {
+    public class Startup {
+        public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration {
+            get;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
+        public void ConfigureServices(IServiceCollection services) {
             services.AddControllersWithViews();
             services.AddScoped<IConfig, Config>();
             services.AddScoped<DB>();
@@ -68,6 +68,10 @@ namespace FPTBlog
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ITagService, TagService>();
 
+            //Comment Module
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICommentService, CommentService>();
+
             // Category Module
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
@@ -82,47 +86,39 @@ namespace FPTBlog
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        async public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfig config)
-        {
+        async public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfig config) {
             ValidatorOptions.Global.LanguageManager = new CustomLanguageValidator();
 
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
+            else {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.Use(next => context =>
-                      {
-                          var lang = "en";
-                          var cookies = new Dictionary<string, string>();
-                          var values = ((string)context.Request.Headers["Cookie"])?.Split(',', ';');
+            app.Use(next => context => {
+                var lang = "en";
+                var cookies = new Dictionary<string, string>();
+                var values = ((string) context.Request.Headers["Cookie"])?.Split(',', ';');
 
-                          if (values != null)
-                          {
-                              foreach (var parts in values)
-                              {
-                                  var cookieArray = parts.Trim().Split('=');
-                                  if (cookieArray.Length >= 2)
-                                  {
-                                      cookies.Add(cookieArray[0], cookieArray[1]);
-                                  }
-                              }
+                if (values != null) {
+                    foreach (var parts in values) {
+                        var cookieArray = parts.Trim().Split('=');
+                        if (cookieArray.Length >= 2) {
+                            cookies.Add(cookieArray[0], cookieArray[1]);
+                        }
+                    }
 
-                              var outValue = "";
-                              if (cookies.TryGetValue("lang", out outValue))
-                              {
-                                  lang = outValue;
-                              }
-                          }
-                          ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo(lang);
-                          return next(context);
-                      });
+                    var outValue = "";
+                    if (cookies.TryGetValue("lang", out outValue)) {
+                        lang = outValue;
+                    }
+                }
+                ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo(lang);
+                return next(context);
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -131,8 +127,7 @@ namespace FPTBlog
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
