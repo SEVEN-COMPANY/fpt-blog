@@ -17,7 +17,7 @@ namespace FPTBlog.Utils.Repository.Interface
             string includeProperties = null
             );
 
-        T GetByField(
+        T GetFirstOrDefault(
             Expression<Func<T, bool>> filter = null,
             string includeProperties = null
             );

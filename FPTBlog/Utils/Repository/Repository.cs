@@ -12,6 +12,12 @@ namespace FPTBlog.Utils.Repository
         private readonly DB _db;
         internal DbSet<T> DbSet;
 
+        public Repository(DB db)
+        {
+            _db = db;
+            DbSet = _db.Set<T>();
+        }
+
         public void Add(T entity) {
             DbSet.Add(entity);
         }
@@ -43,7 +49,7 @@ namespace FPTBlog.Utils.Repository
             return query.ToList();
         }
 
-        public T GetByField(Expression<Func<T, bool>> filter = null, string includeProperties = null) {
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null) {
             IQueryable<T> query = DbSet;
             if (filter != null)
             {
