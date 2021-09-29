@@ -11,7 +11,7 @@ namespace FPTBlog.Src.UserModule.Interface {
         public void UpdateUser(User user);
         public void RemoveUser(User user);
         public void BlockUserByAdminHandler(User user);
-        public (List<User>, int) GetUsersWithStatus(int pageIndex, int pageSize, string searchName, UserStatus searchStatus);
+        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus);
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string search);
     }
 }

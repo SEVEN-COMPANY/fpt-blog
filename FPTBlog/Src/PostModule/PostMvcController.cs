@@ -1,3 +1,4 @@
+using System;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
@@ -23,9 +24,11 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpGet("editor")]
         public IActionResult EditorPage(string postId) {
+            Console.WriteLine(postId);
             SelectList list = new SelectList(this.CategoryService.GetCategoryDropList());
             this.ViewData["categories"] = list;
             var post = this.PostService.GetPostByPostId(postId);
+            Console.WriteLine(post);
             if (post == null) {
                 return Redirect(Routers.Home.Link);
             }
@@ -54,6 +57,7 @@ namespace FPTBlog.Src.PostModule {
 
             var user = (User) this.ViewData["user"];
             var (posts, total) = this.PostService.GetPostsOfStudentWithStatus(pageSize, pageIndex, user.UserId, PostStatus.DRAFT);
+
             this.ViewData["drafts"] = posts;
             this.ViewData["totalDraft"] = total;
 

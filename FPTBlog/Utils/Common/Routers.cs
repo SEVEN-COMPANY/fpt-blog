@@ -14,8 +14,8 @@ namespace FPTBlog.Utils.Common {
 
         // Post
         public static readonly RouterItem GetMyPost = new RouterItem() { Page = "/Views/Containers/Post/MyList.cshtml", Title = "Login", Link = "/admin/tag/add" };
-        public static readonly RouterItem GetMyDraft = new RouterItem() { Page = "/Views/Containers/Post/DraftList.cshtml", Title = "My Draft", Link = "/blog/me" };
-        public static readonly RouterItem GetBlogPreview = new RouterItem() { Page = "/Views/Containers/Post/Preview.cshtml", Title = "", Link = "/blog/preview" };
+        public static readonly RouterItem GetMyDraft = new RouterItem() { Page = "/Views/Containers/Post/DraftList.cshtml", Title = "My Draft", Link = "/post/me" };
+        public static readonly RouterItem GetBlogPreview = new RouterItem() { Page = "/Views/Containers/Post/Preview.cshtml", Title = "", Link = "/post/preview" };
 
         // User
         public static readonly RouterItem Home = new RouterItem() { Page = "/Views/Containers/Auth/Login.cshtml", Title = "Home", Link = "/auth/login" };
@@ -25,9 +25,9 @@ namespace FPTBlog.Utils.Common {
         public static readonly RouterItem ChangePass = new RouterItem() { Page = "/Views/Containers/User/ChangePass.cshtml", Title = "Change Pass", Link = "/user/change-password" };
 
         // Blog
-        public static readonly RouterItem GetBlog = new RouterItem() { Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/blog/get" };
-        public static readonly RouterItem GetAllBlogs = new RouterItem() { Page = "/Views/Containers/Blog/GetAllBlogs.cshtml", Title = "Get All Blogs", Link = "/blog/all" };
-        public static readonly RouterItem GetBlogEditor = new RouterItem() { Page = "/Views/Containers/Post/Editor.cshtml", Title = "Write Your Blog", Link = "/blog/editor" };
+        public static readonly RouterItem GetBlog = new RouterItem() { Page = "/Views/Containers/Blog/GetBlog.cshtml", Title = "Get Blog", Link = "/post/get" };
+        public static readonly RouterItem GetAllBlogs = new RouterItem() { Page = "/Views/Containers/Blog/GetAllBlogs.cshtml", Title = "Get All Blogs", Link = "/post/all" };
+        public static readonly RouterItem GetBlogEditor = new RouterItem() { Page = "/Views/Containers/Post/Editor.cshtml", Title = "Write Your Blog", Link = "/post/editor" };
 
 
 

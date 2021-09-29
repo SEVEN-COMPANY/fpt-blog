@@ -25,7 +25,7 @@ namespace FPTBlog.Src.UserModule {
                 searchName = "";
             }
 
-            var (users, total) = this.UserService.GetUsersWithStatus(pageIndex, pageSize, searchName, searchStatus);
+            var (users, total) = this.UserService.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
             this.ViewData["users"] = users;
             this.ViewData["total"] = total;
             return View(RoutersAdmin.GetUsers.Page);

@@ -26,6 +26,7 @@ namespace FPTBlog.Src.CategoryModule {
                 searchName = "";
             }
 
+
             var (categories, total) = this.CategoryService.GetCategoriesAndCount(indexPage, pageSize, searchName, searchStatus);
 
             this.ViewData["categories"] = categories;

@@ -11,5 +11,22 @@ namespace FPTBlog.Src.UserModule {
         public UserRepository(DB db) : base(db) {
             this.Db = db;
         }
+
+        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) {
+            List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
+            var count = list.Count();
+            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+
+            return (list, count);
+        }
+        public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) {
+            List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName));
+            var count = list.Count();
+            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+
+            return (list, count);
+        }
     }
 }

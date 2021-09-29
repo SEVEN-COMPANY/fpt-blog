@@ -35,7 +35,7 @@ namespace FPTBlog.Src.TagModule {
                 searchName = "";
             }
 
-            var (listTag, total) = this.TagService.GetTagsWithCount(pageIndex, pageSize, searchName, searchStatus);
+            var (listTag, total) = this.TagService.GetTagsBelongToPostWithCount(pageIndex, pageSize, searchName, searchStatus);
             ViewData["tags"] = listTag;
             ViewData["total"] = total;
 

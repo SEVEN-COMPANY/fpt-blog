@@ -35,10 +35,6 @@ namespace FPTBlog.Src.TagModule.Entity {
             get; set;
         }
 
-
-        public virtual int PostCount {
-            get; set;
-        }
         public Tag() {
             this.TagId = Guid.NewGuid().ToString();
             this.Name = "";
