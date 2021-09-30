@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.AuthModule.Interface;
-
+using FPTBlog.Src.UserModule.Entity;
+using System;
 
 namespace FPTBlog.Src.UserModule {
 
@@ -18,29 +19,26 @@ namespace FPTBlog.Src.UserModule {
             this.AuthService = authService;
         }
 
-
-
         [HttpGet("list")]
-        public IActionResult GetUsers() {
-            var (users, count) = this.UserService.GetUsers();
-            this.ViewData["users"] = users;
-            this.ViewData["count"] = count;
-            return View(RoutersAdmin.GetUsers.Page);
-        }
+        public IActionResult GetUsers(string searchName, UserStatus searchStatus = UserStatus.ENABLE, int pageSize = 12, int pageIndex = 0) {
+            if (searchName == null) {
+                searchName = "";
+            }
 
-        // [HttpGet("")]
-        // public IActionResult GetUser() {
-        //     return View(Routers.AdminDashboard.Page);
-        // }
+            var (users, total) = this.UserService.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
+            this.ViewData["users"] = users;
+            this.ViewData["total"] = total;
+            return View(RoutersAdmin.UserGetUserList.Page);
+        }
 
         [HttpGet("update")]
         public IActionResult UpdateUser() {
-            return View(RoutersAdmin.UpdateUser.Page);
+            return View(RoutersAdmin.UserPutUser.Page);
         }
 
         [HttpGet("change-password")]
         public IActionResult ChangePassPage() {
-            return View(RoutersAdmin.ChangePassword.Page);
+            return View(RoutersAdmin.UserPutPassword.Page);
         }
 
     }

@@ -4,7 +4,7 @@
 
 @{
     var users = (List<User>)this.ViewData["users"];
-    var count = (int)this.ViewData["count"];
+    var total = (int)this.ViewData["total"];
 }
 
 <div class="flex items-center mt-8 intro-y">
@@ -13,39 +13,111 @@
     </h2>
 </div>
 
-<div class="overflow-x-auto">
-    @* Table Start *@
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">User ID</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Username</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Email</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Phone</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Address</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Role</th>
-                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Create Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in users)
-            {
-                <tr>
-                    <td class="border-b dark:border-dark-5">@item.UserId</td>
-                    <td class="border-b dark:border-dark-5">@item.Name</td>
-                    <td class="border-b dark:border-dark-5">@item.Username</td>
-                    <td class="border-b dark:border-dark-5">@item.Email</td>
-                    <td class="border-b dark:border-dark-5">@item.Phone</td>
-                    <td class="border-b dark:border-dark-5">@item.Address</td>
-                    <td class="border-b dark:border-dark-5">@await Html.PartialAsync(
-                    "../../Components/Table/TableStatus.cshtml",
-                    item.Status == UserStatus.ENABLE)</td>
-                    <td class="border-b dark:border-dark-5">@item.Role</td>
-                    <td class="border-b dark:border-dark-5">@item.CreateDate</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="grid grid-cols-12 gap-4 mt-5">
+    <div class="col-span-12 space-y-2 md:col-span-12">
+        @* Table Start *@
+        <div class="col-span-12 md:col-span-8 intro-y box">
+            <div class="p-5 border-b border-gray-200 sm:flex-row">
+
+                <div class="flex items-center justify-between">
+                    <h2 class="mr-auto text-base font-medium">
+                        Search List
+                    </h2>
+                </div>
+
+
+                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                <form action="@RoutersAdmin.UserGetUserList.Link" id="listUserForm" class="my-2">
+                    <div class="flex space-x-2">
+                        @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                        new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+                        this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+                        })
+                        @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
+                        new { Name = "searchStatus", Label = "Status", Value =
+                        ((string) this.Context.Request.Query["searchStatus"] ?? "1" ) == ((int)
+                        UserStatus.ENABLE).ToString(),
+                        IsLabel = false })
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
+
+                        @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                        new { Label = "Search" })
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="p-5" id="hoverable-table">
+                <div class="preview" style="display: block; opacity: 1;">
+                    <div class="overflow-x-auto">
+                        <table class="table">
+
+                            <thead>
+                                <tr>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        #
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Name
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Username
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Email
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Phone
+                                    </th>
+
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Status
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Role
+                                    </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+                                        Create Date
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < users.Count; i++)
+                                {
+                                    var item = users[i];
+                                    <tr>
+                                        <td class="border">@(i+1)</td>
+                                        <td class="border">@item.Name</td>
+                                        <td class="border">@item.Username</td>
+                                        <td class="border">@item.Email</td>
+                                        <td class="border">@item.Phone</td>
+                                        <td class="border">@await Html.PartialAsync(
+                                        "../../Components/Table/TableStatus.cshtml",
+                                        item.Status == UserStatus.ENABLE)</td>
+                                        <td class="border">@item.Role</td>
+                                        <td class="border">@item.CreateDate</td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Table End *@
+        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+        new { PageIndex = (string) this.Context.Request.Query["pageIndex"]?? "0", PageSize = (string)
+        this.Context.Request.Query["pageSize"]?? "12", Total = total })
+    </div>
 </div>
+
+@section Scripts {
+
+<script src="/js/user-list.js"></script>
+}

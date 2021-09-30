@@ -1,0 +1,34 @@
+@using FPTBlog.Src.PostModule.Entity
+@using FPTBlog.Src.CategoryModule.Entity
+@using Microsoft.AspNetCore.Html
+
+@section Styles {
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+}
+
+
+@{
+
+
+    var post = (Post)this.ViewData["post"];
+    var content = new HtmlString(post.Content);
+
+    this.ViewData["Title"] = post.Title;
+    var editorLink = $"{Routers.PostGetEditor.Link}?postId={post.PostId}";
+}
+
+<div class="flex">
+    <a href="@editorLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500">Go back to
+        editor</a>
+</div>
+<div class="ql-editor">
+    @content
+</div>
+<div>
+    @foreach (var item in post.PostTags)
+    {
+        <div>
+            @item.Tag.Name
+        </div>
+    }
+</div>

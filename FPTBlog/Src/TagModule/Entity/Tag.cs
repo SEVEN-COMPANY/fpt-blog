@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FPTBlog.Src.BlogModule.Entity;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Src.TagModule.Entity {
     [Table("tblTag")]
@@ -31,15 +31,16 @@ namespace FPTBlog.Src.TagModule.Entity {
             get; set;
         }
 
-        public virtual ICollection<BlogTag> BlogTags {
+        public virtual ICollection<PostTag> PostTags {
             get; set;
         }
+
         public Tag() {
             this.TagId = Guid.NewGuid().ToString();
             this.Name = "";
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Status = TagStatus.ACTIVE;
-            this.BlogTags = new List<BlogTag>();
+            this.PostTags = new List<PostTag>();
         }
 
         public override string ToString() {
@@ -50,6 +51,6 @@ namespace FPTBlog.Src.TagModule.Entity {
 
     public enum TagStatus {
         ACTIVE = 1,
-        INACTIVE = 0
+        INACTIVE = 2
     }
 }

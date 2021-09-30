@@ -1,0 +1,136 @@
+@{
+    decimal pageIndex = Decimal.Parse(Model.PageIndex) ?? 0;
+    decimal pageSize = Decimal.Parse(Model.PageSize) ?? 12;
+    decimal total = Model.Total;
+
+    var totalPage = (int)Math.Ceiling(total / pageSize);
+
+    var totalRender = totalPage < 3 ? totalPage : 3;
+
+    var pageRange = (((int)pageIndex - 1) < 0) ? 0 : ((int)pageIndex - 1);
+
+    if (totalPage > 3 && pageIndex > totalPage - 3)
+    {
+        pageRange = totalPage - 3;
+    }
+
+    // Fix pageRange when totalPage = 2 or 3
+    if (totalPage - pageRange < totalRender)
+    {
+        pageRange = 0;
+    }
+
+    var previousPage = pageIndex - 1;
+    if (previousPage < 0)
+    {
+        previousPage = 0;
+    }
+
+    var nextPage = pageIndex + 1;
+    if (nextPage > totalPage - 1)
+    {
+        nextPage = pageIndex;
+    }
+
+    var lastPage = totalPage - 1;
+    if (lastPage < 0)
+    {
+        lastPage = 0;
+    }
+}
+
+<div class="flex flex-wrap items-center col-span-12 intro-y sm:flex-row sm:flex-nowrap">
+    <ul class="pagination" id="pagination-btn">
+        <li>
+            <button type="button" class="pagination__link" data-index="0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevrons-left">
+                    <polyline points="11 17 6 12 11 7"></polyline>
+                    <polyline points="18 17 13 12 18 7"></polyline>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="pagination__link" data-index="@previousPage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+        </li>
+
+
+        @for (int i = pageRange; i < pageRange + totalRender; i++)
+        {
+            var display = i + 1;
+
+            if (i == pageIndex)
+            {
+                <li>
+                    <button type="button" class="pagination__link pagination__link--active" data-index="@i">@display</button>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <button type="button" class="pagination__link" data-index="@i">@display</button>
+                </li>
+            }
+        }
+
+
+        <li>
+            <button type="button" class="pagination__link" data-index="@nextPage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevron-right">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="pagination__link" data-index="@lastPage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-4 h-4 feather feather-chevrons-right">
+                    <polyline points="13 17 18 12 13 7"></polyline>
+                    <polyline points="6 17 11 12 6 7"></polyline>
+                </svg>
+            </button>
+        </li>
+    </ul>
+    <select class="w-20 mt-3 form-select box sm:mt-0" id="pagination-size">
+
+        @if (pageSize == 12)
+        {
+
+            <option value="12" selected>12</option>
+        }
+        else
+        {
+            <option value="12">12</option>
+
+        }
+
+        @if (pageSize == 24)
+        {
+            <option value="24" selected>24</option>
+        }
+        else
+        {
+            <option value="24">24</option>
+        }
+        @if (pageSize == 50)
+        {
+            <option value="50" selected>50</option>
+        }
+        else
+        {
+            <option value="50">50</option>
+        }
+
+
+    </select>
+</div>

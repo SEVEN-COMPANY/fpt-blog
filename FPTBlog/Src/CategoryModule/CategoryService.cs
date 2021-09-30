@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.Entity;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace FPTBlog.Src.CategoryModule {
     public class CategoryService : ICategoryService {
@@ -11,31 +12,17 @@ namespace FPTBlog.Src.CategoryModule {
 
             this.CategoryRepository = categoryRepository;
         }
-
-        public List<Category> GetCategories() {
-            return this.CategoryRepository.GetCategories();
+        public (List<Category>, int) GetCategories() {
+            List<Category> list = (List<Category>) this.CategoryRepository.GetAll();
+            var count = list.Count;
+            return (list, count);
         }
-
-        public bool SaveCategory(Category category) {
-            return this.CategoryRepository.SaveCategory(category);
-        }
-
-        public Category GetCategoryByCategoryName(string name) {
-            return this.CategoryRepository.GetCategoryByCategoryName(name);
-        }
-
-        public Category GetCategoryByCategoryId(string categoryId) {
-            return this.CategoryRepository.GetCategoryByCategoryId(categoryId);
-        }
-
-        public bool UpdateCategory(Category category) {
-            return this.CategoryRepository.UpdateCategory(category);
-        }
-
-        public bool DeleteCategory(Category category) {
-            return this.CategoryRepository.DeleteCategory(category);
-        }
-
+        public void AddCategory(Category category) => this.CategoryRepository.Add(category);
+        public Category GetCategoryByCategoryId(string categoryId) => this.CategoryRepository.Get(categoryId);
+        public Category GetCategoryByName(string name) => this.CategoryRepository.GetFirstOrDefault(item => item.Name.Equals(name));
+        public void UpdateCategory(Category category) => this.CategoryRepository.Update(category);
+        public void RemoveCategory(Category category) => this.CategoryRepository.Remove(category);
+        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) => this.CategoryRepository.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
 
         public List<SelectListItem> GetRadioStatusList() {
             SelectListItem active = new SelectListItem() { Value = ((int) CategoryStatus.ACTIVE).ToString(), Text = "active" };
@@ -46,7 +33,7 @@ namespace FPTBlog.Src.CategoryModule {
         public List<SelectListItem> GetCategoryDropList() {
             var categories = new List<SelectListItem>();
 
-            var list = this.CategoryRepository.GetCategories();
+            var list = this.CategoryRepository.GetAll();
             foreach (var item in list) {
                 categories.Add(new SelectListItem() { Value = item.CategoryId, Text = item.Name });
             }

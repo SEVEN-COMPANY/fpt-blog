@@ -1,17 +1,11 @@
 using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
-
+using FPTBlog.Utils.Repository.Interface;
 
 namespace FPTBlog.Src.TagModule.Interface {
-    public interface ITagRepository {
-        public bool SaveTag(Tag tag);
-        public Tag GetTagByTagId(string tagId);
-        public Tag GetTagByName(string name);
-        public bool UpdateTag(Tag tag);
-        public List<Tag> GetTags();
-        public bool DeleteTag(string tagId);
-        public int GetQualityBlogOfTag(string tagId);
+    public interface ITagRepository : IRepository<Tag> {
+        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus);
+        public int NumberOfPostBelongToTag(string tagId);
 
-        public List<Tag> GetTagsByName(string name);
     }
 }

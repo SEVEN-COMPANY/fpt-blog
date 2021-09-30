@@ -87,7 +87,7 @@ namespace FPTBlog.Src.AuthModule {
             user.Username = body.Username;
             user.CreateDate = DateTime.Now.ToShortDateString();
             user.Password = this.AuthService.HashingPassword(body.Password);
-            this.UserService.SaveUser(user);
+            this.UserService.AddUser(user);
 
             return new ObjectResult(res.getResponse());
         }

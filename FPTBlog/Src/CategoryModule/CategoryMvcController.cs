@@ -1,10 +1,11 @@
+
+using System;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.DTO;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Utils.Common;
-using FPTBlog.Src.BlogModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
@@ -13,19 +14,24 @@ namespace FPTBlog.Src.CategoryModule {
     [ServiceFilter(typeof(AuthGuard))]
     public class CategoryMvcController : Controller {
         private readonly ICategoryService CategoryService;
-        private readonly IBlogService BlogService;
 
 
-        public CategoryMvcController(ICategoryService categoryService, IBlogService blogService) {
-            this.BlogService = blogService;
+        public CategoryMvcController(ICategoryService categoryService) {
             this.CategoryService = categoryService;
         }
 
         [HttpGet("")]
-        public IActionResult Category() {
-            var categories = this.CategoryService.GetCategories();
+        public IActionResult Category(string searchName, CategoryStatus searchStatus = CategoryStatus.ACTIVE, int pageSize = 12, int pageIndex = 0) {
+            if (searchName == null) {
+                searchName = "";
+            }
+
+
+            var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
+
             this.ViewData["categories"] = categories;
-            return View(RoutersAdmin.Category.Page);
+            this.ViewData["total"] = total;
+            return View(RoutersAdmin.CategoryGetCategoryList.Page);
         }
 
         [HttpGet("create")]
@@ -33,7 +39,7 @@ namespace FPTBlog.Src.CategoryModule {
             SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
             this.ViewData["status"] = list;
 
-            return View(RoutersAdmin.CreateCategory.Page);
+            return View(RoutersAdmin.CategoryPost.Page);
         }
 
         [HttpGet("update")]
@@ -42,36 +48,7 @@ namespace FPTBlog.Src.CategoryModule {
             SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
             this.ViewData["status"] = list;
             this.ViewData["category"] = category;
-            return View(RoutersAdmin.UpdateCategory.Page);
+            return View(RoutersAdmin.CategoryPutCategory.Page);
         }
-
-
-
-        // check this function, you can delete this function if it needs
-        // [HttpPost("blog/add")]
-        // public string AddCategoryToBlog([FromBody] AddCategoryToBlogDto input) {
-        //     Console.WriteLine(input.BlogId);
-        //     ValidationResult result = new AddCategoryToBlogDtoValidator().Validate(input);
-        //     if (!result.IsValid) {
-        //         return "not pass validation";
-        //     }
-
-        //     Blog blog = this.BlogService.GetBlogByBlogId(input.BlogId);
-        //     if (blog == null) {
-
-        //         return "blog not found";
-        //     }
-
-        //     Category category = this.CategoryService.GetCategoryByCategoryId(input.CategoryId);
-        //     if (category == null) {
-
-        //         return "category not found";
-        //     }
-
-        //     blog.CategoryId = input.CategoryId;
-        //     this.BlogService.UpdateBlog(blog);
-
-        //     return "ok";
-        // }
     }
 }
