@@ -13,10 +13,12 @@
     <main class="relative flex flex-col min-h-screen">
         @await Html.PartialAsync("../Components/Navbar/Navbar.cshtml")
         <div class="flex flex-col flex-1 bg-alabaster-600 bg-opacity-60">
-            <div class="flex-1 w-full max-w-6xl pt-20 mx-auto md:p-2 md:w-4/5 bg-alabaster-200 broder">
+            <div class="flex-1 w-full max-w-6xl pt-20 mx-auto md:p-2 xl:w-4/5 bg-alabaster-200 broder">
                 @RenderBody()
             </div>
         </div>
+
+        @await Html.PartialAsync("../Components/Footer/Footer.cshtml")
     </main>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

@@ -16,7 +16,7 @@
     var previewLink = $"{Routers.PostGetPreview.Link}?postId={post.PostId}";
 }
 
-<div class="flex-1 py-8">
+<div class="flex-1 pt-8 pb-16 fade-in">
 
     <form class="space-y-4" id="createBlogForm">
         <div class="flex items-center justify-between">
@@ -53,7 +53,7 @@
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
             new { Label="Save Changes"})
             <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500"
-                onclick="return confirm('Do you save your post?')">
+                onclick="return confirm('Do you save your post, click ok to go to preview page?')">
                 Preview
             </a>
         </div>
