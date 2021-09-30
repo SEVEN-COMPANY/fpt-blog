@@ -3,7 +3,7 @@ using FPTBlog.Src.UserModule.Entity;
 
 namespace backend.Src.AuthModule {
     public class RoleGuardAttribute : ActionFilterAttribute {
-        private UserRole[] roles;
+        private readonly UserRole[] roles;
         public RoleGuardAttribute(UserRole[] roles) {
             this.roles = roles;
         }
