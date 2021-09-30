@@ -34,9 +34,9 @@ namespace FPTBlog.Src.PostModule {
             this.Db.PostTag.Remove(postTag);
         }
 
-        public List<Tag> GetTagsFromPost(Post blog) {
+        public List<Tag> GetTagsFromPost(Post post) {
             List<Tag> tags = (from Post in this.Db.Post
-                              where Post.PostId.Equals(blog.PostId)
+                              where Post.PostId.Equals(post.PostId)
                               join PostTag in this.Db.PostTag
                               on Post.PostId equals PostTag.PostId
                               join Tag in this.Db.Tag
@@ -57,13 +57,13 @@ namespace FPTBlog.Src.PostModule {
             // return this.GetEntityByPage(query, pageSize, pageIndex);
         }
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) {
-            var query = (from BlogTag in this.Db.PostTag
+            var query = (from PostTag in this.Db.PostTag
                          join Tag in this.Db.Tag
-                         on BlogTag.TagId equals Tag.TagId
-                         join Blog in this.Db.Post
-                         on BlogTag.PostId equals Blog.PostId
+                         on PostTag.TagId equals Tag.TagId
+                         join Post in this.Db.Post
+                         on PostTag.PostId equals Post.PostId
                          where Tag.Name.Equals(name)
-                         select Blog);
+                         select Post);
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
@@ -72,9 +72,9 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) {
-            var query = (from Blog in this.Db.Post
-                        where Blog.StudentId.Equals(studentId) && Blog.Status == status
-                        select Blog);
+            var query = (from Post in this.Db.Post
+                        where Post.StudentId.Equals(studentId) && Post.Status == status
+                        select Post);
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
@@ -83,9 +83,10 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public (List<Post>, int) GetWaitPostsWithCount() {
-            List<Post> blogs = this.Db.Post.Where(item => (item.Status) == PostStatus.WAIT).ToList();
-            return (blogs, blogs.Count);
+            List<Post> posts = this.GetAll(item => item.Status == PostStatus.WAIT).ToList();
+            return (posts, posts.Count);
         }
+
         // private (List<Post>, int) GetPostsWithCount(IQueryable<Post> query, int pageSize, int pageIndex) {
         //     List<Post> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
         //     int count = query.Count();
