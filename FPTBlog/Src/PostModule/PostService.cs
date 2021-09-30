@@ -13,7 +13,7 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public void AddPost(Post post) => this.PostRepository.Add(post);
-        public Post GetPostByPostId(string postId) => this.PostRepository.Get(postId);
+        public Post GetPostByPostId(string postId) => this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, "Category");
         public void UpdatePost(Post post) => this.PostRepository.Update(post);
         public void RemovePost(Post post) => this.PostRepository.Remove(post);
         public void AddTagToPost(Post post, Tag tag) => this.PostRepository.AddTagToPost(post, tag);

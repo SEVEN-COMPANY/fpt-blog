@@ -52,7 +52,8 @@
         <div class="flex items-center space-x-4">
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
             new { Label="Save Changes"})
-            <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500">
+            <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500"
+                onclick="return confirm('Do you save your post?')">
                 Preview
             </a>
         </div>

@@ -6,13 +6,13 @@ import { routers } from '../package/axios/routes';
 import { handleSelectBadge } from '../package/components/listBadge';
 
 interface ToggleTagDto {
-    blogId: string;
+    postId: string;
     tagName: string;
 }
 interface SaveBlogDto {
     title: string;
     content: string;
-    blogId: string;
+    postId: string;
 }
 
 interface Tag {
@@ -34,7 +34,7 @@ createBlogForm?.addEventListener('submit', function (event: Event) {
         const input: SaveBlogDto = {
             title: title.value,
             content: editor.root.innerHTML,
-            blogId: blogIdElement.value,
+            postId: blogIdElement.value,
         };
         http.post<ServerResponse<null>>(routers.post.save, input).then(() => {});
     }
@@ -64,7 +64,7 @@ handleSelectBadge(
 
         if (blogIdElement) {
             const input: ToggleTagDto = {
-                blogId: blogIdElement.value,
+                postId: blogIdElement.value,
                 tagName: label,
             };
 
@@ -78,7 +78,7 @@ handleSelectBadge(
         const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
 
         const input: ToggleTagDto = {
-            blogId: blogIdElement.value,
+            postId: blogIdElement.value,
             tagName: label,
         };
 
