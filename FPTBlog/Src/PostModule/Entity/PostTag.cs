@@ -2,15 +2,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.TagModule.Entity;
 
-namespace FPTBlog.Src.BlogModule.Entity {
-    [Table("tblBlogTag")]
-    public class BlogTag {
+namespace FPTBlog.Src.PostModule.Entity {
+    [Table("tblPostTag")]
+    public class PostTag {
         [Key]
-        public string BlogId {
+        public string PostId {
             get; set;
         }
 
-        public virtual Blog Blog {
+        public virtual Post post {
             get; set;
         }
 

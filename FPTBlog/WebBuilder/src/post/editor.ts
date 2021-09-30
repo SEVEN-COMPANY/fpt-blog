@@ -6,13 +6,13 @@ import { routers } from '../package/axios/routes';
 import { handleSelectBadge } from '../package/components/listBadge';
 
 interface ToggleTagDto {
-    blogId: string;
+    postId: string;
     tagName: string;
 }
 interface SaveBlogDto {
     title: string;
     content: string;
-    blogId: string;
+    postId: string;
 }
 
 interface Tag {
@@ -34,9 +34,9 @@ createBlogForm?.addEventListener('submit', function (event: Event) {
         const input: SaveBlogDto = {
             title: title.value,
             content: editor.root.innerHTML,
-            blogId: blogIdElement.value,
+            postId: blogIdElement.value,
         };
-        http.post<ServerResponse<null>>(routers.saveBlog, input).then(() => {});
+        http.post<ServerResponse<null>>(routers.post.save, input).then(() => {});
     }
 });
 
@@ -44,7 +44,7 @@ handleSelectBadge(
     'tag',
     async () => {
         const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
-        const { data } = await http.get<ServerResponse<Tag[]>>(routers.blog.getTagOfBlog(blogIdElement.value));
+        const { data } = await http.get<ServerResponse<Tag[]>>(routers.post.getTagOfPost(blogIdElement.value));
 
         return data.data.map((item) => item.name);
     },
@@ -64,11 +64,11 @@ handleSelectBadge(
 
         if (blogIdElement) {
             const input: ToggleTagDto = {
-                blogId: blogIdElement.value,
+                postId: blogIdElement.value,
                 tagName: label,
             };
 
-            const { data } = await http.post<ServerResponse<Tag[]>>(routers.blog.addNewTagToBlog, input);
+            const { data } = await http.post<ServerResponse<Tag[]>>(routers.post.addNewTagToPost, input);
 
             return data.data.map((item) => item.name);
         }
@@ -78,11 +78,11 @@ handleSelectBadge(
         const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
 
         const input: ToggleTagDto = {
-            blogId: blogIdElement.value,
+            postId: blogIdElement.value,
             tagName: label,
         };
 
-        await http.put<ServerResponse<Tag[]>>(routers.blog.addNewTagToBlog, input);
+        await http.put<ServerResponse<Tag[]>>(routers.post.addNewTagToPost, input);
         return;
     },
     500

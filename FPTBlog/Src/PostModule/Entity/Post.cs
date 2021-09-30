@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.BlogModule.Entity {
-    [Table("tblBlog")]
-    public class Blog {
+namespace FPTBlog.Src.PostModule.Entity {
+    [Table("tblPost")]
+    public class Post {
         [Key]
         [Required]
         [StringLength(40)]
-        public string BlogId {
+        public string PostId {
             get; set;
         }
 
@@ -57,7 +57,7 @@ namespace FPTBlog.Src.BlogModule.Entity {
         }
 
         [Required]
-        public BlogStatus Status {
+        public PostStatus Status {
             get; set;
         }
 
@@ -94,29 +94,29 @@ namespace FPTBlog.Src.BlogModule.Entity {
             get; set;
         }
 
-        public virtual ICollection<BlogTag> BlogTags {
+        public virtual ICollection<PostTag> PostTags {
             get; set;
         }
 
-        public Blog() {
-            this.BlogId = Guid.NewGuid().ToString();
-            this.Title = "Title";
-            this.Content = "<p>Content</p>";
+        public Post() {
+            this.PostId = Guid.NewGuid().ToString();
+            this.Title = "Draft";
+            this.Content = "<p>Hello there</p>";
             this.Description = "Description";
             this.ReadTime = 1;
             this.Like = 0;
             this.Dislike = 0;
             this.View = 0;
-            this.Status = BlogStatus.DRAFT;
+            this.Status = PostStatus.DRAFT;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Student = null;
             this.Lecturer = null;
             this.Category = null;
-            this.BlogTags = new List<BlogTag>();
+            this.PostTags = new List<PostTag>();
         }
     }
 
-    public enum BlogStatus {
+    public enum PostStatus {
         DRAFT = 0,
         WAIT = 1,
         APPROVED = 2,

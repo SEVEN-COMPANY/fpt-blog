@@ -14,10 +14,12 @@ namespace FPTBlog.Src.AuthModule {
     public class AuthGuard : IActionFilter {
         private readonly IJwtService JWTService;
         private readonly IUserRepository UserRepository;
-        public AuthGuard(IJwtService jwtService, IUserRepository userRepository) {
+        private readonly IUserService UserService;
+        public AuthGuard(IJwtService jwtService, IUserRepository userRepository, IUserService userService) {
 
             this.JWTService = jwtService;
             this.UserRepository = userRepository;
+            this.UserService = userService;
         }
 
         public void OnActionExecuted(ActionExecutedContext context) {
@@ -31,7 +33,7 @@ namespace FPTBlog.Src.AuthModule {
                 Controller controller = context.Controller as Controller;
                 ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW, controller.ViewData);
                 context.Result = new ViewResult {
-                    ViewName = Routers.Login.Page,
+                    ViewName = Routers.AuthPostLogin.Page,
                 };
                 return;
 
@@ -60,7 +62,7 @@ namespace FPTBlog.Src.AuthModule {
                 if (token[0] == null) {
                     return false;
                 }
-                var user = this.UserRepository.GetUserByUserId(token[0]);
+                var user = this.UserService.GetUserByUserId(token[0]);
                 if (user == null) {
                     return false;
                 }

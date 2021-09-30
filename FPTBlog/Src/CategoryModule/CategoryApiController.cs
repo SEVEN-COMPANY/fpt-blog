@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 using System;
 
-using FPTBlog.Src.BlogModule.Interface;
+using FPTBlog.Src.PostModule.Interface;
 
 
 namespace FPTBlog.Src.CategoryModule {
@@ -17,23 +17,12 @@ namespace FPTBlog.Src.CategoryModule {
     // [ServiceFilter(typeof(AuthGuard))]
 
     public class CategoryApiController : Controller {
-
         private readonly ICategoryService CategoryService;
-        private readonly IBlogService BlogService;
 
 
-        public CategoryApiController(ICategoryService categoryService, IBlogService blogService) {
-            this.BlogService = blogService;
+        public CategoryApiController(ICategoryService categoryService, IPostService postService) {
             this.CategoryService = categoryService;
         }
-
-        // [HttpGet("")]
-        // public ObjectResult GetCategories() {
-        //     var res = new ServerApiResponse<List<Category>>();
-        //     List<Category> list = this.CategoryService.GetCategories();
-        //     res.data = list;
-        //     return new ObjectResult(res.getResponse());
-        // }
 
         [HttpPost("")]
         public ObjectResult HandleCreateCategory([FromBody] CreateCategoryDTO body) {
@@ -45,7 +34,7 @@ namespace FPTBlog.Src.CategoryModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            var isExistCategory = this.CategoryService.GetCategoryByCategoryName(body.Name);
+            var isExistCategory = this.CategoryService.GetCategoryByName(body.Name);
             if (isExistCategory != null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "name");
                 return new BadRequestObjectResult(res.getResponse());
@@ -57,7 +46,7 @@ namespace FPTBlog.Src.CategoryModule {
             category.Description = body.Description;
             category.Status = body.Status;
             category.CreateDate = DateTime.Now.ToShortDateString();
-            this.CategoryService.SaveCategory(category);
+            this.CategoryService.AddCategory(category);
 
             res.data = category;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
@@ -81,7 +70,7 @@ namespace FPTBlog.Src.CategoryModule {
             }
 
             if (category.Name != body.Name) {
-                var isExistCategory = this.CategoryService.GetCategoryByCategoryName(body.Name);
+                var isExistCategory = this.CategoryService.GetCategoryByName(body.Name);
                 if (isExistCategory != null) {
                     res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "name");
                     return new BadRequestObjectResult(res.getResponse());

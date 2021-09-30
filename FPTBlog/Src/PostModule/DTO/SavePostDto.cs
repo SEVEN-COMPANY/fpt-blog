@@ -1,9 +1,9 @@
 
 using FluentValidation;
 
-namespace FPTBlog.Src.BlogModule.DTO {
-    public class SaveBlogDto {
-        public string BlogId {
+namespace FPTBlog.Src.PostModule.DTO {
+    public class SavePostDto {
+        public string PostId {
             get; set;
         }
         public string Title {
@@ -14,9 +14,9 @@ namespace FPTBlog.Src.BlogModule.DTO {
         }
     }
 
-    public class SaveBlogDtoValidator : AbstractValidator<SaveBlogDto> {
+    public class SaveBlogDtoValidator : AbstractValidator<SavePostDto> {
         public SaveBlogDtoValidator() {
-            RuleFor(x => x.BlogId).NotEmpty().NotNull();
+            RuleFor(x => x.PostId).NotEmpty().NotNull();
             RuleFor(x => x.Title).NotEmpty().NotNull().MaximumLength(40);
             RuleFor(x => x.Content).NotEmpty().NotNull();
         }

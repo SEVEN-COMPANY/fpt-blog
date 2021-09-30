@@ -27,7 +27,7 @@
 
 
                 @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
-                <form action="@RoutersAdmin.GetUsers.Link" id="listUserForm" class="my-2">
+                <form action="@RoutersAdmin.UserGetUserList.Link" id="listUserForm" class="my-2">
                     <div class="flex space-x-2">
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                         new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
@@ -58,7 +58,7 @@
                             <thead>
                                 <tr>
                                     <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        ID
+                                        #
                                     </th>
                                     <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         Name
@@ -72,9 +72,7 @@
                                     <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         Phone
                                     </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Address
-                                    </th>
+
                                     <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         Status
                                     </th>
@@ -88,15 +86,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in users)
+                                @for (int i = 0; i < users.Count; i++)
                                 {
+                                    var item = users[i];
                                     <tr>
-                                        <td class="border">@item.UserId</td>
+                                        <td class="border">@(i+1)</td>
                                         <td class="border">@item.Name</td>
                                         <td class="border">@item.Username</td>
                                         <td class="border">@item.Email</td>
                                         <td class="border">@item.Phone</td>
-                                        <td class="border">@item.Address</td>
                                         <td class="border">@await Html.PartialAsync(
                                         "../../Components/Table/TableStatus.cshtml",
                                         item.Status == UserStatus.ENABLE)</td>
@@ -104,6 +102,8 @@
                                         <td class="border">@item.CreateDate</td>
                                     </tr>
                                 }
+
+
                             </tbody>
                         </table>
                     </div>

@@ -2,14 +2,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.BlogModule.Entity {
-    [Table("tblLikeBlog")]
-    public class LikeBlog {
+namespace FPTBlog.Src.PostModule.Entity {
+    [Table("tblLikePost")]
+    public class LikePost {
         [Key]
-        public string BlogId {
+        public string PostId {
             get; set;
         }
-        public virtual Blog Blog {
+        public virtual Post Post {
             get; set;
         }
 

@@ -62,7 +62,7 @@
                             <thead>
                                 <tr>
                                     <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        ID
+                                        #
                                     </th>
                                     <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         Name
@@ -83,13 +83,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in categories)
+                                @for (int i = 0; i < categories.Count; i++)
                                 {
+                                    var item = categories[i];
                                     var link =
-                                    $"{RoutersAdmin.UpdateCategory.Link}?categoryId={item.CategoryId}";
+                                    $"{RoutersAdmin.CategoryPutCategory.Link}?categoryId={item.CategoryId}";
 
                                     <tr class="hover:bg-gray-200">
-                                        <td class="border">@item.CategoryId</td>
+                                        <td class="border">@(i+1)</td>
                                         <td class="border">@item.Name</td>
                                         <td class="border">@item.Description</td>
                                         <td class="border">
@@ -111,6 +112,7 @@
                                         </td>
                                     </tr>
                                 }
+
                             </tbody>
                         </table>
                     </div>

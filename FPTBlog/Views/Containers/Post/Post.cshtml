@@ -1,0 +1,33 @@
+@using FPTBlog.Src.PostModule.Entity
+@using FPTBlog.Src.CategoryModule.Entity
+@using Microsoft.AspNetCore.Html
+
+@section Styles {
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+}
+
+
+@{
+
+
+    var post = (Post)this.ViewData["post"];
+    var content = new HtmlString(post.Content);
+
+    this.ViewData["Title"] = post.Title;
+    Console.WriteLine(post.Student);
+    Console.WriteLine(post.Category);
+
+}
+
+
+<div class="ql-editor">
+    @content
+</div>
+<div>
+    @foreach (var item in post.PostTags)
+    {
+        <div>
+            @item.Tag.Name
+        </div>
+    }
+</div>
