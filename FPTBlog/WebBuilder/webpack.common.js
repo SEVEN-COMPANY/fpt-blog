@@ -2,6 +2,7 @@ var path = require('path');
 
 module.exports = {
     entry: {
+        home: ['./src/navbar/navbar.ts'],
         'auth-login': ['./src/auth/login.ts'],
         'auth-register': ['./src/auth/register.ts'],
         'auth-update': ['./src/auth/login.ts'],

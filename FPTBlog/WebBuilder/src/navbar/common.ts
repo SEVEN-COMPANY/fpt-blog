@@ -14,7 +14,7 @@ interface User {
 }
 
 const getCurrentUser = () => {
-    http.get<ServerResponse<User>>(routers.getUser).then((res) => {
+    http.get<ServerResponse<User>>(routers.user.get).then((res) => {
         const name = document.getElementById('user-name');
 
         const username = document.getElementById('user-username');
