@@ -33,7 +33,6 @@ namespace FPTBlog.Src.CategoryModule {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
-
             var isExistCategory = this.CategoryService.GetCategoryByName(body.Name);
             if (isExistCategory != null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "name");
@@ -53,7 +52,7 @@ namespace FPTBlog.Src.CategoryModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("update")]
+        [HttpPut("")]
         public ObjectResult HandleUpdateCategory([FromBody] UpdateCategoryDTO body) {
             var res = new ServerApiResponse<string>();
 
