@@ -18,7 +18,7 @@ namespace FPTBlog.Src.UserModule {
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
 
-            return (list, count);
+            return (pagelist, count);
         }
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) {
             List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName));
@@ -26,7 +26,7 @@ namespace FPTBlog.Src.UserModule {
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
 
-            return (list, count);
+            return (pagelist, count);
         }
     }
 }
