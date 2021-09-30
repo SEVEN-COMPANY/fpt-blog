@@ -6,7 +6,7 @@ namespace FPTBlog.Src.CommentModule.DTO {
         public string Content {
             get; set;
         }
-        public string BlogId {
+        public string PostId {
             get; set;
         }
     }
@@ -14,7 +14,7 @@ namespace FPTBlog.Src.CommentModule.DTO {
     public class AddCommentDtoValidator : AbstractValidator<AddCommentDto> {
         public AddCommentDtoValidator() {
             RuleFor(x => x.Content).NotEmpty().NotNull();
-            RuleFor(x => x.BlogId).NotEmpty().NotNull();
+            RuleFor(x => x.PostId).NotEmpty().NotNull();
         }
     }
 }

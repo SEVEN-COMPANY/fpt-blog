@@ -1,4 +1,4 @@
-@using FPTBlog.Src.BlogModule.Entity
+@using FPTBlog.Src.PostModule.Entity
 @using FPTBlog.Src.CategoryModule.Entity
 @using Microsoft.AspNetCore.Html
 
@@ -10,11 +10,11 @@
 @{
 
 
-    var blog = (Blog)this.ViewData["blog"];
-    var content = new HtmlString(blog.Content);
+    var post = (Post)this.ViewData["post"];
+    var content = new HtmlString(post.Content);
 
-    this.ViewData["Title"] = blog.Title;
-    var editorLink = $"{Routers.GetBlogEditor.Link}?blogId={blog.BlogId}";
+    this.ViewData["Title"] = post.Title;
+    var editorLink = $"{Routers.PostGetEditor.Link}?postId={post.PostId}";
 }
 
 <div class="flex">
@@ -25,7 +25,7 @@
     @content
 </div>
 <div>
-    @foreach (var item in blog.BlogTags)
+    @foreach (var item in post.PostTags)
     {
         <div>
             @item.Tag.Name

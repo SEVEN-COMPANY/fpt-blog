@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.UserModule.Entity;
-using FPTBlog.Src.BlogModule.Entity;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Src.CommentModule.Entity {
     [Table("tblComment")]
@@ -42,12 +42,12 @@ namespace FPTBlog.Src.CommentModule.Entity {
             get; set;
         }
 
-        [ForeignKey("tblBlog")]
+        [ForeignKey("tblPost")]
         [StringLength(40)]
-        public string BlogId {
+        public string PostId {
             get; set;
         }
-        public virtual Blog Blog {
+        public virtual Post Post {
             get; set;
         }
 
@@ -69,14 +69,14 @@ namespace FPTBlog.Src.CommentModule.Entity {
             this.Dislike = 0;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.SubcommentId = null;
-            this.BlogId = null;
+            this.PostId = null;
             this.UserId = null;
         }
 
         public override string ToString() {
             return "Comment: \n CommentId: " + CommentId + " \nContent: " + Content
             + " \nLike: " + Like + " \nDislike: " + Dislike + " \nCreateDate: " + CreateDate
-            + " \nSubcommentId" + SubcommentId + " \nBlogId" + BlogId + " \nUserId" + UserId;
+            + " \nSubcommentId" + SubcommentId + " \nBlogId" + PostId + " \nUserId" + UserId;
         }
     }
 }

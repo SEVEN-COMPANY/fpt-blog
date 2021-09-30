@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = Routers.Login.Title;
+    ViewData["Title"] = Routers.AuthPostLogin.Title;
 }
 
 @await Html.PartialAsync("../../Components/Common/SideLogo.cshtml")
@@ -26,7 +26,7 @@
             @await Html.PartialAsync("../../Components/Form/FormDivider.cshtml")
             @await Html.PartialAsync("../../Components/Form/FormGoogle.cshtml")
             @await Html.PartialAsync("../../Components/Form/FormBottomLink.cshtml",
-            new {Label="Register New Account Instead?", Link = Routers.Register.Link})
+            new {Label="Register New Account Instead?", Link = Routers.AuthPostRegister.Link})
         </div>
         @* Support End *@
     </div>

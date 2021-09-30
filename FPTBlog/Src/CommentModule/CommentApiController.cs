@@ -28,7 +28,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             Comment comment = new Comment();
             comment.Content = input.Content;
             User currentUser = (User) this.ViewData["user"];
-            comment.BlogId = input.BlogId;
+            comment.PostId = input.PostId;
             this.CommentService.AddComment(comment);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);

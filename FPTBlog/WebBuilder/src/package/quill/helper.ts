@@ -29,11 +29,12 @@ export async function saveToServer(editor: Quill, file: File) {
     fd.append('image', file);
     const formData = new FormData();
     formData.append('image', file);
-
-    http.post<ServerResponse<string>>(routers.uploadImageBlog, formData)
+    http.post<ServerResponse<string>>(routers.post.uploadImagePost, formData)
         .then((res) => {
             const imageUrl = res.data.data;
             insertToEditor(editor, imageUrl);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+            console.log(error);
+        });
 }
