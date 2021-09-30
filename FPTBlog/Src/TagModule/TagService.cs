@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using FPTBlog.Src.TagModule.Entity;
@@ -20,9 +21,16 @@ namespace FPTBlog.Src.TagModule {
         public void AddTag(Tag tag) => this.TagRepository.Add(tag);
         public Tag GetTagByTagId(string tagId) => this.TagRepository.Get(tagId);
         public Tag GetTagByName(string name) => this.TagRepository.GetFirstOrDefault(item => item.Name == name);
+
+        public (List<Tag>, int) GetTagsByName(string name) {
+            var list = (List<Tag>) this.TagRepository.GetAll(item => item.Name.Contains(name));
+
+            return (list, list.Count());
+        }
+
         public void UpdateTag(Tag tag) => this.TagRepository.Update(tag);
         public void RemoveTag(Tag tag) => this.TagRepository.Remove(tag);
-        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus){
+        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus) {
             var list = (IEnumerable<Tag>) this.TagRepository.GetAll(item => item.Name.Equals(searchName) && item.Status == searchStatus,
                                                                     includeProperties: "PostTag");
             var count = list.Count();
