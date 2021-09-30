@@ -43,6 +43,7 @@ namespace FPTBlog.Src.PostModule {
             if (post == null) {
                 return Redirect(Routers.CommonGetHome.Link);
             }
+            Console.WriteLine(post.Category);
 
             this.ViewData["post"] = post;
 

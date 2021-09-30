@@ -12,19 +12,36 @@
 
 ## Feature by role
 
+- Common Role
+     - Login and register account
+     - Update user information
+     - Change password
+     - Search and view posts
+- FPT Student Role
+     - Write new post
+- FPT Lecture Role
+     - CURD category, tag
+     - Accept student posts
+     - Block Particular user, or category
+
 ## Technology
 
 - Frontend
      - cshtml - Server Side Rendering
      - Tailwind - Style
-     - Javascript
+     - Javascript + Webpack (TS)
 - Backend
-     - .NET - Server Core
-     - Entity Framework
+     - ASP.NET - Server Core
+     - Entity Framework - Object–relational mapping
      - SQL Server 2019 - Database
+- Design Pattern
+     - Service-Repository pattern
+     - Dependency injection pattern
+     - SOLID Principles
 - Deployment
      - Docker - Container Management
      - Github Action - CI/CD
+     - Digital Ocean - VPS
 
 ## Team Member
 
@@ -44,7 +61,7 @@
      - Gmail: tantruong2303@gmail.com
      - Linkedin: https://linkedin.com/in/truongbinhtan
      - Github: https://github.com/tantruong2303
-- Nguyễn Lương Hoàng Nam
+- Nguyễn Lương Hoàng Nam | Backend
      - Gmail: monkeynam208@gmail.com
      - Linkedin: https://linkedin.com/in/truongbinhtan
      - Github: https://www.linkedin.com/in/monkinam
@@ -53,7 +70,11 @@
 
 ### Login Page
 
-[![Grocery Store Logo](doc/login-page.jpg)](https://fptblog.vinhnhan.com/auth/login)
+[![Login Page](doc/login-page.jpg)](https://fptblog.vinhnhan.com/auth/login)
+
+### VPS Panel Management
+
+![VPS Page](doc/vps.jpg)
 
 ## Bug Report
 
