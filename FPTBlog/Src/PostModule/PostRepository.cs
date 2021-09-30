@@ -14,14 +14,14 @@ namespace FPTBlog.Src.PostModule {
             this.Db = db;
         }
 
-        public void AddTagToPost(Post blog, Tag tag) {
+        public void AddTagToPost(Post post, Tag tag) {
             PostTag postTag = new PostTag();
-            postTag.PostId = blog.PostId;
-            postTag.post = blog;
+            postTag.PostId = post.PostId;
+            postTag.Post = post;
             postTag.TagId = tag.TagId;
             postTag.Tag = tag;
 
-            blog.PostTags.Add(postTag);
+            post.PostTags.Add(postTag);
             tag.PostTags.Add(postTag);
             this.Db.PostTag.Add(postTag);
 
@@ -29,9 +29,9 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public void RemoveTagFromPost(Post post, Tag tag) {
-            PostTag blogTag = this.Db.PostTag.FirstOrDefault(item => item.PostId == post.PostId && item.TagId == tag.TagId);
+            PostTag postTag = this.Db.PostTag.FirstOrDefault(item => item.PostId == post.PostId && item.TagId == tag.TagId);
 
-            this.Db.PostTag.Remove(blogTag);
+            this.Db.PostTag.Remove(postTag);
         }
 
         public List<Tag> GetTagsFromPost(Post blog) {

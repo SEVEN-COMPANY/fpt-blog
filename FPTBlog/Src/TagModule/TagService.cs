@@ -12,7 +12,7 @@ namespace FPTBlog.Src.TagModule {
             this.TagRepository = tagRepository;
         }
         public (List<Tag>, int) GetTags() {
-            List<Tag> list = (List<Tag>) this.TagRepository.GetAll();
+            List<Tag> list = (List<Tag>) this.TagRepository.GetAll(includeProperties: "PostTags");
             var count = list.Count;
             return (list, count);
         }
@@ -22,7 +22,15 @@ namespace FPTBlog.Src.TagModule {
         public Tag GetTagByName(string name) => this.TagRepository.GetFirstOrDefault(item => item.Name == name);
         public void UpdateTag(Tag tag) => this.TagRepository.Update(tag);
         public void RemoveTag(Tag tag) => this.TagRepository.Remove(tag);
-        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus) => this.TagRepository.GetTagsWithCount(pageIndex, pageSize, searchName, searchStatus);
+        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus){
+            var list = (IEnumerable<Tag>) this.TagRepository.GetAll(item => item.Name.Equals(searchName) && item.Status == searchStatus,
+                                                                    includeProperties: "PostTag");
+            var count = list.Count();
+
+            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+            return (pagelist, count);
+        }
 
         public List<SelectListItem> GetRadioStatusList() {
             SelectListItem active = new SelectListItem() { Value = ((int) TagStatus.ACTIVE).ToString(), Text = "active" };
