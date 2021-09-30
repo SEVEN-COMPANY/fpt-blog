@@ -21,7 +21,7 @@ namespace FPTBlog.Src.CategoryModule {
 
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
-            return (list, count);
+            return (pagelist, count);
         }
     }
 }

@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace FPTBlog.Utils.Common {
     public class RouterAdminItem {
-        public string Page;
-        public string Link;
+        public string Page {
+            get; set;
+        }
+        public string Link {
+            get; set;
+        }
     }
 
     public class RoutersAdmin {
