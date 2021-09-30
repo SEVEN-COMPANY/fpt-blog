@@ -32,19 +32,18 @@ namespace FPTBlog.Utils {
         public DbSet<PostTag> PostTag {
             get; set;
         }
-        public DbSet<LikePost> LikeBlog {
-            get; set;
-        }
+        // public DbSet<LikePost> LikeBlog {
+        //     get; set;
+        // }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
+
             optionsBuilder.UseSqlServer(this.Config.GetEnvByKey("DB_URL"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<PostTag>().HasKey(item => new { item.PostId, item.TagId });
-
             modelBuilder.Entity<PostTag>()
-                .HasOne(x => x.post)
+                .HasOne(x => x.Post)
                 .WithMany(x => x.PostTags)
                 .HasForeignKey(x => x.PostId);
 
@@ -53,7 +52,8 @@ namespace FPTBlog.Utils {
                 .WithMany(x => x.PostTags)
                 .HasForeignKey(x => x.TagId);
 
-            modelBuilder.Entity<LikePost>().HasKey(item => new { item.PostId, item.UserId });
+
+            // modelBuilder.Entity<LikePost>().HasKey(item => new { item.PostId, item.UserId });
 
             base.OnModelCreating(modelBuilder);
         }
