@@ -1,3 +1,4 @@
+using System;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
@@ -23,27 +24,29 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpGet("editor")]
         public IActionResult EditorPage(string postId) {
+
             SelectList list = new SelectList(this.CategoryService.GetCategoryDropList());
             this.ViewData["categories"] = list;
             var post = this.PostService.GetPostByPostId(postId);
+
             if (post == null) {
-                return Redirect(Routers.Home.Link);
+                return Redirect(Routers.CommonGetHome.Link);
             }
             this.ViewData["post"] = post;
 
-            return View(Routers.GetBlogEditor.Page);
+            return View(Routers.PostGetEditor.Page);
         }
 
         [HttpGet("preview")]
         public IActionResult PreviewPage(string postId) {
             var post = this.PostService.GetPostByPostId(postId);
             if (post == null) {
-                return Redirect(Routers.Home.Link);
+                return Redirect(Routers.CommonGetHome.Link);
             }
 
             this.ViewData["post"] = post;
 
-            return View(Routers.GetBlogPreview.Page);
+            return View(Routers.PostGetPreview.Page);
         }
 
 
@@ -54,23 +57,31 @@ namespace FPTBlog.Src.PostModule {
 
             var user = (User) this.ViewData["user"];
             var (posts, total) = this.PostService.GetPostsOfStudentWithStatus(pageSize, pageIndex, user.UserId, PostStatus.DRAFT);
+
             this.ViewData["drafts"] = posts;
             this.ViewData["totalDraft"] = total;
 
-            return View(Routers.GetMyDraft.Page);
+            return View(Routers.PostGetDraftList.Page);
         }
 
         [HttpGet("")]
-        public IActionResult GetAllBlogs(PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
-            var (posts, total) = this.PostService.GetPostsAndCount(pageSize, pageIndex, searchStatus);
-            this.ViewData["blogs"] = posts;
-            this.ViewData["total"] = total;
-
-            return Json(new {
-                blogs = posts,
-                total = total
-            });
+        public IActionResult GetBlogByBlogId(string postId) {
+            var post = this.PostService.GetPostByPostId(postId);
+            this.ViewData["post"] = post;
+            return View(Routers.PostGetPost.Page);
         }
+
+        // [HttpGet("")]
+        // public IActionResult GetAllBlogs(PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
+        //     var (posts, total) = this.PostService.GetPostsAndCount(pageSize, pageIndex, searchStatus);
+        //     this.ViewData["blogs"] = posts;
+        //     this.ViewData["total"] = total;
+
+        //     return Json(new {
+        //         blogs = posts,
+        //         total = total
+        //     });
+        // }
 
         [HttpGet("tag")]
         public IActionResult GetBlogsByTagName(int pageSize = 12, int pageIndex = 0, string name = "") {
@@ -108,11 +119,6 @@ namespace FPTBlog.Src.PostModule {
             });
         }
 
-        [HttpGet("postId")]
-        public IActionResult GetBlogByBlogId(string postId) {
-            var post = this.PostService.GetPostByPostId(postId);
-            this.ViewData["post"] = post;
-            return View(Routers.GetBlog.Page);
-        }
+
     }
 }

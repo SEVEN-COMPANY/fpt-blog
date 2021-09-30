@@ -22,14 +22,7 @@ namespace FPTBlog.Src.CategoryModule {
         public Category GetCategoryByName(string name) => this.CategoryRepository.GetFirstOrDefault(item => item.Name.Equals(name));
         public void UpdateCategory(Category category) => this.CategoryRepository.Update(category);
         public void RemoveCategory(Category category) => this.CategoryRepository.Remove(category);
-
-        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) {
-            List<Category> list = (List<Category>) this.CategoryRepository.GetAll(item => item.Name.Equals(searchName) && item.Status == searchStatus);
-            var count = list.Count;
-            list = (List<Category>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
-
-            return (list, count);
-        }
+        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) => this.CategoryRepository.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
 
         public List<SelectListItem> GetRadioStatusList() {
             SelectListItem active = new SelectListItem() { Value = ((int) CategoryStatus.ACTIVE).ToString(), Text = "active" };

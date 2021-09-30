@@ -24,19 +24,7 @@ namespace FPTBlog.Src.UserModule {
             this.UserRepository.Update(blockedUser);
         }
 
-        public (List<User>, int) GetUsersWithStatus(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) {
-            List<User> list = (List<User>) this.UserRepository.GetAll(item => item.Name.Equals(searchName) && item.Status == searchStatus);
-            var count = list.Count;
-            list = (List<User>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
-
-            return (list, count);
-        }
-        public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) {
-            List<User> list = (List<User>) this.UserRepository.GetAll(item => item.Name.Equals(searchName));
-            var count = list.Count;
-            list = (List<User>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
-
-            return (list, count);
-        }
+        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) => this.UserRepository.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
+        public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) => this.UserRepository.GetUsersWithCount(pageSize, pageIndex, searchName);
     }
 }

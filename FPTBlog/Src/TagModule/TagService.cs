@@ -31,6 +31,18 @@ namespace FPTBlog.Src.TagModule {
 
             return (pagelist, count);
         }
+        public (List<IDictionary<string, object>>, int) GetTagsBelongToPostWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus) {
+            var list = new List<IDictionary<string, object>>();
+            var (tags, count) = this.TagRepository.GetTagsWithCount(pageIndex, pageSize, searchName, searchStatus);
+            foreach (Tag item in tags) {
+                var tagWithCount = new Dictionary<string, object>();
+                tagWithCount.Add("tag", item);
+                tagWithCount.Add("quantity", this.TagRepository.NumberOfPostBelongToTag(item.TagId));
+                list.Add(tagWithCount);
+            }
+
+            return (list, count);
+        }
 
         public List<SelectListItem> GetRadioStatusList() {
             SelectListItem active = new SelectListItem() { Value = ((int) TagStatus.ACTIVE).ToString(), Text = "active" };

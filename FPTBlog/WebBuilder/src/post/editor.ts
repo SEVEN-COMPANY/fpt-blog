@@ -36,7 +36,7 @@ createBlogForm?.addEventListener('submit', function (event: Event) {
             content: editor.root.innerHTML,
             blogId: blogIdElement.value,
         };
-        http.post<ServerResponse<null>>(routers.saveBlog, input).then(() => {});
+        http.post<ServerResponse<null>>(routers.post.save, input).then(() => {});
     }
 });
 
@@ -44,7 +44,7 @@ handleSelectBadge(
     'tag',
     async () => {
         const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
-        const { data } = await http.get<ServerResponse<Tag[]>>(routers.blog.getTagOfBlog(blogIdElement.value));
+        const { data } = await http.get<ServerResponse<Tag[]>>(routers.post.getTagOfPost(blogIdElement.value));
 
         return data.data.map((item) => item.name);
     },
@@ -68,7 +68,7 @@ handleSelectBadge(
                 tagName: label,
             };
 
-            const { data } = await http.post<ServerResponse<Tag[]>>(routers.blog.addNewTagToBlog, input);
+            const { data } = await http.post<ServerResponse<Tag[]>>(routers.post.addNewTagToPost, input);
 
             return data.data.map((item) => item.name);
         }
@@ -82,7 +82,7 @@ handleSelectBadge(
             tagName: label,
         };
 
-        await http.put<ServerResponse<Tag[]>>(routers.blog.addNewTagToBlog, input);
+        await http.put<ServerResponse<Tag[]>>(routers.post.addNewTagToPost, input);
         return;
     },
     500

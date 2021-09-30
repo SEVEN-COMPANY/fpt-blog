@@ -17,7 +17,7 @@ namespace FPTBlog.Src.PostModule {
             var (posts, count) = this.PostService.GetWaitPostsWithCount();
             this.ViewData["posts"] = posts;
             this.ViewData["count"] = count;
-            return View(Routers.GetAllBlogs.Page);
+            return View("");
         }
     }
 }

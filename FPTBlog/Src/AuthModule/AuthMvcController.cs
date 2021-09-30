@@ -26,7 +26,7 @@ namespace FPTBlog.Src.AuthModule {
 
         [HttpGet("login")]
         public IActionResult LoginPage() {
-            return View(Routers.Login.Page);
+            return View(Routers.AuthPostLogin.Page);
         }
 
         [HttpGet("google")]
@@ -52,7 +52,7 @@ namespace FPTBlog.Src.AuthModule {
                 Secure = true
             });
 
-            return Redirect(Routers.Home.Link);
+            return Redirect(Routers.CommonGetHome.Link);
 
         }
 
@@ -60,7 +60,7 @@ namespace FPTBlog.Src.AuthModule {
 
         [HttpGet("register")]
         public IActionResult RegisterPage() {
-            return View(Routers.Register.Page);
+            return View(Routers.AuthPostRegister.Page);
         }
 
         [HttpGet("logout")]
@@ -75,7 +75,7 @@ namespace FPTBlog.Src.AuthModule {
 
             });
 
-            return Redirect(Routers.Login.Link);
+            return Redirect(Routers.AuthPostLogin.Link);
         }
     }
 }

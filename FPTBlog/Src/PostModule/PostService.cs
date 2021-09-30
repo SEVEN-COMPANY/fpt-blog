@@ -18,7 +18,7 @@ namespace FPTBlog.Src.PostModule {
         public void RemovePost(Post post) => this.PostRepository.Remove(post);
         public void AddTagToPost(Post post, Tag tag) => this.PostRepository.AddTagToPost(post, tag);
         public void RemoveTagFromPost(Post post, Tag tag) => this.PostRepository.RemoveTagFromPost(post, tag);
-        public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, PostStatus searchStatus){
+        public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, PostStatus searchStatus) {
             List<Post> list = (List<Post>) this.PostRepository.GetAll(item => item.Status == searchStatus);
             var count = list.Count;
             list = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
@@ -28,7 +28,7 @@ namespace FPTBlog.Src.PostModule {
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByCategoryWithCount(pageIndex, pageSize, name);
         public List<Tag> GetTagsFromPost(Post post) => this.PostRepository.GetTagsFromPost(post);
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByTagWithCount(pageIndex, pageSize, name);
-        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageIndex, pageSize, studentId, status);
+        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
         public int CalculatePostPoint(Post post) {
             int result = post.Like - post.Dislike + (post.View / 10);

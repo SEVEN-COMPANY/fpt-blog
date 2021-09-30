@@ -7,22 +7,24 @@ export const routers = {
         create: '/api/category',
         update: '/api/category/update',
     },
-    blog: {
-        create: '/api/blog',
-        addNewTagToBlog: '/api/blog/tag',
-        getTagOfBlog: (blogId: string) => `/api/blog/tag?blogId=${blogId}`,
+    post: {
+        create: '/api/post',
+        addNewTagToPost: '/api/post/tag',
+        getTagOfPost: (postId: string) => `/api/post/tag?postId=${postId}`,
+        save: '/api/post/save',
+        uploadImagePost: '/api/post/image',
     },
     user: {
         changePassword: '/api/user/change-password',
         update: '/api/user',
+        get: '/api/user',
     },
     tag: {
         getAll: '/api/tag/all',
         getByName: (name: string) => `/api/tag?name=${name}`,
     },
-    loginUser: '/api/auth/login',
-    getUser: '/api/user',
-    registerUser: '/api/auth/register',
-    saveBlog: '/api/blog/save',
-    uploadImageBlog: '/api/blog/image',
+    auth: {
+        login: '/api/auth/login',
+        register: '/api/auth/register',
+    },
 };

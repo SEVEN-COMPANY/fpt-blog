@@ -73,7 +73,7 @@ namespace FPTBlog.Src.PostModule {
 
             Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
@@ -102,7 +102,7 @@ namespace FPTBlog.Src.PostModule {
 
             Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
@@ -148,7 +148,7 @@ namespace FPTBlog.Src.PostModule {
 
             Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
@@ -189,7 +189,7 @@ namespace FPTBlog.Src.PostModule {
 
             Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
@@ -228,7 +228,7 @@ namespace FPTBlog.Src.PostModule {
 
             Post blog = this.PostService.GetPostByPostId(input.PostId);
             if (blog == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 

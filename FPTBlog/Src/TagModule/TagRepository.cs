@@ -12,5 +12,20 @@ namespace FPTBlog.Src.TagModule {
         public TagRepository(DB dB) : base(dB) {
             this.Db = dB;
         }
+
+        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus) {
+            var list = (IEnumerable<Tag>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
+            var count = list.Count();
+            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+            return (pagelist, count);
+        }
+
+        public int NumberOfPostBelongToTag(string tagId) {
+            List<PostTag> listBlogByTag = (from PostTag in this.Db.PostTag
+                                           where tagId.CompareTo(PostTag.TagId) == 0
+                                           select PostTag).ToList();
+            return listBlogByTag.Count();
+        }
     }
 }

@@ -1,31 +1,35 @@
 @{
-    decimal indexPage = Decimal.Parse(Model.IndexPage) ?? 0;
+    decimal pageIndex = Decimal.Parse(Model.PageIndex) ?? 0;
     decimal pageSize = Decimal.Parse(Model.PageSize) ?? 12;
     decimal total = Model.Total;
 
-
     var totalPage = (int)Math.Ceiling(total / pageSize);
 
-    var pageRange = (int)indexPage;
+    var totalRender = totalPage < 3 ? totalPage : 3;
 
-    if (totalPage > 3 && indexPage > totalPage - 3)
+    var pageRange = (((int)pageIndex - 1) < 0) ? 0 : ((int)pageIndex - 1);
+
+    if (totalPage > 3 && pageIndex > totalPage - 3)
     {
         pageRange = totalPage - 3;
     }
 
-    var totalRender = totalPage < 3 ? totalPage : 3;
+    // Fix pageRange when totalPage = 2 or 3
+    if (totalPage - pageRange < totalRender)
+    {
+        pageRange = 0;
+    }
 
-
-    var previousPage = indexPage - 1;
+    var previousPage = pageIndex - 1;
     if (previousPage < 0)
     {
         previousPage = 0;
     }
 
-    var nextPage = indexPage + 1;
+    var nextPage = pageIndex + 1;
     if (nextPage > totalPage - 1)
     {
-        nextPage = indexPage;
+        nextPage = pageIndex;
     }
 
     var lastPage = totalPage - 1;
@@ -33,9 +37,6 @@
     {
         lastPage = 0;
     }
-
-
-
 }
 
 <div class="flex flex-wrap items-center col-span-12 intro-y sm:flex-row sm:flex-nowrap">
@@ -65,7 +66,7 @@
         {
             var display = i + 1;
 
-            if (i == indexPage)
+            if (i == pageIndex)
             {
                 <li>
                     <button type="button" class="pagination__link pagination__link--active" data-index="@i">@display</button>

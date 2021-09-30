@@ -14,7 +14,7 @@
     var content = new HtmlString(post.Content);
 
     this.ViewData["Title"] = post.Title;
-    var editorLink = $"{Routers.GetBlogEditor.Link}?blogId={post.PostId}";
+    var editorLink = $"{Routers.PostGetEditor.Link}?postId={post.PostId}";
 }
 
 <div class="flex">

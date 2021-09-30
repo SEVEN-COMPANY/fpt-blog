@@ -10,7 +10,7 @@ namespace FPTBlog.Src.TagModule.Interface {
         public Tag GetTagByName(string name);
         public void UpdateTag(Tag tag);
         public void RemoveTag(Tag tag);
-        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus);
+        public (List<IDictionary<string, object>>, int) GetTagsBelongToPostWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus);
         public List<SelectListItem> GetRadioStatusList();
 
     }

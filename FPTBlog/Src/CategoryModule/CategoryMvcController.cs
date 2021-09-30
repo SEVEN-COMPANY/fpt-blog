@@ -21,16 +21,17 @@ namespace FPTBlog.Src.CategoryModule {
         }
 
         [HttpGet("")]
-        public IActionResult Category(string searchName, CategoryStatus searchStatus = CategoryStatus.ACTIVE, int pageSize = 12, int indexPage = 0) {
+        public IActionResult Category(string searchName, CategoryStatus searchStatus = CategoryStatus.ACTIVE, int pageSize = 12, int pageIndex = 0) {
             if (searchName == null) {
                 searchName = "";
             }
 
-            var (categories, total) = this.CategoryService.GetCategoriesAndCount(indexPage, pageSize, searchName, searchStatus);
+
+            var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
 
             this.ViewData["categories"] = categories;
             this.ViewData["total"] = total;
-            return View(RoutersAdmin.Category.Page);
+            return View(RoutersAdmin.CategoryGetCategoryList.Page);
         }
 
         [HttpGet("create")]
@@ -38,7 +39,7 @@ namespace FPTBlog.Src.CategoryModule {
             SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
             this.ViewData["status"] = list;
 
-            return View(RoutersAdmin.CreateCategory.Page);
+            return View(RoutersAdmin.CategoryPost.Page);
         }
 
         [HttpGet("update")]
@@ -47,7 +48,7 @@ namespace FPTBlog.Src.CategoryModule {
             SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
             this.ViewData["status"] = list;
             this.ViewData["category"] = category;
-            return View(RoutersAdmin.UpdateCategory.Page);
+            return View(RoutersAdmin.CategoryPutCategory.Page);
         }
     }
 }
