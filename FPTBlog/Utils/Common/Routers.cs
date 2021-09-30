@@ -31,7 +31,8 @@ namespace FPTBlog.Utils.Common {
 
         //Comment
         public static readonly RouterItem AddComment = new RouterItem() { Page = "/Views/Containers/Comment/AddComment.cshtml", Link = "/comment/add" };
-        public static readonly RouterItem GetComment = new RouterItem() { Page = "/Views/Containers/Comment/GetComment.cshtml", Link = "/comment" };
+        public static readonly RouterItem GetComment = new RouterItem() { Page = "/Views/Containers/Comment/GetComment.cshtml", Link = "/comment/get" };
+        public static readonly RouterItem UpdateComment = new RouterItem() { Page = "/Views/Containers/Comment/UpdateComment.cshtml", Link = "comment/update" };
 
     }
 }

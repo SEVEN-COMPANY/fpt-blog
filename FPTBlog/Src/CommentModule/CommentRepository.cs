@@ -1,7 +1,7 @@
 using FPTBlog.Src.CommentModule.Interface;
-using System.Collections.Generic;
-using System.Linq;
 using FPTBlog.Utils;
+using System.Linq;
+using System.Collections.Generic;
 using FPTBlog.Src.CommentModule.Entity;
 
 namespace FPTBlog.Src.CommentModule {
@@ -11,9 +11,15 @@ namespace FPTBlog.Src.CommentModule {
             this.Db = Db;
         }
 
-        public bool SaveComment(Comment comment) {
-            this.Db.Comment.Add(comment);
-            return this.Db.SaveChanges() > 0;
+        public void AddComment(Comment comment) => this.Db.Comment.Add(comment);
+
+        public Comment GetCommentByCommentId(string commentId) {
+            Comment comment = this.Db.Comment.FirstOrDefault(item => item.CommentId == commentId);
+            return comment;
         }
+
+        public void UpdateComment(Comment comment) => this.Db.Comment.Update(comment);
+
+        public void RemoveComment(Comment comment) => this.Db.Comment.Remove(comment);
     }
 }

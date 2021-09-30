@@ -16,5 +16,10 @@ namespace FPTBlog.Src.CommentModule {
         public IActionResult AddCommentPage() {
             return View(Routers.AddComment.Page);
         }
+
+        [HttpGet("update")]
+        public IActionResult UpdateCommentPage() {
+            return View(Routers.UpdateComment.Page);
+        }
     }
 }

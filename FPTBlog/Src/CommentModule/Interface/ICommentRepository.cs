@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FPTBlog.Src.CommentModule.Interface {
     public interface ICommentRepository {
-        public bool SaveComment(Comment comment);
+        public void AddComment(Comment comment);
+        public Comment GetCommentByCommentId(string commentId);
+        public void UpdateComment(Comment comment);
+        public void RemoveComment(Comment comment);
     }
 }
