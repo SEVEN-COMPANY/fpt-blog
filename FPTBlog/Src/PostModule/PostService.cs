@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FPTBlog.Src.CommentModule.Entity;
+using FPTBlog.Src.CommentModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
@@ -9,8 +11,10 @@ using FPTBlog.Src.UserModule.Entity;
 namespace FPTBlog.Src.PostModule {
     public class PostService : IPostService {
         private readonly IPostRepository PostRepository;
-        public PostService(IPostRepository postRepository) {
+        private readonly ICommentRepository CommentRepository;
+        public PostService(IPostRepository postRepository, ICommentRepository commentRepository) {
             this.PostRepository = postRepository;
+            this.CommentRepository = commentRepository;
         }
 
         public void AddPost(Post post) => this.PostRepository.Add(post);
@@ -64,6 +68,12 @@ namespace FPTBlog.Src.PostModule {
         public void DislikePost(Post post, User user) {
             this.PostRepository.DislikePost(post, user);
             return;
+        }
+        public (List<Comment>, int) GetCommentOfPost(Post post) {
+            List<Comment> list = (List<Comment>) this.CommentRepository.GetAll(filter: item => item.PostId == post.PostId);
+            int count = list.Count;
+
+            return (list, count);
         }
     }
 }
