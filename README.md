@@ -66,6 +66,13 @@
      - Linkedin: https://linkedin.com/in/truongbinhtan
      - Github: https://www.linkedin.com/in/monkinam
 
+## Special Thank For Supporting Us
+
+- Nguyễn Quế Trân | UI - UX Designer
+     - Facebook: https://www.facebook.com/profile.php?id=100034774181375
+- Trương Thanh Duy | UI Designer
+     - Facebook: https://www.facebook.com/trthduy
+
 ## Project Picture
 
 ### Login Page

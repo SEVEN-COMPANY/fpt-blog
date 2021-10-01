@@ -52,7 +52,7 @@ namespace FPTBlog.Src.PostModule {
         }
 
         [HttpPost("")]
-        public IActionResult SaveBlogHandler() {
+        public IActionResult AddBlogHandler() {
             Post post = new Post();
             post.Student = (User) this.ViewData["user"];
             post.StudentId = ((User) this.ViewData["user"]).UserId;
@@ -71,22 +71,23 @@ namespace FPTBlog.Src.PostModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Post blog = this.PostService.GetPostByPostId(input.PostId);
-            if (blog == null) {
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
             User student = (User) this.ViewData["user"];
 
-            blog.Title = input.Title;
-            blog.Content = input.Content;
-            blog.Student = student;
-            blog.StudentId = student.UserId;
+            post.Title = input.Title;
+            post.Content = input.Content;
+            post.CoverUrl = input.CoverUrl;
+            post.Student = student;
+            post.StudentId = student.UserId;
 
-            this.PostService.UpdatePost(blog);
+            this.PostService.UpdatePost(post);
 
-            res.data = blog;
+            res.data = post;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
@@ -219,7 +220,7 @@ namespace FPTBlog.Src.PostModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("post")]
+        [HttpPost("send")]
         public IActionResult PostBlog([FromBody] SendPostDto input) {
             var res = new ServerApiResponse<Post>();
             ValidationResult result = new SendPostDtoValidator().Validate(input);
@@ -242,25 +243,47 @@ namespace FPTBlog.Src.PostModule {
             return new ObjectResult(res.getResponse());
         }
 
-        // [HttpPost("like")]
-        // public IActionResult LikeBlog([FromBody] LikePostDto input) {
-        //     var res = new ServerApiResponse<Post>();
-        //     ValidationResult result = new LikeBlogDtoValidator().Validate(input);
-        //     if (!result.IsValid) {
-        //         res.mapDetails(result);
-        //         return new BadRequestObjectResult(res.getResponse());
-        //     }
-        //     Post blog = this.PostService.GetPostByPostId(input.PostId);
-        //     if (blog == null) {
-        //         res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
-        //         return new NotFoundObjectResult(res.getResponse());
-        //     }
-        //     User user = (User) this.ViewData["user"];
 
-        //     this.PostService.LikeBlog(blog, user);
-        //     res.data = blog;
-        //     res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
-        //     return new ObjectResult(res.getResponse());
-        // }
+        [HttpPost("like")]
+        public IActionResult LikePost([FromBody] LikePostDto input) {
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new LikepostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.PostService.LikePost(post, user);
+            res.data = post;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("dislike")]
+        public IActionResult DislikePost([FromBody] LikePostDto input) {
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new LikepostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.PostService.DislikePost(post, user);
+            res.data = post;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
     }
 }

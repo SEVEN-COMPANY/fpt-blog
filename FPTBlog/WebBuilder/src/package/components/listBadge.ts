@@ -115,6 +115,16 @@ export function handleSelectBadge(
     });
     //handle null
     if (inputElement !== null && searchResult !== null) {
+        inputElement.addEventListener('change', async function (event) {
+            const tagNameInput = event.currentTarget as HTMLInputElement;
+            handleOnEnter(tagNameInput.value).then((value) => {
+                const badgeElement = document.getElementById(`${id}Badge`) as HTMLDivElement;
+                if (badgeElement) {
+                    handleRenderBadge(badgeElement, value, handleOnDelete);
+                }
+            });
+        });
+
         //detect click outside
         handleOnClickOutside(inputElement, searchResult);
         // handle select drop list

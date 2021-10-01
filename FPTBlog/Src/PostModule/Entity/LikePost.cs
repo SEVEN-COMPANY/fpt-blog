@@ -1,25 +1,44 @@
-// using System.ComponentModel.DataAnnotations;
-// using System.ComponentModel.DataAnnotations.Schema;
-// using FPTBlog.Src.UserModule.Entity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using FPTBlog.Src.UserModule.Entity;
 
-// namespace FPTBlog.Src.PostModule.Entity {
-//     [Table("tblLikePost")]
-//     public class LikePost {
-//         [Key]
-//         public string PostId {
-//             get; set;
-//         }
-//         public virtual Post Post {
-//             get; set;
-//         }
+namespace FPTBlog.Src.PostModule.Entity {
+    public enum Expression {
+        LIKE = 1,
+        DISLIKE = 2
+    }
 
-//         [Key]
-//         public string UserId {
-//             get; set;
-//         }
+    [Table("tblLikePost")]
+    public class LikePost {
+        [Key]
+        [Required]
+        public string LikePostId {
+            get; set;
+        }
 
-//         public virtual User User {
-//             get; set;
-//         }
-//     }
-// }
+        [Required]
+        public string PostId {
+            get; set;
+        }
+
+        [ForeignKey("PostId")]
+        public virtual Post Post {
+            get; set;
+        }
+
+        [Required]
+        public string UserId {
+            get; set;
+        }
+
+        [ForeignKey("UserId")]
+        public virtual User User {
+            get; set;
+        }
+
+        [Required]
+        public Expression expression {
+            get; set;
+        }
+    }
+}

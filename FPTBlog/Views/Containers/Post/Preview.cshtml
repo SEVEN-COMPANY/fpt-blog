@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Html
 
 @section Styles {
-<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 }
 
 
@@ -15,20 +15,41 @@
 
     this.ViewData["Title"] = post.Title;
     var editorLink = $"{Routers.PostGetEditor.Link}?postId={post.PostId}";
+    var categoryName = post.Category != null ? post.Category.Name : "Please select category";
+    Console.WriteLine(post.PostTags.Count);
 }
 
-<div class="flex">
-    <a href="@editorLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500">Go back to
-        editor</a>
+<div class="flex flex-col px-4 ">
+    <div>
+        <a href="@editorLink"
+           class="inline-block px-8 py-2 font-medium text-center text-white rounded-sm bg-tango-500 intro-x">
+            Go back to editor
+        </a>
+    </div>
+    <p class="text-xs opacity-60">This screen displays exactly what you will see your post.</p>
 </div>
-<div class="ql-editor">
+
+
+
+<div class="ql-editor intro-y">
+    <div>
+
+    </div>
     @content
-</div>
-<div>
-    @foreach (var item in post.PostTags)
-    {
-        <div>
-            @item.Tag.Name
+
+    <div class="flex flex-wrap items-center space-x-2">
+        @foreach (var item in post.PostTags)
+        {
+        <div class="text-sm text-blue-600">#@item.Tag.Name</div>
+        }
+    </div>
+    <div class="flex items-center space-x-2">
+        <div class="w-12 h-12 overflow-hidden rounded-full">
+            <img class="inline-block w-full h-full" src="@post.Student.AvatarUrl" alt="@post.Student.Name" />
         </div>
-    }
+        <div>
+            <p class="font-semibold capitalize">@post.Student.Name</p>
+            <p class="text-xs font-medium opacity-60">@post.CreateDate</p>
+        </div>
+    </div>
 </div>

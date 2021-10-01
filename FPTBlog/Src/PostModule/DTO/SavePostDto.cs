@@ -12,6 +12,10 @@ namespace FPTBlog.Src.PostModule.DTO {
         public string Content {
             get; set;
         }
+
+        public string CoverUrl {
+            get;set;
+        }
     }
 
     public class SaveBlogDtoValidator : AbstractValidator<SavePostDto> {
@@ -19,6 +23,7 @@ namespace FPTBlog.Src.PostModule.DTO {
             RuleFor(x => x.PostId).NotEmpty().NotNull();
             RuleFor(x => x.Title).NotEmpty().NotNull().MaximumLength(40);
             RuleFor(x => x.Content).NotEmpty().NotNull();
+            RuleFor(x => x.CoverUrl).NotEmpty().NotNull();
         }
     }
 }
