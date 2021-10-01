@@ -13,6 +13,7 @@ export const routers = {
         getTagOfPost: (postId: string) => `/api/post/tag?postId=${postId}`,
         save: '/api/post/save',
         uploadImagePost: '/api/post/image',
+        addCategoryToPost: '/api/post/category',
     },
     user: {
         changePassword: '/api/user/change-password',
