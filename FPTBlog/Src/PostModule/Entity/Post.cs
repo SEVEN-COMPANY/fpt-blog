@@ -33,6 +33,11 @@ namespace FPTBlog.Src.PostModule.Entity {
         }
 
         [Required]
+        public string CoverUrl {
+            get; set;
+        }
+
+        [Required]
         [Range(1, 60)]
         public int ReadTime {
             get; set;
@@ -103,6 +108,7 @@ namespace FPTBlog.Src.PostModule.Entity {
             this.Title = "Draft";
             this.Content = "<p>Hello there</p>";
             this.Description = "Description";
+            this.CoverUrl = "https://picsum.photos/128";
             this.ReadTime = 1;
             this.Like = 0;
             this.Dislike = 0;
