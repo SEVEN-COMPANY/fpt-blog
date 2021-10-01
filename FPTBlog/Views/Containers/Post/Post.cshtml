@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Html
 
 @section Styles {
-<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 }
 
 
@@ -26,8 +26,8 @@
 <div>
     @foreach (var item in post.PostTags)
     {
-        <div>
-            @item.Tag.Name
-        </div>
+    <div>
+        @item.Tag.Name
+    </div>
     }
 </div>

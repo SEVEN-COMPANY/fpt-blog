@@ -12,12 +12,17 @@
         <h1 class="text-2xl font-semibold">My Draft Post</h1>
     </div>
     <div>
-        <button class="px-8 py-2 font-medium text-white duration-300 rounded-sm bg-tango-500 hover:bg-tango-600"
-            id="createNewPost fade-in">
+        <button class="px-8 py-2 font-medium text-white duration-300 rounded-sm bg-tango-500 intro-x hover:bg-tango-600"
+            id="createNewPost">
             New Draft
         </button>
     </div>
     <div class="grid grid-cols-6 p-2 border">
+        @if (posts.Count <= 0)
+        {
+            <p>Draft is empty</p>
+        }
+
         @foreach (var item in posts)
         {
 

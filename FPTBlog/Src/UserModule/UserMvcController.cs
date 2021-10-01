@@ -23,6 +23,11 @@ namespace FPTBlog.Src.UserModule {
         }
 
 
+        [HttpGet("me")]
+        public IActionResult GetProfile() {
+            return View(Routers.UserGetProfile.Page);
+        }
+
         [HttpGet("update")]
         public IActionResult UpdateUser() {
             return View(Routers.UserPutUser.Page);

@@ -148,7 +148,7 @@
 }
 
 .intro-x {
-    animation: IntroX 0.5s infinite;
+    animation: IntroX 0.5s forwards;
 }
 
 @keyframes IntroZ {

@@ -31,14 +31,19 @@ editor.getModule('toolbar').addHandler('image', () => {
 const createBlogForm = document.getElementById('createBlogForm');
 createBlogForm?.addEventListener('submit', function (event: Event) {
     event.preventDefault();
+});
 
+const saveChangePostBtn = document.getElementById('form-btn');
+
+saveChangePostBtn?.addEventListener('click', function () {
     const title = document.getElementById('title') as HTMLInputElement;
-    const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
-    if (title !== null && editor !== null && blogIdElement !== null) {
+    const postIdElement = document.getElementById('postId') as HTMLInputElement;
+
+    if (title !== null && editor !== null && postIdElement !== null) {
         const input: SaveBlogDto = {
             title: title.value,
             content: editor.root.innerHTML,
-            postId: blogIdElement.value,
+            postId: postIdElement.value,
         };
         http.post<ServerResponse<null>>(routers.post.save, input).then(() => {});
     }
@@ -47,7 +52,7 @@ createBlogForm?.addEventListener('submit', function (event: Event) {
 const categoryInput = document.getElementById('categoryId');
 
 categoryInput?.addEventListener('change', function (event) {
-    const postIdElement = document.getElementById('blogId') as HTMLInputElement;
+    const postIdElement = document.getElementById('postId') as HTMLInputElement;
     const selectInput = event.currentTarget as HTMLSelectElement;
     const input: AddCategoryDto = {
         categoryId: selectInput.value,
@@ -59,7 +64,7 @@ categoryInput?.addEventListener('change', function (event) {
 handleSelectBadge(
     'tag',
     async () => {
-        const postIdElement = document.getElementById('blogId') as HTMLInputElement;
+        const postIdElement = document.getElementById('postId') as HTMLInputElement;
         const { data } = await http.get<ServerResponse<Tag[]>>(routers.post.getTagOfPost(postIdElement.value));
 
         return data.data.map((item) => item.name);
@@ -78,7 +83,7 @@ handleSelectBadge(
         return [];
     },
     async (label: string) => {
-        const postIdElement = document.getElementById('blogId') as HTMLInputElement;
+        const postIdElement = document.getElementById('postId') as HTMLInputElement;
 
         if (postIdElement) {
             const input: ToggleTagDto = {
@@ -93,7 +98,7 @@ handleSelectBadge(
         return [];
     },
     async (label: string) => {
-        const postIdElement = document.getElementById('blogId') as HTMLInputElement;
+        const postIdElement = document.getElementById('postId') as HTMLInputElement;
 
         const input: ToggleTagDto = {
             postId: postIdElement.value,
