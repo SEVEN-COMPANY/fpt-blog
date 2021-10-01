@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FPTBlog.Src.CommentModule.Entity;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
@@ -23,5 +24,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         public int CalculatePostPoint(Post post);
         public void LikePost(Post post, User user);
         public void DislikePost(Post post, User user);
+        public (List<Comment>, int) GetCommentOfPost(Post post);
     }
 }
