@@ -264,5 +264,26 @@ namespace FPTBlog.Src.PostModule {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+
+        [HttpPost("dislike")]
+        public IActionResult DislikePost([FromBody] LikePostDto input) {
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new LikepostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.PostService.DislikePost(post, user);
+            res.data = post;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
     }
 }

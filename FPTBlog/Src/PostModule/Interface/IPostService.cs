@@ -22,5 +22,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetNewestPosts(int quantity);
         public int CalculatePostPoint(Post post);
         public void LikePost(Post post, User user);
+        public void DislikePost(Post post, User user);
     }
 }
