@@ -30,7 +30,10 @@ namespace FPTBlog.Src.PostModule {
 
         public void RemoveTagFromPost(Post post, Tag tag) {
             PostTag postTag = this.Db.PostTag.FirstOrDefault(item => item.PostId == post.PostId && item.TagId == tag.TagId);
-
+            post.PostTags.Remove(postTag);
+            this.Update(post);
+            tag.PostTags.Remove(postTag);
+            this.Db.Tag.Update(tag);
             this.Db.PostTag.Remove(postTag);
         }
 
