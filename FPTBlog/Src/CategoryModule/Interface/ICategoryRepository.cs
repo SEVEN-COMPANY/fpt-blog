@@ -1,15 +1,9 @@
 using System.Collections.Generic;
 using FPTBlog.Src.CategoryModule.Entity;
+using FPTBlog.Utils.Repository.Interface;
 
 namespace FPTBlog.Src.CategoryModule.Interface {
-    public interface ICategoryRepository {
-        public Category GetCategoryByCategoryName(string name);
-        public Category GetCategoryByCategoryId(string categoryId);
-
-        public (List<Category>, int) GetCategoriesAndCount(int currentPage, int pageSize, string name, CategoryStatus status);
-        public bool SaveCategory(Category category);
-        public List<Category> GetCategories();
-        public bool UpdateCategory(Category category);
-        public bool DeleteCategory(Category category);
+    public interface ICategoryRepository : IRepository<Category> {
+        (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus);
     }
 }

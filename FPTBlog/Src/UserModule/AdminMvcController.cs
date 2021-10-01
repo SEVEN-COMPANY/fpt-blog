@@ -20,29 +20,25 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("list")]
-        public IActionResult GetUsers(UserStatus status, string name, int pageSize = 12, int pageIndex = 0) {
-            if (status == 0) {
-                status = UserStatus.ENABLE;
+        public IActionResult GetUsers(string searchName, UserStatus searchStatus = UserStatus.ENABLE, int pageSize = 12, int pageIndex = 0) {
+            if (searchName == null) {
+                searchName = "";
             }
 
-            if (name == null) {
-                name = "";
-            }
-
-            var (users, count) = this.UserService.GetUsersWithStatus(pageSize, pageIndex, status, name);
+            var (users, total) = this.UserService.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
             this.ViewData["users"] = users;
-            this.ViewData["count"] = count;
-            return View(RoutersAdmin.GetUsers.Page);
+            this.ViewData["total"] = total;
+            return View(RoutersAdmin.UserGetUserList.Page);
         }
 
         [HttpGet("update")]
         public IActionResult UpdateUser() {
-            return View(RoutersAdmin.UpdateUser.Page);
+            return View(RoutersAdmin.UserPutUser.Page);
         }
 
         [HttpGet("change-password")]
         public IActionResult ChangePassPage() {
-            return View(RoutersAdmin.ChangePassword.Page);
+            return View(RoutersAdmin.UserPutPassword.Page);
         }
 
     }

@@ -13,36 +13,19 @@ namespace FPTBlog.Src.TagModule {
             this.TagService = tagService;
         }
 
-        [HttpGet("add")]
-        public IActionResult AddTagPage() {
-            return View(RoutersAdmin.AddTag.Page);
-        }
 
-        [HttpGet("update")]
-        public IActionResult UpdateTagPage(string tagId) {
-            Tag tag = this.TagService.GetTagByTagId(tagId);
-            if (tag == null) {
-                ServerMvcResponse.SetErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, this.ViewData);
-                return View(RoutersAdmin.UpdateTag.Page);
-            }
-            ViewData["tag"] = tag;
-            return View(RoutersAdmin.UpdateTag.Page);
-        }
 
         [HttpGet("")]
-        public IActionResult GetTagsPage(TagStatus status, string name, int pageSize = 12, int pageIndex = 0) {
-            if (status == 0) {
-                status = TagStatus.ACTIVE;
+        public IActionResult GetTagsPage(string searchName, TagStatus searchStatus = TagStatus.ACTIVE, int pageSize = 12, int pageIndex = 0) {
+            if (searchName == null) {
+                searchName = "";
             }
 
-            if (name == null) {
-                name = "";
-            }
-
-            var listTag = this.TagService.GetTagsWithCountAndFilter(pageSize, pageIndex, status, name);
+            var (listTag, total) = this.TagService.GetTagsBelongToPostWithCount(pageIndex, pageSize, searchName, searchStatus);
             ViewData["tags"] = listTag;
+            ViewData["total"] = total;
 
-            return View(RoutersAdmin.GetTags.Page);
+            return View(RoutersAdmin.TagGetTagList.Page);
         }
     }
 }

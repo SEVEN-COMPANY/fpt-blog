@@ -5,7 +5,7 @@ using FPTBlog.Utils.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using FPTBlog.Src.BlogModule.Entity;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Utils {
     public class DB : DbContext {
@@ -22,34 +22,34 @@ namespace FPTBlog.Utils {
         public DbSet<Category> Category {
             set; get;
         }
-        public DbSet<Blog> Blog {
+        public DbSet<Post> Post {
             set; get;
         }
-        public DbSet<BlogTag> BlogTag {
+        public DbSet<PostTag> PostTag {
             get; set;
         }
-        public DbSet<LikeBlog> LikeBlog {
-            get; set;
-        }
+        // public DbSet<LikePost> LikeBlog {
+        //     get; set;
+        // }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
+
             optionsBuilder.UseSqlServer(this.Config.GetEnvByKey("DB_URL"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<BlogTag>().HasKey(item => new { item.BlogId, item.TagId });
+            modelBuilder.Entity<PostTag>()
+                .HasOne(x => x.Post)
+                .WithMany(x => x.PostTags)
+                .HasForeignKey(x => x.PostId);
 
-            modelBuilder.Entity<BlogTag>()
-                .HasOne(x => x.Blog)
-                .WithMany(x => x.BlogTags)
-                .HasForeignKey(x => x.BlogId);
-
-            modelBuilder.Entity<BlogTag>()
+            modelBuilder.Entity<PostTag>()
                 .HasOne(x => x.Tag)
-                .WithMany(x => x.BlogTags)
+                .WithMany(x => x.PostTags)
                 .HasForeignKey(x => x.TagId);
 
-            modelBuilder.Entity<LikeBlog>().HasKey(item => new { item.BlogId, item.UserId });
+
+            // modelBuilder.Entity<LikePost>().HasKey(item => new { item.PostId, item.UserId });
 
             base.OnModelCreating(modelBuilder);
         }

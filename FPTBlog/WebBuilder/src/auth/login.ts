@@ -19,7 +19,7 @@ loginForm?.addEventListener('submit', function (event: Event) {
             password: password.value,
         };
 
-        http.post<ServerResponse<null>>(routers.loginUser, input).then(() => window.location.assign(routerLinks.home));
+        http.post<ServerResponse<null>>(routers.auth.login, input).then(() => window.location.assign(routerLinks.home));
     } else {
         console.log('login form wrong');
     }

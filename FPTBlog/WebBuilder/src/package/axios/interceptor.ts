@@ -61,7 +61,7 @@ export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>
         const details = error.response.data.details;
         for (const key in details) {
             const error = document.getElementById(`${key.toUpperCase()}ERROR`);
-            console.log(error);
+
             if (error) {
                 error.innerHTML = `${error.getAttribute('data-label')} ${details[key]}`;
             }

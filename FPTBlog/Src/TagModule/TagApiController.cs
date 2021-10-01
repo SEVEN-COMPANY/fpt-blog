@@ -1,3 +1,4 @@
+using System;
 using FluentValidation.Results;
 using FPTBlog.Src.TagModule.DTO;
 using FPTBlog.Src.TagModule.Entity;
@@ -34,7 +35,7 @@ namespace FPTBlog.Src.TagModule {
 
             Tag tag = new Tag();
             tag.Name = input.Name;
-            this.TagService.SaveTag(tag);
+            this.TagService.AddTag(tag);
 
             res.data = tag;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
@@ -44,8 +45,8 @@ namespace FPTBlog.Src.TagModule {
         [HttpGet("all")]
         public ObjectResult GetQualityBlogOfTagHandler() {
             var res = new ServerApiResponse<object>();
-            var listTag = this.TagService.GetTagsWithCount();
-            res.data = listTag;
+            var (tags, _) = this.TagService.GetTags();
+            res.data = tags;
 
             return new ObjectResult(res.getResponse());
         }
@@ -53,8 +54,8 @@ namespace FPTBlog.Src.TagModule {
         [HttpGet("")]
         public ObjectResult GetTagByName(string name = "") {
             var res = new ServerApiResponse<object>();
-            var listTag = this.TagService.GetTagsByName(name);
-            res.data = listTag;
+            var (tags, _) = this.TagService.GetTagsByName(name);
+            res.data = tags;
 
             return new ObjectResult(res.getResponse());
         }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 
 namespace FPTBlog.Utils {
-    public class Helper {
+    public static class Helper {
         public static string StringFormat(string format, IDictionary<string, object> values) {
-            if (values == null){
+            if (values == null) {
                 return format;
             }
             foreach (var p in values) {

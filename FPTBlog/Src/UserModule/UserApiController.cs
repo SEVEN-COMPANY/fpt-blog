@@ -81,7 +81,7 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
             user.Password = this.AuthService.HashingPassword(body.NewPassword);
-            this.UserService.ChangePasswordHandler(user);
+            this.UserService.UpdateUser(user);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
@@ -94,7 +94,7 @@ namespace FPTBlog.Src.UserModule {
             if (search == null) {
                 search = "";
             }
-            var (users, total) = this.UserService.GetUsersByPageAndCount(pageSize, pageIndex, search);
+            var (users, total) = this.UserService.GetUsersWithCount(pageSize, pageIndex, search);
             dataRes.Add("blogs", users);
             dataRes.Add("total", total);
             res.data = dataRes;

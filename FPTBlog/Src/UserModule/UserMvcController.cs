@@ -19,19 +19,24 @@ namespace FPTBlog.Src.UserModule {
         [HttpGet("")]
         public IActionResult GetUser() {
 
-            return View(Routers.User.Page);
+            return View(Routers.UserGetProfile.Page);
         }
 
 
+        [HttpGet("me")]
+        public IActionResult GetProfile() {
+            return View(Routers.UserGetProfile.Page);
+        }
+
         [HttpGet("update")]
         public IActionResult UpdateUser() {
-            return View(Routers.UpdateUser.Page);
+            return View(Routers.UserPutUser.Page);
         }
 
 
         [HttpGet("change-password")]
         public IActionResult ChangePassPage() {
-            return View(Routers.ChangePass.Page);
+            return View(Routers.UserPutPassword.Page);
         }
 
 
