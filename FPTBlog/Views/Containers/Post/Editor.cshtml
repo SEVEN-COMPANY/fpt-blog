@@ -1,8 +1,8 @@
 @using FPTBlog.Src.PostModule.Entity
-@using FPTBlog.Src.CategoryModule.Entity
 @using Microsoft.AspNetCore.Html
 @section Styles {
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+
 }
 
 
@@ -26,7 +26,7 @@
         </div>
 
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-        new {Name="blogId", Value=post.PostId})
+        new {Name="postId", Value=post.PostId})
         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
         new {Name="title", Label="Title", Type="text", Value=post.Title})
 
@@ -52,8 +52,9 @@
         <div class="flex items-center space-x-4">
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
             new { Label="Save Changes"})
-            <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500"
-                onclick="return confirm('Do you save your post, click ok to go to preview page?')">
+
+            <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500 fade-in"
+                onclick="return confirm('Do you save your post, click ok to go to preview page?')" target="_blank">
                 Preview
             </a>
         </div>
