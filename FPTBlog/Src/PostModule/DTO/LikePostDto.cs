@@ -7,8 +7,8 @@ namespace FPTBlog.Src.PostModule.DTO {
         }
     }
 
-    public class LikeBlogDtoValidator : AbstractValidator<LikePostDto> {
-        public LikeBlogDtoValidator() {
+    public class LikepostDtoValidator : AbstractValidator<LikePostDto> {
+        public LikepostDtoValidator() {
             RuleFor(x => x.PostId).NotEmpty().NotNull();
         }
     }
