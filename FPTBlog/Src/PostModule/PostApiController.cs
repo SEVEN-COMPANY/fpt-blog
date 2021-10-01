@@ -71,22 +71,23 @@ namespace FPTBlog.Src.PostModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Post blog = this.PostService.GetPostByPostId(input.PostId);
-            if (blog == null) {
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
 
             User student = (User) this.ViewData["user"];
 
-            blog.Title = input.Title;
-            blog.Content = input.Content;
-            blog.Student = student;
-            blog.StudentId = student.UserId;
+            post.Title = input.Title;
+            post.Content = input.Content;
+            post.CoverUrl = input.CoverUrl;
+            post.Student = student;
+            post.StudentId = student.UserId;
 
-            this.PostService.UpdatePost(blog);
+            this.PostService.UpdatePost(post);
 
-            res.data = blog;
+            res.data = post;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
