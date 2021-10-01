@@ -84,9 +84,11 @@ namespace FPTBlog.Src.CommentModule.Interface {
             }
 
             List<Comment> list = this.CommentService.GetListOriCommentByPostId(input.PostId);
-            this.ViewData["list-comment"] = list;
+            this.ViewData["listComment"] = list;
 
-            return View(Routers.GetComment.Page);
+            return Json(new {
+                listComment = list
+            });
 
         }
 
