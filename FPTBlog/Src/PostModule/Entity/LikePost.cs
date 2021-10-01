@@ -3,6 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.PostModule.Entity {
+    public enum Expression {
+        LIKE = 1,
+        DISLIKE = 2
+    }
+
     [Table("tblLikePost")]
     public class LikePost {
         [Key]
@@ -28,6 +33,11 @@ namespace FPTBlog.Src.PostModule.Entity {
 
         [ForeignKey("UserId")]
         public virtual User User {
+            get; set;
+        }
+
+        [Required]
+        public Expression expression {
             get; set;
         }
     }

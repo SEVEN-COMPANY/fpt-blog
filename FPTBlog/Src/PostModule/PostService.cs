@@ -61,5 +61,9 @@ namespace FPTBlog.Src.PostModule {
             this.PostRepository.LikePost(post, user);
             return;
         }
+        public void DislikePost(Post post, User user) {
+            this.PostRepository.DislikePost(post, user);
+            return;
+        }
     }
 }

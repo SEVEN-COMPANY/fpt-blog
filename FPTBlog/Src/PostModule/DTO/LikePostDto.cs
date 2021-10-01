@@ -1,4 +1,5 @@
 using FluentValidation;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Src.PostModule.DTO {
     public class LikePostDto {
