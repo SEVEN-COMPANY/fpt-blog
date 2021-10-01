@@ -8,6 +8,7 @@ using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FluentValidation.Results;
 using System.Collections.Generic;
+using System;
 
 namespace FPTBlog.Src.UserModule {
     [Route("/api/user")]
@@ -70,7 +71,7 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if (user.GoogleId != null) {
+            if (user.GoogleId != "") {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
