@@ -21,7 +21,7 @@ namespace FPTBlog.Src.PostModule {
         public void RemoveTagFromPost(Post post, Tag tag) => this.PostRepository.RemoveTagFromPost(post, tag);
         public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, PostStatus searchStatus) {
             ICollection<Post> list = null;
-            if(searchStatus != 0){
+            if (searchStatus != 0) {
                 list = this.PostRepository.GetAll(item => item.Status == searchStatus);
             }
             else {
@@ -29,7 +29,7 @@ namespace FPTBlog.Src.PostModule {
             }
             var count = list.Count;
 
-            var listForPage = (List<Post>) list.Take((pageIndex + 1)* pageSize).Skip(pageIndex * pageSize).ToList();
+            var listForPage = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
             return (listForPage, count);
         }
@@ -38,23 +38,28 @@ namespace FPTBlog.Src.PostModule {
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByTagWithCount(pageIndex, pageSize, name);
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
-        public (List<Post>, int) GetPopularPosts(int quantity){
-            var list = (List<Post>)this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList());
+        public (List<Post>, int) GetPopularPosts(int quantity) {
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList());
             return (list, quantity);
         }
 
-        public (List<Post>, int) GetHighestPointPosts(int quantity){
-            var list = (List<Post>)this.PostRepository.GetAll(options: o => o.OrderBy(p => p.Like - p.Dislike + p.View / 10).Take(quantity).ToList());
+        public (List<Post>, int) GetHighestPointPosts(int quantity) {
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.Like - p.Dislike + p.View / 10).Take(quantity).ToList());
             return (list, quantity);
         }
 
-        public (List<Post>, int) GetNewestPosts(int quantity){
-            var list = (List<Post>)this.PostRepository.GetAll(options: o => o.OrderBy(p => p.CreateDate).Take(quantity).ToList());
+        public (List<Post>, int) GetNewestPosts(int quantity) {
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.CreateDate).Take(quantity).ToList());
             return (list, quantity);
         }
         public int CalculatePostPoint(Post post) {
             int result = post.Like - post.Dislike + (post.View / 10);
             return result;
+        }
+
+        public void LikePost(Post post, User user) {
+            this.PostRepository.LikePost(post, user);
+            return;
         }
     }
 }

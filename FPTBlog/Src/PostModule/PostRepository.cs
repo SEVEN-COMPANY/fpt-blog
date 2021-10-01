@@ -1,9 +1,11 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Utils;
 using FPTBlog.Utils.Repository;
 
@@ -76,8 +78,8 @@ namespace FPTBlog.Src.PostModule {
 
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) {
             var query = (from Post in this.Db.Post
-                        where Post.StudentId.Equals(studentId) && Post.Status == status
-                        select Post);
+                         where Post.StudentId.Equals(studentId) && Post.Status == status
+                         select Post);
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
@@ -111,26 +113,30 @@ namespace FPTBlog.Src.PostModule {
 
 
 
-        //     public void LikeBlog(Post blog, User user) {
-        //         LikePost obj = this.Db.LikeBlog.FirstOrDefault(item => item.PostId == blog.PostId && item.UserId == user.UserId);
-        //         if (obj == null) {
-        //             blog.Like += 1;
-        //             this.Db.Post.Update(blog);
-        //             LikePost like = new LikePost();
-        //             like.PostId = blog.PostId;
-        //             like.Post = blog;
-        //             like.UserId = user.UserId;
-        //             like.User = user;
-        //             this.Db.LikeBlog.Add(like);
-        //             return;
-        //         }
+        public void LikePost(Post post, User user) {
+            LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);
+            if (obj == null) {
+                post.Like += 1;
+                this.Db.Post.Update(post);
+                LikePost like = new LikePost();
+                like.LikePostId = Guid.NewGuid().ToString();
+                like.PostId = post.PostId;
+                like.Post = post;
+                like.UserId = user.UserId;
+                like.User = user;
+                this.Db.LikePost.Add(like);
+                this.Db.SaveChanges();
+                return;
+            }
 
-        //         blog.Like -= 1;
-        //         this.Db.Post.Update(blog);
-        //         this.Db.LikeBlog.Remove(obj);
-        //         return;
+            post.Like -= 1;
+            this.Db.Post.Update(post);
+            this.Db.LikePost.Remove(obj);
+            this.Db.SaveChanges();
 
-        //     }
+            return;
+
+        }
 
     }
 }

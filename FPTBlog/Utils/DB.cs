@@ -28,9 +28,9 @@ namespace FPTBlog.Utils {
         public DbSet<PostTag> PostTag {
             get; set;
         }
-        // public DbSet<LikePost> LikeBlog {
-        //     get; set;
-        // }
+        public DbSet<LikePost> LikePost {
+            get; set;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 

@@ -244,25 +244,25 @@ namespace FPTBlog.Src.PostModule {
         }
 
 
-        // [HttpPost("like")]
-        // public IActionResult LikeBlog([FromBody] LikePostDto input) {
-        //     var res = new ServerApiResponse<Post>();
-        //     ValidationResult result = new LikeBlogDtoValidator().Validate(input);
-        //     if (!result.IsValid) {
-        //         res.mapDetails(result);
-        //         return new BadRequestObjectResult(res.getResponse());
-        //     }
-        //     Post blog = this.PostService.GetPostByPostId(input.PostId);
-        //     if (blog == null) {
-        //         res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
-        //         return new NotFoundObjectResult(res.getResponse());
-        //     }
-        //     User user = (User) this.ViewData["user"];
+        [HttpPost("like")]
+        public IActionResult LikePost([FromBody] LikePostDto input) {
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new LikepostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
 
-        //     this.PostService.LikeBlog(blog, user);
-        //     res.data = blog;
-        //     res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
-        //     return new ObjectResult(res.getResponse());
-        // }
+            this.PostService.LikePost(post, user);
+            res.data = post;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
     }
 }

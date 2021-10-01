@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.PostModule.Interface {
     public interface IPostService {
@@ -20,5 +21,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetHighestPointPosts(int quantity);
         public (List<Post>, int) GetNewestPosts(int quantity);
         public int CalculatePostPoint(Post post);
+        public void LikePost(Post post, User user);
     }
 }
