@@ -23,7 +23,7 @@ namespace FPTBlog.Src.UserModule {
         public IActionResult BlockUserHandler([FromBody] BlockUserDto body) {
             var res = new ServerApiResponse<BlockUserDto>();
             User admin = (User) this.ViewData["user"];
-            if (((int) admin.Role) != 1) {
+            if (admin.Role != UserRole.LECTURER) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -33,7 +33,7 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
             User blockUser = this.UserService.GetUserByUserId(body.UserIdBlock);
-            if ((int) blockUser.Role == 1) {
+            if (blockUser.Role == UserRole.LECTURER) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }

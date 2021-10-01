@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using FPTBlog.Src.CommentModule.Entity;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.PostModule.Interface {
     public interface IPostService {
@@ -16,6 +18,12 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name);
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status);
         public (List<Post>, int) GetWaitPostsWithCount();
+        public (List<Post>, int) GetPopularPosts(int quantity);
+        public (List<Post>, int) GetHighestPointPosts(int quantity);
+        public (List<Post>, int) GetNewestPosts(int quantity);
         public int CalculatePostPoint(Post post);
+        public void LikePost(Post post, User user);
+        public void DislikePost(Post post, User user);
+        public (List<Comment>, int) GetCommentOfPost(Post post);
     }
 }

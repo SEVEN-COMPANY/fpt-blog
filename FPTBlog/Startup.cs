@@ -26,6 +26,8 @@ using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.UserModule;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.AuthModule;
+using FPTBlog.Src.CommentModule.Interface;
+using FPTBlog.Src.CommentModule;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Src.TagModule;
 using FPTBlog.Src.CategoryModule.Interface;
@@ -67,6 +69,10 @@ namespace FPTBlog {
             // Tag Module
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<ITagService, TagService>();
+
+            //Comment Module
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICommentService, CommentService>();
 
             // Category Module
             services.AddScoped<ICategoryRepository, CategoryRepository>();

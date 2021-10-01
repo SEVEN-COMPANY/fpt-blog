@@ -30,7 +30,12 @@ namespace FPTBlog.Utils.Common {
 
         // User
 
+        //Comment
+        public static readonly RouterItem AddComment = new RouterItem() { Page = "/Views/Containers/Comment/AddComment.cshtml", Link = "/comment/add" };
+        public static readonly RouterItem GetComment = new RouterItem() { Page = "/Views/Containers/Comment/GetComment.cshtml", Link = "/comment/get" };
+        public static readonly RouterItem UpdateComment = new RouterItem() { Page = "/Views/Containers/Comment/UpdateComment.cshtml", Link = "comment/update" };
         public static readonly RouterItem UserGetProfile = new RouterItem() { Page = "/Views/Containers/User/Profile.cshtml", Title = "User", Link = "/user" };
+
         public static readonly RouterItem UserPutUser = new RouterItem() { Page = "/Views/Containers/User/Update.cshtml", Title = "Update User", Link = "/user/update" };
 
         public static readonly RouterItem UserPutPassword = new RouterItem() { Page = "/Views/Containers/User/PutPassword.cshtml", Title = "Change Pass", Link = "/user/change-password" };
