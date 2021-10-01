@@ -1,0 +1,82 @@
+     <div class="px-2 mx-auto mt-8 space-y-4 md:w-4/5 lg:w-3/5">
+                        <h1 class="text-4xl font-semibold text-center">Search Post</h1>
+                        <div class="flex flex-1 space-x-4">
+                            <div class="flex flex-col flex-1 space-y-1">
+                                <label class="block font-semibold capitalize">Title</label>
+                                <input
+                                    class="block w-full px-2 py-1 duration-300 border rounded-sm outline-none safari h-9 focus:border-tango-500"
+                                    id="title"
+                                    name="title"
+                                    type="text"
+                                    value="Draft"
+                                />
+                                <span class="block text-red-500 fade-in" id="TITLEERROR" data-label="Title"></span>
+                            </div>
+
+                            <div class="flex flex-col flex-1 space-y-1">
+                                <label class="block font-semibold capitalize"> Category </label>
+                                <select
+                                    class="block w-full px-2 py-1 duration-300 border outline-none h-9 focus:border-tango-500 safari"
+                                    id="categoryId"
+                                    name="categoryId"
+                                >
+                                    <option value="0122a162-2dba-460a-bae0-501b9fdbb94f">Graphic Design</option>
+                                    <option value="c6d0ba0f-33ee-40f0-995f-cd95c7e43496">Freestyle</option>
+                                    <option value="d45b8d14-3812-48bc-ab61-20011656f6f8">Business Administration</option>
+                                </select>
+                                <span class="block text-red-500 fade-in" id="CATEGORYIDERROR" data-label="Category"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>
+                                    <div class="flex-1 md:space-x-4 md:flex fade-in">
+                                        <div class="md:w-1/3">
+                                            <img src="https://picsum.photos/500/202" class="object-cover w-full h-full" />
+                                        </div>
+                                        <div class="py-2 space-y-2 md:w-2/3 md:py-0">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center space-x-2 font-medium">
+                                                    <div class="w-1 h-8 rounded-xs bg-tango-500"></div>
+                                                    <p>IT</p>
+                                                </div>
+                                                <p class="text-sm italic font-medium text-right">Kyle Wiggers</p>
+                                            </div>
+                                            <h2 class="font-semibold">Falsehoods more likely with large language models</h2>
+                                            <p class="text-xs opacity-60">September 20, 2021 11:50 AM</p>
+                                            <div class="flex space-x-1">
+                                                <div class="flex items-center space-x-1">
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M7.99998 15.1099C7.7722 15.1099 7.5526 15.0273 7.38146 14.8774C6.73509 14.3123 6.11193 13.7811 5.56212 13.3126L5.55932 13.3102C3.94738 11.9365 2.55542 10.7502 1.58691 9.58167C0.504271 8.27527 0 7.03662 0 5.68347C0 4.36877 0.450805 3.15588 1.26928 2.26807C2.09753 1.36975 3.234 0.875 4.46972 0.875C5.3933 0.875 6.23912 1.16699 6.98363 1.7428C7.35936 2.03345 7.69994 2.38916 7.99998 2.80408C8.30016 2.38916 8.64061 2.03345 9.01646 1.7428C9.76097 1.16699 10.6068 0.875 11.5304 0.875C12.766 0.875 13.9026 1.36975 14.7308 2.26807C15.5493 3.15588 16 4.36877 16 5.68347C16 7.03662 15.4958 8.27527 14.4132 9.58154C13.4447 10.7502 12.0528 11.9364 10.4411 13.3099C9.89036 13.7792 9.26622 14.3112 8.61839 14.8777C8.44737 15.0273 8.22765 15.1099 7.99998 15.1099V15.1099ZM4.46972 1.81226C3.49889 1.81226 2.60705 2.19971 1.95825 2.90332C1.2998 3.61755 0.937132 4.60486 0.937132 5.68347C0.937132 6.82153 1.3601 7.83936 2.30847 8.98364C3.22509 10.0897 4.58849 11.2516 6.1671 12.5969L6.17003 12.5994C6.72191 13.0697 7.34752 13.6029 7.99864 14.1722C8.65367 13.6018 9.28026 13.0677 9.83323 12.5967C11.4117 11.2513 12.775 10.0897 13.6916 8.98364C14.6399 7.83936 15.0628 6.82153 15.0628 5.68347C15.0628 4.60486 14.7002 3.61755 14.0417 2.90332C13.393 2.19971 12.5011 1.81226 11.5304 1.81226C10.8192 1.81226 10.1662 2.03833 9.5897 2.48413C9.07591 2.88159 8.718 3.38403 8.50816 3.7356C8.40025 3.91638 8.21031 4.02429 7.99998 4.02429C7.78966 4.02429 7.59972 3.91638 7.49181 3.7356C7.28209 3.38403 6.92418 2.88159 6.41027 2.48413C5.83373 2.03833 5.18078 1.81226 4.46972 1.81226V1.81226Z"
+                                                            fill="#666666"
+                                                        ></path>
+                                                    </svg>
+
+                                                    <p class="text-sm font-medium opacity-60">100</p>
+                                                </div>
+
+                                                <div class="flex items-center space-x-1">
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <g clip-path="url(#clip0)">
+                                                            <path
+                                                                d="M2.32892 15.0441H1.1952L1.99688 14.2424C2.42913 13.8102 2.69906 13.248 2.77162 12.6381C1.64367 11.8979 0.818867 10.924 0.377348 9.80716C-0.0638584 8.69117 -0.119303 7.46266 0.217026 6.25441C0.62057 4.80462 1.56707 3.4832 2.88211 2.53351C4.31113 1.50154 6.09011 0.956055 8.02674 0.956055C10.4664 0.956055 12.5227 1.65698 13.9734 2.98301C15.2803 4.17764 16 5.78903 16 7.52039C16 8.36154 15.8287 9.17999 15.491 9.95302C15.1414 10.7529 14.6296 11.4652 13.9697 12.0699C12.5171 13.4012 10.462 14.1049 8.02671 14.1049C7.12267 14.1049 6.1793 13.9842 5.33706 13.7627C4.53983 14.5806 3.45953 15.0441 2.32892 15.0441V15.0441ZM8.02674 1.89526C4.14349 1.89526 1.7607 4.21111 1.12182 6.50627C0.518103 8.6752 1.40806 10.7246 3.50248 11.9886L3.7365 12.1298L3.7293 12.403C3.71502 12.9438 3.5861 13.4647 3.35534 13.9355C3.91726 13.7454 4.42716 13.4007 4.82644 12.929L5.02499 12.6944L5.31943 12.7825C6.14571 13.0296 7.10717 13.1657 8.02674 13.1657C12.8596 13.1657 15.0608 10.2393 15.0608 7.52039C15.0608 6.05599 14.4496 4.69076 13.3397 3.67624C12.0651 2.51112 10.2279 1.89526 8.02674 1.89526V1.89526Z"
+                                                                fill="#666666"
+                                                            ></path>
+                                                        </g>
+                                                        <defs>
+                                                            <clipPath id="clip0">
+                                                                <rect width="16" height="16" fill="white"></rect>
+                                                            </clipPath>
+                                                        </defs>
+                                                    </svg>
+
+                                                    <p class="text-sm font-medium opacity-60">100</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>

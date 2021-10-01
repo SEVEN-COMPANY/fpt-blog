@@ -65,6 +65,18 @@ namespace FPTBlog.Src.PostModule {
             return View(Routers.PostGetDraftList.Page);
         }
 
+        [HttpGet("search")]
+        public IActionResult GetAllBlogs(PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
+            var (posts, total) = this.PostService.GetPostsAndCount(pageSize, pageIndex, searchStatus);
+            this.ViewData["blogs"] = posts;
+            this.ViewData["total"] = total;
+
+            return Json(new {
+                blogs = posts,
+                total = total
+            });
+        }
+
         [HttpGet("")]
         public IActionResult GetBlogByBlogId(string postId) {
             var post = this.PostService.GetPostByPostId(postId);
@@ -72,17 +84,6 @@ namespace FPTBlog.Src.PostModule {
             return View(Routers.PostGetPost.Page);
         }
 
-        // [HttpGet("")]
-        // public IActionResult GetAllBlogs(PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
-        //     var (posts, total) = this.PostService.GetPostsAndCount(pageSize, pageIndex, searchStatus);
-        //     this.ViewData["blogs"] = posts;
-        //     this.ViewData["total"] = total;
-
-        //     return Json(new {
-        //         blogs = posts,
-        //         total = total
-        //     });
-        // }
 
         [HttpGet("tag")]
         public IActionResult GetBlogsByTagName(int pageSize = 12, int pageIndex = 0, string name = "") {
