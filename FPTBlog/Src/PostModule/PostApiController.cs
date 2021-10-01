@@ -82,6 +82,7 @@ namespace FPTBlog.Src.PostModule {
             post.Title = input.Title;
             post.Content = input.Content;
             post.CoverUrl = input.CoverUrl;
+            post.ReadTime = input.ReadTime;
             post.Student = student;
             post.StudentId = student.UserId;
 
