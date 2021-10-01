@@ -7,10 +7,28 @@
         <title>Document</title>
 
         <link rel="stylesheet" href="./wwwroot/style/styles.css" />
+        <style>
+            @keyframes IntroZ {
+                0% {
+                    opacity: 0;
+                    transform: translate(-3rem, 3rem);
+                }
+
+                80% {
+                    transform: translate(0);
+                }
+
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            .intro-z {
+                animation: IntroZ 0.3s forwards;
+            }
+        </style>
     </head>
-    <body>
-        <div class="flex flex-col flex-1 min-h-screen bg-alabaster-600">
-            <div class="flex-1 w-full max-w-6xl pt-20 mx-auto md:p-2 md:w-4/5 bg-alabaster-300 broder"></div>
-        </div>
+    <body class="grid min-h-screen overflow-hidden place-items-center">
+        <div class="w-24 h-24 bg-red-600 intro-z">231</div>
     </body>
 </html>

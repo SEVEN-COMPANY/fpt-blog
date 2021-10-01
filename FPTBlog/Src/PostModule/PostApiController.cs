@@ -91,7 +91,7 @@ namespace FPTBlog.Src.PostModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("category")]
+        [HttpPut("category")]
         public IActionResult AddCategoryToBlog([FromBody] UpdateCategoryOfPostDto input) {
             var res = new ServerApiResponse<Post>();
             ValidationResult result = new UpdateCategoryOfPostDtoValidator().Validate(input);
@@ -123,10 +123,10 @@ namespace FPTBlog.Src.PostModule {
         }
 
         [HttpGet("tag")]
-        public IActionResult GetTagsByBlogId(string blogId) {
+        public IActionResult GetTagsByPostId(string postId) {
             var res = new ServerApiResponse<List<Tag>>();
 
-            Post blog = this.PostService.GetPostByPostId(blogId);
+            Post blog = this.PostService.GetPostByPostId(postId);
             if (blog == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new NotFoundObjectResult(res.getResponse());
@@ -134,6 +134,8 @@ namespace FPTBlog.Src.PostModule {
 
             var tags = this.PostService.GetTagsFromPost(blog);
             res.data = tags;
+
+
             return new ObjectResult(res.getResponse());
         }
 
