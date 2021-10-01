@@ -52,7 +52,7 @@ namespace FPTBlog.Src.PostModule {
         }
 
         [HttpPost("")]
-        public IActionResult SaveBlogHandler() {
+        public IActionResult AddBlogHandler() {
             Post post = new Post();
             post.Student = (User) this.ViewData["user"];
             post.StudentId = ((User) this.ViewData["user"]).UserId;
@@ -217,7 +217,7 @@ namespace FPTBlog.Src.PostModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("post")]
+        [HttpPost("send")]
         public IActionResult PostBlog([FromBody] SendPostDto input) {
             var res = new ServerApiResponse<Post>();
             ValidationResult result = new SendPostDtoValidator().Validate(input);
@@ -239,6 +239,7 @@ namespace FPTBlog.Src.PostModule {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_POSTED_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+
 
         // [HttpPost("like")]
         // public IActionResult LikeBlog([FromBody] LikePostDto input) {

@@ -117,9 +117,9 @@ namespace FPTBlog.Src.PostModule.Entity {
     }
 
     public enum PostStatus {
-        DRAFT = 0,
-        WAIT = 1,
-        APPROVED = 2,
-        DENY = 3
+        DRAFT = 1,
+        WAIT = 2,
+        APPROVED = 3,
+        DENY = 4
     }
 }

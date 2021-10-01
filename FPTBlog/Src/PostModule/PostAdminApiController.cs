@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.PostModule
 {
-    [Route("/api/post")]
+    [Route("/api/admin/post")]
     [ServiceFilter(typeof(AuthGuard))]
     public class PostAdminApiController : Controller
     {        private readonly IPostService PostService;

@@ -8,6 +8,7 @@ using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace FPTBlog.Src.PostModule {
     [Route("post")]
@@ -50,8 +51,6 @@ namespace FPTBlog.Src.PostModule {
             return View(Routers.PostGetPreview.Page);
         }
 
-
-
         [HttpGet("me")]
         public IActionResult GetMyBlogsWithStatus(int pageSize = 12, int pageIndex = 0) {
 
@@ -72,17 +71,17 @@ namespace FPTBlog.Src.PostModule {
             return View(Routers.PostGetPost.Page);
         }
 
-        // [HttpGet("")]
-        // public IActionResult GetAllBlogs(PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
-        //     var (posts, total) = this.PostService.GetPostsAndCount(pageSize, pageIndex, searchStatus);
-        //     this.ViewData["blogs"] = posts;
-        //     this.ViewData["total"] = total;
+        [HttpGet("all")]
+        public IActionResult GetAllBlogs(PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
+            var (posts, total) = this.PostService.GetPostsAndCount(pageIndex, pageSize, searchStatus);
+            this.ViewData["blogs"] = posts;
+            this.ViewData["total"] = total;
 
-        //     return Json(new {
-        //         blogs = posts,
-        //         total = total
-        //     });
-        // }
+            return Json(new {
+                blogs = posts,
+                total = total
+            });
+        }
 
         [HttpGet("tag")]
         public IActionResult GetBlogsByTagName(int pageSize = 12, int pageIndex = 0, string name = "") {
@@ -120,6 +119,22 @@ namespace FPTBlog.Src.PostModule {
             });
         }
 
+        [HttpGet("home")]
+        public IActionResult GetPostForHome(){
+            var (listHighestPoint, _) = this.PostService.GetHighestPointPosts(4);
+            var (listPopular, _) = this.PostService.GetPopularPosts(16);
+            var (listNewest, _) = this.PostService.GetNewestPosts(16);
 
+            this.ViewData["top1"] = listHighestPoint[0];
+            this.ViewData["top3"] = new List<Post>(){ listHighestPoint[1], listHighestPoint[2], listHighestPoint[3] };
+            this.ViewData["middle16"] = listPopular;
+            this.ViewData["bottom16"] = listNewest;
+
+            return Json(new {
+                listHighestPoint = listHighestPoint,
+                listNewest = listNewest,
+                listPopular = listPopular
+            });
+        }
     }
 }
