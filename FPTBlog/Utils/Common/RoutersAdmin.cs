@@ -15,6 +15,7 @@ namespace FPTBlog.Utils.Common {
 
 
         //user
+        public static readonly RouterAdminItem UserProfile = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/User/UserProfile.cshtml", Link = "/admin/user/profile" };
         public static readonly RouterAdminItem UserPutUser = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/User/Update.cshtml", Link = "/admin/user/update" };
         public static readonly RouterAdminItem UserPutPassword = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/User/ChangePassword.cshtml", Link = "/admin/user/change-password" };
         public static readonly RouterAdminItem UserGetUserList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Admin/ListUser.cshtml", Link = "/admin/user/list" };
