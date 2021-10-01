@@ -25,7 +25,7 @@ namespace FPTBlog.Utils.Repository {
             return DbSet.Find(key);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IEnumerable<T>> options = null, string includeProperties = null) {
+        public ICollection<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, ICollection<T>> options = null, string includeProperties = null) {
             IQueryable<T> query = DbSet;
             if (filter != null) {
                 query = query.Where(filter);
@@ -74,7 +74,7 @@ namespace FPTBlog.Utils.Repository {
             _db.SaveChanges();
         }
 
-        public void Remove(IEnumerable<T> entities) {
+        public void Remove(ICollection<T> entities) {
             DbSet.RemoveRange(entities);
             _db.SaveChanges();
         }

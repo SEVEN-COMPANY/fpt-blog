@@ -14,6 +14,10 @@ interface SaveBlogDto {
     content: string;
     postId: string;
 }
+interface AddCategoryDto {
+    categoryId: string;
+    postId: string;
+}
 
 interface Tag {
     tagId: string;
@@ -27,44 +31,63 @@ editor.getModule('toolbar').addHandler('image', () => {
 const createBlogForm = document.getElementById('createBlogForm');
 createBlogForm?.addEventListener('submit', function (event: Event) {
     event.preventDefault();
+});
 
+const saveChangePostBtn = document.getElementById('form-btn');
+
+saveChangePostBtn?.addEventListener('click', function () {
     const title = document.getElementById('title') as HTMLInputElement;
-    const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
-    if (title !== null && editor !== null && blogIdElement !== null) {
+    const postIdElement = document.getElementById('postId') as HTMLInputElement;
+
+    if (title !== null && editor !== null && postIdElement !== null) {
         const input: SaveBlogDto = {
             title: title.value,
             content: editor.root.innerHTML,
-            postId: blogIdElement.value,
+            postId: postIdElement.value,
         };
         http.post<ServerResponse<null>>(routers.post.save, input).then(() => {});
     }
 });
 
+const categoryInput = document.getElementById('categoryId');
+
+categoryInput?.addEventListener('change', function (event) {
+    const postIdElement = document.getElementById('postId') as HTMLInputElement;
+    const selectInput = event.currentTarget as HTMLSelectElement;
+    const input: AddCategoryDto = {
+        categoryId: selectInput.value,
+        postId: postIdElement.value,
+    };
+    http.put<ServerResponse<Tag[]>>(routers.post.addCategoryToPost, input);
+});
+
 handleSelectBadge(
     'tag',
     async () => {
-        const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
-        const { data } = await http.get<ServerResponse<Tag[]>>(routers.post.getTagOfPost(blogIdElement.value));
+        const postIdElement = document.getElementById('postId') as HTMLInputElement;
+        const { data } = await http.get<ServerResponse<Tag[]>>(routers.post.getTagOfPost(postIdElement.value));
 
         return data.data.map((item) => item.name);
     },
 
     async () => {
         const tagInputElement = document.getElementById('tag');
+
         if (tagInputElement) {
             const url = routers.tag.getByName((tagInputElement as HTMLInputElement).value);
             const { data } = await http.get<ServerResponse<Tag[]>>(url);
+
             return data.data.slice(0, 10).map((item) => item.name);
         }
 
         return [];
     },
     async (label: string) => {
-        const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
+        const postIdElement = document.getElementById('postId') as HTMLInputElement;
 
-        if (blogIdElement) {
+        if (postIdElement) {
             const input: ToggleTagDto = {
-                postId: blogIdElement.value,
+                postId: postIdElement.value,
                 tagName: label,
             };
 
@@ -75,10 +98,10 @@ handleSelectBadge(
         return [];
     },
     async (label: string) => {
-        const blogIdElement = document.getElementById('blogId') as HTMLInputElement;
+        const postIdElement = document.getElementById('postId') as HTMLInputElement;
 
         const input: ToggleTagDto = {
-            postId: blogIdElement.value,
+            postId: postIdElement.value,
             tagName: label,
         };
 

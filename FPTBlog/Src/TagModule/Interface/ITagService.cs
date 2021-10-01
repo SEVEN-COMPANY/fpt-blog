@@ -7,6 +7,7 @@ namespace FPTBlog.Src.TagModule.Interface {
         public (List<Tag>, int) GetTags();
         public void AddTag(Tag tag);
         public Tag GetTagByTagId(string tagId);
+        public (List<Tag>, int) GetTagsByName(string name);
         public Tag GetTagByName(string name);
         public void UpdateTag(Tag tag);
         public void RemoveTag(Tag tag);

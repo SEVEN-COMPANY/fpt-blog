@@ -1,3 +1,4 @@
+using System;
 using FluentValidation.Results;
 using FPTBlog.Src.TagModule.DTO;
 using FPTBlog.Src.TagModule.Entity;
@@ -53,7 +54,7 @@ namespace FPTBlog.Src.TagModule {
         [HttpGet("")]
         public ObjectResult GetTagByName(string name = "") {
             var res = new ServerApiResponse<object>();
-            var tags = this.TagService.GetTagByName(name);
+            var (tags, _) = this.TagService.GetTagsByName(name);
             res.data = tags;
 
             return new ObjectResult(res.getResponse());

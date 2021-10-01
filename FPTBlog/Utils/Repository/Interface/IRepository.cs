@@ -9,9 +9,9 @@ namespace FPTBlog.Utils.Repository.Interface {
 
         void Add(T entity);
 
-        IEnumerable<T> GetAll(
+        ICollection<T> GetAll(
             Expression<Func<T, bool>> filter = null,
-            Func<IQueryable<T>, IEnumerable<T>> options = null,
+            Func<IQueryable<T>, ICollection<T>> options = null,
             string includeProperties = null
             );
         T GetFirstOrDefault(
@@ -25,7 +25,7 @@ namespace FPTBlog.Utils.Repository.Interface {
 
         void Remove(T entity);
 
-        void Remove(IEnumerable<T> entities);
+        void Remove(ICollection<T> entities);
 
         // IEnumerable<T> GetEntityByPage(IEnumerable<T> enumrable, int pageSize, int pageIndex);
 
