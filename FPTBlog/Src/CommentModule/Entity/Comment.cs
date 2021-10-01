@@ -37,8 +37,9 @@ namespace FPTBlog.Src.CommentModule.Entity {
             get; set;
         }
 
+        [ForeignKey("tblComment")]
         [StringLength(50)]
-        public string SubcommentId {
+        public string OriCommentId {
             get; set;
         }
 
@@ -68,7 +69,7 @@ namespace FPTBlog.Src.CommentModule.Entity {
             this.Like = 0;
             this.Dislike = 0;
             this.CreateDate = DateTime.Now.ToShortDateString();
-            this.SubcommentId = null;
+            this.OriCommentId = null;
             this.PostId = null;
             this.UserId = null;
         }
@@ -76,7 +77,7 @@ namespace FPTBlog.Src.CommentModule.Entity {
         public override string ToString() {
             return "Comment: \n CommentId: " + CommentId + " \nContent: " + Content
             + " \nLike: " + Like + " \nDislike: " + Dislike + " \nCreateDate: " + CreateDate
-            + " \nSubcommentId" + SubcommentId + " \nBlogId" + PostId + " \nUserId" + UserId;
+            + " \nSubcommentId" + OriCommentId + " \nBlogId" + PostId + " \nUserId" + UserId;
         }
     }
 }

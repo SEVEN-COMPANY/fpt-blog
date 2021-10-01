@@ -21,5 +21,10 @@ namespace FPTBlog.Src.CommentModule {
         public IActionResult UpdateCommentPage() {
             return View(Routers.UpdateComment.Page);
         }
+
+        [HttpDelete("remove")]
+        public IActionResult RemoveCommentPage() {
+            return View(Routers.CommonGetHome.Page);
+        }
     }
 }

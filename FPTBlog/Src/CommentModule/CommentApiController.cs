@@ -4,6 +4,7 @@ using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.CommentModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
+using System.Collections.Generic;
 using FPTBlog.Src.CommentModule.DTO;
 
 namespace FPTBlog.Src.CommentModule.Interface {
@@ -16,7 +17,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
         }
 
         [HttpPost("")]
-        public ObjectResult AddCommentHandler([FromBody] AddCommentDto input) {
+        public IActionResult AddCommentHandler([FromBody] AddCommentDto input) {
             var res = new ServerApiResponse<Comment>();
 
             ValidationResult result = new AddCommentDtoValidator().Validate(input);
@@ -29,6 +30,8 @@ namespace FPTBlog.Src.CommentModule.Interface {
             comment.Content = input.Content;
             User currentUser = (User) this.ViewData["user"];
             comment.PostId = input.PostId;
+            if (input.OriCommentId != null)
+                comment.OriCommentId = input.OriCommentId;
             this.CommentService.AddComment(comment);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
@@ -36,7 +39,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
         }
 
         [HttpPut("content")]
-        public ObjectResult UpdateCommentHandler([FromBody] UpdateCommentDto input) {
+        public IActionResult UpdateCommentHandler([FromBody] UpdateCommentDto input) {
             var res = new ServerApiResponse<Comment>();
 
             ValidationResult result = new UpdateCommentDtoValidator().Validate(input);
@@ -49,12 +52,12 @@ namespace FPTBlog.Src.CommentModule.Interface {
             comment.Content = input.Content;
             this.CommentService.UpdateComment(comment);
 
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
         [HttpDelete("")]
-        public ObjectResult RemoveCommentHandler([FromBody] RemoveCommentDto input) {
+        public IActionResult RemoveCommentHandler([FromBody] RemoveCommentDto input) {
             var res = new ServerApiResponse<Comment>();
 
             ValidationResult result = new RemoveCommentDtoValidator().Validate(input);
@@ -68,6 +71,23 @@ namespace FPTBlog.Src.CommentModule.Interface {
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("all")]
+        public IActionResult GetListOriComment([FromBody] GetOriCommentDto input) {
+            var res = new ServerApiResponse<Comment>();
+
+            ValidationResult result = new GetOriCommentDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            List<Comment> list = this.CommentService.GetListOriCommentByPostId(input.PostId);
+            this.ViewData["list-comment"] = list;
+
+            return View(Routers.GetComment.Page);
+
         }
 
     }

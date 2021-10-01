@@ -3,23 +3,20 @@ using FPTBlog.Utils;
 using System.Linq;
 using System.Collections.Generic;
 using FPTBlog.Src.CommentModule.Entity;
+using FPTBlog.Utils.Repository;
 
 namespace FPTBlog.Src.CommentModule {
-    public class CommentRepository : ICommentRepository {
+    public class CommentRepository : Repository<Comment>, ICommentRepository {
         private readonly DB Db;
-        public CommentRepository(DB Db) {
+        public CommentRepository(DB Db) : base(Db) {
             this.Db = Db;
         }
 
-        public void AddComment(Comment comment) => this.Db.Comment.Add(comment);
-
-        public Comment GetCommentByCommentId(string commentId) {
-            Comment comment = this.Db.Comment.FirstOrDefault(item => item.CommentId == commentId);
+        public List<Comment> GetListOriCommentByPostId(string postId) {
+            List<Comment> comment = (from Comment in this.Db.Comment
+                                     where Comment.PostId.Equals(postId) && Comment.OriCommentId != null
+                                     select Comment).ToList();
             return comment;
         }
-
-        public void UpdateComment(Comment comment) => this.Db.Comment.Update(comment);
-
-        public void RemoveComment(Comment comment) => this.Db.Comment.Remove(comment);
     }
 }

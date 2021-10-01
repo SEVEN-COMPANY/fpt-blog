@@ -9,6 +9,9 @@ namespace FPTBlog.Src.CommentModule.DTO {
         public string PostId {
             get; set;
         }
+        public string OriCommentId {
+            get; set;
+        }
     }
 
     public class AddCommentDtoValidator : AbstractValidator<AddCommentDto> {
