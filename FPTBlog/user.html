@@ -278,18 +278,36 @@
             </div>
 
             <div class="relative flex flex-col flex-1 bg-alabaster-600 bg-opacity-60">
-                <div class="flex flex-1 w-full max-w-6xl pt-20 mx-auto md:p-2 xl:w-4/5 bg-alabaster-200 broder"></div>
-                <!-- <div class="absolute intro-x left-8 top-8">
-                    <h1>Account setting</h1>
-                    <ul>
-                        <li>
-                            <a>Update User Information</a>
-                        </li>
-                        <li>
-                            <a>Change Password</a>
-                        </li>
-                    </ul>
-                </div> -->
+                <div class="flex flex-col flex-1 w-full max-w-6xl pt-20 mx-auto space-y-4 md:p-2 xl:w-4/5 bg-alabaster-200 broder">
+                    <h1 class="text-4xl font-semibold text-center">Search Post</h1>
+                    <div class="flex flex-1 space-x-4">
+                        <div class="flex flex-col flex-1 space-y-1">
+                            <label class="block font-semibold capitalize">Title</label>
+                            <input
+                                class="block w-full px-2 py-1 duration-300 border rounded-sm outline-none safari h-9 focus:border-tango-500"
+                                id="title"
+                                name="title"
+                                type="text"
+                                value="Draft"
+                            />
+                            <span class="block text-red-500 fade-in" id="TITLEERROR" data-label="Title"></span>
+                        </div>
+
+                        <div class="flex flex-col flex-1 space-y-1">
+                            <label class="block font-semibold capitalize"> Category </label>
+                            <select
+                                class="block w-full px-2 py-1 duration-300 border outline-none h-9 focus:border-tango-500 safari"
+                                id="categoryId"
+                                name="categoryId"
+                            >
+                                <option value="0122a162-2dba-460a-bae0-501b9fdbb94f">Graphic Design</option>
+                                <option value="c6d0ba0f-33ee-40f0-995f-cd95c7e43496">Freestyle</option>
+                                <option value="d45b8d14-3812-48bc-ab61-20011656f6f8">Business Administration</option>
+                            </select>
+                            <span class="block text-red-500 fade-in" id="CATEGORYIDERROR" data-label="Category"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="px-4 py-4 bg-alabaster-500">
