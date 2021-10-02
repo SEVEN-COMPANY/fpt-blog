@@ -29,7 +29,7 @@ namespace FPTBlog.Src.AuthModule {
         public IActionResult LoginPage() {
             var user = (User) this.ViewData["user"];
             if (user != null) {
-                return View(Routers.CommonGetHome.Page);
+                return Redirect(Routers.CommonGetHome.Link);
             }
             return View(Routers.AuthPostLogin.Page);
         }
@@ -67,7 +67,7 @@ namespace FPTBlog.Src.AuthModule {
         public IActionResult RegisterPage() {
             var user = (User) this.ViewData["user"];
             if (user != null) {
-                return View(Routers.CommonGetHome.Page);
+                return Redirect(Routers.CommonGetHome.Link);
             }
             return View(Routers.AuthPostRegister.Page);
         }
