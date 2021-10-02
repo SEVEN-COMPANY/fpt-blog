@@ -19,29 +19,25 @@ namespace FPTBlog.Src.PostModule {
 
         public void AddPost(Post post) => this.PostRepository.Add(post);
         public Post GetPostByPostId(string postId) => this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
+
+        public PostViewModel GetViewPostByPostId(string postId) {
+            var viewPost = new PostViewModel();
+            var post = this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
+            viewPost.Post = post;
+            var (_, numberOfComment) = this.GetCommentOfPost(post);
+            viewPost.NumberOfComment = numberOfComment;
+
+            return viewPost;
+        }
         public void UpdatePost(Post post) => this.PostRepository.Update(post);
         public void RemovePost(Post post) => this.PostRepository.Remove(post);
         public void AddTagToPost(Post post, Tag tag) => this.PostRepository.AddTagToPost(post, tag);
         public void RemoveTagFromPost(Post post, Tag tag) => this.PostRepository.RemoveTagFromPost(post, tag);
         public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, PostStatus searchStatus) {
-<<<<<<< HEAD
             var list = (IEnumerable<Post>) this.PostRepository.GetAll(item => item.Status == searchStatus);
             var count = list.Count();
             var listForPage = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
 
-=======
-            ICollection<Post> list = null;
-            if (searchStatus != 0) {
-                list = this.PostRepository.GetAll(item => item.Status == searchStatus);
-            }
-            else {
-                list = this.PostRepository.GetAll();
-            }
-            var count = list.Count;
-
-            var listForPage = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-
->>>>>>> origin/development
             return (listForPage, count);
         }
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByCategoryWithCount(pageIndex, pageSize, name);
