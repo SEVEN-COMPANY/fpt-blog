@@ -4,8 +4,8 @@
     var user = (User)this.ViewData["user"] ?? new User();
 }
 
-<div>
-    <div class="relative md:hidden">
+<div class="fixed z-40 w-full duration-300 transform bg-white" id="navbar-layout">
+    <div class=" md:hidden">
         <div class="fixed z-50 flex items-center justify-between w-full px-2 py-4 shadow-lg bg-alabaster-500">
             <div class="space-y-2" id="nav-btn">
                 <div class="w-8 h-0.75 rounded-full bg-shark-500 transform duration-300 " id="nav-btn-1"></div>
@@ -107,25 +107,27 @@
         </div>
     </div>
     <div class="hidden md:block">
-        <div class="flex items-center justify-between px-32 py-4">
-            <a href="@Routers.PostGetSearch.Link" class="p-2 bg-gray-500">
-                <div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M11 20C15.9706 20 20 15.9706 20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20Z"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path
-                            d="M18.9299 20.6898C19.4599 22.2898 20.6699 22.4498 21.5999 21.0498C22.4499 19.7698 21.8899 18.7198 20.3499 18.7198C19.2099 18.7098 18.5699 19.5998 18.9299 20.6898Z"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </div>
-            </a>
-            <div>
-                <a href="@Routers.CommonGetHome.Link">
+        <div class="flex items-center justify-between px-32 py-4 transform ">
+            <div class="flex items-center flex-1">
+                <a href="@Routers.PostGetSearch.Link" class="block p-2 bg-gray-500">
+                    <div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M11 20C15.9706 20 20 15.9706 20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path
+                                d="M18.9299 20.6898C19.4599 22.2898 20.6699 22.4498 21.5999 21.0498C22.4499 19.7698 21.8899 18.7198 20.3499 18.7198C19.2099 18.7098 18.5699 19.5998 18.9299 20.6898Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+            <div class="flex items-center justify-center flex-1">
+                <a href="@Routers.CommonGetHome.Link" class="inline-block">
                     <h1 class="text-4xl font-semibold text-tango-500">FPT Blog</h1>
                 </a>
             </div>
-            <div>
+            <div class="flex items-center justify-end flex-1">
                 <div class="flex items-center space-x-4">
 
                     @if (user.Name == "")
@@ -215,7 +217,7 @@
                 </div>
             </div>
         </div>
-        <div class="py-4 shadow-md bg-alabaster-500 ">
+        <div class="py-4 shadow-md bg-alabaster-500">
             <ul class="flex items-center justify-center space-x-16 font-medium">
                 <li>
                     <a class="text-tango-500" href="@Routers.CommonGetHome.Link">Home</a>
