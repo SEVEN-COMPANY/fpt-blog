@@ -15,7 +15,8 @@ namespace FPTBlog.Src.PostModule.Interface {
 
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status);
         public (List<Post>, int) GetWaitPostsWithCount();
-
+        public void LikePost(Post post, User user);
+        public void DislikePost(Post post, User user);
 
     }
 }

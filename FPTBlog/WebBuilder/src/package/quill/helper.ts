@@ -2,7 +2,7 @@ import Quill from 'quill';
 import { http } from '../axios';
 import { routers } from '../axios/routes';
 import { ServerResponse } from '../interface/serverResponse';
-
+// let coverUrl = '';
 export function insertToEditor(editor: Quill, url: string) {
     const range = editor.getSelection();
     if (range) editor.insertEmbed(range.index, 'image', `${url}`);
@@ -32,9 +32,12 @@ export async function saveToServer(editor: Quill, file: File) {
     http.post<ServerResponse<string>>(routers.post.uploadImagePost, formData)
         .then((res) => {
             const imageUrl = res.data.data;
+            // if (coverUrl) coverUrl = imageUrl;
             insertToEditor(editor, imageUrl);
         })
         .catch((error) => {
             console.log(error);
         });
 }
+
+// export { coverUrl };

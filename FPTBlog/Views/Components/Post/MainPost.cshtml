@@ -1,0 +1,74 @@
+@using FPTBlog.Src.PostModule.Entity
+@{
+    var value = (PostViewModel)Model.Value;
+}
+
+
+<div class="relative flex flex-col flex-1 rounded-sm">
+    <div class="flex-1">
+        <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="block object-cover w-full h-full" alt="">
+
+    </div>
+    <div class="w-full px-2 py-2 space-y-2 ">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2 font-semibold ">
+                <div class="w-1 h-8 bg-tango-500"></div>
+                <p>@value.Post.Category.Name</p>
+            </div>
+            <div>
+                <p class="text-xs opacity-60">
+                    @value.Post.ReadTime min read
+                </p>
+            </div>
+        </div>
+        <h1 class="text-xl font-semibold md:text-xl">
+            @value.Post.Title
+        </h1>
+        <div class="flex space-x-8 text-xs italic opacity-60 md:text-sm">
+            <p class="">@value.Post.Student.Name</p>
+            <p>@value.Post.CreateDate</p>
+        </div>
+        <div class="flex space-x-2">
+            <div class="flex items-center space-x-0.5">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10.3866 7.99995C10.3866 9.31995 9.31995 10.3866 7.99995 10.3866C6.67995 10.3866 5.61328 9.31995 5.61328 7.99995C5.61328 6.67995 6.67995 5.61328 7.99995 5.61328C9.31995 5.61328 10.3866 6.67995 10.3866 7.99995Z"
+                        stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M7.9999 13.5133C10.3532 13.5133 12.5466 12.1266 14.0732 9.72665C14.6732 8.78665 14.6732 7.20665 14.0732 6.26665C12.5466 3.86665 10.3532 2.47998 7.9999 2.47998C5.64656 2.47998 3.45323 3.86665 1.92656 6.26665C1.32656 7.20665 1.32656 8.78665 1.92656 9.72665C3.45323 12.1266 5.64656 13.5133 7.9999 13.5133Z"
+                        stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+
+                <p class="text-sm font-medium opacity-60">@value.Post.View</p>
+            </div>
+
+            <div class="flex items-center space-x-0.5">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M4.98633 12.2331L7.05299 13.8331C7.31966 14.0998 7.91966 14.2331 8.31966 14.2331H10.853C11.653 14.2331 12.5197 13.6331 12.7197 12.8331L14.3197 7.96648C14.653 7.03315 14.053 6.23315 13.053 6.23315H10.3863C9.98633 6.23315 9.653 5.89982 9.71966 5.43315L10.053 3.29982C10.1863 2.69982 9.78633 2.03315 9.18633 1.83315C8.653 1.63315 7.98633 1.89982 7.71966 2.29982L4.98633 6.36648"
+                        stroke="#666666" stroke-width="1.5" stroke-miterlimit="10" />
+                    <path
+                        d="M1.58691 12.2336V5.70026C1.58691 4.76693 1.98691 4.43359 2.92025 4.43359H3.58691C4.52025 4.43359 4.92025 4.76693 4.92025 5.70026V12.2336C4.92025 13.1669 4.52025 13.5003 3.58691 13.5003H2.92025C1.98691 13.5003 1.58691 13.1669 1.58691 12.2336Z"
+                        stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
+
+                <p class="text-sm font-medium opacity-60">@value.Post.Like</p>
+            </div>
+            <div class="flex items-center space-x-0.5">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11.333 12.2868H8.66634L5.69967 14.2601C5.25967 14.5535 4.66634 14.2402 4.66634 13.7068V12.2868C2.66634 12.2868 1.33301 10.9535 1.33301 8.95349V4.95345C1.33301 2.95345 2.66634 1.62012 4.66634 1.62012H11.333C13.333 1.62012 14.6663 2.95345 14.6663 4.95345V8.95349C14.6663 10.9535 13.333 12.2868 11.333 12.2868Z"
+                        stroke="#666666" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+
+
+                <p class="text-sm font-medium opacity-60">@value.NumberOfComment</p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
