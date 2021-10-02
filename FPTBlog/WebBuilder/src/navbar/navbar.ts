@@ -20,3 +20,20 @@ navBtn?.addEventListener('click', function () {
         navBtn3.classList.toggle('-rotate-45');
     }
 });
+
+console.log('hello');
+
+let currentY = window.scrollY;
+
+window.addEventListener('scroll', function () {
+    console.log(this.window.scrollY);
+    const navbar = this.document.getElementById('navbar-layout');
+    if (currentY < this.window.scrollY) {
+        console.log('hello');
+        currentY = this.window.screenY;
+
+        navbar?.classList.add('md:-translate-y-18');
+    } else {
+        navbar?.classList.remove('md:-translate-y-18');
+    }
+});

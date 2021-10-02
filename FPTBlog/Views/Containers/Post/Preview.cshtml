@@ -52,13 +52,8 @@
             @await Html.PartialAsync("../../Components/Post/MainPost.cshtml", new {Value = value})
             <div class="flex flex-col flex-1 space-y-4">
                 @await Html.PartialAsync("../../Components/Post/SidePost.cshtml",new {Value = value})
-                <div class="flex">
-
-                    @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = value})
-                    <div class="flex-1">
-
-                    </div>
-                </div>
+                @await Html.PartialAsync("../../Components/Post/SidePost.cshtml",new {Value = value})
+                @await Html.PartialAsync("../../Components/Post/SidePost.cshtml",new {Value = value})
             </div>
         </div>
     </div>
