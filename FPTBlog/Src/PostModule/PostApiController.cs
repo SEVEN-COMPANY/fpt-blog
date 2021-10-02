@@ -286,5 +286,18 @@ namespace FPTBlog.Src.PostModule {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+
+        [HttpPost("suggest")]
+        public IActionResult SuggestSearch([FromBody] SuggestSearchDto input) {
+            var res = new ServerApiResponse<List<String>>();
+            ValidationResult result = new SuggestSearchDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            List<string> suggest = this.PostService.GetPostSuggestion(input.Search, input.CategoryId);
+            res.data = suggest;
+            return new ObjectResult(res.getResponse());
+        }
     }
 }
