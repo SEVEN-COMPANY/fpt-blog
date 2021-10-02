@@ -73,7 +73,7 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpGet("")]
         public IActionResult GetBlogByBlogId(string postId) {
-            var post = this.PostService.GetPostByPostId(postId);
+            var post = this.PostService.GetViewPostByPostId(postId);
             this.ViewData["post"] = post;
             return View(Routers.PostGetPost.Page);
         }
