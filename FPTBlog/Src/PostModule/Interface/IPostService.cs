@@ -8,6 +8,7 @@ namespace FPTBlog.Src.PostModule.Interface {
     public interface IPostService {
         public void AddPost(Post post);
         public Post GetPostByPostId(string postId);
+        public PostViewModel GetViewPostByPostId(string postId);
         public void UpdatePost(Post post);
         public void RemovePost(Post post);
         public void AddTagToPost(Post post, Tag tag);

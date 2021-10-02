@@ -23,6 +23,7 @@ namespace FPTBlog.Utils.Common {
 
         // Post
         public static readonly RouterItem PostGetDraftList = new RouterItem() { Page = "/Views/Containers/Post/DraftList.cshtml", Title = "My Draft", Link = "/post/me" };
+        public static readonly RouterItem PostGetSearch = new RouterItem() { Page = "/Views/Containers/Post/Search.cshtml", Title = "Search Post", Link = "/post/search" };
         public static readonly RouterItem PostGetPreview = new RouterItem() { Page = "/Views/Containers/Post/Preview.cshtml", Title = "Review", Link = "/post/preview" };
 
         public static readonly RouterItem PostGetEditor = new RouterItem() { Page = "/Views/Containers/Post/Editor.cshtml", Title = "Write Your Post", Link = "/post/editor" };

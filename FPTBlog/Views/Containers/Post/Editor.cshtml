@@ -27,6 +27,8 @@
 
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
         new {Name="postId", Value=post.PostId})
+        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+        new {Name="coverUrl", Value=post.CoverUrl})
         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
         new {Name="title", Label="Title", Type="text", Value=post.Title})
 
