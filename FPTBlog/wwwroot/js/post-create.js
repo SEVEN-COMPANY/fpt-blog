@@ -46,7 +46,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
   \****************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar createBlogForm = document.getElementById('createNewPost');\r\ncreateBlogForm === null || createBlogForm === void 0 ? void 0 : createBlogForm.addEventListener('click', function (event) {\r\n    axios_1.http.post(routes_1.routers.post.create).then(function (res) {\r\n        console.log(res.data);\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/post/create.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar createBlogForm = document.getElementById('createNewPost');\r\ncreateBlogForm === null || createBlogForm === void 0 ? void 0 : createBlogForm.addEventListener('click', function (event) {\r\n    axios_1.http.post(routes_1.routers.post.create).then(function (res) {\r\n        window.location.reload();\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/post/create.ts?");
 
 /***/ })
 

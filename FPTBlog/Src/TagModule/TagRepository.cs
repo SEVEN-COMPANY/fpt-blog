@@ -13,7 +13,7 @@ namespace FPTBlog.Src.TagModule {
             this.Db = dB;
         }
 
-        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus) {
+        public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus   ) {
             var list = (IEnumerable<Tag>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
             var count = list.Count();
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();

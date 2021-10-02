@@ -13,6 +13,7 @@ namespace FPTBlog.Utils.Common {
     public class RoutersAdmin {
 
 
+        public static readonly RouterAdminItem HomeDashboard = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/User/UserProfile.cshtml", Link = "/admin/user/profile" };
 
         //user
         public static readonly RouterAdminItem UserProfile = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/User/UserProfile.cshtml", Link = "/admin/user/profile" };
