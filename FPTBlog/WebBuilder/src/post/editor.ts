@@ -1,4 +1,5 @@
 import { editor } from '../package/quill';
+
 import { saveToServer, selectLocalImage } from '../package/quill/helper';
 import { http } from '../package/axios';
 import { ServerResponse } from '../package/interface/serverResponse';
@@ -13,6 +14,8 @@ interface SaveBlogDto {
     title: string;
     content: string;
     postId: string;
+    readTime: number;
+    coverUrl: string;
 }
 interface AddCategoryDto {
     categoryId: string;
@@ -38,13 +41,26 @@ const saveChangePostBtn = document.getElementById('form-btn');
 saveChangePostBtn?.addEventListener('click', function () {
     const title = document.getElementById('title') as HTMLInputElement;
     const postIdElement = document.getElementById('postId') as HTMLInputElement;
+    const readTime = Math.ceil(editor.getText().split(' ').length / 250);
+
+    const wrapperElement = document.createElement('div');
+    wrapperElement.innerHTML = editor.root.innerHTML;
+    let coverImage = 'https://picsum.photos/300';
+    const imageElement = wrapperElement.getElementsByTagName('img');
+    if (imageElement.length) {
+        coverImage = imageElement[0].getAttribute('src') || 'https://picsum.photos/300';
+    }
 
     if (title !== null && editor !== null && postIdElement !== null) {
         const input: SaveBlogDto = {
             title: title.value,
             content: editor.root.innerHTML,
             postId: postIdElement.value,
+            readTime: readTime,
+            coverUrl: coverImage,
         };
+
+        console.log(input);
         http.post<ServerResponse<null>>(routers.post.save, input).then(() => {});
     }
 });

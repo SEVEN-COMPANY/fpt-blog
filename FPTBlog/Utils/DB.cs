@@ -2,6 +2,7 @@
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Utils.Interface;
+using FPTBlog.Src.CommentModule.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -19,6 +20,9 @@ namespace FPTBlog.Utils {
         public DbSet<Tag> Tag {
             set; get;
         }
+        public DbSet<Comment> Comment {
+            set; get;
+        }
         public DbSet<Category> Category {
             set; get;
         }
@@ -28,9 +32,9 @@ namespace FPTBlog.Utils {
         public DbSet<PostTag> PostTag {
             get; set;
         }
-        // public DbSet<LikePost> LikeBlog {
-        //     get; set;
-        // }
+        public DbSet<LikePost> LikePost {
+            get; set;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 

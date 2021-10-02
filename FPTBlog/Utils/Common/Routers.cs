@@ -23,6 +23,7 @@ namespace FPTBlog.Utils.Common {
 
         // Post
         public static readonly RouterItem PostGetDraftList = new RouterItem() { Page = "/Views/Containers/Post/DraftList.cshtml", Title = "My Draft", Link = "/post/me" };
+        public static readonly RouterItem PostGetSearch = new RouterItem() { Page = "/Views/Containers/Post/Search.cshtml", Title = "Search Post", Link = "/post/search" };
         public static readonly RouterItem PostGetPreview = new RouterItem() { Page = "/Views/Containers/Post/Preview.cshtml", Title = "Review", Link = "/post/preview" };
 
         public static readonly RouterItem PostGetEditor = new RouterItem() { Page = "/Views/Containers/Post/Editor.cshtml", Title = "Write Your Post", Link = "/post/editor" };
@@ -30,7 +31,12 @@ namespace FPTBlog.Utils.Common {
 
         // User
 
+        //Comment
+        public static readonly RouterItem AddComment = new RouterItem() { Page = "/Views/Containers/Comment/AddComment.cshtml", Link = "/comment/add" };
+        public static readonly RouterItem GetComment = new RouterItem() { Page = "/Views/Containers/Comment/GetComment.cshtml", Link = "/comment/get" };
+        public static readonly RouterItem UpdateComment = new RouterItem() { Page = "/Views/Containers/Comment/UpdateComment.cshtml", Link = "comment/update" };
         public static readonly RouterItem UserGetProfile = new RouterItem() { Page = "/Views/Containers/User/Profile.cshtml", Title = "User", Link = "/user" };
+
         public static readonly RouterItem UserPutUser = new RouterItem() { Page = "/Views/Containers/User/Update.cshtml", Title = "Update User", Link = "/user/update" };
 
         public static readonly RouterItem UserPutPassword = new RouterItem() { Page = "/Views/Containers/User/PutPassword.cshtml", Title = "Change Pass", Link = "/user/change-password" };
