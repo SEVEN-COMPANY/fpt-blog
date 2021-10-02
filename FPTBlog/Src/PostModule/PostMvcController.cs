@@ -63,17 +63,17 @@ namespace FPTBlog.Src.PostModule {
         }
 
         [HttpGet("search")]
-        public IActionResult GetAllBlogs(PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
-            // var (posts, total) = this.PostService.GetPostsAndCount(pageSize, pageIndex, searchStatus);
-            // this.ViewData["blogs"] = posts;
-            // this.ViewData["total"] = total;
+        public IActionResult GetAllBlogs(string search, string categoryId, int pageSize = 12, int pageIndex = 0) {
+            var (posts, total) = this.PostService.GetPostsAndCount(pageSize, pageIndex, search, categoryId);
+            this.ViewData["blogs"] = posts;
+            this.ViewData["total"] = total;
 
             return View(Routers.PostGetSearch.Page);
         }
 
         [HttpGet("")]
         public IActionResult GetBlogByBlogId(string postId) {
-            var post = this.PostService.GetPostByPostId(postId);
+            var post = this.PostService.GetViewPostByPostId(postId);
             this.ViewData["post"] = post;
             return View(Routers.PostGetPost.Page);
         }

@@ -170,7 +170,9 @@
     animation: IntroZ 0.5s forwards;
 }
 
-.post-image {
-    min-height: 140px;
-    max-height: 312px;
+@media (min-width: 768px) {
+    .post-image {
+        min-height: 140px;
+        max-height: 545px;
+    }
 }

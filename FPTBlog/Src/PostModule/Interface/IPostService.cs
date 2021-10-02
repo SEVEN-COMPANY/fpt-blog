@@ -13,7 +13,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public void RemovePost(Post post);
         public void AddTagToPost(Post post, Tag tag);
         public void RemoveTagFromPost(Post post, Tag tag);
-        public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, PostStatus searchStatus);
+        public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, string search, string categoryId);
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name);
         public List<Tag> GetTagsFromPost(Post post);
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name);
@@ -26,5 +26,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         public void LikePost(Post post, User user);
         public void DislikePost(Post post, User user);
         public (List<Comment>, int) GetCommentOfPost(Post post);
+        public List<string> GetPostSuggestion(string search, string categoryId);
     }
 }

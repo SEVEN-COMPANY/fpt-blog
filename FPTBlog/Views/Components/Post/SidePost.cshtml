@@ -3,19 +3,21 @@
     var value = (PostViewModel)Model.Value;
 }
 
-<div class="flex-1 md:space-x-2 md:flex fade-in">
-    <div class="">
-        <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="object-cover w-full h-full">
+<div class="flex-1 md:space-x-2 md:flex fade-in post-image">
+    <div class="flex-1">
+        <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="object-cover w-full h-full ">
     </div>
-    <div class="py-2 space-y-2 md:py-0">
-        <p class="text-xs opacity-60">
-            @value.Post.ReadTime min read
-        </p>
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2 font-medium">
-                <div class="w-1 h-8 rounded-xs bg-tango-500"></div>
-                <p>@value.Post.Category.Name</p>
+    <div class="flex flex-col flex-1 py-2 space-y-1 md:py-0">
+
+        <div class="flex items-center justify-between w-full text-sm ">
+            <div class="flex items-center justify-between ">
+                <div class="flex items-center space-x-1 ">
+                    <div class="w-1 h-6 rounded-xs bg-tango-500"></div>
+                    <p class="opacity-60">@value.Post.Category.Name</p>
+                </div>
+
             </div>
+            <span class="inline-block opacity-60">@value.Post.ReadTime min read</span>
 
 
         </div>
@@ -23,7 +25,7 @@
 
         <h2 class="font-semibold">@value.Post.Title</h2>
         <div class="flex items-center justify-between">
-            <p class="text-sm italic font-medium ">@value.Post.Student.Name</p>
+            <p class="text-xs opacity-60 ">@value.Post.Student.Name</p>
 
         </div>
         <div class="flex items-center justify-between">
