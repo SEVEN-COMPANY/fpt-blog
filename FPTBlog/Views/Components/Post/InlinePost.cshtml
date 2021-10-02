@@ -3,17 +3,22 @@
     var value = (PostViewModel)Model.Value;
 }
 
-<div class="flex-1 p-2 space-y-2 bg-gray-100 rounded-sm fade-in">
+<div class="flex-1 p-2 space-y-2 bg-gray-100 rounded-sm fade-in ">
     <div class="h-48">
-        <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="object-cover w-full h-full">
+        <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="object-cover w-full h-full ">
     </div>
     <div class="space-y-2">
-
-        <p class="text-xs opacity-60">
-            @value.Post.ReadTime min read
-        </p>
+        <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-1 ">
+                <div class="w-1 h-6 bg-tango-500"></div>
+                <p class="opacity-60">@value.Post.Category.Name</p>
+            </div>
+            <p class=" opacity-60">
+                @value.Post.ReadTime min read
+            </p>
+        </div>
         <h2 class="text-lg font-semibold">@value.Post.Title</h2>
-        <p class="text-xs italic font-medium ">@value.Post.Student.Name</p>
+        <p class="text-xs opacity-60">@value.Post.Student.Name</p>
     </div>
     <div class="flex items-center justify-between">
 
