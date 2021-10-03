@@ -5,7 +5,7 @@ export const routerLinks = {
 export const routers = {
     category: {
         create: '/api/category',
-        update: '/api/category/update',
+        update: '/api/category',
     },
     post: {
         create: '/api/post',

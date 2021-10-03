@@ -36,6 +36,6 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
             status: status,
             categoryId: categoryId.value,
         };
-        http.post<ServerResponse<null>>(routers.category.update, input);
+        http.put<ServerResponse<null>>(routers.category.update, input);
     }
 });
