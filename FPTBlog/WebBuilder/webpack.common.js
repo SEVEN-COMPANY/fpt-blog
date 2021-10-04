@@ -8,6 +8,7 @@ module.exports = {
         'auth-update': ['./src/auth/login.ts'],
         'user-list': ['./src/user/list.ts'],
         'user-update': ['./src/user/update.ts'],
+        'user-block': ['./src/user/block.ts'],
         'user-changePassword': ['./src/user/changePassword.ts'],
         'category-create': ['./src/category/create.ts'],
         'category-update': ['./src/category/update.ts'],

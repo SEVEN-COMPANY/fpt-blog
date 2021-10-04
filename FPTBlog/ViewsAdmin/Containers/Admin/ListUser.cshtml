@@ -83,6 +83,9 @@
                                     <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
                                         Create Date
                                     </th>
+                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
+
+                                    </th>
 
                                 </tr>
                             </thead>
@@ -90,7 +93,7 @@
                                 @for (int i = 0; i < users.Count; i++)
                                 {
                                     var item = users[i];
-                                    <tr>
+                                    <tr class="hover:bg-gray-200">
                                         <td class="border">@(i+1)</td>
                                         <td class="border">@item.Name</td>
                                         <td class="border">@item.Username</td>
@@ -101,6 +104,32 @@
                                         item.Status == UserStatus.ENABLE)</td>
                                         <td class="border">@item.Role</td>
                                         <td class="border">@item.CreateDate</td>
+                                        <td class="border">
+                                            @if (item.Status == UserStatus.ENABLE)
+                                            {
+                                                <button class="mb-2 mr-1 btn btn-primary" userId="@item.UserId" id="block-btn">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-lock block mx-auto">
+                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                                    </svg>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button class="mb-2 mr-1 btn btn-primary" userId="@item.UserId" id="block-btn">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-unlock block mx-auto">
+                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                                                    </svg>
+                                                </button>
+                                            }
+                                        </td>
                                     </tr>
                                 }
 
@@ -119,6 +148,6 @@
 </div>
 
 @section Scripts {
-
+<script src="/js/user-block.js"></script>
 <script src="/js/user-list.js"></script>
 }

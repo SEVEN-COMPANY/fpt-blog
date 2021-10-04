@@ -10,16 +10,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/category/list.ts":
-/*!******************************!*\
-  !*** ./src/category/list.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar pagination_1 = __webpack_require__(/*! ../package/helper/pagination */ \"./src/package/helper/pagination.ts\");\r\n(0, pagination_1.pageChange)('listCategoryForm');\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar status = 1;\r\nvar createCategoryForm = document.getElementById('createCategoryForm');\r\nvar statusList = document.querySelectorAll('input[name=\"status\"]');\r\nstatusList.forEach(function (radio) {\r\n    radio.addEventListener('click', function () {\r\n        status = Number(radio.value);\r\n    });\r\n});\r\ncreateCategoryForm === null || createCategoryForm === void 0 ? void 0 : createCategoryForm.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var name = document.getElementById('name');\r\n    var description = document.getElementById('description');\r\n    console.log(name);\r\n    console.log(name.value);\r\n    console.log(description);\r\n    console.log(description.value);\r\n    if (name != null && description != null && status != null) {\r\n        var input = {\r\n            name: name.value,\r\n            description: description.value,\r\n            status: status,\r\n        };\r\n        axios_1.http.post(routes_1.routers.category.create, input).then();\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/category/list.ts?");
-
-/***/ }),
-
 /***/ "./src/package/axios/index.ts":
 /*!************************************!*\
   !*** ./src/package/axios/index.ts ***!
@@ -50,13 +40,13 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 
 /***/ }),
 
-/***/ "./src/package/helper/pagination.ts":
-/*!******************************************!*\
-  !*** ./src/package/helper/pagination.ts ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ "./src/user/block.ts":
+/*!***************************!*\
+  !*** ./src/user/block.ts ***!
+  \***************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.pageChange = void 0;\r\nvar pageChange = function (formId) {\r\n    var paginationSize = document.getElementById('pagination-size');\r\n    var paginationBtn = document.getElementById('pagination-btn');\r\n    paginationSize === null || paginationSize === void 0 ? void 0 : paginationSize.addEventListener('change', function (_) {\r\n        var option = paginationSize.options[paginationSize.selectedIndex];\r\n        var pageSizeInput = document.getElementById('pageSize');\r\n        pageSizeInput.value = option.value;\r\n        var pageIndexInput = document.getElementById('pageIndex');\r\n        pageIndexInput.value = '0';\r\n        var form = document.getElementById(formId);\r\n        form.submit();\r\n    });\r\n    var pageBtn = paginationBtn === null || paginationBtn === void 0 ? void 0 : paginationBtn.getElementsByTagName('button');\r\n    if (pageBtn) {\r\n        var _loop_1 = function (index) {\r\n            var element = pageBtn[index];\r\n            element.addEventListener('click', function (_) {\r\n                var pageIndexInput = document.getElementById('pageIndex');\r\n                var value = element.getAttribute('data-index');\r\n                if (value) {\r\n                    pageIndexInput.value = value;\r\n                }\r\n                var form = document.getElementById(formId);\r\n                form.submit();\r\n            });\r\n        };\r\n        for (var index = 0; index < pageBtn.length; index++) {\r\n            _loop_1(index);\r\n        }\r\n    }\r\n};\r\nexports.pageChange = pageChange;\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/helper/pagination.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar blockButton = document.getElementById('block-btn');\r\nblockButton === null || blockButton === void 0 ? void 0 : blockButton.addEventListener('click', function (event) {\r\n    event.preventDefault();\r\n    var userId = blockButton.getAttribute('userId');\r\n    if (userId !== null) {\r\n        var input = {\r\n            userIdBlock: userId,\r\n        };\r\n        axios_1.http.put(routes_1.routers.user.block, input);\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/user/block.ts?");
 
 /***/ })
 
@@ -91,7 +81,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/category/list.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/user/block.ts");
 /******/ 	
 /******/ })()
 ;
