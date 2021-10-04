@@ -12,6 +12,17 @@ namespace FPTBlog.Src.UserModule {
             this.Db = db;
         }
 
+        public void FollowUser(User followingUser, User follower) {
+            FollowInfo followInfo = new FollowInfo(){
+                Follower = follower,
+                FollowInfoId = follower.UserId,
+                FollowingUser = followingUser,
+                FollowingUserId = followingUser.UserId
+            };
+            this.Db.FollowInfo.Add(followInfo);
+            this.Db.SaveChanges();
+        }
+
         public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) {
             List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
             var count = list.Count();

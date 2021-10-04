@@ -102,6 +102,23 @@ namespace FPTBlog.Src.UserModule {
             return new ObjectResult(res.getResponse());
         }
 
+        [HttpPost("follow")]
+        public IActionResult FollowUser(string userId){
+            IDictionary<string,User> dataRes = new Dictionary<string, User>();
+            ServerApiResponse<IDictionary<string,User>> res = new ServerApiResponse<IDictionary<string,User>>();
+            User user = (User) this.ViewData["user"];
+
+            User followedUser = this.UserService.GetUserByUserId(userId);
+            if(followedUser == null){
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            dataRes.Add("currentUser", user);
+            dataRes.Add("followedUser", null);
+            res.data = dataRes;
+            return new ObjectResult(res.getResponse());
+        }
     }
 
 }

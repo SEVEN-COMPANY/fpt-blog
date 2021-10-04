@@ -25,12 +25,20 @@ namespace FPTBlog.Src.UserModule {
 
 
         [HttpGet("me")]
-        public IActionResult GetProfile() {
+        public IActionResult GetProfile(string searchName, string searCategoryId) {
             var user = (User) this.ViewData["user"];
 
+
+
+            // them dem like, dem follower, dem post,   keo ve het cacs post cua use, các bài post trong
+            // profile sẽ phân trang, có search theo tên, categoryId
             this.ViewData["profile"] = user;
             return View(Routers.UserGetMyProfile.Page);
         }
+
+        //
+
+        // 1 router profile lay thong tin cua 1 thang user, truyen userId
 
         [HttpGet("update")]
         public IActionResult UpdateUser() {
