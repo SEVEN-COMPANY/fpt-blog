@@ -1,7 +1,6 @@
 @using FPTBlog.Src.PostModule.Entity
 @{
-    @* this.ViewData["blogs"] = blogs;
-        this.ViewData["total"] = total; *@
+    ViewData["Title"] = Routers.PostGetSearch.Title;
     var posts = (List<Post>)this.ViewData["drafts"];
 
 }

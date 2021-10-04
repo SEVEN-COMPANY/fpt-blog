@@ -1,6 +1,9 @@
 @{
 
     this.ViewData["Title"] = "Phạm Vĩnh Nhân";
+
+
+    var user = (User)this.ViewData["user"];
 }
 
 <div class="relative">
@@ -19,13 +22,13 @@
                     <form class="space-y-6 fade-in" id="updateUserForm">
 
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "name", Label = "Name", Type = "text", Value = "" })
+                        new { Name = "name", Label = "Name", Type = "text", Value = user.Name })
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "email", Label = "Email", Type = "text", Value ="" })
+                        new { Name = "email", Label = "Email", Type = "text", Value = user.Email })
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "address", Label = "address", Type = "text", Value = "" })
+                        new { Name = "address", Label = "address", Type = "text", Value = user.Address })
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "phone", Label = "Phone", Type = "text", Value ="" })
+                        new { Name = "phone", Label = "Phone", Type = "text", Value = user.Phone })
                         @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                         new { Label = "Update Information" })
                     </form>

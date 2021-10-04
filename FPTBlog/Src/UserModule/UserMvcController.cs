@@ -1,9 +1,10 @@
+using System;
 using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.AuthModule.Interface;
-
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.UserModule {
     [Route("user")]
@@ -25,7 +26,10 @@ namespace FPTBlog.Src.UserModule {
 
         [HttpGet("me")]
         public IActionResult GetProfile() {
-            return View(Routers.UserGetProfile.Page);
+            var user = (User) this.ViewData["user"];
+
+            this.ViewData["profile"] = user;
+            return View(Routers.UserGetMyProfile.Page);
         }
 
         [HttpGet("update")]

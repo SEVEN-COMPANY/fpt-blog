@@ -4,7 +4,7 @@ using FPTBlog.Utils.Locale;
 using FPTBlog.Utils.Validator;
 
 namespace FPTBlog.Src.UserModule.DTO {
-    public class ChangePassDto {
+    public class ChangePasswordDto {
         public string OldPassword {
             get; set;
         }
@@ -16,8 +16,8 @@ namespace FPTBlog.Src.UserModule.DTO {
         }
     }
 
-    public class ChangePassDtoValidator : AbstractValidator<ChangePassDto> {
-        public ChangePassDtoValidator() {
+    public class ChangePasswordDtoValidator : AbstractValidator<ChangePasswordDto> {
+        public ChangePasswordDtoValidator() {
             RuleFor(x => x.OldPassword).NotEmpty().NotNull().Length(UserValidator.PASSWORD_MIN, UserValidator.PASSWORD_MAX);
             RuleFor(x => x.NewPassword).NotEmpty().NotNull().Length(UserValidator.PASSWORD_MIN, UserValidator.PASSWORD_MAX)
             .Custom((value, context) => {

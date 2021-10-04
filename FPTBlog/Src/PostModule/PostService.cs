@@ -34,7 +34,8 @@ namespace FPTBlog.Src.PostModule {
         public void AddTagToPost(Post post, Tag tag) => this.PostRepository.AddTagToPost(post, tag);
         public void RemoveTagFromPost(Post post, Tag tag) => this.PostRepository.RemoveTagFromPost(post, tag);
         public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, string search, string categoryId) {
-            var list = (IEnumerable<Post>) this.PostRepository.GetAll(item => ((int) item.Status) == 3 && (item.Title.Contains(search) || item.Student.Name.Contains(search)));
+            var list = this.PostRepository.GetAll(item => item.Status == PostStatus.APPROVED && (item.Title.Contains(search) || item.Student.Name.Contains(search)));
+
             var count = list.Count();
             var listForPage = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
 
