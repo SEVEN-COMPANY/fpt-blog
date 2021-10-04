@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 
@@ -9,5 +10,6 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public void RemoveUserReward(UserReward userReward);
         public UserReward GetUserReward(Reward reward, User user);
         public void UpdateReward(Reward reward);
+        public List<Reward> GetAllReward();
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.RewardModule.DTO;
@@ -162,6 +163,15 @@ namespace FPTBlog.Src.RewardModule {
             this.RewardService.RemoveUserReward(userReward);
             res.data = userReward;
             return new ObjectResult(res.getResponse());
+        }
+
+        [HttpGet("")]
+        public ObjectResult GetAllReward() {
+            var res = new ServerApiResponse<List<Reward>>();
+            List<Reward> rewards = this.RewardService.GetAllReward();
+            res.data = rewards;
+            return new ObjectResult(res.getResponse());
+
         }
     }
 }
