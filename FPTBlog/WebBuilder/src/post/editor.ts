@@ -108,7 +108,8 @@ handleSelectBadge(
             };
 
             const { data } = await http.post<ServerResponse<Tag[]>>(routers.post.addNewTagToPost, input);
-
+            const tag = document.getElementById('tag') as HTMLInputElement;
+            tag.value = '';
             return data.data.map((item) => item.name);
         }
         return [];
