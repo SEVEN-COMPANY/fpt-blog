@@ -19,9 +19,11 @@ namespace FPTBlog.Src.UserModule {
         public void RemoveUser(User user) => this.UserRepository.Remove(user);
 
         public void BlockUserByAdminHandler(User user) {
-            User blockedUser = this.GetUserByUserId(user.UserId);
-            blockedUser.Status = 0;
-            this.UserRepository.Update(blockedUser);
+            if (user.Status == UserStatus.ENABLE)
+                user.Status = UserStatus.DISABLE;
+            else
+                user.Status = UserStatus.ENABLE;
+            this.UserRepository.Update(user);
         }
 
         public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) => this.UserRepository.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);

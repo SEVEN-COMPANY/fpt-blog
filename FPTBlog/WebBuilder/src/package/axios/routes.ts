@@ -19,6 +19,7 @@ export const routers = {
         changePassword: '/api/user/change-password',
         update: '/api/user',
         get: '/api/user',
+        block: '/api/admin/user/block',
     },
     tag: {
         getAll: '/api/tag/all',
