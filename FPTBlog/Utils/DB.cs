@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 using FPTBlog.Src.PostModule.Entity;
+using FPTBlog.Src.RewardModule.Entity;
 
 namespace FPTBlog.Utils {
     public class DB : DbContext {
@@ -41,6 +42,13 @@ namespace FPTBlog.Utils {
         }
 
 
+        public DbSet<Reward> Reward {
+            get; set;
+        }
+
+        public DbSet<UserReward> UserReward {
+            get; set;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 

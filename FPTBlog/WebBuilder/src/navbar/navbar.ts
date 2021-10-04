@@ -21,8 +21,6 @@ navBtn?.addEventListener('click', function () {
     }
 });
 
-console.log('hello');
-
 let currentY = window.scrollY;
 
 window.addEventListener('scroll', function () {

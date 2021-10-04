@@ -47,19 +47,17 @@ namespace FPTBlog.Src.PostModule {
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
         public (List<Post>, int) GetPopularPosts(int quantity) {
-            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(),
-                                                                includeProperties: "Category,Student");
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
 
         public (List<Post>, int) GetHighestPointPosts(int quantity) {
-            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.Like - p.Dislike + p.View / 10).Take(quantity).ToList());
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.Like - p.Dislike + p.View / 10).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
 
         public (List<Post>, int) GetNewestPosts(int quantity) {
-            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.CreateDate).Take(quantity).ToList(),
-                                                                includeProperties: "Category,Student");
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.CreateDate).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
         public int CalculatePostPoint(Post post) {
