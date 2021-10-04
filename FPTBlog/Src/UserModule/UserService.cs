@@ -26,5 +26,7 @@ namespace FPTBlog.Src.UserModule {
 
         public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) => this.UserRepository.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) => this.UserRepository.GetUsersWithCount(pageSize, pageIndex, searchName);
+
+        public void FollowUser(User followingUser, User follower) => this.UserRepository.FollowUser(followingUser, follower);
     }
 }
