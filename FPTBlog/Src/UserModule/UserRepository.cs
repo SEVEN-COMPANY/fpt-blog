@@ -12,6 +12,34 @@ namespace FPTBlog.Src.UserModule {
             this.Db = db;
         }
 
+        // Đếm những đứa follow mình
+        public (List<User>, int) CalculateFollower(string userId) {
+            List<FollowInfo> followInfos = this.Db.FollowInfo.Where(item => item.FollowingUserId == userId).ToList();
+
+            List<User> users = new List<User>();
+            foreach(var followInfo in followInfos){
+                User foundUser = this.GetFirstOrDefault(item => item.UserId == followInfo.FollowerId);
+                if(foundUser != null){
+                    users.Add(foundUser);
+                }
+            }
+            return (users, users.Count);
+        }
+
+        // Đếm những thằng mà mình follow nó
+        public (List<User>, int) CalculateFollowing(string userId) {
+            List<FollowInfo> followInfos = this.Db.FollowInfo.Where(item => item.FollowerId == userId).ToList();
+
+            List<User> users = new List<User>();
+            foreach(var followInfo in followInfos){
+                User foundUser = this.GetFirstOrDefault(item => item.UserId == followInfo.FollowingUserId);
+                if(foundUser != null){
+                    users.Add(foundUser);
+                }
+            }
+            return (users, users.Count);
+        }
+
         public void FollowUser(User followingUser, User follower) {
             FollowInfo followInfo = new FollowInfo(){
                 Follower = follower,
@@ -38,6 +66,14 @@ namespace FPTBlog.Src.UserModule {
 
 
             return (pagelist, count);
+        }
+
+        public bool IsFollow(string userId, string followerId) {
+            List<FollowInfo> followInfos =  this.Db.FollowInfo.Where(item => item.FollowerId == followerId && item.FollowingUserId == userId).ToList();
+            if(followInfos != null){
+                return true;
+            }
+            return false;
         }
     }
 }

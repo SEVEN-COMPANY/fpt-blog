@@ -30,5 +30,9 @@ namespace FPTBlog.Src.UserModule {
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) => this.UserRepository.GetUsersWithCount(pageSize, pageIndex, searchName);
 
         public void FollowUser(User followingUser, User follower) => this.UserRepository.FollowUser(followingUser, follower);
+        public (List<User>, int) CalculateFollower(string userId) => this.UserRepository.CalculateFollower(userId);
+        public (List<User>, int) CalculateFollowing(string userId) => this.UserRepository.CalculateFollowing(userId);
+
+        public bool IsFollow(string userId, string followerId) => this.UserRepository.IsFollow(userId, followerId);
     }
 }

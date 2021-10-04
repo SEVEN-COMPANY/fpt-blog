@@ -7,5 +7,8 @@ namespace FPTBlog.Src.UserModule.Interface {
         (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName);
         (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus);
         void FollowUser(User followingUser, User follower);
+        public (List<User>, int) CalculateFollower(string userId);
+        public (List<User>, int) CalculateFollowing(string userId);
+        public bool IsFollow(string userId, string followerId);
     }
 }

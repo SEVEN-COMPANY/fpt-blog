@@ -104,6 +104,7 @@ namespace FPTBlog.Src.UserModule {
 
         [HttpPost("follow")]
         public IActionResult FollowUser(string followerId){
+            // check follow chưa nữa
             IDictionary<string,User> dataRes = new Dictionary<string, User>();
             ServerApiResponse<IDictionary<string,User>> res = new ServerApiResponse<IDictionary<string,User>>();
             User user = (User) this.ViewData["user"];
@@ -116,6 +117,11 @@ namespace FPTBlog.Src.UserModule {
             User follower = this.UserService.GetUserByUserId(followerId);
             if(follower == null){
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            if(this.UserService.IsFollow(user.UserId, followerId)){
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
