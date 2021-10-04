@@ -8,6 +8,8 @@ namespace FPTBlog.Src.UserModule.Entity
     public class FollowInfo
     {
         [Key]
+        [Required]
+        [StringLength(40)]
         public string FollowInfoId{
             get;set;
         }

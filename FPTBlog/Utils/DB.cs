@@ -58,6 +58,15 @@ namespace FPTBlog.Utils {
                 .WithMany(x => x.PostTags)
                 .HasForeignKey(x => x.TagId);
 
+            modelBuilder.Entity<FollowInfo>()
+                .HasOne(x => x.Follower)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FollowInfo>()
+                .HasOne(x => x.FollowingUser)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
 
             // modelBuilder.Entity<LikePost>().HasKey(item => new { item.PostId, item.UserId });
 
