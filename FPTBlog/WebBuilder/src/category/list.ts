@@ -24,10 +24,6 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
     event.preventDefault();
     const name = document.getElementById('name') as HTMLInputElement;
     const description = document.getElementById('description') as HTMLInputElement;
-    console.log(name);
-    console.log(name.value);
-    console.log(description);
-    console.log(description.value);
 
     if (name != null && description != null && status != null) {
         const input: CreateCategoryDto = {
