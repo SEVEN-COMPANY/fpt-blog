@@ -36,6 +36,8 @@ using FPTBlog.Utils.Repository;
 using FPTBlog.Utils.Repository.Interface;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule;
+using FPTBlog.Src.RewardModule.Interface;
+using FPTBlog.Src.RewardModule;
 
 namespace FPTBlog {
     public class Startup {
@@ -61,6 +63,7 @@ namespace FPTBlog {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<AuthGuard>();
+            services.AddScoped<UserFilter>();
 
             // User Module
             services.AddScoped<IUserRepository, UserRepository>();
@@ -82,6 +85,10 @@ namespace FPTBlog {
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostService, PostService>();
 
+            // Reward Module
+            services.AddScoped<IRewardRepository, RewardRepository>();
+            services.AddScoped<IUserRewardRepository, UserRewardRepository>();
+            services.AddScoped<IRewardService, RewardService>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

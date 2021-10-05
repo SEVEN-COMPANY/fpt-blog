@@ -1,16 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Views",
     "\\Views\\Components",
     "\\Views\\Components\\Common",
     "\\Views\\Components\\Footer",
-    "\\Views\\Components\\Form",
-    "\\Views\\Components\\Navbar",
-    "\\Views\\Containers\\Auth",
-    "\\Views\\Containers\\Home",
-    "\\Views\\Containers\\User"
+    "\\Views\\Components\\Navbar"
   ],
-  "SelectedNode": "\\Views\\Components\\Navbar\\Navbar.cshtml",
+  "SelectedNode": "\\Views",
   "PreviewInSolutionExplorer": false
 }

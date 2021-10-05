@@ -169,3 +169,10 @@
 .intro-z {
     animation: IntroZ 0.5s forwards;
 }
+
+@media (min-width: 768px) {
+    .post-image {
+        min-height: 140px;
+        max-height: 545px;
+    }
+}

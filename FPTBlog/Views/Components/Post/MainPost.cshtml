@@ -1,19 +1,21 @@
 @using FPTBlog.Src.PostModule.Entity
+@using FPTBlog.Utils.Common
 @{
     var value = (PostViewModel)Model.Value;
+    var link = $"{Routers.PostGetPost.Link}?postId={value.Post.PostId}";
 }
 
 
-<div class="relative flex flex-col flex-1 rounded-sm">
-    <div class="flex-1">
-        <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="block object-cover w-full h-full" alt="">
+<a href="@link" class="relative flex flex-col flex-1 rounded-sm post-image">
+    <div class="flex-1 h-78">
+        <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="block object-cover w-full h-full ">
 
     </div>
     <div class="w-full px-2 py-2 space-y-2 ">
         <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2 font-semibold ">
-                <div class="w-1 h-8 bg-tango-500"></div>
-                <p>@value.Post.Category.Name</p>
+            <div class="flex items-center space-x-2 text-sm">
+                <div class="w-1 h-6 bg-tango-500"></div>
+                <p class="opacity-60">@value.Post.Category.Name</p>
             </div>
             <div>
                 <p class="text-xs opacity-60">
@@ -24,7 +26,7 @@
         <h1 class="text-xl font-semibold md:text-xl">
             @value.Post.Title
         </h1>
-        <div class="flex space-x-8 text-xs italic opacity-60 md:text-sm">
+        <div class="flex space-x-8 text-xs opacity-60 md:text-sm">
             <p class="">@value.Post.Student.Name</p>
             <p>@value.Post.CreateDate</p>
         </div>
@@ -71,4 +73,4 @@
 
         </div>
     </div>
-</div>
+</a>

@@ -53,9 +53,12 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpPost("")]
         public IActionResult AddBlogHandler() {
+            var (categories, _) = this.CategoryService.GetCategories();
             Post post = new Post();
             post.Student = (User) this.ViewData["user"];
             post.StudentId = ((User) this.ViewData["user"]).UserId;
+            post.CategoryId = categories[0].CategoryId;
+            post.Category = categories[0];
             this.PostService.AddPost(post);
             var res = new ServerApiResponse<Post>();
             res.data = post;
@@ -284,6 +287,19 @@ namespace FPTBlog.Src.PostModule {
             this.PostService.DislikePost(post, user);
             res.data = post;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("suggest")]
+        public IActionResult SuggestSearch([FromBody] SuggestSearchDto input) {
+            var res = new ServerApiResponse<List<String>>();
+            ValidationResult result = new SuggestSearchDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            List<string> suggest = this.PostService.GetPostSuggestion(input.Search, input.CategoryId);
+            res.data = suggest;
             return new ObjectResult(res.getResponse());
         }
     }

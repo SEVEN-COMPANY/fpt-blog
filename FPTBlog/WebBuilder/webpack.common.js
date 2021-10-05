@@ -2,12 +2,13 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        home: ['./src/navbar/navbar.ts'],
+        navbar: ['./src/navbar/navbar.ts'],
         'auth-login': ['./src/auth/login.ts'],
         'auth-register': ['./src/auth/register.ts'],
         'auth-update': ['./src/auth/login.ts'],
         'user-list': ['./src/user/list.ts'],
         'user-update': ['./src/user/update.ts'],
+        'user-block': ['./src/user/block.ts'],
         'user-changePassword': ['./src/user/changePassword.ts'],
         'category-create': ['./src/category/create.ts'],
         'category-update': ['./src/category/update.ts'],

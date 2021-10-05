@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 namespace FPTBlog.Src.AuthModule {
 
     [Route("/auth")]
+    [ServiceFilter(typeof(UserFilter))]
     public class AuthMvcController : Controller {
 
 
@@ -26,6 +27,10 @@ namespace FPTBlog.Src.AuthModule {
 
         [HttpGet("login")]
         public IActionResult LoginPage() {
+            var user = (User) this.ViewData["user"];
+            if (user != null) {
+                return Redirect(Routers.CommonGetHome.Link);
+            }
             return View(Routers.AuthPostLogin.Page);
         }
 
@@ -60,6 +65,10 @@ namespace FPTBlog.Src.AuthModule {
 
         [HttpGet("register")]
         public IActionResult RegisterPage() {
+            var user = (User) this.ViewData["user"];
+            if (user != null) {
+                return Redirect(Routers.CommonGetHome.Link);
+            }
             return View(Routers.AuthPostRegister.Page);
         }
 

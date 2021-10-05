@@ -33,10 +33,10 @@ namespace FPTBlog.Src.PostModule {
         public void RemovePost(Post post) => this.PostRepository.Remove(post);
         public void AddTagToPost(Post post, Tag tag) => this.PostRepository.AddTagToPost(post, tag);
         public void RemoveTagFromPost(Post post, Tag tag) => this.PostRepository.RemoveTagFromPost(post, tag);
-        public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, PostStatus searchStatus) {
-            var list = (IEnumerable<Post>) this.PostRepository.GetAll(item => item.Status == searchStatus);
+        public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, string search, string categoryId) {
+            var list = this.PostRepository.GetAll(item => ((item.Title.Contains(search) || item.Student.Name.Contains(search)) && item.CategoryId.Contains(categoryId)), includeProperties: "Category,Student");
             var count = list.Count();
-            var listForPage = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize);
+            var listForPage = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
             return (listForPage, count);
         }
@@ -46,17 +46,17 @@ namespace FPTBlog.Src.PostModule {
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
         public (List<Post>, int) GetPopularPosts(int quantity) {
-            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList());
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
 
         public (List<Post>, int) GetHighestPointPosts(int quantity) {
-            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.Like - p.Dislike + p.View / 10).Take(quantity).ToList());
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.Like - p.Dislike + p.View / 10).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
 
         public (List<Post>, int) GetNewestPosts(int quantity) {
-            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.CreateDate).Take(quantity).ToList());
+            var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.CreateDate).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
         public int CalculatePostPoint(Post post) {
@@ -77,6 +77,12 @@ namespace FPTBlog.Src.PostModule {
             int count = list.Count;
 
             return (list, count);
+        }
+
+        public List<string> GetPostSuggestion(string search, string categoryId) {
+            var list = (IEnumerable<Post>) this.PostRepository.GetAll(item => ((int) item.Status) == 3 && (item.Title.Contains(search) || item.Student.Name.Contains(search)));
+            List<string> result = list.Take(10).Skip(0).Select(item => item.Title).ToList();
+            return result;
         }
     }
 }

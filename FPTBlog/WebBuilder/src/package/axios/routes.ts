@@ -5,7 +5,7 @@ export const routerLinks = {
 export const routers = {
     category: {
         create: '/api/category',
-        update: '/api/category/update',
+        update: '/api/category',
     },
     post: {
         create: '/api/post',
@@ -19,6 +19,7 @@ export const routers = {
         changePassword: '/api/user/change-password',
         update: '/api/user',
         get: '/api/user',
+        block: '/api/admin/user/block',
     },
     tag: {
         getAll: '/api/tag/all',
