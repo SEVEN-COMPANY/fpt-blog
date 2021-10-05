@@ -2,6 +2,7 @@
     var viewData = (ViewDataDictionary<dynamic>)Model;
 
     var user = (User)this.ViewData["user"] ?? new User();
+    var listNavbar = new[] { "Club", "Student", "IT", "Cyber Security" };
 }
 
 <div class="fixed z-30 w-full duration-300 transform bg-white" id="navbar-layout">
@@ -76,22 +77,21 @@
                 <ul class="space-y-6 font-medium">
 
                     <li>
-                        <a class="text-tango-500" href="#">Home</a>
+                        <a class="text-tango-500" href="@Routers.CommonGetHome.Link">Home</a>
                     </li>
+
+                    @foreach (var item in listNavbar)
+                    {
+                        var link = $"{Routers.PostGetSearch.Link}?search={item}";
+
+                        <li>
+                            <a href="@link" class="duration-300 text-shark-300 hover:text-tango-500">@item</a>
+                        </li>
+                    }
+
                     <li>
-                        <a class="text-shark-300">Club</a>
-                    </li>
-                    <li>
-                        <a class="text-shark-300">Student</a>
-                    </li>
-                    <li>
-                        <a class="text-shark-300">IT</a>
-                    </li>
-                    <li>
-                        <a class="text-shark-300">Cyber Security</a>
-                    </li>
-                    <li>
-                        <a class="text-shark-300">Contact</a>
+                        <a href="https://github.com/MonoInfinity/fpt-blog" target="_blank"
+                            class="text-shark-300">Contact</a>
                     </li>
                     @if (user.Name != "")
                     {
@@ -258,20 +258,19 @@
                 <li>
                     <a class="text-tango-500" href="@Routers.CommonGetHome.Link">Home</a>
                 </li>
+
+                @foreach (var item in listNavbar)
+                {
+                    var link = $"{Routers.PostGetSearch.Link}?search={item}";
+
+                    <li>
+                        <a href="@link" class="duration-300 text-shark-300 hover:text-tango-500">@item</a>
+                    </li>
+                }
+
+
                 <li>
-                    <a class="text-shark-300" href="@Routers.CommonGetHome.Link">Club</a>
-                </li>
-                <li>
-                    <a class="text-shark-300">Student</a>
-                </li>
-                <li>
-                    <a class="text-shark-300">IT</a>
-                </li>
-                <li>
-                    <a class="text-shark-300">Cyber Security</a>
-                </li>
-                <li>
-                    <a class="text-shark-300">Contact</a>
+                    <a href="https://github.com/MonoInfinity/fpt-blog" target="_blank" class="text-shark-300">Contact</a>
                 </li>
             </ul>
         </div>

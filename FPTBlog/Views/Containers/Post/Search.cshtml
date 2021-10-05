@@ -17,15 +17,15 @@
         <div class="flex space-x-4">
 
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-            new {Name="search", Label="Search", Type="text", Value=""})
+            new {Name="search", Label="Search", Type="text", Value= this.Context.Request.Query["search"]})
 
             @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
-            new {Name="categoryId", Label="Category", Value="", List=categories})
+            new {Name="categoryId", Label="Category", Value=this.Context.Request.Query["categoryId"], List=categories})
         </div>
-        <div class="w-1/5">
+        <div class="md:w-1/5">
 
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-            new { Label="Save Changes"})
+            new { Label="Search "})
         </div>
     </form>
     <div>
