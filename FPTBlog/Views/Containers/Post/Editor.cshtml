@@ -16,7 +16,7 @@
     var previewLink = $"{Routers.PostGetPreview.Link}?postId={post.PostId}";
 }
 
-<div class="flex-1 pt-8 pb-16 fade-in">
+<div class="flex-1 px-2 pt-8 pb-16 fade-in ">
 
     <form class="space-y-4" id="createBlogForm">
         <div class="flex items-center justify-between">
@@ -54,7 +54,7 @@
         <div class="flex items-center space-x-4">
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
             new { Label="Save Changes"})
-    @* <button type="button" id="delete" data-userId="csss"></button> *@
+            @* <button type="button" id="delete" data-userId="csss"></button> *@
             <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500 fade-in"
                 onclick="return confirm('Do you save your post, click ok to go to preview page?')" target="_blank">
                 Preview
