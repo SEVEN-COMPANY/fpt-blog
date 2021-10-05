@@ -309,6 +309,11 @@
     parchment "^1.1.2"
     quill-delta "^4.0.1"
 
+"@types/toastify-js@^1.9.2":
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/@types/toastify-js/-/toastify-js-1.9.2.tgz#de9ea5212f6adb73919a5dcc33158f30881d8c35"
+  integrity sha512-lIbjnaArz56dM++EsrMnt9OK9RSIMAcJGz2sfpuoblLeqYYzyvyDaJu306++K9CtvWWlmj5HXG5CnuqYJKxDbg==
+
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.1.tgz#2bfd767eae1a6996f432ff7e8d7fc75679c0b6a7"

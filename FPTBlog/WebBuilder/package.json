@@ -29,5 +29,8 @@
         "webpack": "^5.52.1",
         "webpack-cli": "^4.8.0",
         "webpack-merge": "^5.8.0"
+    },
+    "devDependencies": {
+        "@types/toastify-js": "^1.9.2"
     }
 }
