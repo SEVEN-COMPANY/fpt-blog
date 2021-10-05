@@ -1,274 +1,40 @@
+@using FPTBlog.Src.PostModule.Entity
 @{
     ViewData["Title"] = Routers.PostGetSearch.Title;
+    SelectList categories = (SelectList)this.ViewData["categories"];
+
+    var blogs = (List<PostViewModel>)this.ViewData["blogs"];
 }
 
 <div class="px-2 mx-auto mt-8 space-y-4 md:w-4/5 lg:w-3/5">
     <h1 class="text-4xl font-semibold text-center">Search Post</h1>
-    <div class="flex flex-1 space-x-4 intro-x">
-        <div class="flex flex-col flex-1 space-y-1">
-            <label class="block font-semibold capitalize">Title</label>
-            <input
-                class="block w-full px-2 py-1 duration-300 border rounded-sm outline-none safari h-9 focus:border-tango-500"
-                id="title" name="title" type="text" value="Draft" />
-            <span class="block text-red-500 fade-in" id="TITLEERROR" data-label="Title"></span>
-        </div>
+    <form class="flex-1 space-y-2 intro-x">
+        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+        new {Name="pageSize", Value="12"})
+        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+        new {Name="indexPage", Value="0"})
 
-        <div class="flex flex-col flex-1 space-y-1">
-            <label class="block font-semibold capitalize"> Category </label>
-            <select class="block w-full px-2 py-1 duration-300 border outline-none h-9 focus:border-tango-500 safari"
-                id="categoryId" name="categoryId">
-                <option value="0122a162-2dba-460a-bae0-501b9fdbb94f">Graphic Design</option>
-                <option value="c6d0ba0f-33ee-40f0-995f-cd95c7e43496">Freestyle</option>
-                <option value="d45b8d14-3812-48bc-ab61-20011656f6f8">Business Administration</option>
-            </select>
-            <span class="block text-red-500 fade-in" id="CATEGORYIDERROR" data-label="Category"></span>
+        <div class="flex space-x-4">
+
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new {Name="search", Label="Search", Type="text", Value=""})
+
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new {Name="categoryId", Label="Category", Value="", List=categories})
         </div>
-    </div>
+        <div class="w-1/5">
+
+            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+            new { Label="Save Changes"})
+        </div>
+    </form>
     <div>
-        <ul>
-            <li>
-                <div class="flex-1 md:space-x-2 md:flex fade-in post-image intro-y">
-                    <div class="flex-1">
-                        <img src="https://s3-ap-southeast-1.amazonaws.com/images.spiderum.com/sp-images/4317d6e030ae11eaad035bca7cc993b1.jpg"
-                            alt="Image src not being inserted into quill" class="object-cover w-full h-full ">
-                    </div>
-                    <div class="flex flex-col flex-1 py-2 space-y-1 md:py-0">
+        <ul class="space-y-4">
+            @foreach (var item in blogs)
+            {
+                @await Html.PartialAsync("../../Components/Post/SidePost.cshtml", new {Value = item})
+            }
 
-                        <div class="flex items-center justify-between w-full text-sm ">
-                            <div class="flex items-center justify-between ">
-                                <div class="flex items-center space-x-1 ">
-                                    <div class="w-1 h-6 rounded-xs bg-tango-500"></div>
-                                    <p class="opacity-60">Pham Vinh Nhanssad</p>
-                                </div>
-
-                            </div>
-                            <span class="inline-block opacity-60">6 min read</span>
-
-
-                        </div>
-
-
-                        <h2 class="font-semibold">Image src not being inserted into quill</h2>
-                        <div class="flex items-center justify-between">
-                            <p class="text-xs opacity-60 ">Pham Vinh Nhan (K15 HCM)</p>
-
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex space-x-2">
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M10.3866 7.99995C10.3866 9.31995 9.31995 10.3866 7.99995 10.3866C6.67995 10.3866 5.61328 9.31995 5.61328 7.99995C5.61328 6.67995 6.67995 5.61328 7.99995 5.61328C9.31995 5.61328 10.3866 6.67995 10.3866 7.99995Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                        <path
-                                            d="M7.9999 13.5133C10.3532 13.5133 12.5466 12.1266 14.0732 9.72665C14.6732 8.78665 14.6732 7.20665 14.0732 6.26665C12.5466 3.86665 10.3532 2.47998 7.9999 2.47998C5.64656 2.47998 3.45323 3.86665 1.92656 6.26665C1.32656 7.20665 1.32656 8.78665 1.92656 9.72665C3.45323 12.1266 5.64656 13.5133 7.9999 13.5133Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M4.98633 12.2331L7.05299 13.8331C7.31966 14.0998 7.91966 14.2331 8.31966 14.2331H10.853C11.653 14.2331 12.5197 13.6331 12.7197 12.8331L14.3197 7.96648C14.653 7.03315 14.053 6.23315 13.053 6.23315H10.3863C9.98633 6.23315 9.653 5.89982 9.71966 5.43315L10.053 3.29982C10.1863 2.69982 9.78633 2.03315 9.18633 1.83315C8.653 1.63315 7.98633 1.89982 7.71966 2.29982L4.98633 6.36648"
-                                            stroke="#666666" stroke-width="1.5" stroke-miterlimit="10"></path>
-                                        <path
-                                            d="M1.58691 12.2336V5.70026C1.58691 4.76693 1.98691 4.43359 2.92025 4.43359H3.58691C4.52025 4.43359 4.92025 4.76693 4.92025 5.70026V12.2336C4.92025 13.1669 4.52025 13.5003 3.58691 13.5003H2.92025C1.98691 13.5003 1.58691 13.1669 1.58691 12.2336Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M11.333 12.2868H8.66634L5.69967 14.2601C5.25967 14.5535 4.66634 14.2402 4.66634 13.7068V12.2868C2.66634 12.2868 1.33301 10.9535 1.33301 8.95349V4.95345C1.33301 2.95345 2.66634 1.62012 4.66634 1.62012H11.333C13.333 1.62012 14.6663 2.95345 14.6663 4.95345V8.95349C14.6663 10.9535 13.333 12.2868 11.333 12.2868Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-miterlimit="10"
-                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-                            </div>
-
-                            <p class="text-xs opacity-60">10/2/2021</p>
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="flex-1 md:space-x-2 md:flex fade-in post-image intro-y">
-                    <div class="flex-1">
-                        <img src="https://s3-ap-southeast-1.amazonaws.com/images.spiderum.com/sp-images/4317d6e030ae11eaad035bca7cc993b1.jpg"
-                            alt="Image src not being inserted into quill" class="object-cover w-full h-full ">
-                    </div>
-                    <div class="flex flex-col flex-1 py-2 space-y-1 md:py-0">
-
-                        <div class="flex items-center justify-between w-full text-sm ">
-                            <div class="flex items-center justify-between ">
-                                <div class="flex items-center space-x-1 ">
-                                    <div class="w-1 h-6 rounded-xs bg-tango-500"></div>
-                                    <p class="opacity-60">Pham Vinh Nhanssad</p>
-                                </div>
-
-                            </div>
-                            <span class="inline-block opacity-60">6 min read</span>
-
-
-                        </div>
-
-
-                        <h2 class="font-semibold">Image src not being inserted into quill</h2>
-                        <div class="flex items-center justify-between">
-                            <p class="text-xs opacity-60 ">Pham Vinh Nhan (K15 HCM)</p>
-
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex space-x-2">
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M10.3866 7.99995C10.3866 9.31995 9.31995 10.3866 7.99995 10.3866C6.67995 10.3866 5.61328 9.31995 5.61328 7.99995C5.61328 6.67995 6.67995 5.61328 7.99995 5.61328C9.31995 5.61328 10.3866 6.67995 10.3866 7.99995Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                        <path
-                                            d="M7.9999 13.5133C10.3532 13.5133 12.5466 12.1266 14.0732 9.72665C14.6732 8.78665 14.6732 7.20665 14.0732 6.26665C12.5466 3.86665 10.3532 2.47998 7.9999 2.47998C5.64656 2.47998 3.45323 3.86665 1.92656 6.26665C1.32656 7.20665 1.32656 8.78665 1.92656 9.72665C3.45323 12.1266 5.64656 13.5133 7.9999 13.5133Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M4.98633 12.2331L7.05299 13.8331C7.31966 14.0998 7.91966 14.2331 8.31966 14.2331H10.853C11.653 14.2331 12.5197 13.6331 12.7197 12.8331L14.3197 7.96648C14.653 7.03315 14.053 6.23315 13.053 6.23315H10.3863C9.98633 6.23315 9.653 5.89982 9.71966 5.43315L10.053 3.29982C10.1863 2.69982 9.78633 2.03315 9.18633 1.83315C8.653 1.63315 7.98633 1.89982 7.71966 2.29982L4.98633 6.36648"
-                                            stroke="#666666" stroke-width="1.5" stroke-miterlimit="10"></path>
-                                        <path
-                                            d="M1.58691 12.2336V5.70026C1.58691 4.76693 1.98691 4.43359 2.92025 4.43359H3.58691C4.52025 4.43359 4.92025 4.76693 4.92025 5.70026V12.2336C4.92025 13.1669 4.52025 13.5003 3.58691 13.5003H2.92025C1.98691 13.5003 1.58691 13.1669 1.58691 12.2336Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M11.333 12.2868H8.66634L5.69967 14.2601C5.25967 14.5535 4.66634 14.2402 4.66634 13.7068V12.2868C2.66634 12.2868 1.33301 10.9535 1.33301 8.95349V4.95345C1.33301 2.95345 2.66634 1.62012 4.66634 1.62012H11.333C13.333 1.62012 14.6663 2.95345 14.6663 4.95345V8.95349C14.6663 10.9535 13.333 12.2868 11.333 12.2868Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-miterlimit="10"
-                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-                            </div>
-
-                            <p class="text-xs opacity-60">10/2/2021</p>
-                        </div>
-
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="flex-1 md:space-x-2 md:flex fade-in post-image intro-y">
-                    <div class="flex-1">
-                        <img src="https://s3-ap-southeast-1.amazonaws.com/images.spiderum.com/sp-images/4317d6e030ae11eaad035bca7cc993b1.jpg"
-                            alt="Image src not being inserted into quill" class="object-cover w-full h-full ">
-                    </div>
-                    <div class="flex flex-col flex-1 py-2 space-y-1 md:py-0">
-
-                        <div class="flex items-center justify-between w-full text-sm ">
-                            <div class="flex items-center justify-between ">
-                                <div class="flex items-center space-x-1 ">
-                                    <div class="w-1 h-6 rounded-xs bg-tango-500"></div>
-                                    <p class="opacity-60">Pham Vinh Nhanssad</p>
-                                </div>
-
-                            </div>
-                            <span class="inline-block opacity-60">6 min read</span>
-
-
-                        </div>
-
-
-                        <h2 class="font-semibold">Image src not being inserted into quill</h2>
-                        <div class="flex items-center justify-between">
-                            <p class="text-xs opacity-60 ">Pham Vinh Nhan (K15 HCM)</p>
-
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex space-x-2">
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M10.3866 7.99995C10.3866 9.31995 9.31995 10.3866 7.99995 10.3866C6.67995 10.3866 5.61328 9.31995 5.61328 7.99995C5.61328 6.67995 6.67995 5.61328 7.99995 5.61328C9.31995 5.61328 10.3866 6.67995 10.3866 7.99995Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                        <path
-                                            d="M7.9999 13.5133C10.3532 13.5133 12.5466 12.1266 14.0732 9.72665C14.6732 8.78665 14.6732 7.20665 14.0732 6.26665C12.5466 3.86665 10.3532 2.47998 7.9999 2.47998C5.64656 2.47998 3.45323 3.86665 1.92656 6.26665C1.32656 7.20665 1.32656 8.78665 1.92656 9.72665C3.45323 12.1266 5.64656 13.5133 7.9999 13.5133Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M4.98633 12.2331L7.05299 13.8331C7.31966 14.0998 7.91966 14.2331 8.31966 14.2331H10.853C11.653 14.2331 12.5197 13.6331 12.7197 12.8331L14.3197 7.96648C14.653 7.03315 14.053 6.23315 13.053 6.23315H10.3863C9.98633 6.23315 9.653 5.89982 9.71966 5.43315L10.053 3.29982C10.1863 2.69982 9.78633 2.03315 9.18633 1.83315C8.653 1.63315 7.98633 1.89982 7.71966 2.29982L4.98633 6.36648"
-                                            stroke="#666666" stroke-width="1.5" stroke-miterlimit="10"></path>
-                                        <path
-                                            d="M1.58691 12.2336V5.70026C1.58691 4.76693 1.98691 4.43359 2.92025 4.43359H3.58691C4.52025 4.43359 4.92025 4.76693 4.92025 5.70026V12.2336C4.92025 13.1669 4.52025 13.5003 3.58691 13.5003H2.92025C1.98691 13.5003 1.58691 13.1669 1.58691 12.2336Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-                                <div class="flex items-center space-x-0.5">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M11.333 12.2868H8.66634L5.69967 14.2601C5.25967 14.5535 4.66634 14.2402 4.66634 13.7068V12.2868C2.66634 12.2868 1.33301 10.9535 1.33301 8.95349V4.95345C1.33301 2.95345 2.66634 1.62012 4.66634 1.62012H11.333C13.333 1.62012 14.6663 2.95345 14.6663 4.95345V8.95349C14.6663 10.9535 13.333 12.2868 11.333 12.2868Z"
-                                            stroke="#666666" stroke-width="1.5" stroke-miterlimit="10"
-                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-
-
-                                    <p class="text-sm font-medium opacity-60">0</p>
-                                </div>
-                            </div>
-
-                            <p class="text-xs opacity-60">10/2/2021</p>
-                        </div>
-
-                    </div>
-                </div>
-            </li>
         </ul>
     </div>
 </div>
