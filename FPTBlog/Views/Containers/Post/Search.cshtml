@@ -29,7 +29,7 @@
         </div>
     </form>
     <div>
-        <ul class="space-y-4">
+        <ul class="space-y-4 intro-y">
             @foreach (var item in blogs)
             {
                 @await Html.PartialAsync("../../Components/Post/SidePost.cshtml", new {Value = item})
