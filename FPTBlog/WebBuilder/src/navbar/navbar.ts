@@ -14,7 +14,7 @@ navBtn?.addEventListener('click', function () {
         navBg.classList.toggle('invisible');
         navMenu.classList.toggle('-translate-x-full');
 
-        navBtn1.classList.add('translate-y-3.5');
+        navBtn1.classList.toggle('translate-y-3.5');
         navBtn1.classList.toggle('rotate-45');
         navBtn2.classList.toggle('-translate-x-2');
         navBtn2.classList.toggle('opacity-0');
