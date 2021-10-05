@@ -59,13 +59,13 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpPost("change-password")]
-        public IActionResult ChangePasswordHandler([FromBody] ChangePassDto body) {
+        public IActionResult ChangePasswordHandler([FromBody] ChangePasswordDto body) {
 
 
             var res = new ServerApiResponse<string>();
             User user = (User) this.ViewData["user"];
 
-            ValidationResult result = new ChangePassDtoValidator().Validate(body);
+            ValidationResult result = new ChangePasswordDtoValidator().Validate(body);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());

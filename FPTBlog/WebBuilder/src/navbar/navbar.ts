@@ -11,25 +11,24 @@ navBtn?.addEventListener('click', function () {
         navBg.classList.toggle('z-40');
         navBg.classList.toggle('z-0');
         navBg.classList.toggle('opacity-0');
+        navBg.classList.toggle('invisible');
         navMenu.classList.toggle('-translate-x-full');
-        navBtn1.classList.toggle('translate-y-3.5');
+
+        navBtn1.classList.add('translate-y-3.5');
         navBtn1.classList.toggle('rotate-45');
         navBtn2.classList.toggle('-translate-x-2');
         navBtn2.classList.toggle('opacity-0');
         navBtn3.classList.toggle('-translate-y-2');
         navBtn3.classList.toggle('-rotate-45');
+    } else {
     }
 });
-
-console.log('hello');
 
 let currentY = window.scrollY;
 
 window.addEventListener('scroll', function () {
-    console.log(this.window.scrollY);
     const navbar = this.document.getElementById('navbar-layout');
     if (currentY < this.window.scrollY) {
-        console.log('hello');
         currentY = this.window.screenY;
 
         navbar?.classList.add('md:-translate-y-18');

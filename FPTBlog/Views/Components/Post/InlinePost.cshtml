@@ -1,9 +1,10 @@
 @using FPTBlog.Src.PostModule.Entity
 @{
     var value = (PostViewModel)Model.Value;
+    var link = $"{Routers.PostGetPost.Link}?postId={value.Post.PostId}";
 }
 
-<div class="flex-1 p-2 space-y-2 bg-gray-100 rounded-sm fade-in ">
+<a href="@link" class="flex-1 p-2 space-y-2 bg-gray-100 rounded-sm fade-in ">
     <div class="h-48">
         <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="object-cover w-full h-full ">
     </div>
@@ -66,4 +67,4 @@
         </div>
         <p class="text-xs opacity-60">@value.Post.CreateDate</p>
     </div>
-</div>
+</a>

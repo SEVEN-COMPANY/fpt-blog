@@ -7,9 +7,10 @@ using FPTBlog.Utils.Locale;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FluentValidation.Results;
+using System;
 
 namespace FPTBlog.Src.UserModule {
-    [Route("api/admin")]
+    [Route("api/admin/user")]
     [ServiceFilter(typeof(AuthGuard))]
     public class AdminApiController : Controller {
         private readonly IAuthService AuthService;
@@ -19,14 +20,10 @@ namespace FPTBlog.Src.UserModule {
             this.UserService = userService;
             this.AuthService = authService;
         }
-        [HttpPost("block")]
+        [HttpPut("block")]
         public IActionResult BlockUserHandler([FromBody] BlockUserDto body) {
-            var res = new ServerApiResponse<BlockUserDto>();
-            User admin = (User) this.ViewData["user"];
-            if (admin.Role != UserRole.LECTURER) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
-                return new BadRequestObjectResult(res.getResponse());
-            }
+            var res = new ServerApiResponse<string>();
+
             ValidationResult result = new BlockUserDtoValidator().Validate(body);
             if (!result.IsValid) {
                 res.mapDetails(result);
