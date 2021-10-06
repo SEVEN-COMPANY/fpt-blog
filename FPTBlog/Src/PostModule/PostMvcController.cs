@@ -142,54 +142,5 @@ namespace FPTBlog.Src.PostModule {
                 total = total
             });
         }
-
-        // [HttpGet("home")]
-        // public IActionResult GetPostForHome() {
-        //     var (listHighestPoint, _) = this.PostService.GetHighestPointPosts(4);
-        //     var (listPopular, _) = this.PostService.GetPopularPosts(16);
-        //     var (listNewest, _) = this.PostService.GetNewestPosts(16);
-
-        //     PostViewModel postViewModelTop1 = new PostViewModel() {
-        //         Post = listHighestPoint[0],
-        //         NumberOfComment = this.PostService.GetCommentOfPost(listHighestPoint[0]).Item2
-        //     };
-
-        //     List<PostViewModel> listTop3 = new List<PostViewModel>();
-        //     for (int i = 1; i <= 3; i++) {
-        //         PostViewModel pvm = new PostViewModel() {
-        //             Post = listHighestPoint[i],
-        //             NumberOfComment = this.PostService.GetCommentOfPost(listHighestPoint[i]).Item2
-        //         };
-        //         listTop3.Add(pvm);
-        //     }
-
-        //     List<PostViewModel> listMiddle16 = new List<PostViewModel>();
-        //     foreach (var item in listPopular) {
-        //         listMiddle16.Add(new PostViewModel() {
-        //             Post = item,
-        //             NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
-        //         });
-        //     }
-
-        //     List<PostViewModel> listBottom16 = new List<PostViewModel>();
-        //     foreach (var item in listNewest) {
-        //         listBottom16.Add(new PostViewModel() {
-        //             Post = item,
-        //             NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
-        //         });
-        //     }
-
-        //     this.ViewData["top1"] = postViewModelTop1;
-        //     this.ViewData["top3"] = listTop3;
-        //     this.ViewData["middle16"] = listMiddle16;
-        //     this.ViewData["bottom16"] = listBottom16;
-
-        //     return Json(new {
-        //         postViewModelTop1 = postViewModelTop1,
-        //         listTop3 = listTop3,
-        //         listMiddle16 = listMiddle16,
-        //         listBottom16 = listBottom16
-        //     });
-        // }
     }
 }

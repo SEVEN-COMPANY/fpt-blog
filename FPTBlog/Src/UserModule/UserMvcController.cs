@@ -32,19 +32,17 @@ namespace FPTBlog.Src.UserModule {
             var (listFollower, countFollower) = this.UserService.CalculateFollower(user.UserId);
             var (listFollowing, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
-            var (posts, count) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searCategoryId, status);
+            var (posts, countPost) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searCategoryId, status);
 
-            this.ViewData["profile"] = user;
-            return Json(new {
-                user = user,
-                listFollower = listFollower,
-                countFollower = countFollower,
-                listFollowing = listFollowing,
-                countFollowing = countFollowing,
-                posts = posts,
-                count = count
-            });
-            // return View(Routers.UserGetMyProfile.Page);
+            this.ViewData["user"] = user;
+            this.ViewData["listFollower"] = listFollower;
+            this.ViewData["countFollower"] = countFollower;
+            this.ViewData["listFollowing"] = listFollowing;
+            this.ViewData["countFollowing"] = countFollowing;
+            this.ViewData["posts"] = posts;
+            this.ViewData["countPost"] = countPost;
+
+            return View(Routers.UserGetMyProfile.Page);
         }
 
         [HttpGet("profile")]
@@ -57,14 +55,17 @@ namespace FPTBlog.Src.UserModule {
             var (listFollower, countFollower) = this.UserService.CalculateFollower(user.UserId);
             var (listFollowing, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
-            this.ViewData["profile"] = user;
-            return Json(new {
-                user = user,
-                listFollower = listFollower,
-                countFollower = countFollower,
-                listFollowing = listFollowing,
-                countFollowing = countFollowing
-            });
+            var (posts, countPost) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searCategoryId, status);
+
+            this.ViewData["user"] = user;
+            this.ViewData["listFollower"] = listFollower;
+            this.ViewData["countFollower"] = countFollower;
+            this.ViewData["listFollowing"] = listFollowing;
+            this.ViewData["countFollowing"] = countFollowing;
+            this.ViewData["posts"] = posts;
+            this.ViewData["countPost"] = countPost;
+
+            return View(Routers.UserGetMyProfile.Page);
         }
 
         [HttpGet("update")]
