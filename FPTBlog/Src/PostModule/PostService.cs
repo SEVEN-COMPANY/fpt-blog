@@ -43,7 +43,7 @@ namespace FPTBlog.Src.PostModule {
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByCategoryWithCount(pageIndex, pageSize, name);
         public List<Tag> GetTagsFromPost(Post post) => this.PostRepository.GetTagsFromPost(post);
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByTagWithCount(pageIndex, pageSize, name);
-        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
+        public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
         public (List<Post>, int) GetPopularPosts(int quantity) {
             var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(), includeProperties: "Category,Student");
@@ -94,6 +94,12 @@ namespace FPTBlog.Src.PostModule {
             int count = list.Count();
             var listForView = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             return (listForView, count);
+        }
+
+        public (List<Post>, int) GetPostsOfStudentWithStatus(string userId, PostStatus status) {
+            var posts =  this.PostRepository.GetAll(item => item.StudentId == userId && item.Status == status).ToList();
+            int count = posts.Count;
+            return (posts, count);
         }
     }
 }
