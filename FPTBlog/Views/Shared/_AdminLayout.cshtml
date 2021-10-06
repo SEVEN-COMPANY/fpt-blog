@@ -30,10 +30,10 @@
 
 <body>
     <main class="relative">
-        @await Html.PartialAsync("../../ViewsAdmin/Components/Navbar/Index.cshtml", RenderBody())
+        @await Html.PartialAsync("../../ViewsAdmin/Components/Navbar/Index.cshtml",RenderBody())
     </main>
 
-    <script src="https://heaty566.github.io/script-service/midone/tinker/app.js"></script>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

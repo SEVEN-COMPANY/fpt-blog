@@ -1,12 +1,13 @@
+using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Utils.Common;
-using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.TagModule {
     [Route("admin/tag")]
+    [ServiceFilter(typeof(AuthGuard))]
     public class TagMvcController : Controller {
         private readonly ITagService TagService;
         public TagMvcController(ITagService tagService) {
