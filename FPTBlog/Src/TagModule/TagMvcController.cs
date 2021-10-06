@@ -3,7 +3,7 @@ using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.TagModule {
     [Route("admin/tag")]
@@ -20,6 +20,13 @@ namespace FPTBlog.Src.TagModule {
             if (searchName == null) {
                 searchName = "";
             }
+
+            var statusList = this.TagService.GetTagStatusDroplist();
+            statusList.Add(new SelectListItem() { Text = "All", Value = "" });
+            SelectList list = new SelectList(statusList, "");
+
+            this.ViewData["statusSearch"] = list;
+
 
             var (listTag, total) = this.TagService.GetTagsBelongToPostWithCount(pageIndex, pageSize, searchName, searchStatus);
             ViewData["tags"] = listTag;

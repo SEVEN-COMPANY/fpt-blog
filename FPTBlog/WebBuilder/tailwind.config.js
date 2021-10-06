@@ -1,7 +1,7 @@
 const theme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: ['./../Views/**/*.cshtml', './../wwwroot/**/*.js', './../Views/**/*.cs'],
+    purge: ['./../Views/**/*.cshtml', './../wwwroot/**/*.js', './../Views/**/*.cs', './../ViewsAdmin/**/*.cshtml'],
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {},

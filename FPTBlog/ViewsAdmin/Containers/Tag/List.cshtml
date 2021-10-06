@@ -2,119 +2,180 @@
 @{
     var listTags = (List<IDictionary<string, object>>)this.ViewData["tags"];
     var total = (int)this.ViewData["total"];
+    var statusSearch = (SelectList)this.ViewData["statusSearch"];
 }
 
-<div class="flex items-center mt-8 intro-y">
-    <h2 class="mr-auto text-lg font-medium">
-        Tag Management
-    </h2>
-</div>
+<div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
+    <h1 class="text-2xl font-semibold ">Tag Management</h1>
+    <div class="flex items-end justify-between">
 
-<div class="grid grid-cols-12 gap-4 mt-5">
-    <div class="col-span-12 space-y-2 md:col-span-12">
-        @* Table Start *@
-        <div class="col-span-12 md:col-span-8 intro-y box">
-            <div class="p-5 border-b border-gray-200 sm:flex-row">
+        <form class="flex items-end space-x-4 " id="listCategoryForm">
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+            this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+            })
 
-                <div class="flex items-center justify-between">
-                    <h2 class="mr-auto text-base font-medium">
-                        Search List
-                    </h2>
-                </div>
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchStatus", Label = "Status", Type = "text", Value = (string)
+            this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = statusSearch
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
 
 
-                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
-                <form id="listTagForm" class="my-2">
-                    <div class="flex space-x-2">
-                        @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
-                        this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
-                        })
-                        @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
-                        new { Name = "searchStatus", Label = "Status", Value =
-                        ((string) this.Context.Request.Query["searchStatus"] ?? "1" ) == ((int)
-                        TagStatus.ACTIVE).ToString()
-                        ,IsLabel = false })
-                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
-                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
 
-                        @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                        new { Label = "Search" })
-                    </div>
-                </form>
+            <div class="my-1">
+                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
             </div>
+        </form>
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div class="intro-y">
+            <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div>
+                    <dt>
+                        <div class="absolute p-3 rounded-md bg-tango-500">
+                            <!-- Heroicon name: outline/users -->
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M10 3C10.5523 3 11 3.44772 11 4V9H16C16.5523 9 17 9.44772 17 10C17 10.5523 16.5523 11 16 11H11V16C11 16.5523 10.5523 17 10 17C9.44772 17 9 16.5523 9 16V11H4C3.44772 11 3 10.5523 3 10C3 9.44771 3.44772 9 4 9L9 9V4C9 3.44772 9.44772 3 10 3Z"
+                                    fill="white" />
+                            </svg>
 
-
-            <div class="p-5" id="hoverable-table">
-                <div class="preview" style="display: block; opacity: 1;">
-                    <div class="overflow-x-auto">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        #
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Name
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Status
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Total of post
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Create Date
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        View Post
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < listTags.Count; i++)
-                                {
-                                    var listTagItem = listTags[i];
-
-                                    var quantity = listTagItem["quantity"];
-                                    var tag = (Tag)listTagItem["tag"];
-
-                                    <tr class="hover:bg-gray-200">
-                                        <td class="border">@tag.TagId</td>
-                                        <td class="border">@tag.Name</td>
-                                        <td class="border">
-                                            @await Html.PartialAsync(
-                                        "../../Components/Table/TableStatus.cshtml",
-                                        tag.Status == TagStatus.ACTIVE)
-
-                                        </td>
-                                        <td class="border">
-                                            @quantity
-                                        </td>
-                                        <td class="border">@tag.CreateDate</td>
-                                        <td class="border">
-                                            <button class="mb-2 mr-1 btn btn-primary">
-                                                <i data-feather="eye" class="w-5 h-5"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
+                        </div>
+                        <p class="text-sm font-medium text-gray-500 truncate ml-14">Total New Tag (30d)</p>
+                    </dt>
+                    <dd class="flex items-baseline pb-2 ml-14 sm:pb-3">
+                        <p class="text-2xl font-semibold text-gray-900">
+                            32
+                        </p>
+                    </dd>
                 </div>
-            </div>
+                <div>
+                    <dt>
+                        <div class="absolute p-3 rounded-md bg-tango-500">
+                            <!-- Heroicon name: outline/users -->
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11.0836 6.7585L12.1836 8.9585C12.3336 9.2585 12.7336 9.55849 13.067 9.60849L15.0586 9.94182C16.3336 10.1585 16.6336 11.0752 15.717 11.9918L14.167 13.5418C13.9086 13.8002 13.7586 14.3085 13.842 14.6752L14.2836 16.6002C14.6336 18.1168 13.8253 18.7085 12.4836 17.9168L10.617 16.8085C10.2753 16.6085 9.72531 16.6085 9.38364 16.8085L7.51696 17.9168C6.17529 18.7085 5.36695 18.1168 5.71695 16.6002L6.15864 14.6752C6.24198 14.3168 6.09196 13.8085 5.83363 13.5418L4.28364 11.9918C3.36698 11.0752 3.66696 10.1502 4.94196 9.94182L6.93364 9.60849C7.26697 9.55016 7.66697 9.2585 7.81697 8.9585L8.91698 6.7585C9.50864 5.56683 10.492 5.56683 11.0836 6.7585Z"
+                                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M5 7.49984V1.6665" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M15 7.49984V1.6665" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M10 3.33317V1.6665" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+
+                        </div>
+                        <p class="text-sm font-medium text-gray-500 truncate ml-14">Hot Trending</p>
+                    </dt>
+                    <dd class="flex items-baseline pb-2 ml-14 sm:pb-3">
+                        <p class="text-2xl font-semibold text-gray-900">
+                            Frontend
+                        </p>
+                    </dd>
+                </div>
+                <div>
+                    <dt>
+                        <div class="absolute p-3 rounded-md bg-tango-500">
+                            <!-- Heroicon name: outline/users -->
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M10 12C10.5304 12 11.0391 11.7893 11.4142 11.4142C11.7893 11.0391 12 10.5304 12 10C12 9.46957 11.7893 8.96086 11.4142 8.58579C11.0391 8.21071 10.5304 8 10 8C9.46957 8 8.96086 8.21071 8.58579 8.58579C8.21071 8.96086 8 9.46957 8 10C8 10.5304 8.21071 11.0391 8.58579 11.4142C8.96086 11.7893 9.46957 12 10 12Z"
+                                    fill="white" />
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0.458008 10C1.73201 5.943 5.52201 3 10 3C14.478 3 18.268 5.943 19.542 10C18.268 14.057 14.478 17 10 17C5.52201 17 1.73201 14.057 0.458008 10ZM14 10C14 11.0609 13.5786 12.0783 12.8284 12.8284C12.0783 13.5786 11.0609 14 10 14C8.93914 14 7.92173 13.5786 7.17158 12.8284C6.42143 12.0783 6.00001 11.0609 6.00001 10C6.00001 8.93913 6.42143 7.92172 7.17158 7.17157C7.92173 6.42143 8.93914 6 10 6C11.0609 6 12.0783 6.42143 12.8284 7.17157C13.5786 7.92172 14 8.93913 14 10V10Z"
+                                    fill="white" />
+                            </svg>
+
+                        </div>
+                        <p class="text-sm font-medium text-gray-500 truncate ml-14">Total View</p>
+                    </dt>
+                    <dd class="flex items-baseline pb-2 ml-14 sm:pb-3">
+                        <p class="text-2xl font-semibold text-gray-900">
+                            2340
+                        </p>
+                    </dd>
+                </div>
+            </dl>
         </div>
-        @* Table End *@
-        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
-        new { PageIndex = (string) this.Context.Request.Query["pageIndex"]?? "0", PageSize = (string)
-        this.Context.Request.Query["pageSize"]?? "12", Total = total })
+
     </div>
 </div>
+
+<div class="mt-2 overflow-hidden border-b border-gray-200 rounded-lg shadow intro-y">
+    <table class="min-w-full divide-y divide-gray-200 ">
+        <thead class="bg-tango-100">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    #
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Total of post
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Create Date
+                </th>
+
+                <th scope="col" class="relative px-6 py-3">
+                    <span class="sr-only">View Post</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200 fade-in">
+            @for (int i = 0; i < listTags.Count; i++)
+            {
+                var listTagItem = listTags[i];
+                var quantity = listTagItem["quantity"];
+                var tag = (Tag)listTagItem["tag"];
+
+                var link = $"{RoutersAdmin.CategoryPutCategory.Link}?categoryId=";
+                <tr class="duration-200 hover:bg-indigo-100">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                        @(i+1)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @tag.Name
+                    </td>
+
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @await Html.PartialAsync("../../Components/Table/TableStatus.cshtml",tag.Status ==
+                    TagStatus.ACTIVE)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @quantity
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @tag.CreateDate
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                        <a href="@link" class="text-indigo-600 hover:text-indigo-900">View Post</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+    new { PageIndex = (string) this.Context.Request.Query["pageIndex"] ?? "0", PageSize = (string)
+    this.Context.Request.Query["pageSize"]?? "12", Total = total })
+</div>
+
 
 @section Scripts {
 
