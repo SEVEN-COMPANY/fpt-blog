@@ -14,7 +14,7 @@ namespace FPTBlog.Src.UserModule {
     public class UserMvcController : Controller {
         private readonly IPostService PostService;
         private readonly IUserService UserService;
-        public UserMvcController(IUserService UserService,IPostService PostService) {
+        public UserMvcController(IUserService UserService, IPostService PostService) {
             this.UserService = UserService;
             this.PostService = PostService;
         }
@@ -46,9 +46,9 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("profile")]
-        public IActionResult GetProfile(string userId, int pageSize, int pageIndex, string searchTitle, string searCategoryId, PostStatus status){
+        public IActionResult GetProfile(string userId, int pageSize, int pageIndex, string searchTitle, string searCategoryId, PostStatus status) {
             User user = this.UserService.GetUserByUserId(userId);
-            if(user == null){
+            if (user == null) {
                 return NotFound();
             }
 

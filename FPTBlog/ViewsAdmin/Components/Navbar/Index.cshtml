@@ -1,0 +1,78 @@
+@{
+
+
+    var user = (User)this.ViewData["user"];
+    var link = $"{Routers.UserGetMyProfile.Link}";
+
+    var listItem = new[]{
+new {Label = "Post", Link = RoutersAdmin.PostGetList.Link, Icon = "../Icons/Post.cshtml"},
+new {Label = "Category", Link = RoutersAdmin.CategoryGetCategoryList.Link, Icon = "../Icons/CategoryIcon.cshtml"},
+new {Label = "Tag", Link = RoutersAdmin.TagGetTagList.Link, Icon = "../Icons/TagIcon.cshtml"},
+new {Label = "Logout", Link = Routers.AuthGetLogout.Link, Icon = "../Icons/Logout.cshtml"},
+};
+
+}
+<div class="flex h-screen overflow-hidden bg-white">
+
+
+    <!-- Static sidebar for desktop -->
+    <div class="hidden lg:flex lg:flex-shrink-0">
+        <div class="flex flex-col w-64">
+            <!-- Sidebar component, swap this element with another sidebar if you like -->
+            <div class="flex flex-col flex-1 min-h-0 bg-gray-100 border-r border-gray-200">
+                <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+                    <div class="flex items-center flex-shrink-0 px-4">
+                        <a href="@Routers.CommonGetHome.Link" class="inline-block">
+                            <h1 class="text-3xl font-semibold intro-x text-tango-500">FPT Blog</h1>
+                        </a>
+                    </div>
+                    <nav class="flex-1 mt-5" aria-label="Sidebar">
+                        <div class="px-2 space-y-1">
+                            @foreach (var item in listItem)
+                            {
+                                <a href="@item.Link"
+                                class="flex items-center px-2 py-2 text-sm font-medium rounded-md hover:bg-tango-100 hover:text-gray-900 intro-y">
+                                    @await Html.PartialAsync(item.Icon)
+                                    @item.Label
+                                </a>
+
+                            }
+                        </div>
+                    </nav>
+                </div>
+                <div class="flex flex-shrink-0 p-4 border-t border-gray-200">
+                    <a href="@link" class="flex-shrink-0 block w-full group">
+                        <div class="flex items-center">
+                            <div>
+                                <img class="inline-block rounded-full h-9 w-9" src=" @user.AvatarUrl" alt="@user.Name">
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                                    @user.Name
+                                </p>
+                                <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                                    View profile
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
+
+        <div class="relative z-0 flex flex-1 overflow-hidden">
+            <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none xl:order-last">
+
+                <div class="absolute inset-0 p-4">
+                    <div class="h-full rounded-lg">
+                        @Model
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+</div>

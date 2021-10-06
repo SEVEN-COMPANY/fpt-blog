@@ -1,0 +1,26 @@
+@{
+    var error = $"{Model.Name.ToUpper()}ERROR";
+
+    var list = (SelectList)Model.List;
+}
+
+<div>
+    <label for="@Model.Name" class="block text-sm font-medium text-gray-700">@Model.Label</label>
+    <select id="@Model.Name" name="@Model.Name"
+        class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-tango-500 focus:border-tango-500 sm:text-sm">
+        @foreach (SelectListItem item in list.Items)
+        {
+            if (item.Value == Model.Value)
+            {
+                <option value="@item.Value" class="capitalize" selected>@item.Text</option>
+            }
+            else
+            {
+                <option value="@item.Value" class="capitalize">@item.Text</option>
+            }
+        }
+    </select>
+    <p class="mt-1 text-sm text-red-600 first-letter fade-in" id="@error" data-label="@Model.Label">
+
+    </p>
+</div>

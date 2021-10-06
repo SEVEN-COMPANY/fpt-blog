@@ -52,9 +52,9 @@ namespace FPTBlog.Src.TagModule {
             return (list, count);
         }
 
-        public List<SelectListItem> GetRadioStatusList() {
-            SelectListItem active = new SelectListItem() { Value = ((int) TagStatus.ACTIVE).ToString(), Text = "active" };
-            SelectListItem inactive = new SelectListItem() { Value = ((int) TagStatus.INACTIVE).ToString(), Text = "inactive" };
+        public List<SelectListItem> GetTagStatusDroplist() {
+            SelectListItem active = new SelectListItem() { Value = ((int) TagStatus.ACTIVE).ToString(), Text = "Active" };
+            SelectListItem inactive = new SelectListItem() { Value = ((int) TagStatus.INACTIVE).ToString(), Text = "Inactive" };
             return new List<SelectListItem>() { active, inactive };
         }
 
