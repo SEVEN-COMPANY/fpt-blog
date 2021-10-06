@@ -13,5 +13,10 @@ namespace FPTBlog.Src.UserModule.Interface {
         public void BlockUserByAdminHandler(User user);
         public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus);
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string search);
+        void FollowUser(User followingUser, User follower);
+        public (List<User>, int) CalculateFollower(string userId);
+        public (List<User>, int) CalculateFollowing(string userId);
+
+        public bool IsFollow(string userId, string followerId);
     }
 }
