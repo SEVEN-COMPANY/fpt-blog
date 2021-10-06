@@ -104,7 +104,6 @@ namespace FPTBlog.Src.UserModule {
 
         [HttpPost("follow")]
         public IActionResult FollowUser(string followerId){
-            // check follow chưa nữa
             IDictionary<string,User> dataRes = new Dictionary<string, User>();
             ServerApiResponse<IDictionary<string,User>> res = new ServerApiResponse<IDictionary<string,User>>();
             User user = (User) this.ViewData["user"];

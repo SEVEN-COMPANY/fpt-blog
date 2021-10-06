@@ -27,5 +27,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         public void DislikePost(Post post, User user);
         public (List<Comment>, int) GetCommentOfPost(Post post);
         public List<string> GetPostSuggestion(string search, string categoryId);
+        public (List<Post>, int) GetPostsForProfile(int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status);
     }
 }

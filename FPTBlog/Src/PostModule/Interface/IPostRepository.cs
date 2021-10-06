@@ -17,6 +17,5 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetWaitPostsWithCount();
         public void LikePost(Post post, User user);
         public void DislikePost(Post post, User user);
-
     }
 }
