@@ -53,9 +53,12 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpPost("")]
         public IActionResult AddBlogHandler() {
+            var (categories, _) = this.CategoryService.GetCategories();
             Post post = new Post();
             post.Student = (User) this.ViewData["user"];
             post.StudentId = ((User) this.ViewData["user"]).UserId;
+            post.CategoryId = categories[0].CategoryId;
+            post.Category = categories[0];
             this.PostService.AddPost(post);
             var res = new ServerApiResponse<Post>();
             res.data = post;
