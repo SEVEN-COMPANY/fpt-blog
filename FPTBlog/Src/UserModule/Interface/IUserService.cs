@@ -1,5 +1,6 @@
 ﻿using FPTBlog.Src.UserModule.Entity;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace FPTBlog.Src.UserModule.Interface {
@@ -18,5 +19,7 @@ namespace FPTBlog.Src.UserModule.Interface {
         public (List<User>, int) CalculateFollowing(string userId);
 
         public bool IsFollow(string userId, string followerId);
+
+        public List<SelectListItem> GetUserStatusDropList();
     }
 }

@@ -2,6 +2,7 @@
 using FPTBlog.Src.UserModule.Interface;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.UserModule {
     public class UserService : IUserService {
@@ -34,5 +35,15 @@ namespace FPTBlog.Src.UserModule {
         public (List<User>, int) CalculateFollowing(string userId) => this.UserRepository.CalculateFollowing(userId);
 
         public bool IsFollow(string userId, string followerId) => this.UserRepository.IsFollow(userId, followerId);
+
+        public List<SelectListItem> GetUserStatusDropList() {
+            var status = new List<SelectListItem>(){
+                new SelectListItem(){ Value = UserStatus.ENABLE.ToString(), Text = "Enable"},
+                new SelectListItem(){  Value =  UserStatus.DISABLE.ToString(), Text = "Disable"}
+            };
+
+            return status;
+        }
+
     }
 }

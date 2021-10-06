@@ -5,6 +5,7 @@ using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.UserModule {
 
@@ -24,6 +25,14 @@ namespace FPTBlog.Src.UserModule {
             if (searchName == null) {
                 searchName = "";
             }
+
+            this.ViewData["status"] = new SelectList(this.UserService.GetUserStatusDropList(), UserStatus.ENABLE);
+
+            var statusList = this.UserService.GetUserStatusDropList();
+            statusList.Add(new SelectListItem() { Text = "All", Value = "" });
+            SelectList list = new SelectList(statusList, "");
+
+            this.ViewData["statusSearch"] = list;
 
             var (users, total) = this.UserService.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
             this.ViewData["users"] = users;
