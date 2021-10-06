@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FPTBlog.Src.CommentModule.Entity;
 using FPTBlog.Src.CommentModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
@@ -19,7 +20,6 @@ namespace FPTBlog.Src.PostModule {
 
         public void AddPost(Post post) => this.PostRepository.Add(post);
         public Post GetPostByPostId(string postId) => this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
-
         public PostViewModel GetViewPostByPostId(string postId) {
             var viewPost = new PostViewModel();
             var post = this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
@@ -49,12 +49,10 @@ namespace FPTBlog.Src.PostModule {
             var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
-
         public (List<Post>, int) GetHighestPointPosts(int quantity) {
             var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.Like - p.Dislike + p.View / 10).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
         }
-
         public (List<Post>, int) GetNewestPosts(int quantity) {
             var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.CreateDate).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
@@ -63,7 +61,6 @@ namespace FPTBlog.Src.PostModule {
             int result = post.Like - post.Dislike + (post.View / 10);
             return result;
         }
-
         public void LikePost(Post post, User user) {
             this.PostRepository.LikePost(post, user);
             return;
@@ -78,11 +75,17 @@ namespace FPTBlog.Src.PostModule {
 
             return (list, count);
         }
-
         public List<string> GetPostSuggestion(string search, string categoryId) {
             var list = (IEnumerable<Post>) this.PostRepository.GetAll(item => ((int) item.Status) == 3 && (item.Title.Contains(search) || item.Student.Name.Contains(search)));
             List<string> result = list.Take(10).Skip(0).Select(item => item.Title).ToList();
             return result;
+        }
+        public (List<Post>, int) GetPostsForProfile(int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status){
+            var list = this.PostRepository.GetAll(item => item.Status == PostStatus.APPROVED && (item.Title.Contains(searchTitle) || item.CategoryId.Contains(searchCategoryId)));
+
+            int count = list.Count();
+            var listForView = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            return (listForView, count);
         }
     }
 }

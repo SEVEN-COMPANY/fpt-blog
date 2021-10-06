@@ -5,6 +5,7 @@ import { http } from '../package/axios';
 import { ServerResponse } from '../package/interface/serverResponse';
 import { routers } from '../package/axios/routes';
 import { handleSelectBadge } from '../package/components/listBadge';
+import { toastify } from '../package/toastify';
 
 interface ToggleTagDto {
     postId: string;
@@ -60,8 +61,32 @@ saveChangePostBtn?.addEventListener('click', function () {
             coverUrl: coverImage,
         };
 
-        console.log(input);
-        http.post<ServerResponse<null>>(routers.post.save, input).then(() => {});
+        console.log('hello');
+        http.post<ServerResponse<null>>(routers.post.save, input)
+            .then(() => {
+                toastify({
+                    text: 'Save your draft  successfully',
+                    duration: 2000,
+                    newWindow: true,
+                    close: true,
+                    gravity: 'top',
+                    position: 'right',
+                    backgroundColor: '#F37124',
+                    stopOnFocus: true,
+                });
+            })
+            .catch(() => {
+                toastify({
+                    text: 'Please check the field',
+                    duration: 2000,
+                    newWindow: true,
+                    close: true,
+                    gravity: 'top',
+                    position: 'right',
+                    backgroundColor: 'rgb(239, 68, 68)',
+                    stopOnFocus: true,
+                });
+            });
     }
 });
 
