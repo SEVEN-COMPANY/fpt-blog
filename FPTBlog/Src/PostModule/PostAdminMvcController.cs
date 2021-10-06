@@ -12,12 +12,29 @@ namespace FPTBlog.Src.PostModule {
             this.PostService = postService;
         }
 
-        [HttpGet("wait")]
+        [HttpGet("")]
         public IActionResult GetAllWaitBlogs() {
-            var (posts, count) = this.PostService.GetWaitPostsWithCount();
-            this.ViewData["posts"] = posts;
-            this.ViewData["count"] = count;
-            return View("");
+
+            return View(RoutersAdmin.PostGetList.Page);
+        }
+        [HttpGet("wait")]
+        // public IActionResult GetAllWaitBlogs() {
+        //     var (posts, count) = this.PostService.GetWaitPostsWithCount();
+        //     this.ViewData["posts"] = posts;
+        //     this.ViewData["count"] = count;
+        //     return View("");
+        // }
+
+        [HttpGet("tag")]
+        public IActionResult GetBlogsByTagName(int pageSize = 12, int pageIndex = 0, string name = "") {
+            var (posts, total) = this.PostService.GetPostsByTagWithCount(pageSize, pageIndex, name);
+            this.ViewData["blogs"] = posts;
+            this.ViewData["total"] = total;
+
+            return Json(new {
+                posts = posts,
+                total = total
+            });
         }
     }
 }
