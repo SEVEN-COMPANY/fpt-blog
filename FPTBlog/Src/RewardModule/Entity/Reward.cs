@@ -13,6 +13,12 @@ namespace FPTBlog.Src.RewardModule.Entity {
         }
 
         [Required]
+        [StringLength(40)]
+        public string Name {
+            get; set;
+        }
+
+        [Required]
         [StringLength(500)]
         public string Description {
             get; set;
@@ -30,6 +36,7 @@ namespace FPTBlog.Src.RewardModule.Entity {
 
         public Reward() {
             this.RewardId = Guid.NewGuid().ToString();
+            this.Name = "";
             this.Description = "";
             this.ImageUrl = "https://picsum.photos/128";
             this.CreateDate = DateTime.Now.ToShortDateString();

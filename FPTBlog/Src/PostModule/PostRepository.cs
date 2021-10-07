@@ -124,6 +124,7 @@ namespace FPTBlog.Src.PostModule {
                 like.Post = post;
                 like.UserId = user.UserId;
                 like.User = user;
+                like.CreateDate = DateTime.Now.ToShortDateString();
                 like.expression = Expression.LIKE;
                 this.Db.LikePost.Add(like);
                 this.Db.SaveChanges();
@@ -154,6 +155,7 @@ namespace FPTBlog.Src.PostModule {
                 dislike.Post = post;
                 dislike.UserId = user.UserId;
                 dislike.User = user;
+                dislike.CreateDate = DateTime.Now.ToShortDateString();
                 dislike.expression = Expression.DISLIKE;
                 this.Db.LikePost.Add(dislike);
                 this.Db.SaveChanges();
