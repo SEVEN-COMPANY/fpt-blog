@@ -28,7 +28,7 @@ namespace FPTBlog.Src.PostModule {
         [HttpGet("tag")]
         public IActionResult GetBlogsByTagName(int pageSize = 12, int pageIndex = 0, string name = "") {
             var (posts, total) = this.PostService.GetPostsByTagWithCount(pageSize, pageIndex, name);
-            this.ViewData["blogs"] = posts;
+            this.ViewData["posts"] = posts;
             this.ViewData["total"] = total;
 
             return Json(new {
