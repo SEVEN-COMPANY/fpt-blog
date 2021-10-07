@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.CategoryModule.Interface;
@@ -49,12 +50,5 @@ namespace FPTBlog.Src.PostModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpGet("report")]
-        public IActionResult MonthlyReport() {
-            ServerApiResponse<Report> res = new ServerApiResponse<Report>();
-            var monthlyReport = this.PostService.GetMonthlyReport();
-            res.data = monthlyReport;
-            return new ObjectResult(res.getResponse());
-        }
     }
 }
