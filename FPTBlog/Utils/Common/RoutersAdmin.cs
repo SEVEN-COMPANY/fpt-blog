@@ -13,6 +13,8 @@ namespace FPTBlog.Utils.Common {
     public class RoutersAdmin {
 
 
+        // Reward
+        public static readonly RouterItem RewardGetHome = new RouterItem() { Page = "/ViewsAdmin/Containers/Reward/UserList.cshtml", Link = "/" };
 
 
         //user
@@ -26,6 +28,7 @@ namespace FPTBlog.Utils.Common {
         public static readonly RouterAdminItem CategoryPutCategory = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Category/Update.cshtml", Link = "/admin/category/update" };
         // Post
         public static readonly RouterAdminItem PostGetList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Post/List.cshtml", Link = "/admin/post" };
+        public static readonly RouterAdminItem PostGetPostByTag = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Post/TagPost.cshtml", Link = "/admin/post/tag" };
 
         // Tag
         public static readonly RouterAdminItem TagGetTagList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Tag/List.cshtml", Link = "/admin/tag" };

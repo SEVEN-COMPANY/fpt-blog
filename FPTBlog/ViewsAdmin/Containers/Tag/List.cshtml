@@ -143,7 +143,7 @@
                 var quantity = listTagItem["quantity"];
                 var tag = (Tag)listTagItem["tag"];
 
-                var link = $"{RoutersAdmin.CategoryPutCategory.Link}?categoryId=";
+                var link = $"{RoutersAdmin.PostGetPostByTag.Link}?name={tag.Name}";
                 <tr class="duration-200 hover:bg-indigo-100">
                     <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
                         @(i+1)
