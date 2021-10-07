@@ -30,5 +30,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetPostsForProfile(int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status);
         public (List<Post>, int) GetPostsOfStudentWithStatus(string userId, PostStatus status);
         public Report GetMonthlyReport();
+
+        public (List<Post>, int) getPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
     }
 }
