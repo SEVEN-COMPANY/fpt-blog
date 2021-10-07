@@ -1,5 +1,5 @@
 import { pageChange } from '../package/helper/pagination';
-import { slideOver } from '../package/modal';
+import { slideOver } from '../package/modal/index';
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
 import { ServerResponse } from '../package/interface/serverResponse';
