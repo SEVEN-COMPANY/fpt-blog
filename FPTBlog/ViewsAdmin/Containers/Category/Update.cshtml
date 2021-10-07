@@ -1,27 +1,60 @@
 @using FPTBlog.Src.CategoryModule.Entity
-
-
+@using FPTBlog.Utils.Common
 
 @{
     Category category = (Category)ViewData["category"];
+    var statusSearch = (SelectList)this.ViewData["statusSearch"];
+    var status = (SelectList)this.ViewData["status"];
 }
 
-<div class="flex items-center mt-8 intro-y">
-    <h2 class="mr-auto text-lg font-medium">
-        Category Management
-    </h2>
+<div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
+    <h1 class="text-2xl font-semibold ">Category Management</h1>
+    <div class="flex items-end justify-between">
+
+        <form class="flex items-end space-x-4 " id="listCategoryForm">
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+            this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchStatus", Label = "Status", Type = "text", Value = (string)
+            this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = status
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
+
+            <div class="my-1">
+                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
+            </div>
+        </form>
+        <div class="my-1">
+            <button type="button" id="modal-btn"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <!-- Heroicon name: solid/mail -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                        clip-rule="evenodd" />
+                </svg>
+                Create New Category
+            </button>
+        </div>
+    </div>
 </div>
 
 <div class="grid grid-cols-12 gap-4 mt-5">
-    <div class="col-span-12">
-        <div class="max-w-sm intro-y box ">
-            <div class="flex flex-col items-center p-5 border-b border-gray-200 sm:flex-row dark:border-dark-5">
+    <div class="col-span-12 ">
+        <div class="max-w-sm intro-y box shadow ">
+            <div id="vertical-form" class="p-5">
                 <h3 class="mr-auto text-base font-medium">
                     Update Category
                 </h3>
-
-            </div>
-            <div id="vertical-form" class="p-5">
                 @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
                 <form class="space-y-4 preview" id="updateCategoryForm">
                     @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
@@ -39,14 +72,16 @@
                     CategoryStatus.ACTIVE })
 
                     @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                    new { Label = "Update Category" })
+                    new { Label = "Update", Icon = "../../Components/Icons/UpdateCategory.cshtml"})
                 </form>
             </div>
         </div>
 
     </div>
 </div>
-@section Scripts {
 
+
+
+@section Scripts {
 <script src="/js/category-update.js"></script>
 }

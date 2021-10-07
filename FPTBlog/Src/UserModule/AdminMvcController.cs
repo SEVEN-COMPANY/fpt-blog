@@ -5,6 +5,7 @@ using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.UserModule {
 
@@ -20,12 +21,35 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("list")]
-        public IActionResult GetUsers(string searchName, UserStatus searchStatus = UserStatus.ENABLE, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetUsers(string searchName, UserStatus searchStatus = UserStatus.ENABLE, UserRole searchRole = UserRole.STUDENT, int pageSize = 12, int pageIndex = 0) {
             if (searchName == null) {
                 searchName = "";
             }
 
-            var (users, total) = this.UserService.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
+            // get status user for update user status
+            this.ViewData["status"] = new SelectList(this.UserService.GetUserStatusDropList(), UserStatus.ENABLE);
+            // get status search list for search by status
+            var statusList = this.UserService.GetUserStatusDropList();
+            statusList.Add(new SelectListItem() { Text = "All", Value = "" });
+            SelectList listStatus = new SelectList(statusList, "");
+            this.ViewData["statusSearch"] = listStatus;
+
+            // get role user for update user role
+            this.ViewData["role"] = new SelectList(this.UserService.GetUserRoleDropList(), UserRole.STUDENT);
+            // get role search list for search by role
+            var roleList = this.UserService.GetUserRoleDropList();
+            roleList.Add(new SelectListItem() { Text = "All", Value = "" });
+            SelectList listRole = new SelectList(roleList, "");
+
+            int totalStudent = this.UserService.CountUserByRole(UserRole.STUDENT);
+            int totalLecturer = this.UserService.CountUserByRole(UserRole.LECTURER);
+
+            this.ViewData["totalStudent"] = totalStudent;
+            this.ViewData["totalLecturer"] = totalLecturer;
+
+            this.ViewData["roleSearch"] = listRole;
+
+            var (users, total) = this.UserService.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus, searchRole);
             this.ViewData["users"] = users;
             this.ViewData["total"] = total;
             return View(RoutersAdmin.UserGetUserList.Page);

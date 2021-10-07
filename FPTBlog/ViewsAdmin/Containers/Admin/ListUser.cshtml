@@ -6,145 +6,184 @@
 @{
     var users = (List<User>)this.ViewData["users"];
     var total = (int)this.ViewData["total"];
+    var statusSearch = (SelectList)this.ViewData["statusSearch"];
+    var status = (SelectList)this.ViewData["status"];
+    var roleSearch = (SelectList)this.ViewData["roleSearch"];
+    var role = (SelectList)this.ViewData["role"];
+    var totalStudent = (int)this.ViewData["totalStudent"];
+    var totalLecturer = (int)this.ViewData["totalLecturer"];
 }
 
-<div class="flex items-center mt-8 intro-y">
-    <h2 class="mr-auto text-lg font-medium">
-        User Management
-    </h2>
+
+<div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
+    <h1 class="text-2xl font-semibold ">User Management</h1>
+    <h3 class="text-lg font-medium leading-6 text-gray-900">
+        Last 30 days
+    </h3>
+    <div class="flex items-end justify-between">
+
+        <form class="flex items-end space-x-4 " id="listUserForm">
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+            this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchStatus", Label = "Status", Type = "text", Value = (string)
+            this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = statusSearch
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchRole", Label = "Role", Type = "text", Value = (string)
+            this.Context.Request.Query["searchRole"] ?? "" , IsLabel = false, List = roleSearch
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
+
+            <div class="my-1">
+                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
+            </div>
+        </form>
+
+
+        <dl
+            class="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow md:grid-cols-2 md:divide-y-0 md:divide-x">
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    Student
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        71
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            70
+                        </span>
+                    </div>
+
+                    <div
+                        class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+                        <!-- Heroicon name: solid/arrow-sm-up -->
+                        <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">
+                            Increased by
+                        </span>
+                        12%
+                    </div>
+                </dd>
+            </div>
+
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    Lecturer
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        71
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            70
+                        </span>
+                    </div>
+
+                    <div
+                        class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+                        <!-- Heroicon name: solid/arrow-sm-up -->
+                        <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">
+                            Increased by
+                        </span>
+                        2.02%
+                    </div>
+                </dd>
+            </div>
+        </dl>
+    </div>
 </div>
 
-<div class="grid grid-cols-12 gap-4 mt-5">
-    <div class="col-span-12 space-y-2 md:col-span-12">
-        @* Table Start *@
-        <div class="col-span-12 md:col-span-8 intro-y box">
-            <div class="p-5 border-b border-gray-200 sm:flex-row">
+<div class="mt-2 overflow-hidden border-b border-gray-200 rounded-lg shadow intro-y">
+    <table class="min-w-full divide-y divide-gray-200 ">
+        <thead class="bg-tango-100">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    #
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Username
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Role
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Create Date
+                </th>
 
-                <div class="flex items-center justify-between">
-                    <h2 class="mr-auto text-base font-medium">
-                        Search List
-                    </h2>
-                </div>
-
-
-                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
-                <form action="@RoutersAdmin.UserGetUserList.Link" id="listUserForm" class="my-2">
-                    <div class="flex space-x-2">
-                        @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
-                        this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
-                        })
-                        @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
-                        new { Name = "searchStatus", Label = "Status", Value =
-                        ((string) this.Context.Request.Query["searchStatus"] ?? "1" ) == ((int)
-                        UserStatus.ENABLE).ToString(),
-                        IsLabel = false })
-                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
-                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
-
-                        @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                        new { Label = "Search" })
-                    </div>
-                </form>
-            </div>
-
-
-            <div class="p-5" id="hoverable-table">
-                <div class="preview" style="display: block; opacity: 1;">
-                    <div class="overflow-x-auto">
-                        <table class="table">
-
-                            <thead>
-                                <tr>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        #
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Name
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Username
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Email
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Phone
-                                    </th>
-
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Status
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Role
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Create Date
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < users.Count; i++)
-                                {
-                                    var item = users[i];
-                                    <tr class="hover:bg-gray-200">
-                                        <td class="border">@(i+1)</td>
-                                        <td class="border">@item.Name</td>
-                                        <td class="border">@item.Username</td>
-                                        <td class="border">@item.Email</td>
-                                        <td class="border">@item.Phone</td>
-                                        <td class="border">@await Html.PartialAsync(
-                                        "../../Components/Table/TableStatus.cshtml",
-                                        item.Status == UserStatus.ENABLE)</td>
-                                        <td class="border">@item.Role</td>
-                                        <td class="border">@item.CreateDate</td>
-                                        <td class="border">
-                                            @if (item.Status == UserStatus.ENABLE)
-                                            {
-                                                <button class="mb-2 mr-1 btn btn-primary" userId="@item.UserId" id="block-btn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-lock block mx-auto">
-                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                                    </svg>
-                                                </button>
-                                            }
-                                            else
-                                            {
-                                                <button class="mb-2 mr-1 btn btn-primary" userId="@item.UserId" id="block-btn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-unlock block mx-auto">
-                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
-                                                    </svg>
-                                                </button>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @* Table End *@
-        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
-        new { PageIndex = (string) this.Context.Request.Query["pageIndex"]?? "0", PageSize = (string)
-        this.Context.Request.Query["pageSize"]?? "12", Total = total })
-    </div>
+                <th scope="col" class="relative px-6 py-3">
+                    <span class="sr-only">Edit</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200 fade-in">
+            @for (int i = 0; i < users.Count; i++)
+            {
+                var item = users[i];
+                <tr class="duration-200 hover:bg-indigo-100">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                        @(i+1)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Name
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Username
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Email
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Role
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @await Html.PartialAsync("../../Components/Table/TableStatus.cshtml",item.Status ==
+                    UserStatus.ENABLE)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.CreateDate
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                        <a href="" class="text-indigo-600 hover:text-indigo-900">Profile</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+    new { PageIndex = (string) this.Context.Request.Query["pageIndex"] ?? "0", PageSize = (string)
+    this.Context.Request.Query["pageSize"]?? "12", Total = total })
 </div>
 
 @section Scripts {
