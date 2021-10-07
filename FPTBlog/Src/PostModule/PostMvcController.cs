@@ -37,7 +37,7 @@ namespace FPTBlog.Src.PostModule {
                 return Redirect(Routers.CommonGetHome.Link);
             }
 
-            if(post.StudentId != user.UserId){
+            if (post.StudentId != user.UserId) {
                 return Redirect(Routers.CommonGetHome.Link);
             }
 
@@ -97,7 +97,7 @@ namespace FPTBlog.Src.PostModule {
             }
 
 
-            this.ViewData["blogs"] = listBlogs;
+            this.ViewData["posts"] = listBlogs;
             this.ViewData["total"] = total;
 
             return View(Routers.PostGetSearch.Page);

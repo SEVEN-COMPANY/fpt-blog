@@ -31,10 +31,7 @@ namespace FPTBlog.Src.PostModule {
             this.ViewData["posts"] = posts;
             this.ViewData["total"] = total;
 
-            return Json(new {
-                posts = posts,
-                total = total
-            });
+            return View(RoutersAdmin.PostGetPostByTag.Page);
         }
     }
 }
