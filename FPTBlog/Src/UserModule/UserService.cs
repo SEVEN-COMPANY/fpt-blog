@@ -27,7 +27,7 @@ namespace FPTBlog.Src.UserModule {
             this.UserRepository.Update(user);
         }
 
-        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) => this.UserRepository.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus);
+        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole) => this.UserRepository.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus, searchRole);
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) => this.UserRepository.GetUsersWithCount(pageSize, pageIndex, searchName);
 
         public void FollowUser(User followingUser, User follower) => this.UserRepository.FollowUser(followingUser, follower);
@@ -43,6 +43,26 @@ namespace FPTBlog.Src.UserModule {
             };
 
             return status;
+        }
+
+        public List<SelectListItem> GetUserRoleDropList() {
+            var role = new List<SelectListItem>(){
+                new SelectListItem(){ Value = UserRole.STUDENT.ToString(), Text = "Student"},
+                new SelectListItem(){  Value =  UserRole.LECTURER.ToString(), Text = "Lecturer"}
+            };
+
+            return role;
+        }
+
+        public int CountUserByRole(UserRole role) {
+            List<User> users = (List<User>) this.UserRepository.GetAll();
+            var count = 0;
+            foreach (var user in users) {
+                if (user.Role == role) {
+                    count++;
+                }
+            }
+            return count;
         }
 
     }

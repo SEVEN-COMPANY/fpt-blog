@@ -17,9 +17,9 @@ namespace FPTBlog.Src.UserModule {
             List<FollowInfo> followInfos = this.Db.FollowInfo.Where(item => item.FollowingUserId == userId).ToList();
 
             List<User> users = new List<User>();
-            foreach(var followInfo in followInfos){
+            foreach (var followInfo in followInfos) {
                 User foundUser = this.GetFirstOrDefault(item => item.UserId == followInfo.FollowerId);
-                if(foundUser != null){
+                if (foundUser != null) {
                     users.Add(foundUser);
                 }
             }
@@ -31,9 +31,9 @@ namespace FPTBlog.Src.UserModule {
             List<FollowInfo> followInfos = this.Db.FollowInfo.Where(item => item.FollowerId == userId).ToList();
 
             List<User> users = new List<User>();
-            foreach(var followInfo in followInfos){
+            foreach (var followInfo in followInfos) {
                 User foundUser = this.GetFirstOrDefault(item => item.UserId == followInfo.FollowingUserId);
-                if(foundUser != null){
+                if (foundUser != null) {
                     users.Add(foundUser);
                 }
             }
@@ -41,7 +41,7 @@ namespace FPTBlog.Src.UserModule {
         }
 
         public void FollowUser(User followingUser, User follower) {
-            FollowInfo followInfo = new FollowInfo(){
+            FollowInfo followInfo = new FollowInfo() {
                 Follower = follower,
                 FollowInfoId = follower.UserId,
                 FollowingUser = followingUser,
@@ -51,8 +51,8 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
-        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus) {
-            List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
+        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole) {
+            List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus && item.Role == searchRole);
             var count = list.Count();
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
@@ -69,8 +69,8 @@ namespace FPTBlog.Src.UserModule {
         }
 
         public bool IsFollow(string userId, string followerId) {
-            List<FollowInfo> followInfos =  this.Db.FollowInfo.Where(item => item.FollowerId == followerId && item.FollowingUserId == userId).ToList();
-            if(followInfos != null){
+            List<FollowInfo> followInfos = this.Db.FollowInfo.Where(item => item.FollowerId == followerId && item.FollowingUserId == userId).ToList();
+            if (followInfos != null) {
                 return true;
             }
             return false;

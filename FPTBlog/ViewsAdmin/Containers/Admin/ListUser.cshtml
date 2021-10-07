@@ -8,14 +8,21 @@
     var total = (int)this.ViewData["total"];
     var statusSearch = (SelectList)this.ViewData["statusSearch"];
     var status = (SelectList)this.ViewData["status"];
+    var roleSearch = (SelectList)this.ViewData["roleSearch"];
+    var role = (SelectList)this.ViewData["role"];
+    var totalStudent = (int)this.ViewData["totalStudent"];
+    var totalLecturer = (int)this.ViewData["totalLecturer"];
 }
 
 
 <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
     <h1 class="text-2xl font-semibold ">User Management</h1>
+    <h3 class="text-lg font-medium leading-6 text-gray-900">
+        Last 30 days
+    </h3>
     <div class="flex items-end justify-between">
 
-        <form class="flex items-end space-x-4 " id="listCategoryForm">
+        <form class="flex items-end space-x-4 " id="listUserForm">
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
             new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
             this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
@@ -26,31 +33,85 @@
             this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = statusSearch
             })
 
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchRole", Label = "Role", Type = "text", Value = (string)
+            this.Context.Request.Query["searchRole"] ?? "" , IsLabel = false, List = roleSearch
+            })
+
             @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
             new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
             @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
             new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
-
-
 
             <div class="my-1">
                 @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                 new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
             </div>
         </form>
-        <div class="my-1">
-            <button type="button" id="modal-btn"
-                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <!-- Heroicon name: solid/mail -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                        clip-rule="evenodd" />
-                </svg>
-                Create New Category
-            </button>
-        </div>
+
+
+        <dl
+            class="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow md:grid-cols-2 md:divide-y-0 md:divide-x">
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    Student
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        71
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            70
+                        </span>
+                    </div>
+
+                    <div
+                        class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+                        <!-- Heroicon name: solid/arrow-sm-up -->
+                        <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">
+                            Increased by
+                        </span>
+                        12%
+                    </div>
+                </dd>
+            </div>
+
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    Lecturer
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        71
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            70
+                        </span>
+                    </div>
+
+                    <div
+                        class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+                        <!-- Heroicon name: solid/arrow-sm-up -->
+                        <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">
+                            Increased by
+                        </span>
+                        2.02%
+                    </div>
+                </dd>
+            </div>
+        </dl>
     </div>
 </div>
 
@@ -71,9 +132,6 @@
                     Email
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Phone
-                </th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Role
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
@@ -89,120 +147,46 @@
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200 fade-in">
-            <tr class="duration-200 hover:bg-indigo-100">
-                <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                    1
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    Music
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    Music
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    <span
-                        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                        Active
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path
-                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                        </svg>
-                    </span>
-
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    10/03/2021
-                </td>
-                <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                    <a href="/admin/category/update?categoryId=0b477938-dfdd-441a-bd05-b3935107f4a4"
-                        class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                </td>
-            </tr>
-
+            @for (int i = 0; i < users.Count; i++)
+            {
+                var item = users[i];
+                <tr class="duration-200 hover:bg-indigo-100">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                        @(i+1)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Name
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Username
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Email
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Role
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @await Html.PartialAsync("../../Components/Table/TableStatus.cshtml",item.Status ==
+                    UserStatus.ENABLE)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.CreateDate
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                        <a href="" class="text-indigo-600 hover:text-indigo-900">Profile</a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <!-- This example requires Tailwind CSS v2.0+ -->
-
-
-
-
-    <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
-
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div>
-                <p class="text-sm text-gray-700">
-                    Showing
-                    <span class="font-medium">1</span>
-                    to
-                    <span class="font-medium">11</span>
-                    of
-                    <span class="font-medium">11</span>
-                    results
-                </p>
-            </div>
-            <div id="pagination-btn">
-                <nav class="relative z-0 inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                    <button type="button" data-index="0"
-                        class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">
-                        <span class="sr-only">First</span>
-                        <!-- Heroicon name: solid/chevron-left -->
-                        <svg width="27" height="20" viewBox="0 0 27 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M12.7071 5.29289C13.0976 5.68342 13.0976 6.31658 12.7071 6.70711L9.41421 10L12.7071 13.2929C13.0976 13.6834 13.0976 14.3166 12.7071 14.7071C12.3166 15.0976 11.6834 15.0976 11.2929 14.7071L7.29289 10.7071C6.90237 10.3166 6.90237 9.68342 7.29289 9.29289L11.2929 5.29289C11.6834 4.90237 12.3166 4.90237 12.7071 5.29289Z"
-                                fill="#6B7280"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M19.7071 5.29289C20.0976 5.68342 20.0976 6.31658 19.7071 6.70711L16.4142 10L19.7071 13.2929C20.0976 13.6834 20.0976 14.3166 19.7071 14.7071C19.3166 15.0976 18.6834 15.0976 18.2929 14.7071L14.2929 10.7071C13.9024 10.3166 13.9024 9.68342 14.2929 9.29289L18.2929 5.29289C18.6834 4.90237 19.3166 4.90237 19.7071 5.29289Z"
-                                fill="#6B7280"></path>
-                        </svg>
-
-                    </button>
-                    <button type="button" data-index="0"
-                        class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50">
-                        <span class="sr-only">Previous</span>
-                        <!-- Heroicon name: solid/chevron-left -->
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-
-                    <button type="button"
-                        class="relative z-10 inline-flex items-center px-4 py-2 text-sm font-medium border text-tango-600 border-tango-500 bg-tango-50"
-                        data-index="0">
-                        1
-                    </button>
-
-                    <button type="button" data-index="0"
-                        class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50">
-                        <span class="sr-only">Next</span>
-                        <!-- Heroicon name: solid/chevron-right -->
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                    <button type="button" data-index="0"
-                        class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">
-                        <span class="sr-only">Last</span>
-                        <svg width="27" height="20" viewBox="0 0 27 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M7.29289 14.7071C6.90237 14.3166 6.90237 13.6834 7.29289 13.2929L10.5858 10L7.29289 6.70711C6.90237 6.31658 6.90237 5.68342 7.29289 5.29289C7.68342 4.90237 8.31658 4.90237 8.70711 5.29289L12.7071 9.29289C13.0976 9.68342 13.0976 10.3166 12.7071 10.7071L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071Z"
-                                fill="#6B7280"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M14.2929 14.7071C13.9024 14.3166 13.9024 13.6834 14.2929 13.2929L17.5858 10L14.2929 6.70711C13.9024 6.31658 13.9024 5.68342 14.2929 5.29289C14.6834 4.90237 15.3166 4.90237 15.7071 5.29289L19.7071 9.29289C20.0976 9.68342 20.0976 10.3166 19.7071 10.7071L15.7071 14.7071C15.3166 15.0976 14.6834 15.0976 14.2929 14.7071Z"
-                                fill="#6B7280"></path>
-                        </svg>
-                    </button>
-                </nav>
-            </div>
-        </div>
-    </div>
-
+    @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+    new { PageIndex = (string) this.Context.Request.Query["pageIndex"] ?? "0", PageSize = (string)
+    this.Context.Request.Query["pageSize"]?? "12", Total = total })
 </div>
+
+@section Scripts {
+<script src="/js/user-block.js"></script>
+<script src="/js/user-list.js"></script>
+}

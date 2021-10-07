@@ -12,7 +12,7 @@ namespace FPTBlog.Src.UserModule.Interface {
         public void UpdateUser(User user);
         public void RemoveUser(User user);
         public void BlockUserByAdminHandler(User user);
-        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus);
+        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole);
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string search);
         void FollowUser(User followingUser, User follower);
         public (List<User>, int) CalculateFollower(string userId);
@@ -21,5 +21,7 @@ namespace FPTBlog.Src.UserModule.Interface {
         public bool IsFollow(string userId, string followerId);
 
         public List<SelectListItem> GetUserStatusDropList();
+        public List<SelectListItem> GetUserRoleDropList();
+        public int CountUserByRole(UserRole role);
     }
 }
