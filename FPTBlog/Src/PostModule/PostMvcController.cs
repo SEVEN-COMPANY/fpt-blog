@@ -27,6 +27,7 @@ namespace FPTBlog.Src.PostModule {
         [HttpGet("editor")]
         [ServiceFilter(typeof(AuthGuard))]
         public IActionResult EditorPage(string postId) {
+            User user = (User) this.ViewData["user"];
 
             SelectList list = new SelectList(this.CategoryService.GetCategoryDropList());
             this.ViewData["categories"] = list;
@@ -35,6 +36,11 @@ namespace FPTBlog.Src.PostModule {
             if (post == null) {
                 return Redirect(Routers.CommonGetHome.Link);
             }
+
+            if(post.StudentId != user.UserId){
+                return Redirect(Routers.CommonGetHome.Link);
+            }
+
             this.ViewData["post"] = post;
 
             return View(Routers.PostGetEditor.Page);
@@ -68,8 +74,6 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpGet("search")]
         public IActionResult GetAllBlogs(string search, string categoryId, int pageSize = 12, int pageIndex = 0) {
-
-
             if (search == null) {
                 search = "";
             }
@@ -105,9 +109,6 @@ namespace FPTBlog.Src.PostModule {
             this.ViewData["post"] = post;
             return View(Routers.PostGetPost.Page);
         }
-
-
-
 
         // [HttpGet("category")]
         // public IActionResult GetBlogsByCategoryName(int pageSize = 12, int pageIndex = 0, string name = "") {

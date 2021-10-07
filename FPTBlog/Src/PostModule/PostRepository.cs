@@ -59,7 +59,6 @@ namespace FPTBlog.Src.PostModule {
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (list, count);
-            // return this.GetEntityByPage(query, pageSize, pageIndex);
         }
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) {
             var query = (from PostTag in this.Db.PostTag
@@ -72,6 +71,7 @@ namespace FPTBlog.Src.PostModule {
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
+
             return (list, count);
 
         }
@@ -107,11 +107,6 @@ namespace FPTBlog.Src.PostModule {
         //                      select Blog);
         //         return this.GetEntityByPage(query, pageSize, pageIndex);
         //     }
-
-
-
-
-
 
         public void LikePost(Post post, User user) {
             LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);
