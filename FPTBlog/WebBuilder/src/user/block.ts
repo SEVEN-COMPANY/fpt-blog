@@ -17,6 +17,6 @@ blockButton?.addEventListener('click', function (event: Event) {
             userIdBlock: userId,
         };
 
-        http.put<ServerResponse<null>>(routers.user.block, input);
+        http.put<ServerResponse<null>>(routers.user.status, input);
     }
 });

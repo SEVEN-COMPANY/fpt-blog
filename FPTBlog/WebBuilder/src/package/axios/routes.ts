@@ -19,7 +19,8 @@ export const routers = {
         changePassword: '/api/user/change-password',
         update: '/api/user',
         get: '/api/user',
-        block: '/api/admin/user/block',
+        status: '/api/admin/user/status',
+        role: '/api/admin/user/role',
     },
     tag: {
         getAll: '/api/tag/all',

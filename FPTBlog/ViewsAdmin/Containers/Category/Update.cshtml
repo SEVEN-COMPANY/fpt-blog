@@ -68,8 +68,8 @@
                     = category.Description , PlaceHolder= "" })
 
                     @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
-                    new { Name = "description", Label = "Description", Value = category.Status ==
-                    CategoryStatus.ACTIVE })
+                    new { Name = "status", Label = "Description", Value = (category.Status ==
+                    CategoryStatus.ACTIVE) })
 
                     @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                     new { Label = "Update", Icon = "../../Components/Icons/UpdateCategory.cshtml"})

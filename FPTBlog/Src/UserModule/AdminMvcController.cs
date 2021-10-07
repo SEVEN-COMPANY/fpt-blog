@@ -25,6 +25,9 @@ namespace FPTBlog.Src.UserModule {
             if (searchName == null) {
                 searchName = "";
             }
+            Console.WriteLine(searchRole + "ahihi");
+            Console.WriteLine(searchStatus + "ahihi");
+
 
             // get status user for update user status
             this.ViewData["status"] = new SelectList(this.UserService.GetUserStatusDropList(), UserStatus.ENABLE);

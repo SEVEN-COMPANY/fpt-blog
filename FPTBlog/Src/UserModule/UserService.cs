@@ -19,11 +19,18 @@ namespace FPTBlog.Src.UserModule {
         public void UpdateUser(User user) => this.UserRepository.Update(user);
         public void RemoveUser(User user) => this.UserRepository.Remove(user);
 
-        public void BlockUserByAdminHandler(User user) {
+        public void ToggleUserStatusAdminHandler(User user) {
             if (user.Status == UserStatus.ENABLE)
                 user.Status = UserStatus.DISABLE;
             else
                 user.Status = UserStatus.ENABLE;
+            this.UserRepository.Update(user);
+        }
+        public void ToggleUserRoleAdminHandler(User user) {
+            if (user.Role == UserRole.STUDENT)
+                user.Role = UserRole.LECTURER;
+            else
+                user.Role = UserRole.STUDENT;
             this.UserRepository.Update(user);
         }
 

@@ -20,8 +20,8 @@ const btnRoleCancel = document.getElementById(`modal-role-btn-cancel`);
 
 pageChange('listUserForm');
 
-interface BlockUserDto {
-    userIdBlock: string;
+interface ToggleUserDto {
+    userId: string;
 }
 
 const rows = document.getElementsByTagName('tr');
@@ -55,12 +55,11 @@ btnAccept?.addEventListener('click', function () {
     panel?.addEventListener('transitionend', modalToggle);
 
     if (userId !== null) {
-        const input: BlockUserDto = {
-            userIdBlock: userId,
+        const input: ToggleUserDto = {
+            userId: userId,
         };
-        console.log(input);
 
-        http.put<ServerResponse<null>>(routers.user.block, input);
+        http.put<ServerResponse<null>>(routers.user.status, input);
     }
 });
 
@@ -108,14 +107,13 @@ btnRoleAccept?.addEventListener('click', function () {
     panelRole?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
     panelRole?.addEventListener('transitionend', modalRoleToggle);
 
-    // if (userId !== null) {
-    //     const input: BlockUserDto = {
-    //         userIdBlock: userId,
-    //     };
-    //     console.log(input);
+    if (userId !== null) {
+        const input: ToggleUserDto = {
+            userId: userId,
+        };
 
-    //     http.put<ServerResponse<null>>(routers.user.block, input);
-    // }
+        http.put<ServerResponse<null>>(routers.user.role, input);
+    }
 });
 
 btnRoleClose?.addEventListener('click', function () {
