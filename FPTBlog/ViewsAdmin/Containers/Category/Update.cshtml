@@ -27,8 +27,6 @@
             @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
             new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
 
-
-
             <div class="my-1">
                 @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                 new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
@@ -73,8 +71,8 @@
                     new { Name = "description", Label = "Description", Value = category.Status ==
                     CategoryStatus.ACTIVE })
 
-                    @* @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                        new { Label = "Update Category" }) *@
+                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                    new { Label = "Update", Icon = "../../Components/Icons/UpdateCategory.cshtml"})
                 </form>
             </div>
         </div>
@@ -85,5 +83,5 @@
 
 
 @section Scripts {
-
+<script src="/js/category-update.js"></script>
 }
