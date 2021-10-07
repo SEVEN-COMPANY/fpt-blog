@@ -17,7 +17,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name);
         public List<Tag> GetTagsFromPost(Post post);
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name);
-        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status);
+        public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status);
         public (List<Post>, int) GetWaitPostsWithCount();
         public (List<Post>, int) GetPopularPosts(int quantity);
         public (List<Post>, int) GetHighestPointPosts(int quantity);
@@ -28,5 +28,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Comment>, int) GetCommentOfPost(Post post);
         public List<string> GetPostSuggestion(string search, string categoryId);
         public (List<Post>, int) GetPostsForProfile(int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status);
+        public (List<Post>, int) GetPostsOfStudentWithStatus(string userId, PostStatus status);
     }
 }

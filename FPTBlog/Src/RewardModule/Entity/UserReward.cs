@@ -36,6 +36,7 @@ namespace FPTBlog.Src.RewardModule.Entity {
             get; set;
         }
 
+        [Required]
         public string CreateDate {
             get; set;
         }
