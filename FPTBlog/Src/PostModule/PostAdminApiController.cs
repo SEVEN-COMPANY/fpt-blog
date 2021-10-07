@@ -9,12 +9,11 @@ using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FPTBlog.Src.PostModule
-{
+namespace FPTBlog.Src.PostModule {
     [Route("/api/admin/post")]
     [ServiceFilter(typeof(AuthGuard))]
-    public class PostAdminApiController : Controller
-    {        private readonly IPostService PostService;
+    public class PostAdminApiController : Controller {
+        private readonly IPostService PostService;
         private readonly ICategoryService CategoryService;
         private readonly ITagService TagService;
         public PostAdminApiController(IPostService postService, ICategoryService categoryService, ITagService tagService) {
@@ -24,7 +23,7 @@ namespace FPTBlog.Src.PostModule
         }
 
         [HttpPost("")]
-        public IActionResult ApprovedHandler([FromBody] ApprovedPostDto input){
+        public IActionResult ApprovedHandler([FromBody] ApprovedPostDto input) {
             var res = new ServerApiResponse<(Post, string)>();
 
             ValidationResult result = new ApprovedPostDtoValidator().Validate(input);
@@ -39,7 +38,7 @@ namespace FPTBlog.Src.PostModule
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            if(post.Status != PostStatus.WAIT){
+            if (post.Status != PostStatus.WAIT) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -47,6 +46,14 @@ namespace FPTBlog.Src.PostModule
             post.Status = input.Status;
 
             res.data = (post, input.Note);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpGet("report")]
+        public IActionResult MonthlyReport() {
+            ServerApiResponse<Report> res = new ServerApiResponse<Report>();
+            var monthlyReport = this.PostService.GetMonthlyReport();
+            res.data = monthlyReport;
             return new ObjectResult(res.getResponse());
         }
     }

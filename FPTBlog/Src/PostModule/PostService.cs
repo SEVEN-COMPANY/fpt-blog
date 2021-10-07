@@ -97,9 +97,12 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public (List<Post>, int) GetPostsOfStudentWithStatus(string userId, PostStatus status) {
-            var posts =  this.PostRepository.GetAll(item => item.StudentId == userId && item.Status == status).ToList();
+            var posts = this.PostRepository.GetAll(item => item.StudentId == userId && item.Status == status).ToList();
             int count = posts.Count;
             return (posts, count);
+        }
+        public Report GetMonthlyReport() {
+            return this.PostRepository.GetMonthlyReport();
         }
     }
 }

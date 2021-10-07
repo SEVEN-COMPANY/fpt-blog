@@ -167,5 +167,48 @@ namespace FPTBlog.Src.PostModule {
                 return;
             }
         }
+
+        public Report GetMonthlyReport() {
+            Report report = new Report();
+            report.PostThisMonth = 0;
+            report.ViewThisMonth = 0;
+            report.InteractThisMonth = 0;
+            report.UserThisMonth = 0;
+            report.PostLastMonth = 0;
+            report.ViewLastMonth = 0;
+            report.InteractLastMonth = 0;
+            report.UserLastMonth = 0;
+            string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
+            DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
+            string lastMonth = DateTime.Now.AddMonths(-2).ToShortDateString();
+            DateTime lastMonthDate = Convert.ToDateTime(lastMonth);
+
+            List<Post> posts = this.Db.Post.ToList();
+            List<User> users = this.Db.User.ToList();
+            foreach (var post in posts) {
+                DateTime date = Convert.ToDateTime(post.CreateDate);
+                if (DateTime.Compare(date, thisMonthDate) > 0) {
+                    report.PostThisMonth++;
+                    report.ViewThisMonth += post.View;
+                    report.InteractThisMonth += post.Like + post.Dislike + this.Db.Comment.Where(x => x.PostId == post.PostId).Count();
+                }
+                if (DateTime.Compare(date, lastMonthDate) > 0 && (DateTime.Compare(date, thisMonthDate) < 0)) {
+                    report.PostLastMonth++;
+                    report.ViewLastMonth += post.View;
+                    report.InteractLastMonth += post.Like + post.Dislike + this.Db.Comment.Where(x => x.PostId == post.PostId).Count();
+                }
+            }
+
+            foreach (var user in users) {
+                DateTime date = Convert.ToDateTime(user.CreateDate);
+                if (DateTime.Compare(date, thisMonthDate) > 0) {
+                    report.UserThisMonth++;
+                }
+                if (DateTime.Compare(date, lastMonthDate) > 0 && (DateTime.Compare(date, thisMonthDate) < 0)) {
+                    report.UserLastMonth++;
+                }
+            }
+            return report;
+        }
     }
 }
