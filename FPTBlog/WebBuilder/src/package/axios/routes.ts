@@ -16,6 +16,8 @@ export const routers = {
         addCategoryToPost: '/api/post/category',
         likePost: '/api/post/like',
         dislikePost: '/api/post/dislike',
+        sendPost: '/api/post/send',
+        deletePost: '/api/post/delete',
     },
     user: {
         changePassword: '/api/user/change-password',
