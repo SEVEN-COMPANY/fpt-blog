@@ -50,7 +50,7 @@
 
 <div class="grid grid-cols-12 gap-4 mt-5">
     <div class="col-span-12 ">
-        <div class="max-w-sm intro-y box shadow ">
+        <div class="max-w-sm shadow intro-y box ">
             <div id="vertical-form" class="p-5">
                 <h3 class="mr-auto text-base font-medium">
                     Update Category
@@ -68,8 +68,8 @@
                     = category.Description , PlaceHolder= "" })
 
                     @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
-                    new { Name = "status", Label = "Description", Value = (category.Status ==
-                    CategoryStatus.ACTIVE) })
+                    new { Name = "status", Label = "Status", Value = category.Status ==
+                    CategoryStatus.ACTIVE })
 
                     @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                     new { Label = "Update", Icon = "../../Components/Icons/UpdateCategory.cshtml"})

@@ -7,6 +7,10 @@ namespace FPTBlog.Src.RewardModule.DTO {
             get; set;
         }
 
+        public string Name {
+            get; set;
+        }
+
         public string Description {
             get; set;
         }
@@ -18,6 +22,7 @@ namespace FPTBlog.Src.RewardModule.DTO {
     public class UpdateRewardDtoValidator : AbstractValidator<UpdateRewardDto> {
         public UpdateRewardDtoValidator() {
             RuleFor(x => x.RewardId).NotEmpty().NotNull();
+            RuleFor(x => x.Name).NotEmpty().NotNull();
             RuleFor(x => x.Description).NotEmpty().NotNull();
             RuleFor(x => x.File).NotNull();
         }

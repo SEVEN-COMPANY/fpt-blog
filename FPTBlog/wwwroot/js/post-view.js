@@ -10,16 +10,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/category/list.ts":
-/*!******************************!*\
-  !*** ./src/category/list.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar pagination_1 = __webpack_require__(/*! ../package/helper/pagination */ \"./src/package/helper/pagination.ts\");\r\nvar index_1 = __webpack_require__(/*! ../package/modal/index */ \"./src/package/modal/index.ts\");\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\n(0, pagination_1.pageChange)('listCategoryForm');\r\n(0, index_1.slideOver)('modal');\r\nvar status = 1;\r\nvar createCategoryForm = document.getElementById('createCategoryForm');\r\nvar statusList = document.querySelectorAll('input[name=\"status\"]');\r\nstatusList.forEach(function (radio) {\r\n    radio.addEventListener('click', function () {\r\n        status = Number(radio.value);\r\n    });\r\n});\r\ncreateCategoryForm === null || createCategoryForm === void 0 ? void 0 : createCategoryForm.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var name = document.getElementById('name');\r\n    var description = document.getElementById('description');\r\n    if (name != null && description != null && status != null) {\r\n        var input = {\r\n            name: name.value,\r\n            description: description.value,\r\n            status: status,\r\n        };\r\n        axios_1.http.post(routes_1.routers.category.create, input).then();\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/category/list.ts?");
-
-/***/ }),
-
 /***/ "./src/package/axios/index.ts":
 /*!************************************!*\
   !*** ./src/package/axios/index.ts ***!
@@ -46,31 +36,17 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
   \*************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
-<<<<<<< HEAD
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.routers = exports.routerLinks = void 0;\r\nexports.routerLinks = {\r\n    home: '/',\r\n    loginForm: '/auth/login',\r\n};\r\nexports.routers = {\r\n    category: {\r\n        create: '/api/category',\r\n        update: '/api/category',\r\n    },\r\n    post: {\r\n        create: '/api/post',\r\n        addNewTagToPost: '/api/post/tag',\r\n        getTagOfPost: function (postId) { return \"/api/post/tag?postId=\" + postId; },\r\n        save: '/api/post/save',\r\n        uploadImagePost: '/api/post/image',\r\n        addCategoryToPost: '/api/post/category',\r\n    },\r\n    user: {\r\n        changePassword: '/api/user/change-password',\r\n        update: '/api/user',\r\n        get: '/api/user',\r\n        status: '/api/admin/user/status',\r\n        role: '/api/admin/user/role',\r\n    },\r\n    tag: {\r\n        getAll: '/api/tag/all',\r\n        getByName: function (name) { return \"/api/tag?name=\" + name; },\r\n    },\r\n    auth: {\r\n        login: '/api/auth/login',\r\n        register: '/api/auth/register',\r\n    },\r\n};\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/axios/routes.ts?");
-=======
 eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.routers = exports.routerLinks = void 0;\r\nexports.routerLinks = {\r\n    home: '/',\r\n    loginForm: '/auth/login',\r\n};\r\nexports.routers = {\r\n    category: {\r\n        create: '/api/category',\r\n        update: '/api/category',\r\n    },\r\n    post: {\r\n        create: '/api/post',\r\n        addNewTagToPost: '/api/post/tag',\r\n        getTagOfPost: function (postId) { return \"/api/post/tag?postId=\" + postId; },\r\n        save: '/api/post/save',\r\n        uploadImagePost: '/api/post/image',\r\n        addCategoryToPost: '/api/post/category',\r\n        likePost: '/api/post/like',\r\n        dislikePost: '/api/post/dislike',\r\n    },\r\n    user: {\r\n        changePassword: '/api/user/change-password',\r\n        update: '/api/user',\r\n        get: '/api/user',\r\n        block: '/api/admin/user/block',\r\n    },\r\n    tag: {\r\n        getAll: '/api/tag/all',\r\n        getByName: function (name) { return \"/api/tag?name=\" + name; },\r\n    },\r\n    auth: {\r\n        login: '/api/auth/login',\r\n        register: '/api/auth/register',\r\n    },\r\n};\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/axios/routes.ts?");
->>>>>>> b810aa8ae8589f5d214117328779d704642fdb13
 
 /***/ }),
 
-/***/ "./src/package/helper/pagination.ts":
-/*!******************************************!*\
-  !*** ./src/package/helper/pagination.ts ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ "./src/post/post.ts":
+/*!**************************!*\
+  !*** ./src/post/post.ts ***!
+  \**************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.pageChange = void 0;\r\nvar pageChange = function (formId) {\r\n    var paginationSize = document.getElementById('pagination-size');\r\n    var paginationBtn = document.getElementById('pagination-btn');\r\n    paginationSize === null || paginationSize === void 0 ? void 0 : paginationSize.addEventListener('change', function (_) {\r\n        var option = paginationSize.options[paginationSize.selectedIndex];\r\n        var pageSizeInput = document.getElementById('pageSize');\r\n        pageSizeInput.value = option.value;\r\n        var pageIndexInput = document.getElementById('pageIndex');\r\n        pageIndexInput.value = '0';\r\n        var form = document.getElementById(formId);\r\n        form.submit();\r\n    });\r\n    var pageBtn = paginationBtn === null || paginationBtn === void 0 ? void 0 : paginationBtn.getElementsByTagName('button');\r\n    if (pageBtn) {\r\n        var _loop_1 = function (index) {\r\n            var element = pageBtn[index];\r\n            element.addEventListener('click', function (_) {\r\n                var pageIndexInput = document.getElementById('pageIndex');\r\n                var value = element.getAttribute('data-index');\r\n                if (value) {\r\n                    pageIndexInput.value = value;\r\n                }\r\n                var form = document.getElementById(formId);\r\n                form.submit();\r\n            });\r\n        };\r\n        for (var index = 0; index < pageBtn.length; index++) {\r\n            _loop_1(index);\r\n        }\r\n    }\r\n};\r\nexports.pageChange = pageChange;\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/helper/pagination.ts?");
-
-/***/ }),
-
-/***/ "./src/package/modal/index.ts":
-/*!************************************!*\
-  !*** ./src/package/modal/index.ts ***!
-  \************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.slideOver = void 0;\r\nvar slideOver = function (id) {\r\n    var btn = document.getElementById(id + \"-btn\");\r\n    var btnClose = document.getElementById(id + \"-btn-close\");\r\n    var wrapper = document.getElementById(id + \"-wrapper\");\r\n    var bg = document.getElementById(id + \"-bg\");\r\n    var panel = document.getElementById(id + \"-panel\");\r\n    var modalToggle = function () {\r\n        wrapper === null || wrapper === void 0 ? void 0 : wrapper.classList.add('invisible');\r\n    };\r\n    btn === null || btn === void 0 ? void 0 : btn.addEventListener('click', function () {\r\n        wrapper === null || wrapper === void 0 ? void 0 : wrapper.classList.remove('invisible');\r\n        bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-100');\r\n        bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-0');\r\n        panel === null || panel === void 0 ? void 0 : panel.classList.add('translate-x-0');\r\n        panel === null || panel === void 0 ? void 0 : panel.classList.remove('translate-x-full');\r\n        panel === null || panel === void 0 ? void 0 : panel.removeEventListener('transitionend', modalToggle);\r\n    });\r\n    btnClose === null || btnClose === void 0 ? void 0 : btnClose.addEventListener('click', function () {\r\n        bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-100');\r\n        bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-0');\r\n        panel === null || panel === void 0 ? void 0 : panel.classList.remove('translate-x-0');\r\n        panel === null || panel === void 0 ? void 0 : panel.classList.add('translate-x-full');\r\n        panel === null || panel === void 0 ? void 0 : panel.addEventListener('transitionend', modalToggle);\r\n    });\r\n};\r\nexports.slideOver = slideOver;\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/modal/index.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar count = document.getElementById('like-count');\r\nvar likeBtn = document.getElementById('post-like');\r\nvar dislikeBtn = document.getElementById('post-dislike');\r\nvar postId = document.getElementById('postId');\r\nlikeBtn === null || likeBtn === void 0 ? void 0 : likeBtn.addEventListener('click', function () {\r\n    var input = {\r\n        postId: postId.value,\r\n    };\r\n    axios_1.http.post(routes_1.routers.post.likePost, input).then(function (_a) {\r\n        var _b;\r\n        var data = _a.data;\r\n        var like = (_b = data.data.like) !== null && _b !== void 0 ? _b : '';\r\n        if (count)\r\n            count.innerText = like;\r\n    });\r\n});\r\ndislikeBtn === null || dislikeBtn === void 0 ? void 0 : dislikeBtn.addEventListener('click', function () {\r\n    var input = {\r\n        postId: postId.value,\r\n    };\r\n    axios_1.http.post(routes_1.routers.post.dislikePost, input).then(function (_a) {\r\n        var _b;\r\n        var data = _a.data;\r\n        var like = (_b = data.data.like) !== null && _b !== void 0 ? _b : '';\r\n        if (count)\r\n            count.innerText = like;\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/post/post.ts?");
 
 /***/ })
 
@@ -105,7 +81,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/category/list.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/post/post.ts");
 /******/ 	
 /******/ })()
 ;

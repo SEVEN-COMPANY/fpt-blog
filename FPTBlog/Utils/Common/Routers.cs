@@ -13,6 +13,8 @@ namespace FPTBlog.Utils.Common {
 
     public class Routers {
 
+
+
         // Home
         public static readonly RouterItem CommonGetHome = new RouterItem() { Page = "/Views/Containers/Home/Home.cshtml", Title = "Home", Link = "/" };
 
@@ -35,12 +37,15 @@ namespace FPTBlog.Utils.Common {
         public static readonly RouterItem AddComment = new RouterItem() { Page = "/Views/Containers/Comment/AddComment.cshtml", Link = "/comment/add" };
         public static readonly RouterItem GetComment = new RouterItem() { Page = "/Views/Containers/Comment/GetComment.cshtml", Link = "/comment/get" };
         public static readonly RouterItem UpdateComment = new RouterItem() { Page = "/Views/Containers/Comment/UpdateComment.cshtml", Link = "comment/update" };
-        public static readonly RouterItem UserGetProfile = new RouterItem() { Page = "/Views/Containers/User/Profile.cshtml", Title = "User", Link = "/user" };
+        public static readonly RouterItem UserGetProfile = new RouterItem() { Page = "/Views/Containers/User/Profile.cshtml", Title = "User", Link = "/user/profile" };
         public static readonly RouterItem UserGetMyProfile = new RouterItem() { Page = "/Views/Containers/User/MyProfile.cshtml", Title = "User", Link = "/user/me" };
 
         public static readonly RouterItem UserPutUser = new RouterItem() { Page = "/Views/Containers/User/UpdateProfile.cshtml", Title = "Update User", Link = "/user/update" };
 
         public static readonly RouterItem UserPutPassword = new RouterItem() { Page = "/Views/Containers/User/ChangePassword.cshtml", Title = "Change Password", Link = "/user/change-password" };
 
+        //Common
+        public static readonly RouterItem NotFoundPage = new RouterItem() { Page = "/Views/Containers/Error/404.cshtml", Title = "", Link = "" };
+        public static readonly RouterItem ErrorPage = new RouterItem() { Page = "/Views/Containers/Error/500.cshtml", Title = "", Link = "" };
     }
 }

@@ -29,5 +29,9 @@ namespace FPTBlog.Src.PostModule.Interface {
         public List<string> GetPostSuggestion(string search, string categoryId);
         public (List<Post>, int) GetPostsForProfile(int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status);
         public (List<Post>, int) GetPostsOfStudentWithStatus(string userId, PostStatus status);
+        public Report GetMonthlyReport();
+
+        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
+        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search);
     }
 }

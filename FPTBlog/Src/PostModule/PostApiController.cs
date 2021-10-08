@@ -140,13 +140,13 @@ namespace FPTBlog.Src.PostModule {
         public IActionResult GetTagsByPostId(string postId) {
             var res = new ServerApiResponse<List<Tag>>();
 
-            Post blog = this.PostService.GetPostByPostId(postId);
-            if (blog == null) {
+            Post post = this.PostService.GetPostByPostId(postId);
+            if (post == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            var tags = this.PostService.GetTagsFromPost(blog);
+            var tags = this.PostService.GetTagsFromPost(post);
             res.data = tags;
 
 

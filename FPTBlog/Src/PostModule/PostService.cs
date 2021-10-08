@@ -19,10 +19,10 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public void AddPost(Post post) => this.PostRepository.Add(post);
-        public Post GetPostByPostId(string postId) => this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
+        public Post GetPostByPostId(string postId) => this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag,Student");
         public PostViewModel GetViewPostByPostId(string postId) {
             var viewPost = new PostViewModel();
-            var post = this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
+            var post = this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag,Student");
             viewPost.Post = post;
             var (_, numberOfComment) = this.GetCommentOfPost(post);
             viewPost.NumberOfComment = numberOfComment;
@@ -42,7 +42,7 @@ namespace FPTBlog.Src.PostModule {
         }
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByCategoryWithCount(pageIndex, pageSize, name);
         public List<Tag> GetTagsFromPost(Post post) => this.PostRepository.GetTagsFromPost(post);
-        public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByTagWithCount(pageIndex, pageSize, name);
+        public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByTagWithCount(pageSize, pageIndex, name);
         public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
         public (List<Post>, int) GetPopularPosts(int quantity) {
@@ -97,9 +97,22 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public (List<Post>, int) GetPostsOfStudentWithStatus(string userId, PostStatus status) {
-            var posts =  this.PostRepository.GetAll(item => item.StudentId == userId && item.Status == status).ToList();
+            var posts = this.PostRepository.GetAll(item => item.StudentId == userId && item.Status == status).ToList();
             int count = posts.Count;
             return (posts, count);
+        }
+        public Report GetMonthlyReport() {
+            return this.PostRepository.GetMonthlyReport();
+        }
+
+        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status) {
+            return this.PostRepository.GetPostsByStatus(pageSize, pageIndex, search, status);
+
+        }
+
+        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search) {
+            return this.PostRepository.GetAllPosts(pageSize, pageIndex, search);
+
         }
     }
 }
