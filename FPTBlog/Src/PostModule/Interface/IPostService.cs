@@ -3,6 +3,7 @@ using FPTBlog.Src.CommentModule.Entity;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.PostModule.Interface {
     public interface IPostService {
@@ -14,11 +15,11 @@ namespace FPTBlog.Src.PostModule.Interface {
         public void AddTagToPost(Post post, Tag tag);
         public void RemoveTagFromPost(Post post, Tag tag);
         public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, string search, string categoryId);
-        public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name);
+
         public List<Tag> GetTagsFromPost(Post post);
         public (List<PostViewModel>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name);
         public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status);
-        public (List<Post>, int) GetWaitPostsWithCount();
+
         public (List<Post>, int) GetPopularPosts(int quantity);
         public (List<Post>, int) GetHighestPointPosts(int quantity);
         public (List<Post>, int) GetNewestPosts(int quantity);
@@ -33,5 +34,7 @@ namespace FPTBlog.Src.PostModule.Interface {
 
         public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
         public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search);
+
+        public List<SelectListItem> GetPostStatusDropList();
     }
 }

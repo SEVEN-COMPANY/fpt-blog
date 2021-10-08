@@ -5,13 +5,15 @@
     Category category = (Category)ViewData["category"];
     var statusSearch = (SelectList)this.ViewData["statusSearch"];
     var status = (SelectList)this.ViewData["status"];
+
 }
 
 <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
     <h1 class="text-2xl font-semibold ">Category Management</h1>
     <div class="flex items-end justify-between">
 
-        <form class="flex items-end space-x-4 " id="listCategoryForm">
+        <form class="flex items-end space-x-4 " id="listCategoryForm"
+            action="@RoutersAdmin.CategoryGetCategoryList.Link">
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
             new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
             this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
@@ -19,7 +21,7 @@
 
             @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
             new { Name = "searchStatus", Label = "Status", Type = "text", Value = (string)
-            this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = status
+            this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = statusSearch
             })
 
             @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",

@@ -9,7 +9,6 @@ module.exports = {
         'user-list': ['./src/user/list.ts'],
         'post-view': ['./src/post/post.ts'],
         'user-update': ['./src/user/update.ts'],
-        'user-block': ['./src/user/block.ts'],
         'user-changePassword': ['./src/user/changePassword.ts'],
         'category-update': ['./src/category/update.ts'],
         'category-list': ['./src/category/list.ts'],

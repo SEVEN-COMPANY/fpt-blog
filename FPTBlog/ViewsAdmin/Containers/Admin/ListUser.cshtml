@@ -165,29 +165,28 @@
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @item.Email
                     </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @item.Role
+                    <td class="px-6 py-4 text-sm text-gray-500 capitalize whitespace-nowrap">
+                        <span class="flex items-center ">
+                            @item.Role.ToString().ToLower()
+                            <button data-userId="@item.UserId" data-userRole="@item.Role" class="ml-1 modal-role-btn"
+                            type="button">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                    d="M13.931 2.06873C13.3061 1.44389 12.2931 1.44389 11.6682 2.06873L5.59961 8.13736V10.4001H7.86235L13.931 4.33147C14.5558 3.70663 14.5558 2.69357 13.931 2.06873Z"
+                                    fill="#6C7280" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M1.59961 4.8001C1.59961 3.91644 2.31595 3.2001 3.19961 3.2001H6.39961C6.84144 3.2001 7.19961 3.55827 7.19961 4.0001C7.19961 4.44193 6.84144 4.8001 6.39961 4.8001H3.19961V12.8001H11.1996V9.6001C11.1996 9.15827 11.5578 8.8001 11.9996 8.8001C12.4414 8.8001 12.7996 9.15827 12.7996 9.6001V12.8001C12.7996 13.6838 12.0833 14.4001 11.1996 14.4001H3.19961C2.31595 14.4001 1.59961 13.6838 1.59961 12.8001V4.8001Z"
+                                    fill="#6C7280" />
+                                </svg>
 
-                        <!--  button de tam con fix -->
-                    <button data-userId="@item.UserId" data-userRole="@item.Role" class="modal-role-btn" type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                        </button>
+                            </button>
+                        </span>
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @await Html.PartialAsync("../../Components/Table/TableStatus.cshtml",item.Status ==
-                    UserStatus.ENABLE)
-
-                        <!--  button de tam con fix -->
-                    <button data-userId="@item.UserId" data-userStatus="@item.Status" class="modal-btn" type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
+                        <button data-userId="@item.UserId" data-userStatus="@item.Status" class="modal-btn" type="button">
+                            @await Html.PartialAsync("../../Components/Table/TableStatusEdit.cshtml",item.Status ==
+                        UserStatus.ENABLE)
                         </button>
 
                     </td>
@@ -195,7 +194,8 @@
                         @item.CreateDate
                     </td>
                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <a href="@linkProfile" class="text-indigo-600 hover:text-indigo-900">Profile</a>
+                        <a href="@linkProfile" target="_blank" class="text-indigo-600 hover:text-indigo-900">View
+                            Profile</a>
                     </td>
                 </tr>
             }
@@ -208,23 +208,23 @@
 </div>
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="invisible fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+<div class="fixed inset-0 z-10 invisible overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
     id="modal-wrapper">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
 
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" id="modal-bg"></div>
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true" id="modal-bg"></div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
         <div id="modal-panel"
-            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-            <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-                <button type="button" id="modal-btn-close" class=" bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2
-                    focus:ring-offset-2 focus:ring-indigo-500">
+            class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+            <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                <button type="button" id="modal-btn-close"
+                    class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <span class="sr-only">Close</span>
                     <!-- Heroicon name: outline/x -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
@@ -234,10 +234,10 @@
 
             <div class="hidden sm:flex sm:items-start">
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="hidden text-lg leading-6 font-medium text-gray-900" id="modal-content-title-block">
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-block">
                         Block account
                     </h3>
-                    <h3 class="hidden text-lg leading-6 font-medium text-gray-900" id="modal-content-title-unblock">
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-unblock">
                         Unblock account
                     </h3>
                     <div class="mt-2">
@@ -254,15 +254,15 @@
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <button id="modal-btn-accept-block" type="button"
-                    class="hidden w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                     Block
                 </button>
                 <button id="modal-btn-accept-unblock" type="button"
-                    class="hidden w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                     Unblock
                 </button>
                 <button id="modal-btn-cancel" type="button"
-                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
                     Cancel
                 </button>
             </div>
@@ -271,24 +271,24 @@
 </div>
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="invisible fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+<div class="fixed inset-0 z-10 invisible overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
     id="modal-role-wrapper">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
 
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" id="modal-role-bg">
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true" id="modal-role-bg">
         </div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
         <div id="modal-role-panel"
-            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-            <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-                <button type="button" id="modal-role-btn-close" class=" bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2
-                    focus:ring-offset-2 focus:ring-indigo-500">
+            class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+            <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                <button type="button" id="modal-role-btn-close"
+                    class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <span class="sr-only">Close</span>
                     <!-- Heroicon name: outline/x -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
@@ -297,10 +297,10 @@
             </div>
             <div class="hidden sm:flex sm:items-start">
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="hidden text-lg leading-6 font-medium text-gray-900" id="modal-content-title-upgrade">
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-upgrade">
                         Upgrade account
                     </h3>
-                    <h3 class="hidden text-lg leading-6 font-medium text-gray-900" id="modal-content-title-downgrade">
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-downgrade">
                         Downgrade account
                     </h3>
                     <div class="mt-2">
@@ -318,15 +318,15 @@
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <button id="modal-role-btn-accept-upgrade" type="button"
-                    class="hidden w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                     Upgrade
                 </button>
                 <button id="modal-role-btn-accept-downgrade" type="button"
-                    class="hidden w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                     Downgrade
                 </button>
                 <button id="modal-role-btn-cancel" type="button"
-                    class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
                     Cancel
                 </button>
             </div>
@@ -336,6 +336,6 @@
 
 
 @section Scripts {
-<script src="/js/user-block.js"></script>
+
 <script src="/js/user-list.js"></script>
 }

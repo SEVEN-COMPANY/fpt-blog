@@ -1,6 +1,6 @@
-@using FPTBlog.Src.TagModule.Entity
+@using FPTBlog.Src.PostModule.Entity
 @{
-    var listTags = (List<IDictionary<string, object>>)this.ViewData["tags"];
+    var list = (List<PostViewModel>)this.ViewData["posts"];
     var total = (int)this.ViewData["total"];
 
 }
@@ -14,55 +14,52 @@
                     #
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Name
+                    Title
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Student
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Status
-                </th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Total of post
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Create Date
                 </th>
 
                 <th scope="col" class="relative px-6 py-3">
-                    <span class="sr-only">View Post</span>
+                    <span class="sr-only">Edit</span>
                 </th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200 fade-in ">
-            @for (int i = 0; i < listTags.Count; i++)
+            @for (int i = 0; i < list.Count; i++)
             {
-                var listTagItem = listTags[i];
-                var quantity = listTagItem["quantity"];
-                var tag = (Tag)listTagItem["tag"];
+                var item = list[i];
+                var previewLink = $"{Routers.PostGetPreview.Link}?PostId={item.Post.PostId}";
 
-                var link = $"{RoutersAdmin.PostGetPostByTag.Link}?name={tag.Name}";
                 <tr class="duration-200 hover:bg-indigo-100">
                     <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
                         @(i+1)
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @tag.Name
-                    </td>
-
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @await Html.PartialAsync("../../Components/Table/TableStatus.cshtml",tag.Status ==
-                    TagStatus.ACTIVE)
+                        @item.Post.Title
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @quantity
+                        @item.Post.StudentId
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @tag.CreateDate
+                        @await Html.PartialAsync("../../Components/Table/PostStatusEdit.cshtml",item.Post.Status)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Post.CreateDate
                     </td>
                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <a href="@link" class="text-indigo-600 hover:text-indigo-900">View Post</a>
+                        <a href="@previewLink" target="_blank" class="text-indigo-600 hover:text-indigo-900">View
+                            Post</a>
                     </td>
                 </tr>
-
             }
+
         </tbody>
     </table>
     <!-- This example requires Tailwind CSS v2.0+ -->

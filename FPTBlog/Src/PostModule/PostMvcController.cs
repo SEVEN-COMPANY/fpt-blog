@@ -109,29 +109,5 @@ namespace FPTBlog.Src.PostModule {
             this.ViewData["post"] = post;
             return View(Routers.PostGetPost.Page);
         }
-
-        // [HttpGet("category")]
-        // public IActionResult GetBlogsByCategoryName(int pageSize = 12, int pageIndex = 0, string name = "") {
-        //     var (posts, total) = this.PostService.GetPostsByCategoryWithCount(pageSize, pageIndex, name);
-        //     this.ViewData["blogs"] = posts;
-        //     this.ViewData["total"] = total;
-
-        //     return Json(new {
-        //         posts = posts,
-        //         total = total
-        //     });
-        // }
-
-        [HttpGet("student")]
-        public IActionResult GetBlogsOfStudentWithStatus(PostStatus status, int pageSize = 12, int pageIndex = 0, string studentId = "") {
-            var (posts, total) = this.PostService.GetPostsOfStudentWithStatusForPage(pageSize, pageIndex, studentId, status);
-            this.ViewData["posts"] = posts;
-            this.ViewData["total"] = total;
-
-            return Json(new {
-                posts = posts,
-                total = total
-            });
-        }
     }
 }

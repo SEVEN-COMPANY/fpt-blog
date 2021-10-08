@@ -90,7 +90,9 @@ btnAcceptBlock?.addEventListener('click', function () {
             userId: userId,
         };
 
-        http.put<ServerResponse<null>>(routers.user.status, input);
+        http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
+            window.location.reload();
+        });
     }
 });
 
@@ -106,7 +108,9 @@ btnAcceptUnblock?.addEventListener('click', function () {
             userId: userId,
         };
 
-        http.put<ServerResponse<null>>(routers.user.status, input);
+        http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
+            window.location.reload();
+        });
     }
 });
 
@@ -195,7 +199,9 @@ btnRoleAcceptUpgrade?.addEventListener('click', function () {
             userId: userId,
         };
 
-        http.put<ServerResponse<null>>(routers.user.role, input);
+        http.put<ServerResponse<null>>(routers.user.role, input).then(() => {
+            window.location.reload();
+        });
     }
 });
 
@@ -211,7 +217,9 @@ btnRoleAcceptDowngrade?.addEventListener('click', function () {
             userId: userId,
         };
 
-        http.put<ServerResponse<null>>(routers.user.role, input);
+        http.put<ServerResponse<null>>(routers.user.role, input).then(() => {
+            window.location.reload();
+        });
     }
 });
 
