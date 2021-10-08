@@ -51,15 +51,27 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
-        public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole) {
-            List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus && item.Role == searchRole);
+        public (List<User>, int) GetUsersStatusAndRoleWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole) {
+            List<User> list = new List<User>();
+            if (searchStatus == 0 && searchRole == 0) {
+                list = (List<User>) this.GetAll(item => item.Name.Contains(searchName));
+            }
+            else if (searchRole == 0) {
+                list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
+            }
+            else if (searchStatus == 0) {
+                list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Role == searchRole);
+            }
+            else {
+                list = (List<User>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus && item.Role == searchRole);
+            }
+
             var count = list.Count();
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-
-
             return (pagelist, count);
         }
-        public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string searchName) {
+
+        public (List<User>, int) GetUsersNameWithCount(int pageSize, int pageIndex, string searchName) {
             List<User> list = (List<User>) this.GetAll(item => item.Name.Contains(searchName));
             var count = list.Count();
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
