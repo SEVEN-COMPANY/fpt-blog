@@ -17,6 +17,7 @@ interface SaveBlogDto {
     postId: string;
     readTime: number;
     coverUrl: string;
+    description: string;
 }
 interface AddCategoryDto {
     categoryId: string;
@@ -59,6 +60,7 @@ saveChangePostBtn?.addEventListener('click', function () {
             postId: postIdElement.value,
             readTime: readTime,
             coverUrl: coverImage,
+            description: `${editor.root.innerText.split(' ').slice(0, 30).join(' ')}...`,
         };
 
         http.post<ServerResponse<null>>(routers.post.save, input);

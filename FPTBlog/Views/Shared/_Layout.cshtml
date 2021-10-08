@@ -1,5 +1,7 @@
 ﻿@{
     var title = $"{ViewData["Title"]} | FPT Blog";
+    var imageUrl = ViewData["ImageUrl"] != null ? $"{ViewData["ImageUrl"]}" : "/images/seo.jpg";
+    var description = ViewData["Description"] != null? $"{ViewData["Description"]}" : "FPT Blog where you can share your knowledge, express your emotion with other classmate";
 }
 
 <!DOCTYPE html>
@@ -38,21 +40,19 @@
 
     <meta name="google-site-verification" content="s3ITW061jk73hJz1FkOClSYuBSi0MzC5F1jJwAWYPcQ" />
 
-    {/* google header */}
-    <meta name="description" content={description} />
-    <meta name="robots" content={metaRobots} />
-    <meta name="keywords" content={keyword} />
+    <meta name="description" content="@description" />
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="Post, Blog, FPT University, FU BLOG" />
 
-    {/* facebook header */}
+
     <meta property="og:type" content="article" />
     <meta property="og:title" content="@title" />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={imageUrl} />
+    <meta property="og:description" content="@description" />
+    <meta property="og:image" content="@imageUrl" />
 
-    {/* twitter header */}
     <meta name="twitter:title" content="@title" />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:description" content="@description" />
+    <meta name="twitter:image" content="@imageUrl" />
     <meta name="twitter:card" content="summary_large_image" />
 
 
