@@ -31,6 +31,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetPostsOfStudentWithStatus(string userId, PostStatus status);
         public Report GetMonthlyReport();
 
-        public (List<Post>, int) getPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
+        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
+        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search);
     }
 }

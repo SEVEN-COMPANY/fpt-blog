@@ -21,7 +21,7 @@ namespace FPTBlog.Src.CategoryModule {
         }
 
         [HttpGet("")]
-        public IActionResult Category(string searchName, CategoryStatus searchStatus = CategoryStatus.ACTIVE, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult Category(string searchName, CategoryStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
             if (searchName == null) {
                 searchName = "";
             }
@@ -31,14 +31,19 @@ namespace FPTBlog.Src.CategoryModule {
             var statusList = this.CategoryService.GetCategoryStatusDropList();
             statusList.Add(new SelectListItem() { Text = "All", Value = "" });
             SelectList list = new SelectList(statusList, "");
-
             this.ViewData["statusSearch"] = list;
+            if ((int) searchStatus == 0) {
+                var (allCategories, allTotal) = this.CategoryService.GetAllCategories(pageIndex, pageSize, searchName);
+                this.ViewData["categories"] = allCategories;
+                this.ViewData["total"] = allTotal;
+            }
+            else {
+                var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
+                this.ViewData["categories"] = categories;
+                this.ViewData["total"] = total;
+            }
 
 
-
-            var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
-            this.ViewData["categories"] = categories;
-            this.ViewData["total"] = total;
             return View(RoutersAdmin.CategoryGetCategoryList.Page);
         }
 
