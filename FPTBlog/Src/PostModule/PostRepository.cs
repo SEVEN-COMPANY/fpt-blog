@@ -212,5 +212,20 @@ namespace FPTBlog.Src.PostModule {
             }
             return report;
         }
+
+        public (List<Post>, int) getPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status) {
+
+            var query = (from Post in this.Db.Post
+                         where (Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search)) && Post.Status == status
+                         select Post);
+
+            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            foreach (var post in list) {
+                this.Db.Entry(post).Reference(item => item.Student).Load();
+            }
+            int count = query.Count();
+            return (list, count);
+
+        }
     }
 }
