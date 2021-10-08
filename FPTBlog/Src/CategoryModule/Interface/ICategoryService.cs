@@ -11,6 +11,8 @@ namespace FPTBlog.Src.CategoryModule.Interface {
         public void UpdateCategory(Category category);
         public void RemoveCategory(Category category);
         public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus);
+        public (List<Category>, int) GetAllCategories(int pageIndex, int pageSize, string searchName);
+
         public List<SelectListItem> GetCategoryStatusDropList();
         public List<SelectListItem> GetCategoryDropList();
     }

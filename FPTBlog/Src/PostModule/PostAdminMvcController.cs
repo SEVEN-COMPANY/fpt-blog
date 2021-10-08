@@ -21,11 +21,19 @@ namespace FPTBlog.Src.PostModule {
                 search = "";
             }
 
-            Console.WriteLine(status);
-
+            if ((int) status == 0) {
+                var (allPosts, allTotal) = this.PostService.GetAllPosts(pageSize, pageIndex, search);
+                this.ViewData["posts"] = allPosts;
+                this.ViewData["total"] = allTotal;
+            }
+            else {
+                var (posts, total) = this.PostService.GetPostsByStatus(pageSize, pageIndex, search, status);
+                this.ViewData["posts"] = posts;
+                this.ViewData["total"] = total;
+            }
 
             var monthlyReport = this.PostService.GetMonthlyReport();
-            var (posts, total) = this.PostService.getPostsByStatus(pageSize, pageIndex, search, status);
+
 
             this.ViewData["postThisMonth"] = monthlyReport.PostThisMonth;
             this.ViewData["postLastMonth"] = monthlyReport.PostLastMonth;
@@ -35,9 +43,7 @@ namespace FPTBlog.Src.PostModule {
             this.ViewData["interactLastMonth"] = monthlyReport.InteractLastMonth;
             this.ViewData["userThisMonth"] = monthlyReport.UserThisMonth;
             this.ViewData["userLastMonth"] = monthlyReport.UserLastMonth;
-            this.ViewData["posts"] = posts;
-            this.ViewData["total"] = total;
-            Console.WriteLine(posts.Count);
+
 
             return View(RoutersAdmin.PostGetList.Page);
         }
@@ -52,39 +58,6 @@ namespace FPTBlog.Src.PostModule {
             return View(RoutersAdmin.PostGetPostByTag.Page);
         }
 
-        [HttpGet("report")]
-        public IActionResult MonthlyReport(string search, PostStatus status, int pageSize = 12, int pageIndex = 0) {
-            if (search == null) {
-                search = "";
-            }
 
-
-
-            var monthlyReport = this.PostService.GetMonthlyReport();
-            var (posts, total) = this.PostService.getPostsByStatus(pageSize, pageIndex, search, status);
-
-            this.ViewData["postThisMonth"] = monthlyReport.PostThisMonth;
-            this.ViewData["postLastMonth"] = monthlyReport.PostLastMonth;
-            this.ViewData["viewThisMonth"] = monthlyReport.ViewThisMonth;
-            this.ViewData["viewLastMonth"] = monthlyReport.ViewLastMonth;
-            this.ViewData["interactThisMonth"] = monthlyReport.InteractThisMonth;
-            this.ViewData["interactLastMonth"] = monthlyReport.InteractLastMonth;
-            this.ViewData["userThisMonth"] = monthlyReport.UserThisMonth;
-            this.ViewData["userLastMonth"] = monthlyReport.UserLastMonth;
-            this.ViewData["posts"] = posts;
-            this.ViewData["total"] = total;
-            return Json(new {
-                postThisMonth = monthlyReport.PostThisMonth,
-                postLastMonth = monthlyReport.PostLastMonth,
-                viewThisMonth = monthlyReport.ViewThisMonth,
-                viewLastMonth = monthlyReport.ViewLastMonth,
-                interactThisMonth = monthlyReport.InteractThisMonth,
-                interactLastMonth = monthlyReport.InteractLastMonth,
-                userThisMonth = monthlyReport.UserThisMonth,
-                userLastMonth = monthlyReport.UserLastMonth,
-                posts = posts,
-                total = total
-            });
-        }
     }
 }

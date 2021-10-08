@@ -18,7 +18,8 @@ namespace FPTBlog.Src.PostModule.Interface {
         public void LikePost(Post post, User user);
         public void DislikePost(Post post, User user);
         public Report GetMonthlyReport();
-        public (List<Post>, int) getPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
+        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
+        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search);
 
     }
 }

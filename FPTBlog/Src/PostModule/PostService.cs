@@ -105,8 +105,13 @@ namespace FPTBlog.Src.PostModule {
             return this.PostRepository.GetMonthlyReport();
         }
 
-        public (List<Post>, int) getPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status) {
-            return this.PostRepository.getPostsByStatus(pageSize, pageIndex, search, status);
+        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status) {
+            return this.PostRepository.GetPostsByStatus(pageSize, pageIndex, search, status);
+
+        }
+
+        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search) {
+            return this.PostRepository.GetAllPosts(pageSize, pageIndex, search);
 
         }
     }
