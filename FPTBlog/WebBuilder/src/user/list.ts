@@ -15,14 +15,6 @@ const btnAcceptBlock = document.getElementById(`modal-btn-accept-block`);
 const btnAcceptUnblock = document.getElementById(`modal-btn-accept-unblock`);
 const btnCancel = document.getElementById(`modal-btn-cancel`);
 
-// modal of user role
-const btnRoleClose = document.getElementById(`modal-role-btn-close`);
-const wrapperRole = document.getElementById(`modal-role-wrapper`);
-const bgRole = document.getElementById(`modal-role-bg`);
-const panelRole = document.getElementById(`modal-role-panel`);
-const btnRoleAccept = document.getElementById(`modal-role-btn-accept`);
-const btnRoleCancel = document.getElementById(`modal-role-btn-cancel`);
-
 pageChange('listUserForm');
 
 interface ToggleUserDto {
@@ -30,8 +22,8 @@ interface ToggleUserDto {
 }
 
 enum UserRole {
-    STUDENT = 1,
-    LECTURER = 2,
+    STUDENT = 'STUDENT',
+    LECTURER = 'LECTURER',
 }
 
 enum UserStatus {
@@ -42,6 +34,7 @@ enum UserStatus {
 const rows = document.getElementsByTagName('tr');
 let userId: any = null;
 let userStatus = UserStatus.ENABLE;
+let userRole = UserRole.STUDENT;
 
 const modalToggle = () => {
     wrapper?.classList.add('invisible');
@@ -62,9 +55,6 @@ for (let index = 0; index < rows.length; index++) {
     const btn = element.getElementsByClassName('modal-btn')[0] as HTMLButtonElement;
     if (btn)
         btn.addEventListener('click', function () {
-            console.log(btn.getAttribute('data-userStatus') == UserStatus.ENABLE);
-            console.log(btn.getAttribute('data-userStatus') == UserStatus.DISABLE);
-
             if (btn.getAttribute('data-userStatus') == UserStatus.ENABLE) {
                 userStatus = UserStatus.ENABLE;
                 contentTitleBlock?.classList.remove('hidden');
@@ -136,9 +126,33 @@ btnCancel?.addEventListener('click', function () {
     panel?.addEventListener('transitionend', modalToggle);
 });
 
-// model role
+// modal of user role
+const btnRoleClose = document.getElementById(`modal-role-btn-close`);
+const wrapperRole = document.getElementById(`modal-role-wrapper`);
+const bgRole = document.getElementById(`modal-role-bg`);
+const panelRole = document.getElementById(`modal-role-panel`);
+const contentTitleUpgrade = document.getElementById(`modal-content-title-upgrade`);
+const contentTitleDowngrade = document.getElementById(`modal-content-title-downgrade`);
+const contentDescriptionUpgrade = document.getElementById(`modal-content-description-upgrade`);
+const contentDescriptionDowngrade = document.getElementById(`modal-content-description-downgrade`);
+const btnRoleAcceptUpgrade = document.getElementById(`modal-role-btn-accept-upgrade`);
+const btnRoleAcceptDowngrade = document.getElementById(`modal-role-btn-accept-downgrade`);
+const btnRoleCancel = document.getElementById(`modal-role-btn-cancel`);
+
 const modalRoleToggle = () => {
     wrapperRole?.classList.add('invisible');
+    if (userRole == UserRole.STUDENT) {
+        userStatus = UserStatus.ENABLE;
+        contentTitleUpgrade?.classList.add('hidden');
+        contentDescriptionUpgrade?.classList.add('hidden');
+        btnRoleAcceptUpgrade?.classList.add('hidden');
+    }
+    if (userRole == UserRole.LECTURER) {
+        userStatus = UserStatus.DISABLE;
+        contentTitleDowngrade?.classList.add('hidden');
+        contentDescriptionDowngrade?.classList.add('hidden');
+        btnRoleAcceptDowngrade?.classList.add('hidden');
+    }
 };
 
 for (let index = 0; index < rows.length; index++) {
@@ -146,6 +160,18 @@ for (let index = 0; index < rows.length; index++) {
     const btn = element.getElementsByClassName('modal-role-btn')[0] as HTMLButtonElement;
     if (btn)
         btn.addEventListener('click', function () {
+            if (btn.getAttribute('data-userRole') == UserRole.STUDENT) {
+                userRole = UserRole.STUDENT;
+                contentTitleUpgrade?.classList.remove('hidden');
+                contentDescriptionUpgrade?.classList.remove('hidden');
+                btnRoleAcceptUpgrade?.classList.remove('hidden');
+            }
+            if (btn.getAttribute('data-userRole') == UserRole.LECTURER) {
+                userRole = UserRole.LECTURER;
+                contentTitleDowngrade?.classList.remove('hidden');
+                contentDescriptionDowngrade?.classList.remove('hidden');
+                btnRoleAcceptDowngrade?.classList.remove('hidden');
+            }
             wrapperRole?.classList.remove('invisible');
             bgRole?.classList.add('opacity-100');
             bgRole?.classList.remove('opacity-0');
@@ -157,7 +183,23 @@ for (let index = 0; index < rows.length; index++) {
         });
 }
 
-btnRoleAccept?.addEventListener('click', function () {
+btnRoleAcceptUpgrade?.addEventListener('click', function () {
+    bgRole?.classList.remove('opacity-100');
+    bgRole?.classList.add('opacity-0');
+    panelRole?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+    panelRole?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+    panelRole?.addEventListener('transitionend', modalRoleToggle);
+
+    if (userId !== null) {
+        const input: ToggleUserDto = {
+            userId: userId,
+        };
+
+        http.put<ServerResponse<null>>(routers.user.role, input);
+    }
+});
+
+btnRoleAcceptDowngrade?.addEventListener('click', function () {
     bgRole?.classList.remove('opacity-100');
     bgRole?.classList.add('opacity-0');
     panelRole?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
