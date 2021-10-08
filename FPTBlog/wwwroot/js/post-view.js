@@ -10,16 +10,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/auth/register.ts":
-/*!******************************!*\
-  !*** ./src/auth/register.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar registerForm = document.getElementById('registerForm');\r\nregisterForm === null || registerForm === void 0 ? void 0 : registerForm.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var username = document.getElementById('username');\r\n    var password = document.getElementById('password');\r\n    var name = document.getElementById('name');\r\n    var confirmPassword = document.getElementById('confirmPassword');\r\n    if (username !== null && password !== null && name !== null && confirmPassword !== null) {\r\n        var input = {\r\n            username: username.value,\r\n            password: password.value,\r\n            name: name.value,\r\n            confirmPassword: confirmPassword.value,\r\n        };\r\n        axios_1.http.post(routes_1.routers.auth.register, input).then(function () { return window.location.assign(routes_1.routerLinks.loginForm); });\r\n    }\r\n    else {\r\n        console.log('register form wrong');\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/auth/register.ts?");
-
-/***/ }),
-
 /***/ "./src/package/axios/index.ts":
 /*!************************************!*\
   !*** ./src/package/axios/index.ts ***!
@@ -47,6 +37,16 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /***/ ((__unused_webpack_module, exports) => {
 
 eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.routers = exports.routerLinks = void 0;\r\nexports.routerLinks = {\r\n    home: '/',\r\n    loginForm: '/auth/login',\r\n};\r\nexports.routers = {\r\n    category: {\r\n        create: '/api/category',\r\n        update: '/api/category',\r\n    },\r\n    post: {\r\n        create: '/api/post',\r\n        addNewTagToPost: '/api/post/tag',\r\n        getTagOfPost: function (postId) { return \"/api/post/tag?postId=\" + postId; },\r\n        save: '/api/post/save',\r\n        uploadImagePost: '/api/post/image',\r\n        addCategoryToPost: '/api/post/category',\r\n        likePost: '/api/post/like',\r\n        dislikePost: '/api/post/dislike',\r\n    },\r\n    user: {\r\n        changePassword: '/api/user/change-password',\r\n        update: '/api/user',\r\n        get: '/api/user',\r\n        block: '/api/admin/user/block',\r\n    },\r\n    tag: {\r\n        getAll: '/api/tag/all',\r\n        getByName: function (name) { return \"/api/tag?name=\" + name; },\r\n    },\r\n    auth: {\r\n        login: '/api/auth/login',\r\n        register: '/api/auth/register',\r\n    },\r\n};\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/axios/routes.ts?");
+
+/***/ }),
+
+/***/ "./src/post/post.ts":
+/*!**************************!*\
+  !*** ./src/post/post.ts ***!
+  \**************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar count = document.getElementById('like-count');\r\nvar likeBtn = document.getElementById('post-like');\r\nvar dislikeBtn = document.getElementById('post-dislike');\r\nvar postId = document.getElementById('postId');\r\nlikeBtn === null || likeBtn === void 0 ? void 0 : likeBtn.addEventListener('click', function () {\r\n    var input = {\r\n        postId: postId.value,\r\n    };\r\n    axios_1.http.post(routes_1.routers.post.likePost, input).then(function (_a) {\r\n        var _b;\r\n        var data = _a.data;\r\n        var like = (_b = data.data.like) !== null && _b !== void 0 ? _b : '';\r\n        if (count)\r\n            count.innerText = like;\r\n    });\r\n});\r\ndislikeBtn === null || dislikeBtn === void 0 ? void 0 : dislikeBtn.addEventListener('click', function () {\r\n    var input = {\r\n        postId: postId.value,\r\n    };\r\n    axios_1.http.post(routes_1.routers.post.dislikePost, input).then(function (_a) {\r\n        var _b;\r\n        var data = _a.data;\r\n        var like = (_b = data.data.like) !== null && _b !== void 0 ? _b : '';\r\n        if (count)\r\n            count.innerText = like;\r\n    });\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/post/post.ts?");
 
 /***/ })
 
@@ -81,7 +81,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/auth/register.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/post/post.ts");
 /******/ 	
 /******/ })()
 ;

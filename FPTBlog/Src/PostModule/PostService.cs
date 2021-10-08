@@ -19,10 +19,10 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public void AddPost(Post post) => this.PostRepository.Add(post);
-        public Post GetPostByPostId(string postId) => this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
+        public Post GetPostByPostId(string postId) => this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag,Student");
         public PostViewModel GetViewPostByPostId(string postId) {
             var viewPost = new PostViewModel();
-            var post = this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag");
+            var post = this.PostRepository.GetFirstOrDefault(item => item.PostId == postId, includeProperties: "Category,PostTags,PostTags.Tag,Student");
             viewPost.Post = post;
             var (_, numberOfComment) = this.GetCommentOfPost(post);
             viewPost.NumberOfComment = numberOfComment;

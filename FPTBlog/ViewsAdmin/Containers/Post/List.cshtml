@@ -1,3 +1,8 @@
+@using FPTBlog.Src.PostModule.Entity
+@{
+    var listPosts = (List<Post>)ViewData["posts"];
+}
+
 <div class="space-y-2">
     <h1 class="text-2xl font-semibold "> Post Management</h1>
     <div>
@@ -12,9 +17,9 @@
                 </dt>
                 <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
-                        71
+                        @ViewData["postThisMonth"]
                         <span class="ml-2 text-sm font-medium text-gray-500">
-                            70
+                            @ViewData["postLastMonth"]
                         </span>
                     </div>
 
@@ -42,9 +47,9 @@
                 </dt>
                 <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
-                        71
+                        @ViewData["viewThisMonth"]
                         <span class="ml-2 text-sm font-medium text-gray-500">
-                            70
+                            @ViewData["viewLastMonth"]
                         </span>
                     </div>
 
@@ -72,9 +77,9 @@
                 </dt>
                 <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
-                        71
+                        @ViewData["interactThisMonth"]
                         <span class="ml-2 text-sm font-medium text-gray-500">
-                            70
+                            @ViewData["interactLastMonth"]
                         </span>
                     </div>
 
@@ -102,9 +107,9 @@
                 </dt>
                 <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
-                        71
+                        @ViewData["userThisMonth"]
                         <span class="ml-2 text-sm font-medium text-gray-500">
-                            70
+                            @ViewData["userLastMonth"]
                         </span>
                     </div>
 
@@ -231,31 +236,38 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 fade-in">
-                <tr class="duration-200 hover:bg-indigo-100">
-                    <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                        10
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        Programming
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        C#, HTML, CSS
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        <span
-                            class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                            Active
-                        </span>
 
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        10/03/2021
-                    </td>
-                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <a href="/admin/category/update?categoryId=e4202c32-476f-44ab-b091-e549d8d7d95f"
+                @for (int i = 0; i < listPosts.Count; i++)
+                {
+                    var item = listPosts[i];
+
+                    <tr class="duration-200 hover:bg-indigo-100">
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                            @(i+1)
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            @item.Title
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            @item.Student.Name
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            <span
+                            class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                Active
+                            </span>
+
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            10/03/2021
+                        </td>
+                        <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                            <a href="/admin/category/update?categoryId=e4202c32-476f-44ab-b091-e549d8d7d95f"
                             class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                }
+
 
             </tbody>
         </table>

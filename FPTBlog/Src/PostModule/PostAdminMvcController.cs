@@ -1,3 +1,4 @@
+using System;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.PostModule.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -14,17 +15,33 @@ namespace FPTBlog.Src.PostModule {
         }
 
         [HttpGet("")]
-        public IActionResult GetAllWaitBlogs() {
+        public IActionResult GetAllWaitBlogs(string search, PostStatus status, int pageSize = 12, int pageIndex = 0) {
+
+            if (search == null) {
+                search = "";
+            }
+
+            Console.WriteLine(status);
+
+
+            var monthlyReport = this.PostService.GetMonthlyReport();
+            var (posts, total) = this.PostService.getPostsByStatus(pageSize, pageIndex, search, status);
+
+            this.ViewData["postThisMonth"] = monthlyReport.PostThisMonth;
+            this.ViewData["postLastMonth"] = monthlyReport.PostLastMonth;
+            this.ViewData["viewThisMonth"] = monthlyReport.ViewThisMonth;
+            this.ViewData["viewLastMonth"] = monthlyReport.ViewLastMonth;
+            this.ViewData["interactThisMonth"] = monthlyReport.InteractThisMonth;
+            this.ViewData["interactLastMonth"] = monthlyReport.InteractLastMonth;
+            this.ViewData["userThisMonth"] = monthlyReport.UserThisMonth;
+            this.ViewData["userLastMonth"] = monthlyReport.UserLastMonth;
+            this.ViewData["posts"] = posts;
+            this.ViewData["total"] = total;
+            Console.WriteLine(posts.Count);
 
             return View(RoutersAdmin.PostGetList.Page);
         }
-        [HttpGet("wait")]
-        // public IActionResult GetAllWaitBlogs() {
-        //     var (posts, count) = this.PostService.GetWaitPostsWithCount();
-        //     this.ViewData["posts"] = posts;
-        //     this.ViewData["count"] = count;
-        //     return View("");
-        // }
+
 
         [HttpGet("tag")]
         public IActionResult GetBlogsByTagName(int pageSize = 12, int pageIndex = 0, string name = "") {
@@ -40,6 +57,7 @@ namespace FPTBlog.Src.PostModule {
             if (search == null) {
                 search = "";
             }
+
 
 
             var monthlyReport = this.PostService.GetMonthlyReport();

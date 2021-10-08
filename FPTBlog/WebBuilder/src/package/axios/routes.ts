@@ -14,6 +14,8 @@ export const routers = {
         save: '/api/post/save',
         uploadImagePost: '/api/post/image',
         addCategoryToPost: '/api/post/category',
+        likePost: '/api/post/like',
+        dislikePost: '/api/post/dislike',
     },
     user: {
         changePassword: '/api/user/change-password',
