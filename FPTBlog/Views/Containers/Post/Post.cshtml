@@ -13,19 +13,21 @@
 
     var value = (PostViewModel)this.ViewData["post"];
     var content = new HtmlString(value.Post.Content);
-
     this.ViewData["Title"] = value.Post.Title;
-    var editorLink = $"{Routers.PostGetEditor.Link}?postId={value.Post.PostId}";
-    var categoryName = value.Post.Category != null ? value.Post.Category.Name : "Empty";
+    var categoryLink = $"{Routers.PostGetSearch.Link}?categoryId={value.Post.CategoryId}";
+
 
 }
 
-<div class="py-8 space-y-4">
-
-
-    <div class="px-4 space-y-1">
-        <p class="font-semibold capitalize ">@value.Post.Category.Name</p>
-        <p class="text-sm font-medium opacity-60">@value.Post.CreateDate</p>
+<div class="relative py-8 space-y-4">
+    <div class="flex justify-between">
+        <div class="px-4 space-y-1">
+            <a href="@categoryLink" class="font-semibold capitalize ">@value.Post.Category.Name</a>
+            <p class="text-sm font-medium opacity-60">@value.Post.CreateDate</p>
+        </div>
+        <div>
+            @value.Post.View
+        </div>
     </div>
     <div class="ql-editor intro-y">
         @content
@@ -40,4 +42,9 @@
     <div class="h-0.5 bg-tango-300 my-4 mx-4">
     </div>
 
+    <div>
+        <div>
+
+        </div>
+    </div>
 </div>

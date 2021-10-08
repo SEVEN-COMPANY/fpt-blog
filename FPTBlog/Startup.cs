@@ -98,13 +98,13 @@ namespace FPTBlog {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         async public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfig config) {
             ValidatorOptions.Global.LanguageManager = new CustomLanguageValidator();
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
             else {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseExceptionHandler("/error/500");
                 app.UseHsts();
             }
 
@@ -137,11 +137,14 @@ namespace FPTBlog {
 
             app.UseAuthorization();
 
+
+
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
 
             await DB.InitDatabase(config);
         }
