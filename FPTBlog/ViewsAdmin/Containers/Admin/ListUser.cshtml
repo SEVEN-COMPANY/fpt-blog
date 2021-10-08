@@ -17,9 +17,7 @@
 
 <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
     <h1 class="text-2xl font-semibold ">User Management</h1>
-    <h3 class="text-lg font-medium leading-6 text-gray-900">
-        Last 30 days
-    </h3>
+
     <div class="flex items-end justify-between">
 
         <form class="flex items-end space-x-4 " id="listUserForm">
@@ -47,16 +45,26 @@
                 @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                 new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
             </div>
+            <div class="my-1">
+                <button
+                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                            d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                    </svg>
+                    View Chart
+                </button>
+            </div>
         </form>
 
 
-        <dl
-            class="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow md:grid-cols-2 md:divide-y-0 md:divide-x">
-            <div class="px-4 py-5 sm:p-6">
+        <dl class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x">
+            <div class="px-4">
                 <dt class="text-base font-normal text-gray-900">
-                    Student
+                    Student (30d)
                 </dt>
-                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <dd class="flex items-baseline justify-between mt-1 space-x-2 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
                         71
                         <span class="ml-2 text-sm font-medium text-gray-500">
@@ -64,29 +72,16 @@
                         </span>
                     </div>
 
-                    <div
-                        class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
-                        <!-- Heroicon name: solid/arrow-sm-up -->
-                        <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <span class="sr-only">
-                            Increased by
-                        </span>
-                        12%
-                    </div>
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
+                    =12, LastMonth = 10})
                 </dd>
             </div>
 
-            <div class="px-4 py-5 sm:p-6">
+            <div class="px-4 ">
                 <dt class="text-base font-normal text-gray-900">
-                    Lecturer
+                    Lecturer (30d)
                 </dt>
-                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                <dd class="flex items-baseline justify-between mt-1 space-x-2 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
                         71
                         <span class="ml-2 text-sm font-medium text-gray-500">
@@ -94,21 +89,8 @@
                         </span>
                     </div>
 
-                    <div
-                        class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
-                        <!-- Heroicon name: solid/arrow-sm-up -->
-                        <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <span class="sr-only">
-                            Increased by
-                        </span>
-                        2.02%
-                    </div>
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
+                    =12, LastMonth = 10})
                 </dd>
             </div>
         </dl>
