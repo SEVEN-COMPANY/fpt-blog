@@ -9,6 +9,9 @@ namespace FPTBlog.Src.PostModule.DTO {
         public string Title {
             get; set;
         }
+        public string Description {
+            get; set;
+        }
         public string Content {
             get; set;
         }
@@ -27,6 +30,7 @@ namespace FPTBlog.Src.PostModule.DTO {
             RuleFor(x => x.Content).NotEmpty().NotNull();
             RuleFor(x => x.CoverUrl).NotEmpty().NotNull();
             RuleFor(x => x.ReadTime).NotEmpty().NotNull();
+            RuleFor(x => x.Description).NotEmpty().NotNull();
         }
     }
 }
