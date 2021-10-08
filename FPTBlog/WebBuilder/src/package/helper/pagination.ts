@@ -16,6 +16,7 @@ export const pageChange = (formId: string) => {
     });
 
     const pageBtn = paginationBtn?.getElementsByTagName('button');
+
     if (pageBtn) {
         for (let index = 0; index < pageBtn.length; index++) {
             const element = pageBtn[index];

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.UserModule.Entity;
@@ -27,6 +28,12 @@ namespace FPTBlog.Src.PostModule.Entity {
         }
 
         [Required]
+        [StringLength(20)]
+        public string CreateDate {
+            get; set;
+        }
+
+        [Required]
         public string UserId {
             get; set;
         }
@@ -39,6 +46,10 @@ namespace FPTBlog.Src.PostModule.Entity {
         [Required]
         public Expression expression {
             get; set;
+        }
+
+        public LikePost() {
+            this.CreateDate = DateTime.Now.ToShortDateString();
         }
     }
 }

@@ -14,12 +14,17 @@ export const routers = {
         save: '/api/post/save',
         uploadImagePost: '/api/post/image',
         addCategoryToPost: '/api/post/category',
+        likePost: '/api/post/like',
+        dislikePost: '/api/post/dislike',
+        sendPost: '/api/post/send',
+        deletePost: '/api/post/delete',
     },
     user: {
         changePassword: '/api/user/change-password',
         update: '/api/user',
         get: '/api/user',
-        block: '/api/admin/user/block',
+        status: '/api/admin/user/status',
+        role: '/api/admin/user/role',
     },
     tag: {
         getAll: '/api/tag/all',

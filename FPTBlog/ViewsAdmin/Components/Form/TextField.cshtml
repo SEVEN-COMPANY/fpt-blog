@@ -26,13 +26,13 @@
 
 }
 
-<div>
 
-    @if (isLabel)
-    {
-        <label for="@Model.Name" class="form-label">@Model.Label</label>
-    }
-    <input id="@Model.Name" name="@Model.Name" type="@Model.Type" class="form-control" value="@Model.Value"
-        placeholder="@placeHolder">
-    <div class="mt-2 pristine-error text-primary-3 fade-in first-letter" id="@error" data-label="@Model.Label"></div>
+<div>
+    <label for="@Model.Name" class="block text-sm font-medium text-gray-700">@Model.Label</label>
+    <div class="relative mt-1 rounded-md shadow-sm">
+        <input type="@Model.Type" id="@Model.Name" name="@Model.Name" value="@Model.Value" placeholder="@placeHolder"
+            class="block w-full duration-200 border-gray-300 rounded-md shadow-sm outline-none focus:ring-tango-500 focus:border-tango-500 sm:text-sm">
+    </div>
+    <p class="mt-1 text-sm text-red-600 first-letter fade-in" id="@error" data-label="@Model.Label">
+    </p>
 </div>

@@ -1,0 +1,206 @@
+@using FPTBlog.Src.PostModule.Entity
+@{
+    var statusSearch = (SelectList)this.ViewData["statusSearch"];
+    var listPosts = (List<Post>)ViewData["posts"];
+    var total = (int)ViewData["total"];
+    var PostThisMonth = (int)this.ViewData["postThisMonth"];
+    var PostLastMonth = (int)this.ViewData["postLastMonth"];
+    var ViewThisMonth = (int)this.ViewData["viewThisMonth"];
+    var ViewLastMonth = (int)this.ViewData["viewLastMonth"];
+    var InteractThisMonth = (int)this.ViewData["interactLastMonth"];
+    var InteractLastMonth = (int)this.ViewData["interactLastMonth"];
+    var UserThisMonth = (int)this.ViewData["userThisMonth"];
+    var UserLastMonth = (int)this.ViewData["userLastMonth"];
+}
+
+<div class="space-y-2">
+    <h1 class="text-2xl font-semibold "> Post Management</h1>
+    <div>
+        <h3 class="text-lg font-medium leading-6 text-gray-900">
+            Last 30 days
+        </h3>
+        <dl
+            class="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow md:grid-cols-4 md:divide-y-0 md:divide-x">
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    New Post
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        @ViewData["postThisMonth"]
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            @ViewData["postLastMonth"]
+                        </span>
+                    </div>
+
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth =
+                    PostThisMonth,
+                    LastMonth = PostLastMonth})
+                </dd>
+            </div>
+
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    Active View
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        @ViewData["viewThisMonth"]
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            @ViewData["viewLastMonth"]
+                        </span>
+                    </div>
+
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth =
+                    ViewThisMonth,
+                    LastMonth = ViewLastMonth})
+                </dd>
+            </div>
+
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    Total Interaction
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        @ViewData["interactThisMonth"]
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            @ViewData["interactLastMonth"]
+                        </span>
+                    </div>
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
+                    =InteractThisMonth,
+                    LastMonth = InteractLastMonth})
+                </dd>
+            </div>
+
+            <div class="px-4 py-5 sm:p-6">
+                <dt class="text-base font-normal text-gray-900">
+                    New User
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        @ViewData["userThisMonth"]
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            @ViewData["userLastMonth"]
+                        </span>
+                    </div>
+
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
+                    =UserThisMonth,
+                    LastMonth = UserLastMonth})
+                </dd>
+            </div>
+        </dl>
+    </div>
+
+    <!-- This example requires Tailwind CSS v2.0+ -->
+
+
+    <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
+
+        <div class="flex items-end justify-between">
+
+            <form class="flex items-end space-x-4 " id="listPostForm">
+
+                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+                this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+                })
+
+                @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+                new { Name = "searchStatus", Label = "Status", Type = "text", Value = (string)
+                this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = statusSearch
+                })
+
+                @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+                @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
+
+
+
+                <div class="my-1">
+                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                    new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
+                </div>
+
+            </form>
+            <div class="my-1">
+
+            </div>
+        </div>
+    </div>
+    <div class="mt-2 overflow-hidden border-b border-gray-200 rounded-lg shadow intro-y">
+        <table class="min-w-full divide-y divide-gray-200 ">
+            <thead class="bg-tango-100">
+                <tr>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        #
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Title
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Student
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Status
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Create Date
+                    </th>
+
+                    <th scope="col" class="relative px-6 py-3">
+                        <span class="sr-only">Edit</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200 fade-in">
+
+                @for (int i = 0; i < listPosts.Count; i++)
+                {
+                    var item = listPosts[i];
+                    var previewLink = $"{Routers.PostGetPreview.Link}?PostId={item.PostId}";
+
+                    <tr class="duration-200 hover:bg-indigo-100">
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                            @(i+1)
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            @item.Title
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            @item.Student.Name
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            @await Html.PartialAsync("../../Components/Table/PostStatusEdit.cshtml",item.Status)
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            @item.CreateDate
+                        </td>
+                        <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                            <a href="@previewLink" target="_blank" class="text-indigo-600 hover:text-indigo-900">View
+                                Post</a>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+        <!-- This example requires Tailwind CSS v2.0+ -->
+
+
+
+
+        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+        new { PageIndex = (string) this.Context.Request.Query["pageIndex"] ?? "0", PageSize = (string)
+        this.Context.Request.Query["pageSize"]?? "12", Total = total })
+    </div>
+</div>

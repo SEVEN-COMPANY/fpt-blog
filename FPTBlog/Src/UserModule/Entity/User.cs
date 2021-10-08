@@ -1,12 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FPTBlog.Src.UserModule.Entity {
     public enum UserRole {
-        STUDENT = 0,
-        LECTURER = 1,
-        GUEST = 2
+        STUDENT = 1,
+        LECTURER = 2,
     }
 
     public enum UserStatus {
