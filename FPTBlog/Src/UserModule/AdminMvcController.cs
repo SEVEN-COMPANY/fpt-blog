@@ -45,8 +45,12 @@ namespace FPTBlog.Src.UserModule {
             int totalStudent = this.UserService.CountUserByRole(UserRole.STUDENT);
             int totalLecturer = this.UserService.CountUserByRole(UserRole.LECTURER);
 
-            this.ViewData["totalStudent"] = totalStudent;
-            this.ViewData["totalLecturer"] = totalLecturer;
+            var monthlyReport = this.UserService.GetMonthlyReport();
+
+            this.ViewData["studentThisMonth"] = monthlyReport.StudentThisMonth;
+            this.ViewData["studentLastMonth"] = monthlyReport.StudentLastMonth;
+            this.ViewData["lecturerThisMonth"] = monthlyReport.LecturerThisMonth;
+            this.ViewData["lecturerLastMonth"] = monthlyReport.LecturerLastMonth;
 
             this.ViewData["roleSearch"] = listRole;
 

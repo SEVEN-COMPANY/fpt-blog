@@ -87,5 +87,38 @@ namespace FPTBlog.Src.UserModule {
             }
             return false;
         }
+
+        public ReportUser GetMonthlyReport() {
+            ReportUser report = new ReportUser();
+
+            string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
+            DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
+            string lastMonth = DateTime.Now.AddMonths(-2).ToShortDateString();
+            DateTime lastMonthDate = Convert.ToDateTime(lastMonth);
+
+            List<User> users = this.Db.User.ToList();
+
+            foreach (var user in users) {
+                DateTime date = Convert.ToDateTime(user.CreateDate);
+                if (DateTime.Compare(date, thisMonthDate) > 0) {
+                    if (user.Role == UserRole.STUDENT) {
+                        report.StudentThisMonth++;
+                    }
+                    if (user.Role == UserRole.LECTURER) {
+                        report.LecturerThisMonth++;
+                    }
+                }
+                if (DateTime.Compare(date, lastMonthDate) > 0 && (DateTime.Compare(date, thisMonthDate) < 0)) {
+                    if (user.Role == UserRole.STUDENT) {
+                        report.StudentLastMonth++;
+                    }
+                    if (user.Role == UserRole.LECTURER) {
+                        report.LecturerLastMonth++;
+                    }
+                }
+            }
+            return report;
+        }
+
     }
 }
