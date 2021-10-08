@@ -8,6 +8,7 @@ using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.PostModule {
     public class PostService : IPostService {
@@ -40,12 +41,12 @@ namespace FPTBlog.Src.PostModule {
 
             return (listForPage, count);
         }
-        public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByCategoryWithCount(pageIndex, pageSize, name);
+
         public List<Tag> GetTagsFromPost(Post post) => this.PostRepository.GetTagsFromPost(post);
-        public (List<PostViewModel>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name){
+        public (List<PostViewModel>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) {
             var (posts, count) = this.PostRepository.GetPostsByTagWithCount(pageSize, pageIndex, name);
             List<PostViewModel> postViewModels = new List<PostViewModel>();
-            foreach(var post in posts){
+            foreach (var post in posts) {
                 PostViewModel postViewModel = new PostViewModel();
                 var (_, numberOfComment) = this.GetCommentOfPost(post);
                 postViewModel.Post = post;
@@ -55,7 +56,7 @@ namespace FPTBlog.Src.PostModule {
             return (postViewModels, count);
         }
         public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
-        public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
+
         public (List<Post>, int) GetPopularPosts(int quantity) {
             var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(), includeProperties: "Category,Student");
             return (list, quantity);
@@ -125,5 +126,16 @@ namespace FPTBlog.Src.PostModule {
             return this.PostRepository.GetAllPosts(pageSize, pageIndex, search);
 
         }
+
+        public List<SelectListItem> GetPostStatusDropList() {
+            var status = new List<SelectListItem>(){
+                new SelectListItem(){ Value = PostStatus.APPROVED.ToString(), Text = "Approved"},
+                new SelectListItem(){  Value =  PostStatus.DENY.ToString(), Text = "Denied"},
+                new SelectListItem(){  Value =  PostStatus.WAIT.ToString(), Text = "Waiting"}
+            };
+
+            return status;
+        }
+
     }
 }

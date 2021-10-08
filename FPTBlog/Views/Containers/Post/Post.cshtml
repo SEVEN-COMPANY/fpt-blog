@@ -13,6 +13,9 @@
     var value = (PostViewModel)this.ViewData["post"];
     var content = new HtmlString(value.Post.Content);
     this.ViewData["Title"] = value.Post.Title;
+    this.ViewData["ImageUrl"] = value.Post.CoverUrl;
+    this.ViewData["Description"] = value.Post.Description;
+
     var categoryLink = $"{Routers.PostGetSearch.Link}?categoryId={value.Post.CategoryId}";
     var profileLink = $"{Routers.UserGetProfile.Link}?userId={value.Post.StudentId}";
 

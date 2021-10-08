@@ -31,10 +31,35 @@
                 @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                 new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
             </div>
+            <div class="my-1">
+                <button
+                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 11h4" />
+                    </svg>
+                    Clear Unused Tag
+                </button>
+            </div>
+
+            <div class="my-1">
+                <button
+                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                            d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                    </svg>
+                    View Chart
+                </button>
+            </div>
         </form>
+
         <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="intro-y">
-            <dl class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                     <dt>
                         <div class="absolute p-3 rounded-md bg-tango-500">
@@ -49,10 +74,16 @@
                         </div>
                         <p class="text-sm font-medium text-gray-500 truncate ml-14">Total New Tag (30d)</p>
                     </dt>
-                    <dd class="flex items-baseline pb-2 ml-14 sm:pb-3">
-                        <p class="text-2xl font-semibold text-gray-900">
-                            32
-                        </p>
+                    <dd class="flex items-baseline pb-2 space-x-2 ml-14 sm:pb-3">
+                        <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                            71
+                            <span class="ml-2 text-sm font-medium text-gray-500">
+                                70
+                            </span>
+                        </div>
+
+                        @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
+                        =12, LastMonth = 10})
                     </dd>
                 </div>
                 <div>
@@ -82,29 +113,7 @@
                         </p>
                     </dd>
                 </div>
-                <div>
-                    <dt>
-                        <div class="absolute p-3 rounded-md bg-tango-500">
-                            <!-- Heroicon name: outline/users -->
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M10 12C10.5304 12 11.0391 11.7893 11.4142 11.4142C11.7893 11.0391 12 10.5304 12 10C12 9.46957 11.7893 8.96086 11.4142 8.58579C11.0391 8.21071 10.5304 8 10 8C9.46957 8 8.96086 8.21071 8.58579 8.58579C8.21071 8.96086 8 9.46957 8 10C8 10.5304 8.21071 11.0391 8.58579 11.4142C8.96086 11.7893 9.46957 12 10 12Z"
-                                    fill="white" />
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M0.458008 10C1.73201 5.943 5.52201 3 10 3C14.478 3 18.268 5.943 19.542 10C18.268 14.057 14.478 17 10 17C5.52201 17 1.73201 14.057 0.458008 10ZM14 10C14 11.0609 13.5786 12.0783 12.8284 12.8284C12.0783 13.5786 11.0609 14 10 14C8.93914 14 7.92173 13.5786 7.17158 12.8284C6.42143 12.0783 6.00001 11.0609 6.00001 10C6.00001 8.93913 6.42143 7.92172 7.17158 7.17157C7.92173 6.42143 8.93914 6 10 6C11.0609 6 12.0783 6.42143 12.8284 7.17157C13.5786 7.92172 14 8.93913 14 10V10Z"
-                                    fill="white" />
-                            </svg>
 
-                        </div>
-                        <p class="text-sm font-medium text-gray-500 truncate ml-14">Total View</p>
-                    </dt>
-                    <dd class="flex items-baseline pb-2 ml-14 sm:pb-3">
-                        <p class="text-2xl font-semibold text-gray-900">
-                            2340
-                        </p>
-                    </dd>
-                </div>
             </dl>
         </div>
 

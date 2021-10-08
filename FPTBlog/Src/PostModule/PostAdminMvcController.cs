@@ -4,6 +4,7 @@ using FPTBlog.Src.PostModule.Interface;
 using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Utils.Common;
 using FPTBlog.Src.PostModule.Entity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.PostModule {
     [Route("/admin/post")]
@@ -15,19 +16,26 @@ namespace FPTBlog.Src.PostModule {
         }
 
         [HttpGet("")]
-        public IActionResult GetAllWaitBlogs(string search, PostStatus status, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetAllWaitBlogs(string searchName, PostStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
 
-            if (search == null) {
-                search = "";
+
+
+            if (searchName == null) {
+                searchName = "";
             }
 
-            if ((int) status == 0) {
-                var (allPosts, allTotal) = this.PostService.GetAllPosts(pageSize, pageIndex, search);
+            var statusList = this.PostService.GetPostStatusDropList();
+            statusList.Add(new SelectListItem() { Text = "All", Value = "" });
+            SelectList list = new SelectList(statusList, "");
+            this.ViewData["statusSearch"] = list;
+
+            if ((int) searchStatus == 0) {
+                var (allPosts, allTotal) = this.PostService.GetAllPosts(pageSize, pageIndex, searchName);
                 this.ViewData["posts"] = allPosts;
                 this.ViewData["total"] = allTotal;
             }
             else {
-                var (posts, total) = this.PostService.GetPostsByStatus(pageSize, pageIndex, search, status);
+                var (posts, total) = this.PostService.GetPostsByStatus(pageSize, pageIndex, searchName, searchStatus);
                 this.ViewData["posts"] = posts;
                 this.ViewData["total"] = total;
             }

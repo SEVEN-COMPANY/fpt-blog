@@ -24,7 +24,7 @@ namespace FPTBlog.Utils.Common {
         public static readonly RouterAdminItem UserGetUserList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Admin/ListUser.cshtml", Link = "/admin/user/list" };
         // Category
         public static readonly RouterAdminItem CategoryGetCategoryList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Category/List.cshtml", Link = "/admin/category" };
-        public static readonly RouterAdminItem CategoryPost = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Category/CreateCategory.cshtml", Link = "/admin/category/create" };
+
         public static readonly RouterAdminItem CategoryPutCategory = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Category/Update.cshtml", Link = "/admin/category/update" };
         // Post
         public static readonly RouterAdminItem PostGetList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Post/List.cshtml", Link = "/admin/post" };

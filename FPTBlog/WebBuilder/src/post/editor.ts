@@ -17,6 +17,7 @@ interface SaveBlogDto {
     postId: string;
     readTime: number;
     coverUrl: string;
+    description: string;
 }
 interface AddCategoryDto {
     categoryId: string;
@@ -59,34 +60,10 @@ saveChangePostBtn?.addEventListener('click', function () {
             postId: postIdElement.value,
             readTime: readTime,
             coverUrl: coverImage,
+            description: `${editor.root.innerText.split(' ').slice(0, 30).join(' ')}...`,
         };
 
-        console.log('hello');
-        http.post<ServerResponse<null>>(routers.post.save, input)
-            .then(() => {
-                toastify({
-                    text: 'Save your draft  successfully',
-                    duration: 2000,
-                    newWindow: true,
-                    close: true,
-                    gravity: 'top',
-                    position: 'right',
-                    backgroundColor: '#F37124',
-                    stopOnFocus: true,
-                });
-            })
-            .catch(() => {
-                toastify({
-                    text: 'Please check the field',
-                    duration: 2000,
-                    newWindow: true,
-                    close: true,
-                    gravity: 'top',
-                    position: 'right',
-                    backgroundColor: 'rgb(239, 68, 68)',
-                    stopOnFocus: true,
-                });
-            });
+        http.post<ServerResponse<null>>(routers.post.save, input);
     }
 });
 
@@ -152,3 +129,16 @@ handleSelectBadge(
     },
     500
 );
+
+const send = document.getElementById('post-send');
+send?.addEventListener('click', function () {
+    const isSend = confirm('Remember that you can not edit after sending your post');
+    if (isSend) {
+        const postIdElement = document.getElementById('postId') as HTMLInputElement;
+        http.post<ServerResponse<null>>(routers.post.sendPost, { PostId: postIdElement.value }).then(() => {
+            setTimeout(() => {
+                window.location.assign('/post/me');
+            }, 1000);
+        });
+    }
+});

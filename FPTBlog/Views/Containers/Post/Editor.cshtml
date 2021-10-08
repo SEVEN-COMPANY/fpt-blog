@@ -17,6 +17,8 @@
     var previewLink = $"{Routers.PostGetPreview.Link}?postId={post.PostId}";
 }
 
+@await Html.PartialAsync("../../Components/Form/FormToastify.cshtml")
+
 <div class="flex-1 px-2 pt-8 pb-16 fade-in ">
 
     <form class="space-y-4" id="createBlogForm">
@@ -56,10 +58,16 @@
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
             new { Label="Save Changes"})
 
-            <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500 fade-in"
+            <a href="@previewLink"
+                class="block px-4 py-2 font-medium text-center text-white duration-200 rounded-sm bg-tango-500 hover:bg-tango-600 fade-in"
                 onclick="return confirm('Do you save your post, click ok to go to preview page?')" target="_blank">
                 Preview
             </a>
+
+            <button id="post-send"
+                class="block px-4 py-2 font-medium text-white duration-200 rounded-sm bg-tango-500 fade-in hover:bg-tango-600">
+                Submit Post Request
+            </button>
         </div>
 
     </form>
