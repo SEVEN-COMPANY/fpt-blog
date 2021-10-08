@@ -7,6 +7,8 @@ const btnClose = document.getElementById(`modal-btn-close`);
 const wrapper = document.getElementById(`modal-wrapper`);
 const bg = document.getElementById(`modal-bg`);
 const panel = document.getElementById(`modal-panel`);
+const blockContent = document.getElementById(`modal-block-content`);
+const unblockContent = document.getElementById(`modal-unblock-content`);
 const btnAccept = document.getElementById(`modal-btn-accept`);
 const btnCancel = document.getElementById(`modal-btn-cancel`);
 
@@ -24,11 +26,29 @@ interface ToggleUserDto {
     userId: string;
 }
 
+enum UserRole {
+    STUDENT = 0,
+    LECTURER = 1,
+    GUEST = 2,
+}
+
+enum UserStatus {
+    DISABLE = 'DISABLE',
+    ENABLE = 'ENABLE',
+}
+
 const rows = document.getElementsByTagName('tr');
 let userId: any = null;
+let userStatus = UserStatus.ENABLE;
 
 const modalToggle = () => {
     wrapper?.classList.add('invisible');
+    if (userStatus == UserStatus.ENABLE) {
+        blockContent?.classList.add('hidden');
+    }
+    if (userStatus == UserStatus.DISABLE) {
+        unblockContent?.classList.add('hidden');
+    }
 };
 
 for (let index = 0; index < rows.length; index++) {
@@ -36,6 +56,17 @@ for (let index = 0; index < rows.length; index++) {
     const btn = element.getElementsByClassName('modal-btn')[0] as HTMLButtonElement;
     if (btn)
         btn.addEventListener('click', function () {
+            console.log(btn.getAttribute('data-userStatus') == UserStatus.ENABLE);
+            console.log(btn.getAttribute('data-userStatus') == UserStatus.DISABLE);
+
+            if (btn.getAttribute('data-userStatus') == UserStatus.ENABLE) {
+                userStatus = UserStatus.ENABLE;
+                blockContent?.classList.remove('hidden');
+            }
+            if (btn.getAttribute('data-userStatus') == UserStatus.DISABLE) {
+                userStatus = UserStatus.DISABLE;
+                unblockContent?.classList.remove('hidden');
+            }
             wrapper?.classList.remove('invisible');
             bg?.classList.add('opacity-100');
             bg?.classList.remove('opacity-0');
