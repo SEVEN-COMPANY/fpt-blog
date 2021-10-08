@@ -7,9 +7,12 @@ const btnClose = document.getElementById(`modal-btn-close`);
 const wrapper = document.getElementById(`modal-wrapper`);
 const bg = document.getElementById(`modal-bg`);
 const panel = document.getElementById(`modal-panel`);
-const blockContent = document.getElementById(`modal-block-content`);
-const unblockContent = document.getElementById(`modal-unblock-content`);
-const btnAccept = document.getElementById(`modal-btn-accept`);
+const contentTitleBlock = document.getElementById(`modal-content-title-block`);
+const contentTitleUnblock = document.getElementById(`modal-content-title-unblock`);
+const contentDescriptionBlock = document.getElementById(`modal-content-description-block`);
+const contentDescriptionUnblock = document.getElementById(`modal-content-description-unblock`);
+const btnAcceptBlock = document.getElementById(`modal-btn-accept-block`);
+const btnAcceptUnblock = document.getElementById(`modal-btn-accept-unblock`);
 const btnCancel = document.getElementById(`modal-btn-cancel`);
 
 // modal of user role
@@ -27,9 +30,8 @@ interface ToggleUserDto {
 }
 
 enum UserRole {
-    STUDENT = 0,
-    LECTURER = 1,
-    GUEST = 2,
+    STUDENT = 1,
+    LECTURER = 2,
 }
 
 enum UserStatus {
@@ -44,10 +46,14 @@ let userStatus = UserStatus.ENABLE;
 const modalToggle = () => {
     wrapper?.classList.add('invisible');
     if (userStatus == UserStatus.ENABLE) {
-        blockContent?.classList.add('hidden');
+        contentTitleBlock?.classList.add('hidden');
+        contentDescriptionBlock?.classList.add('hidden');
+        btnAcceptBlock?.classList.add('hidden');
     }
     if (userStatus == UserStatus.DISABLE) {
-        unblockContent?.classList.add('hidden');
+        contentTitleUnblock?.classList.add('hidden');
+        contentDescriptionUnblock?.classList.add('hidden');
+        btnAcceptUnblock?.classList.add('hidden');
     }
 };
 
@@ -61,11 +67,15 @@ for (let index = 0; index < rows.length; index++) {
 
             if (btn.getAttribute('data-userStatus') == UserStatus.ENABLE) {
                 userStatus = UserStatus.ENABLE;
-                blockContent?.classList.remove('hidden');
+                contentTitleBlock?.classList.remove('hidden');
+                contentDescriptionBlock?.classList.remove('hidden');
+                btnAcceptBlock?.classList.remove('hidden');
             }
             if (btn.getAttribute('data-userStatus') == UserStatus.DISABLE) {
                 userStatus = UserStatus.DISABLE;
-                unblockContent?.classList.remove('hidden');
+                contentTitleUnblock?.classList.remove('hidden');
+                contentDescriptionUnblock?.classList.remove('hidden');
+                btnAcceptUnblock?.classList.remove('hidden');
             }
             wrapper?.classList.remove('invisible');
             bg?.classList.add('opacity-100');
@@ -78,7 +88,23 @@ for (let index = 0; index < rows.length; index++) {
         });
 }
 
-btnAccept?.addEventListener('click', function () {
+btnAcceptBlock?.addEventListener('click', function () {
+    bg?.classList.remove('opacity-100');
+    bg?.classList.add('opacity-0');
+    panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+    panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+    panel?.addEventListener('transitionend', modalToggle);
+
+    if (userId !== null) {
+        const input: ToggleUserDto = {
+            userId: userId,
+        };
+
+        http.put<ServerResponse<null>>(routers.user.status, input);
+    }
+});
+
+btnAcceptUnblock?.addEventListener('click', function () {
     bg?.classList.remove('opacity-100');
     bg?.classList.add('opacity-0');
     panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
