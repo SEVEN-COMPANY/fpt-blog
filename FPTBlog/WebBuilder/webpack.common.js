@@ -7,6 +7,7 @@ module.exports = {
         'auth-register': ['./src/auth/register.ts'],
         'auth-update': ['./src/auth/login.ts'],
         'user-list': ['./src/user/list.ts'],
+        'post-view': ['./src/post/post.ts'],
         'user-update': ['./src/user/update.ts'],
         'user-block': ['./src/user/block.ts'],
         'user-changePassword': ['./src/user/changePassword.ts'],
