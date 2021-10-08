@@ -21,7 +21,7 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("list")]
-        public IActionResult GetUsers(string searchName, UserStatus searchStatus = UserStatus.ENABLE, UserRole searchRole = UserRole.STUDENT, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetUsers(string searchName, UserStatus searchStatus, UserRole searchRole, int pageSize = 12, int pageIndex = 0) {
             if (searchName == null) {
                 searchName = "";
             }
@@ -50,7 +50,7 @@ namespace FPTBlog.Src.UserModule {
 
             this.ViewData["roleSearch"] = listRole;
 
-            var (users, total) = this.UserService.GetUsersStatusWithCount(pageIndex, pageSize, searchName, searchStatus, searchRole);
+            var (users, total) = this.UserService.GetUsersStatusAndRoleWithCount(pageIndex, pageSize, searchName, searchStatus, searchRole);
             this.ViewData["users"] = users;
             this.ViewData["total"] = total;
             return View(RoutersAdmin.UserGetUserList.Page);
