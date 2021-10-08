@@ -16,7 +16,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetPostsAndCount(int pageIndex, int pageSize, string search, string categoryId);
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name);
         public List<Tag> GetTagsFromPost(Post post);
-        public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name);
+        public (List<PostViewModel>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name);
         public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status);
         public (List<Post>, int) GetWaitPostsWithCount();
         public (List<Post>, int) GetPopularPosts(int quantity);

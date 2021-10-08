@@ -42,7 +42,18 @@ namespace FPTBlog.Src.PostModule {
         }
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByCategoryWithCount(pageIndex, pageSize, name);
         public List<Tag> GetTagsFromPost(Post post) => this.PostRepository.GetTagsFromPost(post);
-        public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) => this.PostRepository.GetPostsByTagWithCount(pageSize, pageIndex, name);
+        public (List<PostViewModel>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name){
+            var (posts, count) = this.PostRepository.GetPostsByTagWithCount(pageSize, pageIndex, name);
+            List<PostViewModel> postViewModels = new List<PostViewModel>();
+            foreach(var post in posts){
+                PostViewModel postViewModel = new PostViewModel();
+                var (_, numberOfComment) = this.GetCommentOfPost(post);
+                postViewModel.Post = post;
+                postViewModel.NumberOfComment = numberOfComment;
+                postViewModels.Add(postViewModel);
+            }
+            return (postViewModels, count);
+        }
         public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
         public (List<Post>, int) GetWaitPostsWithCount() => this.PostRepository.GetWaitPostsWithCount();
         public (List<Post>, int) GetPopularPosts(int quantity) {
