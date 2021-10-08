@@ -26,6 +26,7 @@ namespace FPTBlog.Src.UserModule {
                 searchName = "";
             }
 
+
             // get status user for update user status
             this.ViewData["status"] = new SelectList(this.UserService.GetUserStatusDropList(), UserStatus.ENABLE);
             // get status search list for search by status

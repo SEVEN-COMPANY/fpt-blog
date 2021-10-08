@@ -11,7 +11,8 @@ namespace FPTBlog.Src.UserModule.Interface {
         public User GetUserByGoogleId(string googleId);
         public void UpdateUser(User user);
         public void RemoveUser(User user);
-        public void BlockUserByAdminHandler(User user);
+        public void ToggleUserStatusAdminHandler(User user);
+        public void ToggleUserRoleAdminHandler(User user);
         public (List<User>, int) GetUsersStatusWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole);
         public (List<User>, int) GetUsersWithCount(int pageSize, int pageIndex, string search);
         void FollowUser(User followingUser, User follower);

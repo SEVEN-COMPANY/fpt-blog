@@ -11,7 +11,7 @@ interface UpdateCategoryDto {
 
 let status = 1;
 
-const createCategoryForm = document.getElementById('updateCategoryForm');
+const updateCategoryForm = document.getElementById('updateCategoryForm');
 const statusList = document.querySelectorAll('input[name="status"]');
 statusList.forEach((radio) => {
     const element = radio as HTMLInputElement;
@@ -23,7 +23,7 @@ statusList.forEach((radio) => {
     });
 });
 
-createCategoryForm?.addEventListener('submit', function (event: Event) {
+updateCategoryForm?.addEventListener('submit', function (event: Event) {
     event.preventDefault();
     const name = document.getElementById('name') as HTMLInputElement;
     const description = document.getElementById('description') as HTMLInputElement;
@@ -36,6 +36,8 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
             status: status,
             categoryId: categoryId.value,
         };
+
+        console.log(input);
         http.put<ServerResponse<null>>(routers.category.update, input);
     }
 });
