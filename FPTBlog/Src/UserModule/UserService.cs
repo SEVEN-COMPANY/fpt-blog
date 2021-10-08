@@ -71,6 +71,7 @@ namespace FPTBlog.Src.UserModule {
             }
             return count;
         }
+        public ReportUser GetMonthlyReport() => this.UserRepository.GetMonthlyReport();
 
     }
 }

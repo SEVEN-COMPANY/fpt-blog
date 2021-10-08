@@ -24,5 +24,6 @@ namespace FPTBlog.Src.UserModule.Interface {
         public List<SelectListItem> GetUserStatusDropList();
         public List<SelectListItem> GetUserRoleDropList();
         public int CountUserByRole(UserRole role);
+        public ReportUser GetMonthlyReport();
     }
 }

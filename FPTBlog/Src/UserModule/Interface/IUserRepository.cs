@@ -10,5 +10,6 @@ namespace FPTBlog.Src.UserModule.Interface {
         public (List<User>, int) CalculateFollower(string userId);
         public (List<User>, int) CalculateFollowing(string userId);
         public bool IsFollow(string userId, string followerId);
+        public ReportUser GetMonthlyReport();
     }
 }
