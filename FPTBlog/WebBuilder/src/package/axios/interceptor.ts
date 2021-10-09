@@ -49,18 +49,23 @@ export function responseSuccessInterceptor(response: AxiosResponse<any>) {
     if (response?.data?.details?.message) {
         const message = document.getElementById('MESSAGEERROR');
         if (message) {
-            message.innerHTML = response?.data?.details?.message;
+            const successMessage: string = response?.data?.details?.message;
+            message.innerHTML = successMessage.slice(0, 1).toUpperCase() + successMessage.slice(1, successMessage.length);
         }
+
         const sideMessage = document.getElementById('toastify');
+
         if (sideMessage) {
+            const successMessage: string = response?.data?.details?.message;
+
             toastify({
-                text: response?.data?.details?.message,
+                text: successMessage.slice(0, 1).toUpperCase() + successMessage.slice(1, successMessage.length),
                 duration: 2000,
                 newWindow: true,
                 close: true,
                 gravity: 'top',
                 position: 'right',
-                backgroundColor: '#F37124',
+                backgroundColor: '#fa983a',
                 stopOnFocus: true,
             });
         }
@@ -81,11 +86,13 @@ export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>
             }
 
             if (error && (key === 'errorMessage' || key === 'message')) {
-                error.innerHTML = `${details[key]}`;
+                const errorMessage: string = `${details[key]}`;
+                error.innerHTML = errorMessage.slice(0, 1).toUpperCase() + errorMessage.slice(1, errorMessage.length);
                 const sideMessage = document.getElementById('toastify');
+
                 if (sideMessage) {
                     toastify({
-                        text: `${details[key]}`,
+                        text: errorMessage.slice(0, 1).toUpperCase() + errorMessage.slice(1, errorMessage.length),
                         duration: 2000,
                         newWindow: true,
                         close: true,

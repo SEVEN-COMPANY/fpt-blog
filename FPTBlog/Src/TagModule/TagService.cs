@@ -56,19 +56,19 @@ namespace FPTBlog.Src.TagModule {
         public (int, int) GetCreatedTag() => this.TagRepository.GetCreatedTag();
         public (string, int) GetHotTrendingTag() => this.TagRepository.GetHotTrendingTag();
 
-        public List<Tag> RemoveUnUseTag() {
+        public List<Tag> RemoveUnusedTag() {
             List<string> usedTagIds = this.TagRepository.GetUsedTagIds();
-            List<string> unUseTagIds = this.TagRepository.GetAll(item => !usedTagIds.Contains(item.TagId)).Select(item => item.TagId).ToList();
+            List<string> unusedTagIds = this.TagRepository.GetAll(item => !usedTagIds.Contains(item.TagId)).Select(item => item.TagId).ToList();
 
-            List<Tag> removeUnUseTag = new List<Tag>();
-            foreach(string id in unUseTagIds){
+            List<Tag> removeUnusedTag = new List<Tag>();
+            foreach (string id in unusedTagIds) {
                 Tag tag = this.GetTagByTagId(id);
-                if(tag != null){
-                    removeUnUseTag.Add(tag);
+                if (tag != null) {
+                    removeUnusedTag.Add(tag);
                     this.TagRepository.Remove(tag);
                 }
             }
-            return removeUnUseTag;
+            return removeUnusedTag;
         }
     }
 }

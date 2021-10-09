@@ -1,0 +1,25 @@
+@{
+    var error = $"{Model.Name.ToUpper()}ERROR";
+
+    var isLabel = true;
+    try
+    {
+        isLabel = (bool)Model.IsLabel;
+
+    }
+    catch (System.Exception)
+    {
+
+    }
+}
+
+
+<div>
+    <label for="@Model.Name" class="block text-sm font-medium text-gray-700">@Model.Label</label>
+    <div class="relative mt-1">
+        <input type="file" id="@Model.Name" name="@Model.Name"
+            class="block w-full duration-200 outline-none focus:outline-none ">
+    </div>
+    <p class="mt-1 text-sm text-red-600 first-letter fade-in" id="@error" data-label="@Model.Label">
+    </p>
+</div>

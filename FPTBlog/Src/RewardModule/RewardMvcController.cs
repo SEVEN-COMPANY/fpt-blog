@@ -21,6 +21,11 @@ namespace FPTBlog.Src.RewardModule {
 
             return View(RoutersAdmin.RewardGetHome.Page);
         }
+        [Route("badge")]
+        public IActionResult GetAllBadges() {
+
+            return View(RoutersAdmin.RewardGetBadge.Page);
+        }
 
 
     }

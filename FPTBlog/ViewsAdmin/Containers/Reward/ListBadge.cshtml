@@ -1,0 +1,137 @@
+<div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
+    <h1 class="text-2xl font-semibold ">Reward Management</h1>
+    <div class="flex items-end justify-between">
+
+        <form class="flex items-end space-x-4 " id="listCategoryForm">
+
+
+            <div>
+                <label for="searchName" class="block text-sm font-medium text-gray-700">Search</label>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                    <input type="text" id="searchName" name="searchName" value="" placeholder="Name"
+                        class="block w-full duration-200 border-gray-300 rounded-md shadow-sm outline-none focus:ring-tango-500 focus:border-tango-500 sm:text-sm">
+                </div>
+                <p class="mt-1 text-sm text-red-600 first-letter fade-in" id="SEARCHNAMEERROR" data-label="Search">
+                </p>
+            </div>
+
+
+
+            <div>
+                <label for="searchStatus" class="block text-sm font-medium text-gray-700">Status</label>
+                <select id="searchStatus" name="searchStatus"
+                    class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-tango-500 focus:border-tango-500 sm:text-sm">
+                    <option value="ACTIVE" class="capitalize">Active</option>
+                    <option value="INACTIVE" class="capitalize">Inactive</option>
+                    <option value="" class="capitalize" selected="">All</option>
+                </select>
+                <p class="mt-1 text-sm text-red-600 first-letter fade-in" id="SEARCHSTATUSERROR" data-label="Status">
+
+                </p>
+            </div>
+
+
+            <input name="pageSize" value="12" readonly="" class="hidden" id="pageSize">
+
+            <input name="pageIndex" value="0" readonly="" class="hidden" id="pageIndex">
+
+
+
+
+            <div class="my-1">
+                <div>
+                    <button
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" fill="none"
+                            viewBox="0 0 20 20" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </form>
+        <div class="my-1">
+            <button type="button" id="modal-btn"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                <!-- Heroicon name: solid/mail -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                Create New Reward
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="fixed inset-0 invisible overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true"
+    id="modal-wrapper">
+    <div class="absolute inset-0 overflow-hidden">
+
+        <div class="absolute inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true" id="modal-bg">
+        </div>
+
+        <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+
+            <div class="w-screen max-w-md transition duration-500 ease-in-out transform translate-x-full sm:duration-700"
+                id="modal-panel">
+                <div class="flex flex-col h-full py-6 overflow-y-scroll bg-white shadow-xl">
+                    <div class="px-4 sm:px-6">
+                        <div class="flex items-start justify-between">
+                            <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                                Add New Reward Badge
+                            </h2>
+                            <div class="flex items-center ml-3 h-7">
+                                <button type="button" id="modal-btn-close"
+                                    class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <span class="sr-only">Close panel</span>
+                                    <!-- Heroicon name: outline/x -->
+                                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative flex-1 px-4 mt-6 sm:px-6">
+                        <!-- Replace with your content -->
+                        <div class="absolute inset-0 px-4 sm:px-6">
+                            <div class="h-full border-gray-200" aria-hidden="true">
+                                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                                <form class="space-y-4" id="createRewardForm">
+                                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                                    new { Name = "name", Label = "Name", Type = "text", Value = "" })
+                                    @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
+                                    new { Name = "description", Label = "Description", Value = "" })
+
+                                    @await Html.PartialAsync("../../Components/Form/UploadFile.cshtml",
+                                    new { Name = "file", Label = "Image" })
+
+                                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                                    new { Label = "Create New",Icon = "../../Components/Icons/AddCategory.cshtml" })
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /End replace -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+<script src="/js/reward-list.js"></script>
+}
