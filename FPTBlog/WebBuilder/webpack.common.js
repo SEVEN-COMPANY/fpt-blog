@@ -16,6 +16,7 @@ module.exports = {
         'post-editor': ['./src/post/editor.ts'],
         'tag-list': ['./src/tag/list.ts'],
         'post-list': ['./src/post/listPost.ts'],
+        'reward-list': ['./src/reward/listReward.ts'],
     },
     output: {
         path: __dirname + '/../wwwroot/js',
