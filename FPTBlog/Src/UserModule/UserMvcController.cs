@@ -41,7 +41,6 @@ namespace FPTBlog.Src.UserModule {
                 searchCategoryId = "";
             }
 
-            Console.WriteLine(searchCategoryId);
 
             var categoryDropList = this.CategoryService.GetCategoryDropList();
             categoryDropList.Add(new SelectListItem() { Value = "", Text = "All" });
@@ -112,7 +111,7 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("me/save")]
-        public IActionResult GetSavePost(int pageSize = 12, int pageIndex = 0){
+        public IActionResult GetSavePost(int pageSize = 12, int pageIndex = 0) {
             var user = (User) this.ViewData["user"];
 
             var (posts, count) = this.UserService.GetSavePost(user.UserId, pageIndex, pageSize);

@@ -38,8 +38,8 @@ namespace FPTBlog.Src.TagModule {
             ViewData["total"] = total;
             ViewData["hotTrendingTagName"] = hotTrendingTagName;
             ViewData["hotTrendingTagCount"] = hotTrendingTagCount;
-            ViewData["numOfTagsCreatedCurrentMonth"] = createdTagLastMonth;
-            ViewData["numOfTagsCreatedLastMonth"] = createdTagThisMonth;
+            ViewData["numOfTagsCreatedCurrentMonth"] = createdTagThisMonth;
+            ViewData["numOfTagsCreatedLastMonth"] = createdTagLastMonth;
 
             return View(RoutersAdmin.TagGetTagList.Page);
         }
