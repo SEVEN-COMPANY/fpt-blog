@@ -28,10 +28,18 @@ namespace FPTBlog.Src.TagModule {
 
             this.ViewData["statusSearch"] = list;
 
+            var (createdTagLastMonth, createdTagThisMonth) = this.TagService.GetCreatedTag();
+
 
             var (listTag, total) = this.TagService.GetTagsBelongToPostWithCount(pageIndex, pageSize, searchName, searchStatus);
+            var (hotTrendingTagName, hotTrendingTagCount) = this.TagService.GetHotTrendingTag();
+
             ViewData["tags"] = listTag;
             ViewData["total"] = total;
+            ViewData["hotTrendingTagName"] = hotTrendingTagName;
+            ViewData["hotTrendingTagCount"] = hotTrendingTagCount;
+            ViewData["numOfTagsCreatedCurrentMonth"] = createdTagLastMonth;
+            ViewData["numOfTagsCreatedLastMonth"] = createdTagThisMonth;
 
             return View(RoutersAdmin.TagGetTagList.Page);
         }

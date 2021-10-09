@@ -17,17 +17,14 @@ namespace FPTBlog.Src.TagModule {
             var count = list.Count;
             return (list, count);
         }
-
         public void AddTag(Tag tag) => this.TagRepository.Add(tag);
         public Tag GetTagByTagId(string tagId) => this.TagRepository.Get(tagId);
         public Tag GetTagByName(string name) => this.TagRepository.GetFirstOrDefault(item => item.Name == name);
-
         public (List<Tag>, int) GetTagsByName(string name) {
             var list = (List<Tag>) this.TagRepository.GetAll(item => item.Name.Contains(name));
 
             return (list, list.Count());
         }
-
         public void UpdateTag(Tag tag) => this.TagRepository.Update(tag);
         public void RemoveTag(Tag tag) => this.TagRepository.Remove(tag);
         public (List<Tag>, int) GetTagsWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus) {
@@ -51,12 +48,12 @@ namespace FPTBlog.Src.TagModule {
 
             return (list, count);
         }
-
         public List<SelectListItem> GetTagStatusDroplist() {
             SelectListItem active = new SelectListItem() { Value = ((int) TagStatus.ACTIVE).ToString(), Text = "Active" };
             SelectListItem inactive = new SelectListItem() { Value = ((int) TagStatus.INACTIVE).ToString(), Text = "Inactive" };
             return new List<SelectListItem>() { active, inactive };
         }
-
+        public (int, int) GetCreatedTag() => this.TagRepository.GetCreatedTag();
+        public (string, int) GetHotTrendingTag() => this.TagRepository.GetHotTrendingTag();
     }
 }
