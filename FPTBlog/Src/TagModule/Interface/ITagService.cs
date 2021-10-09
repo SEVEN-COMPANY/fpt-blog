@@ -13,6 +13,8 @@ namespace FPTBlog.Src.TagModule.Interface {
         public void RemoveTag(Tag tag);
         public (List<IDictionary<string, object>>, int) GetTagsBelongToPostWithCount(int pageIndex, int pageSize, string searchName, TagStatus searchStatus);
         public List<SelectListItem> GetTagStatusDroplist();
+        public (int,int) GetCreatedTag();
+        public (string, int) GetHotTrendingTag();
 
     }
 }
