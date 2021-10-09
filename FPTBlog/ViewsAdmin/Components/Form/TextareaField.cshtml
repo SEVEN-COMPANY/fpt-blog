@@ -1,0 +1,40 @@
+@{
+    var error = $"{Model.Name.ToUpper()}ERROR";
+
+    var isLabel = true;
+    var placeHolder = "";
+    try
+    {
+        isLabel = (bool)Model.IsLabel;
+
+    }
+    catch (System.Exception)
+    {
+
+    }
+
+    try
+    {
+        placeHolder = (string)Model.PlaceHolder;
+    }
+    catch (System.Exception)
+    {
+
+
+    }
+
+
+}
+
+
+<div class="">
+    <label for="@Model.Name" class="block text-sm font-medium text-gray-700">
+        @Model.Label
+    </label>
+    <div class="mt-1">
+        <textarea id="@Model.Name" name="@Model.Name" placeholder="@placeHolder" rows="3"
+            class="block w-full border border-gray-300 rounded-md shadow-sm focus:ring-tango-500 focus:border-tango-500 sm:text-sm">@Model.Value</textarea>
+    </div>
+    <p class="mt-1 text-sm text-red-600 first-letter fade-in" id="@error" data-label="@Model.Label">
+    </p>
+</div>

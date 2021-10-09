@@ -10,8 +10,12 @@
     var status = (SelectList)this.ViewData["status"];
     var roleSearch = (SelectList)this.ViewData["roleSearch"];
     var role = (SelectList)this.ViewData["role"];
-    var totalStudent = (int)this.ViewData["totalStudent"];
-    var totalLecturer = (int)this.ViewData["totalLecturer"];
+
+    var studentThisMonth = (int)this.ViewData["studentThisMonth"];
+    var studentLastMonth = (int)this.ViewData["studentLastMonth"];
+    var lecturerThisMonth = (int)this.ViewData["lecturerThisMonth"];
+    var lecturerLastMonth = (int)this.ViewData["lecturerLastMonth"];
+
 }
 
 
@@ -66,14 +70,14 @@
                 </dt>
                 <dd class="flex items-baseline justify-between mt-1 space-x-2 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
-                        71
+                        @studentThisMonth
                         <span class="ml-2 text-sm font-medium text-gray-500">
-                            70
+                            @studentLastMonth
                         </span>
                     </div>
 
                     @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
-                    =12, LastMonth = 10})
+                    =studentThisMonth, LastMonth = studentLastMonth})
                 </dd>
             </div>
 
@@ -83,14 +87,14 @@
                 </dt>
                 <dd class="flex items-baseline justify-between mt-1 space-x-2 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-tango-600">
-                        71
+                        @lecturerThisMonth
                         <span class="ml-2 text-sm font-medium text-gray-500">
-                            70
+                            @lecturerLastMonth
                         </span>
                     </div>
 
                     @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
-                    =12, LastMonth = 10})
+                    =lecturerThisMonth, LastMonth = lecturerLastMonth})
                 </dd>
             </div>
         </dl>

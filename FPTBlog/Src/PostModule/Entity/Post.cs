@@ -26,6 +26,7 @@ namespace FPTBlog.Src.PostModule.Entity {
             get; set;
         }
 
+        [StringLength(500)]
         public string Note {
             get; set;
         }
@@ -122,6 +123,7 @@ namespace FPTBlog.Src.PostModule.Entity {
             this.Student = null;
             this.Lecturer = null;
             this.Category = null;
+            this.Note = "";
             this.PostTags = new List<PostTag>();
         }
     }

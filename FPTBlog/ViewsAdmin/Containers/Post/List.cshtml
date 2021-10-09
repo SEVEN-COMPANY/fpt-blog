@@ -1,6 +1,7 @@
 @using FPTBlog.Src.PostModule.Entity
 @{
     var statusSearch = (SelectList)this.ViewData["statusSearch"];
+    var approvedStatus = (SelectList)this.ViewData["approvedStatus"];
     var listPosts = (List<Post>)ViewData["posts"];
     var total = (int)ViewData["total"];
     var PostThisMonth = (int)this.ViewData["postThisMonth"];
@@ -186,7 +187,16 @@
                             @item.Student.Name
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            @await Html.PartialAsync("../../Components/Table/PostStatusEdit.cshtml",item.Status)
+                            @if (item.Status == PostStatus.WAIT)
+                            {
+                                <button class="modal-btn" data-postId="@item.PostId" data-title="@item.Title">
+                                    @await Html.PartialAsync("../../Components/Table/PostStatusEdit.cshtml",item.Status)
+                                </button>
+                            }
+                            else
+                            {
+                                @await Html.PartialAsync("../../Components/Table/PostStatusEdit.cshtml",item.Status)
+                            }
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                             @item.CreateDate
@@ -211,3 +221,89 @@
         this.Context.Request.Query["pageSize"]?? "12", Total = total })
     </div>
 </div>
+
+
+
+<div class="fixed inset-0 invisible overflow-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true"
+    id="modal-wrapper">
+    <div class="absolute inset-0 overflow-hidden">
+
+        <div class="absolute inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true" id="modal-bg">
+        </div>
+
+        <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+
+            <div class="w-screen max-w-md transition duration-500 ease-in-out transform translate-x-full sm:duration-700"
+                id="modal-panel">
+                <div class="flex flex-col h-full py-6 overflow-y-scroll bg-white shadow-xl">
+                    <div class="px-4 sm:px-6">
+                        <div class="flex items-start justify-between">
+                            <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                                Approved Post
+                            </h2>
+                            <div class="flex items-center ml-3 h-7">
+                                <button type="button" id="modal-btn-close"
+                                    class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <span class="sr-only">Close panel</span>
+                                    <!-- Heroicon name: outline/x -->
+                                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative flex-1 px-4 mt-6 sm:px-6">
+                        <!-- Replace with your content -->
+                        <div class="absolute inset-0 px-4 sm:px-6">
+                            <div class="h-full border-gray-200" aria-hidden="true">
+                                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+
+
+                                <form class="space-y-4" id="approvedPostForm">
+                                    <a href="hello" id="postLink" target="_blank"
+                                        class="text-sm font-medium text-indigo-600 hover:text-indigo-900">View
+                                        Post</a>
+
+                                    <div>
+                                        <label for="approvedStatus"
+                                            class="block text-sm font-medium text-gray-700">Title</label>
+
+                                        <div id="postName"
+                                            class="block w-full py-2 pl-3 pr-10 mt-1 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-tango-500 focus:border-tango-500 sm:text-sm">
+
+                                        </div>
+
+                                    </div>
+
+                                    @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+                                    new { Name = "approvedStatus", Label = "Status", Type = "text", Value =
+                                    PostStatus.APPROVED.ToString() , IsLabel = false, List =
+                                    approvedStatus
+                                    })
+
+                                    @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
+                                    new { Name = "note", Label = "Note", Value = "" })
+
+
+                                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                                    new { Label = "Submit",Icon = "../../Components/Icons/ApprovedPost.cshtml" })
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /End replace -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+<script src="/js/post-list.js"></script>
+}
