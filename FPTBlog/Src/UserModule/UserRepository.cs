@@ -5,6 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using FPTBlog.Utils.Repository;
+using FPTBlog.Src.PostModule.Entity;
+
 namespace FPTBlog.Src.UserModule {
     public class UserRepository : Repository<User>, IUserRepository {
         private readonly DB Db;
@@ -118,6 +120,29 @@ namespace FPTBlog.Src.UserModule {
                 }
             }
             return report;
+        }
+
+        public void SavePost(User user, Post post) {
+            SavePost savePost = new SavePost(){
+                User = user,
+                UserId = user.UserId,
+                Post = post,
+                PostId = post.PostId
+            };
+            this.Db.SavePost.Add(savePost);
+            this.Db.SaveChanges();
+        }
+
+        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize){
+            var query = (from Post in this.Db.Post
+                                join SavePost in this.Db.SavePost
+                                on Post.PostId equals SavePost.PostId
+                                where SavePost.UserId.Equals(userId)
+                                select Post).ToList();
+            int count = query.Count;
+            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+            return (list, count);
         }
 
     }
