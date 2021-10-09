@@ -9,6 +9,8 @@ using FPTBlog.Src.UserModule.Entity;
 using FluentValidation.Results;
 using System.Collections.Generic;
 using System;
+using FPTBlog.Src.PostModule.Entity;
+using FPTBlog.Src.PostModule.Interface;
 
 namespace FPTBlog.Src.UserModule {
     [Route("/api/user")]
@@ -17,11 +19,12 @@ namespace FPTBlog.Src.UserModule {
 
 
         private readonly IAuthService AuthService;
-
+        private readonly IPostService PostService;
         private readonly IUserService UserService;
-        public UserApiController(IUserService userService, IAuthService authService) {
+        public UserApiController(IUserService userService, IAuthService authService, IPostService postService) {
             this.UserService = userService;
             this.AuthService = authService;
+            this.PostService = postService;
         }
 
         [HttpGet("")]
@@ -95,7 +98,7 @@ namespace FPTBlog.Src.UserModule {
             if (search == null) {
                 search = "";
             }
-            var (users, total) = this.UserService.GetUsersWithCount(pageSize, pageIndex, search);
+            var (users, total) = this.UserService.GetUsersNameWithCount(pageSize, pageIndex, search);
             dataRes.Add("blogs", users);
             dataRes.Add("total", total);
             res.data = dataRes;
@@ -103,23 +106,23 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpPost("follow")]
-        public IActionResult FollowUser(string followerId){
-            IDictionary<string,User> dataRes = new Dictionary<string, User>();
-            ServerApiResponse<IDictionary<string,User>> res = new ServerApiResponse<IDictionary<string,User>>();
+        public IActionResult FollowUser(string followerId) {
+            IDictionary<string, User> dataRes = new Dictionary<string, User>();
+            ServerApiResponse<IDictionary<string, User>> res = new ServerApiResponse<IDictionary<string, User>>();
             User user = (User) this.ViewData["user"];
 
-            if(user.UserId == followerId){
+            if (user.UserId == followerId) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             User follower = this.UserService.GetUserByUserId(followerId);
-            if(follower == null){
+            if (follower == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if(this.UserService.IsFollow(user.UserId, followerId)){
+            if (this.UserService.IsFollow(user.UserId, followerId)) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -128,6 +131,26 @@ namespace FPTBlog.Src.UserModule {
 
             dataRes.Add("followingUser", user);
             dataRes.Add("follower", follower);
+            res.data = dataRes;
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("save")]
+        public IActionResult SavePost(string postId){
+            IDictionary<string, object> dataRes = new Dictionary<string, object>();
+            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
+            User user = (User) this.ViewData["user"];
+
+            Post post = this.PostService.GetPostByPostId(postId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            this.UserService.SavePost(user, post);
+
+            dataRes.Add("user", user);
+            dataRes.Add("post", post);
             res.data = dataRes;
             return new ObjectResult(res.getResponse());
         }

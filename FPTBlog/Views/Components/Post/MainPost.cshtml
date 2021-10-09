@@ -3,19 +3,21 @@
 @{
     var value = (PostViewModel)Model.Value;
     var link = $"{Routers.PostGetPost.Link}?postId={value.Post.PostId}";
+    var profileLink = $"{Routers.UserGetProfile.Link}?userId={value.Post.StudentId}";
+    var categoryLink = $"{Routers.PostGetSearch.Link}?categoryId={value.Post.CategoryId}";
 }
 
 
-<a href="@link" class="relative flex flex-col flex-1 rounded-sm post-image">
-    <div class="flex-1 h-78">
+<div class="relative flex flex-col flex-1 rounded-sm post-image">
+    <a href="@link" class="flex-1 h-78">
         <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="block object-cover w-full h-full ">
 
-    </div>
+    </a>
     <div class="w-full px-2 py-2 space-y-2 ">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2 text-sm">
                 <div class="w-1 h-6 bg-tango-500"></div>
-                <p class="opacity-60">@value.Post.Category.Name</p>
+                <a href="@categoryLink" class="opacity-60">@value.Post.Category.Name</a>
             </div>
             <div>
                 <p class="text-xs opacity-60">
@@ -23,11 +25,11 @@
                 </p>
             </div>
         </div>
-        <h1 class="text-xl font-semibold md:text-xl">
+        <a href="@link" class="text-xl font-semibold md:text-xl">
             @value.Post.Title
-        </h1>
+        </a>
         <div class="flex space-x-8 text-xs opacity-60 md:text-sm">
-            <p class="">@value.Post.Student.Name</p>
+            <a href="@profileLink" class="">@value.Post.Student.Name</a>
             <p>@value.Post.CreateDate</p>
         </div>
         <div class="flex space-x-2">
@@ -73,4 +75,4 @@
 
         </div>
     </div>
-</a>
+</div>

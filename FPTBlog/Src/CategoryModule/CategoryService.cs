@@ -23,11 +23,15 @@ namespace FPTBlog.Src.CategoryModule {
         public void UpdateCategory(Category category) => this.CategoryRepository.Update(category);
         public void RemoveCategory(Category category) => this.CategoryRepository.Remove(category);
         public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) => this.CategoryRepository.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
+        public (List<Category>, int) GetAllCategories(int pageIndex, int pageSize, string searchName) => this.CategoryRepository.GetAllCategories(pageIndex, pageSize, searchName);
 
-        public List<SelectListItem> GetRadioStatusList() {
-            SelectListItem active = new SelectListItem() { Value = ((int) CategoryStatus.ACTIVE).ToString(), Text = "active" };
-            SelectListItem inactive = new SelectListItem() { Value = ((int) CategoryStatus.INACTIVE).ToString(), Text = "inactive" };
-            return new List<SelectListItem>() { active, inactive };
+        public List<SelectListItem> GetCategoryStatusDropList() {
+            var status = new List<SelectListItem>(){
+                new SelectListItem(){ Value = CategoryStatus.ACTIVE.ToString(), Text = "Active"},
+                new SelectListItem(){  Value =  CategoryStatus.INACTIVE.ToString(), Text = "Inactive"}
+            };
+
+            return status;
         }
 
         public List<SelectListItem> GetCategoryDropList() {

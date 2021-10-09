@@ -8,23 +8,25 @@
         <img src="https://picsum.photos/200" class="object-cover w-full h-full" />
     </div>
     <div class="text-center">
-        <h1 class="text-xl font-semibold">@profile.Name</h1>
+        <h1 class="duration-300 hover:text-tango-500 ">
+            <a href="@Routers.UserGetMyProfile.Link" class="text-xl font-semibold">@profile.Name</a>
+        </h1>
         <p class="text-sm font-medium opacity-70">@profile.Username</p>
     </div>
     <div class="w-3/5 h-0.5 bg-tango-300 opacity-60"></div>
 
     <div class="flex w-full justify-evenly">
         <div class="text-center">
-            <p class="font-semibold opacity-80">Like</p>
-            <p class="text-lg font-semibold">0</p>
-        </div>
-        <div class="text-center">
             <p class="font-semibold opacity-80">Follower</p>
-            <p class="text-lg font-semibold">0</p>
+            <p class="text-lg font-semibold">@viewData["countFollower"]</p>
         </div>
         <div class="text-center">
             <p class="font-semibold opacity-80">Post</p>
-            <p class="text-lg font-semibold">0</p>
+            <p class="text-lg font-semibold">@viewData["countPost"]</p>
+        </div>
+        <div class="text-center">
+            <p class="font-semibold opacity-80">Following</p>
+            <p class="text-lg font-semibold">@viewData["countFollowing"]</p>
         </div>
     </div>
     <div class="space-y-2">

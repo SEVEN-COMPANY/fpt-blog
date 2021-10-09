@@ -6,148 +6,322 @@
 @{
     var users = (List<User>)this.ViewData["users"];
     var total = (int)this.ViewData["total"];
+    var statusSearch = (SelectList)this.ViewData["statusSearch"];
+    var status = (SelectList)this.ViewData["status"];
+    var roleSearch = (SelectList)this.ViewData["roleSearch"];
+    var role = (SelectList)this.ViewData["role"];
+
+    var studentThisMonth = (int)this.ViewData["studentThisMonth"];
+    var studentLastMonth = (int)this.ViewData["studentLastMonth"];
+    var lecturerThisMonth = (int)this.ViewData["lecturerThisMonth"];
+    var lecturerLastMonth = (int)this.ViewData["lecturerLastMonth"];
+
 }
 
-<div class="flex items-center mt-8 intro-y">
-    <h2 class="mr-auto text-lg font-medium">
-        User Management
-    </h2>
-</div>
 
-<div class="grid grid-cols-12 gap-4 mt-5">
-    <div class="col-span-12 space-y-2 md:col-span-12">
-        @* Table Start *@
-        <div class="col-span-12 md:col-span-8 intro-y box">
-            <div class="p-5 border-b border-gray-200 sm:flex-row">
+<div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
+    <h1 class="text-2xl font-semibold ">User Management</h1>
 
-                <div class="flex items-center justify-between">
-                    <h2 class="mr-auto text-base font-medium">
-                        Search List
-                    </h2>
-                </div>
+    <div class="flex items-end justify-between">
+
+        <form class="flex items-end space-x-4 " id="listUserForm">
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+            this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchStatus", Label = "Status", Type = "text", Value = (string)
+            this.Context.Request.Query["searchStatus"] ?? "" , IsLabel = false, List = statusSearch
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchRole", Label = "Role", Type = "text", Value = (string)
+            this.Context.Request.Query["searchRole"] ?? "" , IsLabel = false, List = roleSearch
+            })
+
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
+
+            <div class="my-1">
+                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
+            </div>
+            <div class="my-1">
+                <button
+                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-600 hover:bg-tango-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                            d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                    </svg>
+                    View Chart
+                </button>
+            </div>
+        </form>
 
 
-                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
-                <form action="@RoutersAdmin.UserGetUserList.Link" id="listUserForm" class="my-2">
-                    <div class="flex space-x-2">
-                        @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
-                        this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
-                        })
-                        @await Html.PartialAsync("../../Components/Form/StatusField.cshtml",
-                        new { Name = "searchStatus", Label = "Status", Value =
-                        ((string) this.Context.Request.Query["searchStatus"] ?? "1" ) == ((int)
-                        UserStatus.ENABLE).ToString(),
-                        IsLabel = false })
-                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
-                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
-
-                        @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                        new { Label = "Search" })
+        <dl class="grid grid-cols-1 overflow-hidden divide-y divide-gray-200 md:grid-cols-2 md:divide-y-0 md:divide-x">
+            <div class="px-4">
+                <dt class="text-base font-normal text-gray-900">
+                    Student (30d)
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 space-x-2 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        @studentThisMonth
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            @studentLastMonth
+                        </span>
                     </div>
-                </form>
+
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
+                    =studentThisMonth, LastMonth = studentLastMonth})
+                </dd>
             </div>
 
-
-            <div class="p-5" id="hoverable-table">
-                <div class="preview" style="display: block; opacity: 1;">
-                    <div class="overflow-x-auto">
-                        <table class="table">
-
-                            <thead>
-                                <tr>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        #
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Name
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Username
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Email
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Phone
-                                    </th>
-
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Status
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Role
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-                                        Create Date
-                                    </th>
-                                    <th class="border border-b-2 dark:border-dark-5 whitespace-nowrap">
-
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for (int i = 0; i < users.Count; i++)
-                                {
-                                    var item = users[i];
-                                    <tr class="hover:bg-gray-200">
-                                        <td class="border">@(i+1)</td>
-                                        <td class="border">@item.Name</td>
-                                        <td class="border">@item.Username</td>
-                                        <td class="border">@item.Email</td>
-                                        <td class="border">@item.Phone</td>
-                                        <td class="border">@await Html.PartialAsync(
-                                        "../../Components/Table/TableStatus.cshtml",
-                                        item.Status == UserStatus.ENABLE)</td>
-                                        <td class="border">@item.Role</td>
-                                        <td class="border">@item.CreateDate</td>
-                                        <td class="border">
-                                            @if (item.Status == UserStatus.ENABLE)
-                                            {
-                                                <button class="mb-2 mr-1 btn btn-primary" userId="@item.UserId" id="block-btn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-lock block mx-auto">
-                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                                    </svg>
-                                                </button>
-                                            }
-                                            else
-                                            {
-                                                <button class="mb-2 mr-1 btn btn-primary" userId="@item.UserId" id="block-btn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-unlock block mx-auto">
-                                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
-                                                    </svg>
-                                                </button>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-
-
-                            </tbody>
-                        </table>
+            <div class="px-4 ">
+                <dt class="text-base font-normal text-gray-900">
+                    Lecturer (30d)
+                </dt>
+                <dd class="flex items-baseline justify-between mt-1 space-x-2 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-tango-600">
+                        @lecturerThisMonth
+                        <span class="ml-2 text-sm font-medium text-gray-500">
+                            @lecturerLastMonth
+                        </span>
                     </div>
-                </div>
+
+                    @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
+                    =lecturerThisMonth, LastMonth = lecturerLastMonth})
+                </dd>
             </div>
-        </div>
-        @* Table End *@
-        @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
-        new { PageIndex = (string) this.Context.Request.Query["pageIndex"]?? "0", PageSize = (string)
-        this.Context.Request.Query["pageSize"]?? "12", Total = total })
+        </dl>
     </div>
 </div>
 
+<div class="mt-2 overflow-hidden border-b border-gray-200 rounded-lg shadow intro-y">
+    <table class="min-w-full divide-y divide-gray-200 ">
+        <thead class="bg-tango-100">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    #
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Username
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Role
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Create Date
+                </th>
+
+                <th scope="col" class="relative px-6 py-3">
+                    <span class="sr-only">Edit</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200 fade-in">
+            @for (int i = 0; i < users.Count; i++)
+            {
+                var item = users[i];
+                var linkProfile = $"{Routers.UserGetProfile.Link}?userId={item.UserId}";
+
+                <tr class="duration-200 hover:bg-indigo-100">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                        @(i+1)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Name
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Username
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Email
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 capitalize whitespace-nowrap">
+                        <span class="flex items-center ">
+                            @item.Role.ToString().ToLower()
+                            <button data-userId="@item.UserId" data-userRole="@item.Role" class="ml-1 modal-role-btn"
+                            type="button">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                    d="M13.931 2.06873C13.3061 1.44389 12.2931 1.44389 11.6682 2.06873L5.59961 8.13736V10.4001H7.86235L13.931 4.33147C14.5558 3.70663 14.5558 2.69357 13.931 2.06873Z"
+                                    fill="#6C7280" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M1.59961 4.8001C1.59961 3.91644 2.31595 3.2001 3.19961 3.2001H6.39961C6.84144 3.2001 7.19961 3.55827 7.19961 4.0001C7.19961 4.44193 6.84144 4.8001 6.39961 4.8001H3.19961V12.8001H11.1996V9.6001C11.1996 9.15827 11.5578 8.8001 11.9996 8.8001C12.4414 8.8001 12.7996 9.15827 12.7996 9.6001V12.8001C12.7996 13.6838 12.0833 14.4001 11.1996 14.4001H3.19961C2.31595 14.4001 1.59961 13.6838 1.59961 12.8001V4.8001Z"
+                                    fill="#6C7280" />
+                                </svg>
+
+                            </button>
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        <button data-userId="@item.UserId" data-userStatus="@item.Status" class="modal-btn" type="button">
+                            @await Html.PartialAsync("../../Components/Table/TableStatusEdit.cshtml",item.Status ==
+                        UserStatus.ENABLE)
+                        </button>
+
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.CreateDate
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                        <a href="@linkProfile" target="_blank" class="text-indigo-600 hover:text-indigo-900">View
+                            Profile</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @await Html.PartialAsync("../../Components/Pagination/Pagination.cshtml",
+    new { PageIndex = (string) this.Context.Request.Query["pageIndex"] ?? "0", PageSize = (string)
+    this.Context.Request.Query["pageSize"]?? "12", Total = total })
+</div>
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="fixed inset-0 z-10 invisible overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+    id="modal-wrapper">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true" id="modal-bg"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div id="modal-panel"
+            class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+            <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                <button type="button" id="modal-btn-close"
+                    class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="sr-only">Close</span>
+                    <!-- Heroicon name: outline/x -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden sm:flex sm:items-start">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-block">
+                        Block account
+                    </h3>
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-unblock">
+                        Unblock account
+                    </h3>
+                    <div class="mt-2">
+                        <p id="modal-content-description-block" class="hidden text-sm text-gray-500">
+                            Are you sure you want to block this account? This account will be lock from the FPT Blog
+                            system.
+                        </p>
+                        <p id="modal-content-description-unblock" class="hidden text-sm text-gray-500">
+                            Are you sure you want to unblock this account? This account will be unblock from the FPT
+                            Blog system.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <button id="modal-btn-accept-block" type="button"
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Block
+                </button>
+                <button id="modal-btn-accept-unblock" type="button"
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Unblock
+                </button>
+                <button id="modal-btn-cancel" type="button"
+                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="fixed inset-0 z-10 invisible overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+    id="modal-role-wrapper">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true" id="modal-role-bg">
+        </div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div id="modal-role-panel"
+            class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+            <div class="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                <button type="button" id="modal-role-btn-close"
+                    class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="sr-only">Close</span>
+                    <!-- Heroicon name: outline/x -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="hidden sm:flex sm:items-start">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-upgrade">
+                        Upgrade account
+                    </h3>
+                    <h3 class="hidden text-lg font-medium leading-6 text-gray-900" id="modal-content-title-downgrade">
+                        Downgrade account
+                    </h3>
+                    <div class="mt-2">
+                        <p id="modal-content-description-upgrade" class="hidden text-sm text-gray-500">
+                            Are you sure you want to upgrade this account? This account will be Lecturer in the FPT Blog
+                            system.
+                        </p>
+                        <p id="modal-content-description-downgrade" class="hidden text-sm text-gray-500">
+                            Are you sure you want to downgrade this account? This account will be Student in the FPT
+                            Blog
+                            system.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <button id="modal-role-btn-accept-upgrade" type="button"
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Upgrade
+                </button>
+                <button id="modal-role-btn-accept-downgrade" type="button"
+                    class="inline-flex justify-center hidden w-full px-4 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Downgrade
+                </button>
+                <button id="modal-role-btn-cancel" type="button"
+                    class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
-<script src="/js/user-block.js"></script>
+
 <script src="/js/user-list.js"></script>
 }

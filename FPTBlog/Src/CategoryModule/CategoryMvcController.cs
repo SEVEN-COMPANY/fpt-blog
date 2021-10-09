@@ -21,31 +21,45 @@ namespace FPTBlog.Src.CategoryModule {
         }
 
         [HttpGet("")]
-        public IActionResult Category(string searchName, CategoryStatus searchStatus = CategoryStatus.ACTIVE, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult Category(string searchName, CategoryStatus searchStatus, int pageSize = 12, int pageIndex = 0) {
             if (searchName == null) {
                 searchName = "";
             }
 
+            this.ViewData["status"] = new SelectList(this.CategoryService.GetCategoryStatusDropList(), CategoryStatus.ACTIVE);
 
-            var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
+            var statusList = this.CategoryService.GetCategoryStatusDropList();
+            statusList.Add(new SelectListItem() { Text = "All", Value = "" });
+            SelectList list = new SelectList(statusList, "");
+            this.ViewData["statusSearch"] = list;
 
-            this.ViewData["categories"] = categories;
-            this.ViewData["total"] = total;
+            if ((int) searchStatus == 0) {
+                var (allCategories, allTotal) = this.CategoryService.GetAllCategories(pageIndex, pageSize, searchName);
+                this.ViewData["categories"] = allCategories;
+                this.ViewData["total"] = allTotal;
+            }
+            else {
+                var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
+                this.ViewData["categories"] = categories;
+                this.ViewData["total"] = total;
+            }
+
+
             return View(RoutersAdmin.CategoryGetCategoryList.Page);
         }
 
-        [HttpGet("create")]
-        public IActionResult AddCategoryPage() {
-            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
-            this.ViewData["status"] = list;
-
-            return View(RoutersAdmin.CategoryPost.Page);
-        }
 
         [HttpGet("update")]
         public IActionResult UpdateCategory(string categoryId) {
+
+            var statusList = this.CategoryService.GetCategoryStatusDropList();
+            statusList.Add(new SelectListItem() { Text = "All", Value = "" });
+            SelectList statusSearchList = new SelectList(statusList, "");
+            this.ViewData["statusSearch"] = statusSearchList;
+
+
             var category = this.CategoryService.GetCategoryByCategoryId(categoryId);
-            SelectList list = new SelectList(this.CategoryService.GetRadioStatusList(), "1");
+            SelectList list = new SelectList(this.CategoryService.GetCategoryStatusDropList(), "1");
             this.ViewData["status"] = list;
             this.ViewData["category"] = category;
             return View(RoutersAdmin.CategoryPutCategory.Page);

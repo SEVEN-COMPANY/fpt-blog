@@ -17,6 +17,8 @@
     var previewLink = $"{Routers.PostGetPreview.Link}?postId={post.PostId}";
 }
 
+@await Html.PartialAsync("../../Components/Form/FormToastify.cshtml")
+
 <div class="flex-1 px-2 pt-8 pb-16 fade-in ">
 
     <form class="space-y-4" id="createBlogForm">
@@ -25,6 +27,24 @@
             <h1 class="text-2xl font-semibold">Editor Post</h1>
 
         </div>
+
+        @if (post.Note != "")
+        {
+            <div class="space-y-2">
+                <h2 class="block font-semibold capitalize">Comment</h2>
+                <div class="p-2 border border-red-500 rounded-sm fade-in">
+
+                    <p>
+                        @post.Note
+                    </p>
+
+                    <p class="mt-2 text-xs text-red-500">
+                        This message is created by a lecturer, please change your post and submit again.
+                    </p>
+                </div>
+            </div>
+        }
+
 
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
         new {Name="postId", Value=post.PostId})
@@ -56,10 +76,16 @@
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
             new { Label="Save Changes"})
 
-            <a href="@previewLink" class="block p-2 font-medium text-center text-white rounded-sm bg-tango-500 fade-in"
+            <a href="@previewLink"
+                class="block px-4 py-2 font-medium text-center text-white duration-200 rounded-sm bg-tango-500 hover:bg-tango-600 fade-in"
                 onclick="return confirm('Do you save your post, click ok to go to preview page?')" target="_blank">
                 Preview
             </a>
+
+            <button id="post-send"
+                class="block px-4 py-2 font-medium text-white duration-200 rounded-sm bg-tango-500 fade-in hover:bg-tango-600">
+                Submit Post Request
+            </button>
         </div>
 
     </form>

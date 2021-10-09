@@ -59,7 +59,6 @@ namespace FPTBlog.Src.PostModule {
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (list, count);
-            // return this.GetEntityByPage(query, pageSize, pageIndex);
         }
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name) {
             var query = (from PostTag in this.Db.PostTag
@@ -72,13 +71,14 @@ namespace FPTBlog.Src.PostModule {
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
+
             return (list, count);
 
         }
 
-        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) {
+        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId) {
             var query = (from Post in this.Db.Post
-                         where Post.StudentId.Equals(studentId) && Post.Status == status
+                         where Post.StudentId.Equals(studentId) && (Post.Status != PostStatus.APPROVED)
                          select Post);
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
@@ -108,11 +108,6 @@ namespace FPTBlog.Src.PostModule {
         //         return this.GetEntityByPage(query, pageSize, pageIndex);
         //     }
 
-
-
-
-
-
         public void LikePost(Post post, User user) {
             LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);
             if (obj == null || (obj != null && (int) obj.expression == 2)) {
@@ -129,6 +124,7 @@ namespace FPTBlog.Src.PostModule {
                 like.Post = post;
                 like.UserId = user.UserId;
                 like.User = user;
+                like.CreateDate = DateTime.Now.ToShortDateString();
                 like.expression = Expression.LIKE;
                 this.Db.LikePost.Add(like);
                 this.Db.SaveChanges();
@@ -159,6 +155,7 @@ namespace FPTBlog.Src.PostModule {
                 dislike.Post = post;
                 dislike.UserId = user.UserId;
                 dislike.User = user;
+                dislike.CreateDate = DateTime.Now.ToShortDateString();
                 dislike.expression = Expression.DISLIKE;
                 this.Db.LikePost.Add(dislike);
                 this.Db.SaveChanges();
@@ -171,6 +168,78 @@ namespace FPTBlog.Src.PostModule {
                 this.Db.SaveChanges();
                 return;
             }
+        }
+
+        public Report GetMonthlyReport() {
+            Report report = new Report();
+            report.PostThisMonth = 0;
+            report.ViewThisMonth = 0;
+            report.InteractThisMonth = 0;
+            report.UserThisMonth = 0;
+            report.PostLastMonth = 0;
+            report.ViewLastMonth = 0;
+            report.InteractLastMonth = 0;
+            report.UserLastMonth = 0;
+            string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
+            DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
+            string lastMonth = DateTime.Now.AddMonths(-2).ToShortDateString();
+            DateTime lastMonthDate = Convert.ToDateTime(lastMonth);
+
+            List<Post> posts = this.Db.Post.ToList();
+            List<User> users = this.Db.User.ToList();
+            foreach (var post in posts) {
+                DateTime date = Convert.ToDateTime(post.CreateDate);
+                if (DateTime.Compare(date, thisMonthDate) > 0) {
+                    report.PostThisMonth++;
+                    report.ViewThisMonth += post.View;
+                    report.InteractThisMonth += post.Like + post.Dislike + this.Db.Comment.Where(x => x.PostId == post.PostId).Count();
+                }
+                if (DateTime.Compare(date, lastMonthDate) > 0 && (DateTime.Compare(date, thisMonthDate) < 0)) {
+                    report.PostLastMonth++;
+                    report.ViewLastMonth += post.View;
+                    report.InteractLastMonth += post.Like + post.Dislike + this.Db.Comment.Where(x => x.PostId == post.PostId).Count();
+                }
+            }
+
+            foreach (var user in users) {
+                DateTime date = Convert.ToDateTime(user.CreateDate);
+                if (DateTime.Compare(date, thisMonthDate) > 0) {
+                    report.UserThisMonth++;
+                }
+                if (DateTime.Compare(date, lastMonthDate) > 0 && (DateTime.Compare(date, thisMonthDate) < 0)) {
+                    report.UserLastMonth++;
+                }
+            }
+            return report;
+        }
+
+        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status) {
+
+            var query = (from Post in this.Db.Post
+                         where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search))) && Post.Status == status && Post.Status != PostStatus.DRAFT
+                         select Post);
+
+            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            foreach (var post in list) {
+                this.Db.Entry(post).Reference(item => item.Student).Load();
+            }
+            int count = query.Count();
+            return (list, count);
+
+        }
+
+        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search) {
+            var query = (from Post in this.Db.Post
+                         where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search)) && Post.Status != PostStatus.DRAFT)
+                         select Post);
+
+            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            foreach (var post in list) {
+                this.Db.Entry(post).Reference(item => item.Student).Load();
+            }
+            int count = query.Count();
+            return (list, count);
+
         }
     }
 }

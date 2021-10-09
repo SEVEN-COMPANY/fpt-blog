@@ -3,7 +3,7 @@
     ViewData["Title"] = Routers.PostGetSearch.Title;
     SelectList categories = (SelectList)this.ViewData["categories"];
 
-    var blogs = (List<PostViewModel>)this.ViewData["blogs"];
+    var posts = (List<PostViewModel>)this.ViewData["posts"];
 }
 
 <div class="px-2 mx-auto mt-8 space-y-4 md:w-4/5 lg:w-3/5">
@@ -30,7 +30,7 @@
     </form>
     <div>
         <ul class="space-y-4 intro-y">
-            @foreach (var item in blogs)
+            @foreach (var item in posts)
             {
                 @await Html.PartialAsync("../../Components/Post/SidePost.cshtml", new {Value = item})
             }

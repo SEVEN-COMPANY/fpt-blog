@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var title = $"{ViewData["Title"]} | FPT Blog";
+    var imageUrl = ViewData["ImageUrl"] != null ? $"{ViewData["ImageUrl"]}" : "/images/seo.jpg";
+    var description = ViewData["Description"] != null? $"{ViewData["Description"]}" : "FPT Blog where you can share your knowledge, express your emotion with other classmate";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -24,7 +30,33 @@
     <meta name="theme-color" content="#ffffff">
 
 
-    <title>@ViewData["Title"] | FPT Blog</title>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-WXKFSEWK00');
+    </script>
+
+    <meta name="google-site-verification" content="s3ITW061jk73hJz1FkOClSYuBSi0MzC5F1jJwAWYPcQ" />
+
+    <meta name="description" content="@description" />
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="Post, Blog, FPT University, FU BLOG" />
+
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@description" />
+    <meta property="og:image" content="@imageUrl" />
+
+    <meta name="twitter:title" content="@title" />
+    <meta name="twitter:description" content="@description" />
+    <meta name="twitter:image" content="@imageUrl" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+
+    <title>@title</title>
     <link href="/style/styles.css" rel="stylesheet" />
     @await RenderSectionAsync("Styles", required: false)
 </head>

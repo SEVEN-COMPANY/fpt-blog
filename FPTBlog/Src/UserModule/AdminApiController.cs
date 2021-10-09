@@ -20,24 +20,45 @@ namespace FPTBlog.Src.UserModule {
             this.UserService = userService;
             this.AuthService = authService;
         }
-        [HttpPut("block")]
-        public IActionResult BlockUserHandler([FromBody] BlockUserDto body) {
+        [HttpPut("status")]
+        public IActionResult ToggleUserStatusHandler([FromBody] ToggleUserDto body) {
             var res = new ServerApiResponse<string>();
 
-            ValidationResult result = new BlockUserDtoValidator().Validate(body);
+            ValidationResult result = new ToggleUserDtoValidator().Validate(body);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
-            User blockUser = this.UserService.GetUserByUserId(body.UserIdBlock);
-            if (blockUser.Role == UserRole.LECTURER) {
+            User user = this.UserService.GetUserByUserId(body.UserId);
+            if (user.Role == UserRole.LECTURER) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
-            this.UserService.BlockUserByAdminHandler(blockUser);
+            this.UserService.ToggleUserStatusAdminHandler(user);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+
+        [HttpPut("role")]
+        public IActionResult ToggleUserRoleHandler([FromBody] ToggleUserDto body) {
+            var res = new ServerApiResponse<string>();
+
+            ValidationResult result = new ToggleUserDtoValidator().Validate(body);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            User user = this.UserService.GetUserByUserId(body.UserId);
+            if (user.Role == UserRole.LECTURER) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            this.UserService.ToggleUserRoleAdminHandler(user);
+
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
     }
 }

@@ -23,5 +23,15 @@ namespace FPTBlog.Src.CategoryModule {
 
             return (pagelist, count);
         }
+
+        public (List<Category>, int) GetAllCategories(int pageIndex, int pageSize, string searchName) {
+            List<Category> list = (List<Category>) this.GetAll(item => item.Name.Contains(searchName));
+            var count = list.Count();
+
+
+            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+            return (pagelist, count);
+        }
     }
 }

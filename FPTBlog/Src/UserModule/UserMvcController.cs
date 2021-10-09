@@ -7,6 +7,9 @@ using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
+using FPTBlog.Src.CategoryModule.Interface;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace FPTBlog.Src.UserModule {
     [Route("user")]
@@ -14,9 +17,11 @@ namespace FPTBlog.Src.UserModule {
     public class UserMvcController : Controller {
         private readonly IPostService PostService;
         private readonly IUserService UserService;
-        public UserMvcController(IUserService UserService,IPostService PostService) {
+        private readonly ICategoryService CategoryService;
+        public UserMvcController(IUserService UserService, IPostService PostService, ICategoryService CategoryService) {
             this.UserService = UserService;
             this.PostService = PostService;
+            this.CategoryService = CategoryService;
         }
 
         [HttpGet("")]
@@ -26,44 +31,102 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("me")]
-        public IActionResult GetProfile(int pageSize = 12, int pageIndex = 0, string searchTitle = "", string searCategoryId = "", PostStatus status = PostStatus.APPROVED) {
+        public IActionResult GetProfile(int pageSize = 12, int pageIndex = 0, string searchTitle = "", string searchCategoryId = "") {
             var user = (User) this.ViewData["user"];
 
-            var (listFollower, countFollower) = this.UserService.CalculateFollower(user.UserId);
-            var (listFollowing, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
+            if (searchTitle == null) {
+                searchTitle = "";
+            }
+            if (searchCategoryId == null) {
+                searchCategoryId = "";
+            }
 
-            var (posts, count) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searCategoryId, status);
 
-            this.ViewData["profile"] = user;
-            return Json(new {
-                user = user,
-                listFollower = listFollower,
-                countFollower = countFollower,
-                listFollowing = listFollowing,
-                countFollowing = countFollowing,
-                posts = posts,
-                count = count
-            });
-            // return View(Routers.UserGetMyProfile.Page);
+            var categoryDropList = this.CategoryService.GetCategoryDropList();
+            categoryDropList.Add(new SelectListItem() { Value = "", Text = "All" });
+            this.ViewData["categories"] = new SelectList(categoryDropList);
+
+            var (_, countFollower) = this.UserService.CalculateFollower(user.UserId);
+            var (_, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
+
+            var (posts, countPost) = this.PostService.GetPostsForProfile(user.UserId, pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
+            List<PostViewModel> listBlogs = new List<PostViewModel>();
+            foreach (var item in posts) {
+                PostViewModel pvm = new PostViewModel() {
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                };
+
+                pvm.Post = item;
+                listBlogs.Add(pvm);
+            }
+
+            this.ViewData["user"] = user;
+            this.ViewData["countFollower"] = countFollower;
+            this.ViewData["countFollowing"] = countFollowing;
+            this.ViewData["countPost"] = countPost;
+            this.ViewData["posts"] = listBlogs;
+
+            return View(Routers.UserGetMyProfile.Page);
         }
 
         [HttpGet("profile")]
-        public IActionResult GetProfile(string userId, int pageSize, int pageIndex, string searchTitle, string searCategoryId, PostStatus status){
+        public IActionResult GetProfile(string userId, string searchTitle = "", string searchCategoryId = "", int pageSize = 12, int pageIndex = 0) {
             User user = this.UserService.GetUserByUserId(userId);
-            if(user == null){
+            if (user == null) {
                 return NotFound();
             }
+
+            if (searchTitle == null) {
+                searchTitle = "";
+            }
+            if (searchCategoryId == null) {
+                searchCategoryId = "";
+            }
+            var categoryDropList = this.CategoryService.GetCategoryDropList();
+            categoryDropList.Add(new SelectListItem() { Value = "", Text = "All" });
+            this.ViewData["categories"] = new SelectList(categoryDropList);
+
 
             var (listFollower, countFollower) = this.UserService.CalculateFollower(user.UserId);
             var (listFollowing, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
-            this.ViewData["profile"] = user;
+            var (posts, countPost) = this.PostService.GetPostsForProfile(user.UserId, pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
+            List<PostViewModel> listBlogs = new List<PostViewModel>();
+            foreach (var item in posts) {
+                PostViewModel pvm = new PostViewModel() {
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                };
+
+                pvm.Post = item;
+                listBlogs.Add(pvm);
+            }
+
+            this.ViewData["user"] = user;
+            this.ViewData["countFollower"] = countFollower;
+            this.ViewData["countFollowing"] = countFollowing;
+            this.ViewData["countPost"] = countPost;
+            this.ViewData["posts"] = listBlogs;
+
+            return View(Routers.UserGetProfile.Page);
+        }
+
+        [HttpGet("me/save")]
+        public IActionResult GetSavePost(int pageSize = 12, int pageIndex = 0) {
+            var user = (User) this.ViewData["user"];
+
+            var (posts, count) = this.UserService.GetSavePost(user.UserId, pageIndex, pageSize);
+            List<PostViewModel> listPosts = new List<PostViewModel>();
+            foreach (var item in posts) {
+                PostViewModel pvm = new PostViewModel() {
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                };
+                pvm.Post = item;
+                listPosts.Add(pvm);
+            }
+
             return Json(new {
-                user = user,
-                listFollower = listFollower,
-                countFollower = countFollower,
-                listFollowing = listFollowing,
-                countFollowing = countFollowing
+                listPosts = listPosts,
+                count = count
             });
         }
 

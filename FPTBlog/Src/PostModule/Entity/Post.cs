@@ -26,6 +26,11 @@ namespace FPTBlog.Src.PostModule.Entity {
             get; set;
         }
 
+        [StringLength(500)]
+        public string Note {
+            get; set;
+        }
+
         [Required]
         [StringLength(500)]
         public string Description {
@@ -118,6 +123,7 @@ namespace FPTBlog.Src.PostModule.Entity {
             this.Student = null;
             this.Lecturer = null;
             this.Category = null;
+            this.Note = "";
             this.PostTags = new List<PostTag>();
         }
     }

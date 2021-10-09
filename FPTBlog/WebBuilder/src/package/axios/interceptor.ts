@@ -1,5 +1,6 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ServerResponse } from '../interface/serverResponse';
+import { toastify } from '../toastify';
 
 export function requestInterceptor(req: AxiosRequestConfig) {
     const btn = document.getElementById('form-btn');
@@ -50,6 +51,19 @@ export function responseSuccessInterceptor(response: AxiosResponse<any>) {
         if (message) {
             message.innerHTML = response?.data?.details?.message;
         }
+        const sideMessage = document.getElementById('toastify');
+        if (sideMessage) {
+            toastify({
+                text: response?.data?.details?.message,
+                duration: 2000,
+                newWindow: true,
+                close: true,
+                gravity: 'top',
+                position: 'right',
+                backgroundColor: '#F37124',
+                stopOnFocus: true,
+            });
+        }
     }
     return response;
 }
@@ -68,6 +82,19 @@ export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>
 
             if (error && (key === 'errorMessage' || key === 'message')) {
                 error.innerHTML = `${details[key]}`;
+                const sideMessage = document.getElementById('toastify');
+                if (sideMessage) {
+                    toastify({
+                        text: `${details[key]}`,
+                        duration: 2000,
+                        newWindow: true,
+                        close: true,
+                        gravity: 'top',
+                        position: 'right',
+                        backgroundColor: 'rgb(239, 68, 68)',
+                        stopOnFocus: true,
+                    });
+                }
             }
         }
     }

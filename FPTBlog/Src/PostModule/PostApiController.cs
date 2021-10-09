@@ -53,14 +53,23 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpPost("")]
         public IActionResult AddBlogHandler() {
+            var res = new ServerApiResponse<Post>();
+
+            User user = (User) this.ViewData["user"];
+            var (posts, count) = this.PostService.GetPostsOfStudentWithStatus(user.UserId, PostStatus.DRAFT);
+            if (count >= 12) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
             var (categories, _) = this.CategoryService.GetCategories();
             Post post = new Post();
-            post.Student = (User) this.ViewData["user"];
-            post.StudentId = ((User) this.ViewData["user"]).UserId;
+            post.Student = user;
+            post.StudentId = user.UserId;
             post.CategoryId = categories[0].CategoryId;
             post.Category = categories[0];
             this.PostService.AddPost(post);
-            var res = new ServerApiResponse<Post>();
+
             res.data = post;
             return new ObjectResult(res.getResponse());
         }
@@ -80,14 +89,21 @@ namespace FPTBlog.Src.PostModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
+            if (post.Status == PostStatus.APPROVED) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
             User student = (User) this.ViewData["user"];
 
             post.Title = input.Title;
             post.Content = input.Content;
             post.CoverUrl = input.CoverUrl;
             post.ReadTime = input.ReadTime;
+            post.Description = input.Description;
             post.Student = student;
             post.StudentId = student.UserId;
+            post.Status = PostStatus.DRAFT;
 
             this.PostService.UpdatePost(post);
 
@@ -131,13 +147,13 @@ namespace FPTBlog.Src.PostModule {
         public IActionResult GetTagsByPostId(string postId) {
             var res = new ServerApiResponse<List<Tag>>();
 
-            Post blog = this.PostService.GetPostByPostId(postId);
-            if (blog == null) {
+            Post post = this.PostService.GetPostByPostId(postId);
+            if (post == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            var tags = this.PostService.GetTagsFromPost(blog);
+            var tags = this.PostService.GetTagsFromPost(post);
             res.data = tags;
 
 
@@ -279,7 +295,7 @@ namespace FPTBlog.Src.PostModule {
             }
             Post post = this.PostService.GetPostByPostId(input.PostId);
             if (post == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
             User user = (User) this.ViewData["user"];
@@ -300,6 +316,38 @@ namespace FPTBlog.Src.PostModule {
             }
             List<string> suggest = this.PostService.GetPostSuggestion(input.Search, input.CategoryId);
             res.data = suggest;
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPut("delete")]
+        public IActionResult RemovePost([FromBody] RemoveDraftPostDto input) {
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new RemoveDraftPostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            if (post.Status != PostStatus.DRAFT) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            User user = (User) this.ViewData["user"];
+            if (post.StudentId != user.UserId) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            this.PostService.RemovePost(post);
+
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
     }

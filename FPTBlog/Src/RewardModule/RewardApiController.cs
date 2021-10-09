@@ -47,6 +47,7 @@ namespace FPTBlog.Src.RewardModule {
 
             var reward = new Reward();
             reward.RewardId = Guid.NewGuid().ToString();
+            reward.Name = input.Name;
             reward.Description = input.Description;
             reward.CreateDate = DateTime.Now.ToShortDateString();
             reward.ImageUrl = imageUrl;
@@ -84,7 +85,7 @@ namespace FPTBlog.Src.RewardModule {
             }
 
             var imageUrl = this.UploadFileService.Upload(input.File);
-
+            reward.Name = input.Name;
             reward.Description = input.Description;
             reward.ImageUrl = imageUrl;
             this.RewardService.UpdateReward(reward);
