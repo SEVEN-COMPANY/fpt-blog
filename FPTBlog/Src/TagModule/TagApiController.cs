@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentValidation.Results;
 using FPTBlog.Src.TagModule.DTO;
 using FPTBlog.Src.TagModule.Entity;
@@ -85,5 +86,16 @@ namespace FPTBlog.Src.TagModule {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+
+        [HttpPut("unuse")]
+        public IActionResult RemoveUnUseTag(){
+            var res = new ServerApiResponse<List<Tag>>();
+
+            List<Tag> unUseTags = this.TagService.RemoveUnUseTag();
+
+            res.data = unUseTags;
+            return new ObjectResult(res.getResponse());
+        }
+
     }
 }
