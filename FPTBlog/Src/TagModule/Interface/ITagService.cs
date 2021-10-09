@@ -15,6 +15,6 @@ namespace FPTBlog.Src.TagModule.Interface {
         public List<SelectListItem> GetTagStatusDroplist();
         public (int,int) GetCreatedTag();
         public (string, int) GetHotTrendingTag();
-
+        public List<Tag> RemoveUnUseTag();
     }
 }

@@ -8,6 +8,7 @@ namespace FPTBlog.Src.TagModule.Interface {
         public int NumberOfPostBelongToTag(string tagId);
         public (int,int) GetCreatedTag();
         public (string, int) GetHotTrendingTag();
+        public List<string> GetUsedTagIds();
 
     }
 }
