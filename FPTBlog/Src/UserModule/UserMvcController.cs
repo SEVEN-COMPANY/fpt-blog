@@ -41,6 +41,8 @@ namespace FPTBlog.Src.UserModule {
                 searchCategoryId = "";
             }
 
+            Console.WriteLine(searchCategoryId);
+
             var categoryDropList = this.CategoryService.GetCategoryDropList();
             categoryDropList.Add(new SelectListItem() { Value = "", Text = "All" });
             this.ViewData["categories"] = new SelectList(categoryDropList);

@@ -14,6 +14,30 @@
         <div class="flex w-2/3">
             <div class="flex flex-col items-center flex-1 px-2 py-8 space-y-2 border rounded-md shadow-lg">
                 <div class="w-full space-y-4 md:px-4 intro-y bg-opacity-90">
+                    <form class="flex-1 space-y-2 intro-x">
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new {Name="pageSize", Value="12"})
+                        @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                        new {Name="indexPage", Value="0"})
+
+                        <div class="flex space-x-4">
+
+                            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                            new {Name="searchTitle", Label="Search", Type="text", Value=
+                            this.Context.Request.Query["searchTitle"]})
+
+                            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+                            new {Name="searchCategoryId", Label="Category",
+                            Value=this.Context.Request.Query["searchCategoryId"],
+                            List=categories})
+                        </div>
+                        <div class="md:w-1/5">
+
+                            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                            new { Label="Search "})
+                        </div>
+                    </form>
+
                     @if (posts.Count == 0)
                     {
                         <div class="flex flex-col items-center justify-center flex-1 space-y-2">
@@ -62,28 +86,7 @@
                     }
                     else
                     {
-                        <form class="flex-1 space-y-2 intro-x">
-                            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new {Name="pageSize", Value="12"})
-                            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
-                        new {Name="indexPage", Value="0"})
 
-                            <div class="flex space-x-4">
-
-                                @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                            new {Name="search", Label="Search", Type="text", Value=
-                            this.Context.Request.Query["search"]})
-
-                                @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
-                            new {Name="categoryId", Label="Category", Value=this.Context.Request.Query["categoryId"],
-                            List=categories})
-                            </div>
-                            <div class="md:w-1/5">
-
-                                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                            new { Label="Search "})
-                            </div>
-                        </form>
                         <div>
                             <ul class="space-y-4 intro-y">
                                 @foreach (var item in posts)

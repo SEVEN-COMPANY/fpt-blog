@@ -55,7 +55,7 @@ namespace FPTBlog.Src.PostModule {
             }
             return (postViewModels, count);
         }
-        public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
+        public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId);
 
         public (List<Post>, int) GetPopularPosts(int quantity) {
             var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(), includeProperties: "Category,Student");
@@ -95,7 +95,10 @@ namespace FPTBlog.Src.PostModule {
         public (List<Post>, int) GetPostsForProfile(string userId, int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status) {
             Expression<Func<Post, bool>> filter = null;
 
-            if (searchCategoryId == string.Empty) {
+
+
+
+            if (searchCategoryId == "") {
                 filter = item => item.Status == PostStatus.APPROVED && item.Title.Contains(searchTitle);
             }
             else {

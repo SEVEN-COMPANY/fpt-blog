@@ -76,9 +76,9 @@ namespace FPTBlog.Src.PostModule {
 
         }
 
-        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status) {
+        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId) {
             var query = (from Post in this.Db.Post
-                         where Post.StudentId.Equals(studentId) && Post.Status == status
+                         where Post.StudentId.Equals(studentId) && (Post.Status != PostStatus.APPROVED)
                          select Post);
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();

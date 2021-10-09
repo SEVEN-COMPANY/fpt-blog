@@ -89,7 +89,7 @@ namespace FPTBlog.Src.PostModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            if (post.Status == PostStatus.WAIT) {
+            if (post.Status == PostStatus.APPROVED) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
