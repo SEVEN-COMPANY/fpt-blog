@@ -3,6 +3,7 @@ using FPTBlog.Src.UserModule.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Src.UserModule {
     public class UserService : IUserService {
@@ -18,7 +19,6 @@ namespace FPTBlog.Src.UserModule {
         public User GetUserByUsername(string username) => this.UserRepository.GetFirstOrDefault(item => item.Username.Equals(username));
         public void UpdateUser(User user) => this.UserRepository.Update(user);
         public void RemoveUser(User user) => this.UserRepository.Remove(user);
-
         public void ToggleUserStatusAdminHandler(User user) {
             if (user.Status == UserStatus.ENABLE)
                 user.Status = UserStatus.DISABLE;
@@ -33,16 +33,12 @@ namespace FPTBlog.Src.UserModule {
                 user.Role = UserRole.STUDENT;
             this.UserRepository.Update(user);
         }
-
         public (List<User>, int) GetUsersStatusAndRoleWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole) => this.UserRepository.GetUsersStatusAndRoleWithCount(pageIndex, pageSize, searchName, searchStatus, searchRole);
         public (List<User>, int) GetUsersNameWithCount(int pageSize, int pageIndex, string searchName) => this.UserRepository.GetUsersNameWithCount(pageSize, pageIndex, searchName);
-
         public void FollowUser(User followingUser, User follower) => this.UserRepository.FollowUser(followingUser, follower);
         public (List<User>, int) CalculateFollower(string userId) => this.UserRepository.CalculateFollower(userId);
         public (List<User>, int) CalculateFollowing(string userId) => this.UserRepository.CalculateFollowing(userId);
-
         public bool IsFollow(string userId, string followerId) => this.UserRepository.IsFollow(userId, followerId);
-
         public List<SelectListItem> GetUserStatusDropList() {
             var status = new List<SelectListItem>(){
                 new SelectListItem(){ Value = UserStatus.ENABLE.ToString(), Text = "Enable"},
@@ -51,7 +47,6 @@ namespace FPTBlog.Src.UserModule {
 
             return status;
         }
-
         public List<SelectListItem> GetUserRoleDropList() {
             var role = new List<SelectListItem>(){
                 new SelectListItem(){ Value = UserRole.STUDENT.ToString(), Text = "Student"},
@@ -60,7 +55,6 @@ namespace FPTBlog.Src.UserModule {
 
             return role;
         }
-
         public int CountUserByRole(UserRole role) {
             List<User> users = (List<User>) this.UserRepository.GetAll();
             var count = 0;
@@ -72,6 +66,8 @@ namespace FPTBlog.Src.UserModule {
             return count;
         }
         public ReportUser GetMonthlyReport() => this.UserRepository.GetMonthlyReport();
+        public void SavePost(User user, Post post) => this.UserRepository.SavePost(user, post);
 
+        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize) => this.UserRepository.GetSavePost(userId, pageIndex, pageSize);
     }
 }

@@ -109,6 +109,26 @@ namespace FPTBlog.Src.UserModule {
             return View(Routers.UserGetProfile.Page);
         }
 
+        [HttpGet("me/save")]
+        public IActionResult GetSavePost(int pageSize = 12, int pageIndex = 0){
+            var user = (User) this.ViewData["user"];
+
+            var (posts, count) = this.UserService.GetSavePost(user.UserId, pageIndex, pageSize);
+            List<PostViewModel> listPosts = new List<PostViewModel>();
+            foreach (var item in posts) {
+                PostViewModel pvm = new PostViewModel() {
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                };
+                pvm.Post = item;
+                listPosts.Add(pvm);
+            }
+
+            return Json(new {
+                listPosts = listPosts,
+                count = count
+            });
+        }
+
         [HttpGet("update")]
         public IActionResult UpdateUser() {
             return View(Routers.UserPutUser.Page);
