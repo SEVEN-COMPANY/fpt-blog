@@ -24,7 +24,7 @@ new {Label = "Logout", Link = Routers.AuthGetLogout.Link, Icon = "../Icons/Logou
                 <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
                     <div class="flex items-center flex-shrink-0 px-4">
                         <a href="@Routers.CommonGetHome.Link" class="inline-block">
-                            <h1 class="text-3xl font-semibold intro-x text-tango-500">FPT Blog</h1>
+                            <h1 class="text-3xl font-semibold fade-in text-tango-500">FPT Blog</h1>
                         </a>
                     </div>
                     <nav class="flex-1 mt-5" aria-label="Sidebar">
@@ -32,7 +32,7 @@ new {Label = "Logout", Link = Routers.AuthGetLogout.Link, Icon = "../Icons/Logou
                             @foreach (var item in listItem)
                             {
                                 <a href="@item.Link"
-                                class="flex items-center px-2 py-2 text-sm font-medium rounded-md hover:bg-tango-100 hover:text-gray-900 intro-y">
+                                class="flex items-center px-2 py-2 text-sm font-medium rounded-md hover:bg-tango-100 hover:text-gray-900 fade-in">
                                     @await Html.PartialAsync(item.Icon)
                                     @item.Label
                                 </a>

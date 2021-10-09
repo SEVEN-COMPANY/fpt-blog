@@ -3,13 +3,18 @@
     var listTags = (List<IDictionary<string, object>>)this.ViewData["tags"];
     var total = (int)this.ViewData["total"];
     var statusSearch = (SelectList)this.ViewData["statusSearch"];
+
+    var hotTrendingTagName = (string)this.ViewData["hotTrendingTagName"];
+    var numOfTagsCreatedCurrentMonth = (int)this.ViewData["numOfTagsCreatedCurrentMonth"];
+    var numOfTagsCreatedLastMonth = (int)this.ViewData["numOfTagsCreatedLastMonth"];
+
 }
 
 <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
     <h1 class="text-2xl font-semibold ">Tag Management</h1>
     <div class="flex items-end justify-between">
 
-        <form class="flex items-end space-x-4 " id="listCategoryForm">
+        <form class="flex items-end space-x-4 " id="listTagForm">
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
             new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
             this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
@@ -76,14 +81,14 @@
                     </dt>
                     <dd class="flex items-baseline pb-2 space-x-2 ml-14 sm:pb-3">
                         <div class="flex items-baseline text-2xl font-semibold text-tango-600">
-                            71
+                            @numOfTagsCreatedCurrentMonth
                             <span class="ml-2 text-sm font-medium text-gray-500">
-                                70
+                                @numOfTagsCreatedLastMonth
                             </span>
                         </div>
 
                         @await Html.PartialAsync("../../Components/Common/UpDownBadge.cshtml", new { ThisMonth
-                        =12, LastMonth = 10})
+                        =numOfTagsCreatedCurrentMonth, LastMonth = numOfTagsCreatedLastMonth})
                     </dd>
                 </div>
                 <div>
@@ -109,7 +114,7 @@
                     </dt>
                     <dd class="flex items-baseline pb-2 ml-14 sm:pb-3">
                         <p class="text-2xl font-semibold text-gray-900">
-                            Frontend
+                            @hotTrendingTagName
                         </p>
                     </dd>
                 </div>
