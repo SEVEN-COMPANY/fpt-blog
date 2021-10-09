@@ -23,7 +23,7 @@ namespace FPTBlog.Src.PostModule {
             this.TagService = tagService;
         }
 
-        [HttpPost("")]
+        [HttpPost("approved")]
         public IActionResult ApprovedHandler([FromBody] ApprovedPostDto input) {
             var res = new ServerApiResponse<(Post, string)>();
 
@@ -45,8 +45,8 @@ namespace FPTBlog.Src.PostModule {
             }
 
             post.Status = input.Status;
+            this.PostService.UpdatePost(post);
 
-            res.data = (post, input.Note);
             return new ObjectResult(res.getResponse());
         }
 

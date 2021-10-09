@@ -40,6 +40,16 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 
 /***/ }),
 
+/***/ "./src/package/helper/pagination.ts":
+/*!******************************************!*\
+  !*** ./src/package/helper/pagination.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.pageChange = void 0;\r\nvar pageChange = function (formId) {\r\n    var paginationSize = document.getElementById('pagination-size');\r\n    var paginationBtn = document.getElementById('pagination-btn');\r\n    paginationSize === null || paginationSize === void 0 ? void 0 : paginationSize.addEventListener('change', function (_) {\r\n        var option = paginationSize.options[paginationSize.selectedIndex];\r\n        var pageSizeInput = document.getElementById('pageSize');\r\n        pageSizeInput.value = option.value;\r\n        var pageIndexInput = document.getElementById('pageIndex');\r\n        pageIndexInput.value = '0';\r\n        var form = document.getElementById(formId);\r\n        form.submit();\r\n    });\r\n    var pageBtn = paginationBtn === null || paginationBtn === void 0 ? void 0 : paginationBtn.getElementsByTagName('button');\r\n    if (pageBtn) {\r\n        var _loop_1 = function (index) {\r\n            var element = pageBtn[index];\r\n            element.addEventListener('click', function (_) {\r\n                var pageIndexInput = document.getElementById('pageIndex');\r\n                var value = element.getAttribute('data-index');\r\n                if (value) {\r\n                    pageIndexInput.value = value;\r\n                }\r\n                var form = document.getElementById(formId);\r\n                form.submit();\r\n            });\r\n        };\r\n        for (var index = 0; index < pageBtn.length; index++) {\r\n            _loop_1(index);\r\n        }\r\n    }\r\n};\r\nexports.pageChange = pageChange;\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/helper/pagination.ts?");
+
+/***/ }),
+
 /***/ "./src/package/toastify/index.ts":
 /*!***************************************!*\
   !*** ./src/package/toastify/index.ts ***!
@@ -50,13 +60,13 @@ eval("\r\n// @ts-nocheck\r\nObject.defineProperty(exports, \"__esModule\", ({ va
 
 /***/ }),
 
-/***/ "./src/user/changePassword.ts":
-/*!************************************!*\
-  !*** ./src/user/changePassword.ts ***!
-  \************************************/
+/***/ "./src/post/listPost.ts":
+/*!******************************!*\
+  !*** ./src/post/listPost.ts ***!
+  \******************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar changeUserPassword = document.getElementById('changeUserPasswordForm');\r\nchangeUserPassword === null || changeUserPassword === void 0 ? void 0 : changeUserPassword.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var oldPassword = document.getElementById('oldPassword');\r\n    var newPassword = document.getElementById('newPassword');\r\n    var confirmNewPassword = document.getElementById('confirmNewPassword');\r\n    if (oldPassword !== null && newPassword !== null && confirmNewPassword !== null) {\r\n        var input = {\r\n            oldPassword: oldPassword.value,\r\n            newPassword: newPassword.value,\r\n            confirmNewPassword: confirmNewPassword.value,\r\n        };\r\n        axios_1.http.post(routes_1.routers.user.changePassword, input);\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/user/changePassword.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar pagination_1 = __webpack_require__(/*! ../package/helper/pagination */ \"./src/package/helper/pagination.ts\");\r\n(0, pagination_1.pageChange)('listPostForm');\r\nvar btn = document.getElementsByClassName(\"modal-btn\");\r\nvar btnClose = document.getElementById(\"modal-btn-close\");\r\nvar wrapper = document.getElementById(\"modal-wrapper\");\r\nvar bg = document.getElementById(\"modal-bg\");\r\nvar panel = document.getElementById(\"modal-panel\");\r\nvar modalToggle = function () {\r\n    wrapper === null || wrapper === void 0 ? void 0 : wrapper.classList.add('invisible');\r\n};\r\nvar _loop_1 = function (index) {\r\n    var element = btn[index];\r\n    element === null || element === void 0 ? void 0 : element.addEventListener('click', function () {\r\n        wrapper === null || wrapper === void 0 ? void 0 : wrapper.classList.remove('invisible');\r\n        bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-100');\r\n        bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-0');\r\n        panel === null || panel === void 0 ? void 0 : panel.classList.add('translate-x-0');\r\n        panel === null || panel === void 0 ? void 0 : panel.classList.remove('translate-x-full');\r\n        panel === null || panel === void 0 ? void 0 : panel.removeEventListener('transitionend', modalToggle);\r\n        var postId = element.getAttribute('data-postId');\r\n        var title = element.getAttribute('data-title');\r\n        var postName = document.getElementById('postName');\r\n        var postLink = document.getElementById('postLink');\r\n        if (title && postName)\r\n            postName.innerText = title;\r\n        if (postLink && postId)\r\n            postLink.setAttribute('href', \"/post?postId=\" + postId);\r\n        if (postId) {\r\n            var approvedPostForm = document.getElementById('approvedPostForm');\r\n            approvedPostForm === null || approvedPostForm === void 0 ? void 0 : approvedPostForm.addEventListener('submit', function (event) {\r\n                var approvedStatus = document.getElementById('approvedStatus');\r\n                var note = document.getElementById('note');\r\n                event.preventDefault();\r\n                var input = {\r\n                    note: note.value,\r\n                    status: approvedStatus.value,\r\n                    postId: postId,\r\n                };\r\n                axios_1.http.post(routes_1.routers.post.approvedPost, input).then(function () {\r\n                    setTimeout(function () {\r\n                        window.location.reload();\r\n                    }, 1000);\r\n                });\r\n            });\r\n        }\r\n    });\r\n};\r\nfor (var index = 0; index < btn.length; index++) {\r\n    _loop_1(index);\r\n}\r\nbtnClose === null || btnClose === void 0 ? void 0 : btnClose.addEventListener('click', function () {\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-100');\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-0');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.remove('translate-x-0');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.add('translate-x-full');\r\n    panel === null || panel === void 0 ? void 0 : panel.addEventListener('transitionend', modalToggle);\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/post/listPost.ts?");
 
 /***/ })
 
@@ -91,7 +101,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/user/changePassword.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/post/listPost.ts");
 /******/ 	
 /******/ })()
 ;

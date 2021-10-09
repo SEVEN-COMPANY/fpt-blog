@@ -17,6 +17,7 @@ export const routers = {
         likePost: '/api/post/like',
         dislikePost: '/api/post/dislike',
         sendPost: '/api/post/send',
+        approvedPost: '/api/admin/post/approved',
         deletePost: '/api/post/delete',
     },
     user: {

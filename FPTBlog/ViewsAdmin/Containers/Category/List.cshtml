@@ -167,8 +167,8 @@
                                 <form class="space-y-4" id="createCategoryForm">
                                     @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                                     new { Name = "name", Label = "Name", Type = "text", Value = "" })
-                                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                                    new { Name = "description", Label = "Description", Type = "text", Value = "" })
+                                    @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
+                                    new { Name = "description", Label = "Description", Value = "" })
 
                                     @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
                                     new { Name = "status", Label = "Status", Type = "text", Value = "" , IsLabel =

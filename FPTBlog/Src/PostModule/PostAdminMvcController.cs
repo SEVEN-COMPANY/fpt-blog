@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.PostModule.Interface;
@@ -23,6 +24,12 @@ namespace FPTBlog.Src.PostModule {
             if (searchName == null) {
                 searchName = "";
             }
+            var approvedStatus = new List<SelectListItem>(){
+                new SelectListItem(){ Value = PostStatus.APPROVED.ToString(), Text = "Approve"},
+                new SelectListItem(){  Value =  PostStatus.DENY.ToString(), Text = "Deny"},
+            };
+
+            this.ViewData["approvedStatus"] = new SelectList(approvedStatus);
 
             var statusList = this.PostService.GetPostStatusDropList();
             statusList.Add(new SelectListItem() { Text = "All", Value = "" });

@@ -48,7 +48,7 @@ namespace FPTBlog.Src.UserModule {
             var (_, countFollower) = this.UserService.CalculateFollower(user.UserId);
             var (_, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
-            var (posts, countPost) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
+            var (posts, countPost) = this.PostService.GetPostsForProfile(user.UserId, pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
             List<PostViewModel> listBlogs = new List<PostViewModel>();
             foreach (var item in posts) {
                 PostViewModel pvm = new PostViewModel() {
@@ -89,7 +89,7 @@ namespace FPTBlog.Src.UserModule {
             var (listFollower, countFollower) = this.UserService.CalculateFollower(user.UserId);
             var (listFollowing, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
-            var (posts, countPost) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
+            var (posts, countPost) = this.PostService.GetPostsForProfile(user.UserId, pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
             List<PostViewModel> listBlogs = new List<PostViewModel>();
             foreach (var item in posts) {
                 PostViewModel pvm = new PostViewModel() {
