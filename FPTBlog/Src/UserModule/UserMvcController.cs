@@ -41,6 +41,7 @@ namespace FPTBlog.Src.UserModule {
                 searchCategoryId = "";
             }
 
+
             var categoryDropList = this.CategoryService.GetCategoryDropList();
             categoryDropList.Add(new SelectListItem() { Value = "", Text = "All" });
             this.ViewData["categories"] = new SelectList(categoryDropList);
@@ -48,7 +49,7 @@ namespace FPTBlog.Src.UserModule {
             var (_, countFollower) = this.UserService.CalculateFollower(user.UserId);
             var (_, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
-            var (posts, countPost) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
+            var (posts, countPost) = this.PostService.GetPostsForProfile(user.UserId, pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
             List<PostViewModel> listBlogs = new List<PostViewModel>();
             foreach (var item in posts) {
                 PostViewModel pvm = new PostViewModel() {
@@ -89,7 +90,7 @@ namespace FPTBlog.Src.UserModule {
             var (listFollower, countFollower) = this.UserService.CalculateFollower(user.UserId);
             var (listFollowing, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
-            var (posts, countPost) = this.PostService.GetPostsForProfile(pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
+            var (posts, countPost) = this.PostService.GetPostsForProfile(user.UserId, pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
             List<PostViewModel> listBlogs = new List<PostViewModel>();
             foreach (var item in posts) {
                 PostViewModel pvm = new PostViewModel() {
@@ -107,6 +108,26 @@ namespace FPTBlog.Src.UserModule {
             this.ViewData["posts"] = listBlogs;
 
             return View(Routers.UserGetProfile.Page);
+        }
+
+        [HttpGet("me/save")]
+        public IActionResult GetSavePost(int pageSize = 12, int pageIndex = 0) {
+            var user = (User) this.ViewData["user"];
+
+            var (posts, count) = this.UserService.GetSavePost(user.UserId, pageIndex, pageSize);
+            List<PostViewModel> listPosts = new List<PostViewModel>();
+            foreach (var item in posts) {
+                PostViewModel pvm = new PostViewModel() {
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                };
+                pvm.Post = item;
+                listPosts.Add(pvm);
+            }
+
+            return Json(new {
+                listPosts = listPosts,
+                count = count
+            });
         }
 
         [HttpGet("update")]

@@ -1,6 +1,7 @@
 using FPTBlog.Src.UserModule.Entity;
 using System.Collections.Generic;
 using FPTBlog.Utils.Repository.Interface;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Src.UserModule.Interface {
     public interface IUserRepository : IRepository<User> {
@@ -10,5 +11,8 @@ namespace FPTBlog.Src.UserModule.Interface {
         public (List<User>, int) CalculateFollower(string userId);
         public (List<User>, int) CalculateFollowing(string userId);
         public bool IsFollow(string userId, string followerId);
+        public ReportUser GetMonthlyReport();
+        public void SavePost(User user, Post post);
+        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize);
     }
 }

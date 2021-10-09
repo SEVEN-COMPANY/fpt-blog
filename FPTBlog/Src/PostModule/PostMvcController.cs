@@ -64,7 +64,7 @@ namespace FPTBlog.Src.PostModule {
 
 
             var user = (User) this.ViewData["user"];
-            var (posts, total) = this.PostService.GetPostsOfStudentWithStatusForPage(pageSize, pageIndex, user.UserId, PostStatus.DRAFT);
+            var (posts, total) = this.PostService.GetPostsOfStudentWithStatusForPage(pageSize, pageIndex, user.UserId);
 
             this.ViewData["drafts"] = posts;
             this.ViewData["totalDraft"] = total;
@@ -106,6 +106,9 @@ namespace FPTBlog.Src.PostModule {
         [HttpGet("")]
         public IActionResult GetBlogByBlogId(string postId) {
             var post = this.PostService.GetViewPostByPostId(postId);
+            post.Post.View += 1;
+            this.PostService.UpdatePost(post.Post);
+
             this.ViewData["post"] = post;
             return View(Routers.PostGetPost.Page);
         }

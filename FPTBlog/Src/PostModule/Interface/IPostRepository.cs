@@ -13,7 +13,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public List<Tag> GetTagsFromPost(Post blog);
         public (List<Post>, int) GetPostsByTagWithCount(int pageSize, int pageIndex, string name);
 
-        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId, PostStatus status);
+        public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId);
         public (List<Post>, int) GetWaitPostsWithCount();
         public void LikePost(Post post, User user);
         public void DislikePost(Post post, User user);

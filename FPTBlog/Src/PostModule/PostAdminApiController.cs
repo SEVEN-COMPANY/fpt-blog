@@ -6,6 +6,7 @@ using FPTBlog.Src.PostModule.DTO;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.TagModule.Interface;
+using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,10 @@ namespace FPTBlog.Src.PostModule {
             this.TagService = tagService;
         }
 
-        [HttpPost("")]
+        [HttpPost("approved")]
         public IActionResult ApprovedHandler([FromBody] ApprovedPostDto input) {
-            var res = new ServerApiResponse<(Post, string)>();
+            var user = (User) this.ViewData["user"];
+            var res = new ServerApiResponse<Post>();
 
             ValidationResult result = new ApprovedPostDtoValidator().Validate(input);
             if (!result.IsValid) {
@@ -44,9 +46,12 @@ namespace FPTBlog.Src.PostModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
+            post.Lecturer = user;
+            post.LecturerId = user.UserId;
             post.Status = input.Status;
+            post.Note = input.Note;
+            this.PostService.UpdatePost(post);
 
-            res.data = (post, input.Note);
             return new ObjectResult(res.getResponse());
         }
 

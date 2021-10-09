@@ -55,7 +55,7 @@ namespace FPTBlog.Src.PostModule {
             }
             return (postViewModels, count);
         }
-        public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId, PostStatus status) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId, status);
+        public (List<Post>, int) GetPostsOfStudentWithStatusForPage(int pageSize, int pageIndex, string studentId) => this.PostRepository.GetPostsOfStudentWithStatus(pageSize, pageIndex, studentId);
 
         public (List<Post>, int) GetPopularPosts(int quantity) {
             var list = (List<Post>) this.PostRepository.GetAll(options: o => o.OrderBy(p => p.View).Take(quantity).ToList(), includeProperties: "Category,Student");
@@ -92,17 +92,16 @@ namespace FPTBlog.Src.PostModule {
             List<string> result = list.Take(10).Skip(0).Select(item => item.Title).ToList();
             return result;
         }
-        public (List<Post>, int) GetPostsForProfile(int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status) {
+        public (List<Post>, int) GetPostsForProfile(string userId, int pageSize, int pageIndex, string searchTitle, string searchCategoryId, PostStatus status) {
             Expression<Func<Post, bool>> filter = null;
 
-            if (searchCategoryId == string.Empty) {
-                filter = item => item.Status == PostStatus.APPROVED && item.Title.Contains(searchTitle);
+            if (searchCategoryId == "") {
+                filter = item => item.Status == PostStatus.APPROVED && item.StudentId == userId && item.Title.Contains(searchTitle);
             }
             else {
-                filter = item => item.Status == PostStatus.APPROVED && item.Title.Contains(searchTitle) && item.CategoryId == searchCategoryId;
+                filter = item => item.Status == PostStatus.APPROVED && item.StudentId == userId && item.Title.Contains(searchTitle) && item.CategoryId == searchCategoryId;
             }
-            // var list = this.PostRepository.GetAll(filter: filter, includeProperties: "Category");
-            var list = this.PostRepository.GetAll(filter = item => item.Status == status && item.Title.Contains(searchTitle));
+            var list = this.PostRepository.GetAll(filter: filter, includeProperties: "Category");
             int count = list.Count();
             var listForView = (List<Post>) list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             return (listForView, count);

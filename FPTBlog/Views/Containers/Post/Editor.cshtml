@@ -28,6 +28,24 @@
 
         </div>
 
+        @if (post.Note != "")
+        {
+            <div class="space-y-2">
+                <h2 class="block font-semibold capitalize">Comment</h2>
+                <div class="p-2 border border-red-500 rounded-sm fade-in">
+
+                    <p>
+                        @post.Note
+                    </p>
+
+                    <p class="mt-2 text-xs text-red-500">
+                        This message is created by a lecturer, please change your post and submit again.
+                    </p>
+                </div>
+            </div>
+        }
+
+
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
         new {Name="postId", Value=post.PostId})
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
