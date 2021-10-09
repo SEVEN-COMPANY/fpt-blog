@@ -25,7 +25,7 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpPost("")]
         public IActionResult ApprovedHandler([FromBody] ApprovedPostDto input) {
-            var res = new ServerApiResponse<(Post, string)>();
+            var res = new ServerApiResponse<Post>();
 
             ValidationResult result = new ApprovedPostDtoValidator().Validate(input);
             if (!result.IsValid) {
@@ -45,8 +45,9 @@ namespace FPTBlog.Src.PostModule {
             }
 
             post.Status = input.Status;
+            post.Note = input.Note;
 
-            res.data = (post, input.Note);
+            res.data = post;
             return new ObjectResult(res.getResponse());
         }
 

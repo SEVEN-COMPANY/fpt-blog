@@ -26,6 +26,10 @@ namespace FPTBlog.Src.PostModule.Entity {
             get; set;
         }
 
+        public string Note {
+            get; set;
+        }
+
         [Required]
         [StringLength(500)]
         public string Description {
