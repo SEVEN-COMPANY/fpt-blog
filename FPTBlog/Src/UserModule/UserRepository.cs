@@ -53,7 +53,7 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
-        public void UnFollowUser(User followingUser, User follower){
+        public void UnfollowUser(User followingUser, User follower){
             FollowInfo followInfo = this.Db.FollowInfo.FirstOrDefault(item => item.FollowerId == follower.UserId && item.FollowingUserId == followingUser.UserId);
             this.Db.FollowInfo.Remove(followInfo);
             this.Db.SaveChanges();
@@ -91,6 +91,14 @@ namespace FPTBlog.Src.UserModule {
         public bool IsFollow(string userId, string followerId) {
             FollowInfo followInfos = this.Db.FollowInfo.FirstOrDefault(item => item.FollowerId == followerId && item.FollowingUserId == userId);
             if (followInfos != null) {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsSave(string userId, string postId){
+            SavePost savePost = this.Db.SavePost.FirstOrDefault(item => item.UserId == userId && item.PostId == postId);
+            if (savePost != null) {
                 return true;
             }
             return false;
@@ -139,6 +147,11 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
+        public void UnsavePost(User user, Post post){
+            SavePost savePost = this.Db.SavePost.FirstOrDefault(item => item.UserId == user.UserId && item.PostId == post.PostId);
+            this.Db.SavePost.Remove(savePost);
+            this.Db.SaveChanges();
+        }
         public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize){
             var query = (from Post in this.Db.Post
                                 join SavePost in this.Db.SavePost

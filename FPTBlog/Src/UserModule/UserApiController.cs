@@ -107,8 +107,7 @@ namespace FPTBlog.Src.UserModule {
 
         [HttpPost("follow")]
         public IActionResult FollowUser([FromBody]FollowUnfollowUserDto input) {
-            IDictionary<string, User> dataRes = new Dictionary<string, User>();
-            ServerApiResponse<IDictionary<string, User>> res = new ServerApiResponse<IDictionary<string, User>>();
+            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
             User user = (User) this.ViewData["user"];
 
             ValidationResult result = new FollowUnfollowUserDtoValidator().Validate(input);
@@ -129,7 +128,7 @@ namespace FPTBlog.Src.UserModule {
             }
 
             if (this.UserService.IsFollow(user.UserId, input.FollowerId)) {
-                this.UserService.UnFollowUser(user, follower);
+                this.UserService.UnfollowUser(user, follower);
                 res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNFOLLOW_SUCCESS);
             }
             else{
@@ -141,22 +140,31 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpPost("save")]
-        public IActionResult SavePost(string postId){
-            IDictionary<string, object> dataRes = new Dictionary<string, object>();
+        public IActionResult SavePost([FromBody] SaveUnsavePostDto input){
             ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
             User user = (User) this.ViewData["user"];
 
-            Post post = this.PostService.GetPostByPostId(postId);
+            ValidationResult result = new SaveUnsavePostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Post post = this.PostService.GetPostByPostId(input.PostId);
             if (post == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            this.UserService.SavePost(user, post);
+            if(this.UserService.IsSave(user.UserId, input.PostId)){
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNSAVE_SUCCESS);
+                this.UserService.UnsavePost(user, post);
+            }
+            else{
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
+                this.UserService.SavePost(user, post);
+            }
 
-            dataRes.Add("user", user);
-            dataRes.Add("post", post);
-            res.data = dataRes;
             return new ObjectResult(res.getResponse());
         }
     }

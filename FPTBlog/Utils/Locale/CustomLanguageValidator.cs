@@ -28,11 +28,13 @@ namespace FPTBlog.Utils.Locale {
             public static readonly string MESSAGE_ADD_SUCCESS = "MESSAGE_ADD_SUCCESS";
             public static readonly string MESSAGE_DELETE_SUCCESS = "MESSAGE_DELETE_SUCCESS";
             public static readonly string MESSAGE_SAVE_SUCCESS = "MESSAGE_SAVE_SUCCESS";
+            public static readonly string MESSAGE_UNSAVE_SUCCESS = "MESSAGE_UNSAVE_SUCCESS";
         }
         public CustomLanguageValidator() {
 
             // Success message
             // EN
+            AddTranslation("en", MessageKey.MESSAGE_UNSAVE_SUCCESS, "unsave success");
             AddTranslation("en", MessageKey.MESSAGE_FOLLOW_SUCCESS, "follow success");
             AddTranslation("en", MessageKey.MESSAGE_UNFOLLOW_SUCCESS, "unfollow success");
             AddTranslation("en", MessageKey.MESSAGE_POSTED_SUCCESS, "post success");
