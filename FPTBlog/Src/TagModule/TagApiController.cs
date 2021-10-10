@@ -87,11 +87,11 @@ namespace FPTBlog.Src.TagModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPut("unuse")]
-        public IActionResult RemoveUnUseTag(){
+        [HttpPut("unused")]
+        public IActionResult RemoveUnusedTag() {
             var res = new ServerApiResponse<List<Tag>>();
 
-            List<Tag> unUseTags = this.TagService.RemoveUnUseTag();
+            List<Tag> unUseTags = this.TagService.RemoveUnusedTag();
 
             res.data = unUseTags;
             return new ObjectResult(res.getResponse());

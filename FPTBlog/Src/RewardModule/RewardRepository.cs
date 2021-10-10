@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.RewardModule.Interface;
 using FPTBlog.Utils;
@@ -9,5 +10,6 @@ namespace FPTBlog.Src.RewardModule {
         public RewardRepository(DB dB) : base(dB) {
             this.DB = dB;
         }
+
     }
 }

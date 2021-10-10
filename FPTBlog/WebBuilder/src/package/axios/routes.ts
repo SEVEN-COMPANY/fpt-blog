@@ -29,10 +29,15 @@ export const routers = {
     },
     tag: {
         getAll: '/api/tag/all',
+        clearUnused: '/api/tag/unused',
         getByName: (name: string) => `/api/tag?name=${name}`,
     },
     auth: {
         login: '/api/auth/login',
         register: '/api/auth/register',
+    },
+    reward: {
+        create: '/api/reward',
+        update: '/api/reward',
     },
 };

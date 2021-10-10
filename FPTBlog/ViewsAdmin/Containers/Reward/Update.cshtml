@@ -1,0 +1,66 @@
+@using FPTBlog.Src.RewardModule.Entity
+@{
+    var reward = (Reward)this.ViewData["reward"];
+}
+
+<div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
+    <h1 class="text-2xl font-semibold ">Reward Management</h1>
+    <div class="flex items-end justify-between">
+
+        <form class="flex items-end space-x-4 " action="@RoutersAdmin.RewardGetBadge.Link" id="listRewardForm">
+
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
+            this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+            })
+
+
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
+            @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+            new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
+
+            <div class="my-1">
+                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="grid grid-cols-12 gap-4 mt-5">
+    <div class="col-span-12 ">
+        <div class="max-w-sm shadow intro-y box ">
+            <div id="vertical-form" class="p-5">
+                <h3 class="mr-auto text-base font-medium">
+                    Update Reward
+                </h3>
+                @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+                <form class="space-y-4" id="updateRewardForm">
+
+                    @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
+                    new { Name = "rewardId", Value = reward.RewardId })
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "name", Label = "Name", Type = "text", Value = reward.Name })
+                    @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
+                    new { Name = "description", Label = "Description", Value = reward.Description })
+                    @await Html.PartialAsync("../../Components/Form/UploadFile.cshtml",
+                    new { Name = "file", Label = "Image" })
+                    <div class="w-6 h-6">
+                        <img src="@reward.ImageUrl" alt="@reward.Name" class="object-cover w-full h-full"
+                            id="preview-image" />
+                    </div>
+
+                    @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                    new { Label = "Update badge",Icon = "../../Components/Icons/AddCategory.cshtml" })
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+
+<script src="/js/reward-update.js"></script>
+}
