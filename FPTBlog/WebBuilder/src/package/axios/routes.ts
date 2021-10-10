@@ -26,6 +26,7 @@ export const routers = {
         get: '/api/user',
         status: '/api/admin/user/status',
         role: '/api/admin/user/role',
+        follow: '/api/user/follow',
     },
     tag: {
         getAll: '/api/tag/all',

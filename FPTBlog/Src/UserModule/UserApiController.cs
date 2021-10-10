@@ -107,6 +107,10 @@ namespace FPTBlog.Src.UserModule {
 
         [HttpPost("follow")]
         public IActionResult FollowUser(string followerId) {
+            if (followerId == null) {
+                followerId = "";
+            }
+
             IDictionary<string, User> dataRes = new Dictionary<string, User>();
             ServerApiResponse<IDictionary<string, User>> res = new ServerApiResponse<IDictionary<string, User>>();
             User user = (User) this.ViewData["user"];
@@ -122,6 +126,8 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
+            Console.WriteLine(this.UserService.IsFollow(user.UserId, followerId));
+
             if (this.UserService.IsFollow(user.UserId, followerId)) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
@@ -135,25 +141,6 @@ namespace FPTBlog.Src.UserModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("save")]
-        public IActionResult SavePost(string postId){
-            IDictionary<string, object> dataRes = new Dictionary<string, object>();
-            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
-            User user = (User) this.ViewData["user"];
-
-            Post post = this.PostService.GetPostByPostId(postId);
-            if (post == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
-                return new BadRequestObjectResult(res.getResponse());
-            }
-
-            this.UserService.SavePost(user, post);
-
-            dataRes.Add("user", user);
-            dataRes.Add("post", post);
-            res.data = dataRes;
-            return new ObjectResult(res.getResponse());
-        }
     }
 
 }
