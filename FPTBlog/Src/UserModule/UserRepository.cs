@@ -53,7 +53,7 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
-        public void UnfollowUser(User followingUser, User follower){
+        public void UnfollowUser(User followingUser, User follower) {
             FollowInfo followInfo = this.Db.FollowInfo.FirstOrDefault(item => item.FollowerId == follower.UserId && item.FollowingUserId == followingUser.UserId);
             this.Db.FollowInfo.Remove(followInfo);
             this.Db.SaveChanges();
@@ -96,7 +96,7 @@ namespace FPTBlog.Src.UserModule {
             return false;
         }
 
-        public bool IsSave(string userId, string postId){
+        public bool IsSave(string userId, string postId) {
             SavePost savePost = this.Db.SavePost.FirstOrDefault(item => item.UserId == userId && item.PostId == postId);
             if (savePost != null) {
                 return true;
@@ -137,7 +137,7 @@ namespace FPTBlog.Src.UserModule {
         }
 
         public void SavePost(User user, Post post) {
-            SavePost savePost = new SavePost(){
+            SavePost savePost = new SavePost() {
                 User = user,
                 UserId = user.UserId,
                 Post = post,
@@ -147,21 +147,33 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
-        public void UnsavePost(User user, Post post){
+        public void UnsavePost(User user, Post post) {
             SavePost savePost = this.Db.SavePost.FirstOrDefault(item => item.UserId == user.UserId && item.PostId == post.PostId);
             this.Db.SavePost.Remove(savePost);
             this.Db.SaveChanges();
         }
-        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize){
-            var query = (from Post in this.Db.Post
-                                join SavePost in this.Db.SavePost
-                                on Post.PostId equals SavePost.PostId
-                                where SavePost.UserId.Equals(userId)
-                                select Post).ToList();
-            int count = query.Count;
-            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize, string searchTitle, string searchCategoryId) {
+            List<Post> list;
+            if (searchCategoryId == "") {
+                list = (from Post in this.Db.Post
+                             join SavePost in this.Db.SavePost
+                             on Post.PostId equals SavePost.PostId
+                             where SavePost.UserId.Equals(userId)
+                             select Post)
+                             .Where(item => item.Title.Contains(searchTitle)).ToList();
+            }
+            else {
+                list = (from Post in this.Db.Post
+                             join SavePost in this.Db.SavePost
+                             on Post.PostId equals SavePost.PostId
+                             where SavePost.UserId.Equals(userId)
+                             select Post)
+                             .Where(item => item.Title.Contains(searchTitle) && item.CategoryId == searchCategoryId).ToList();
+            }
+            int count = list.Count;
+            List<Post> listForPAge = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
-            return (list, count);
+            return (listForPAge, count);
         }
 
     }

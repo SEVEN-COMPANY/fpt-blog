@@ -70,6 +70,6 @@ namespace FPTBlog.Src.UserModule {
         public ReportUser GetMonthlyReport() => this.UserRepository.GetMonthlyReport();
         public void SavePost(User user, Post post) => this.UserRepository.SavePost(user, post);
         public void UnsavePost(User user, Post post) => this.UserRepository.UnsavePost(user, post);
-        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize) => this.UserRepository.GetSavePost(userId, pageIndex, pageSize);
+        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize, string searchTitle, string searchCategoryId) => this.UserRepository.GetSavePost(userId, pageIndex, pageSize, searchTitle, searchCategoryId);
     }
 }

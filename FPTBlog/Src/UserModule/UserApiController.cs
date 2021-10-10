@@ -156,6 +156,11 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
+            if(post.Status != PostStatus.APPROVED){
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
             if(this.UserService.IsSave(user.UserId, input.PostId)){
                 res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNSAVE_SUCCESS);
                 this.UserService.UnsavePost(user, post);

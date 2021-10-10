@@ -27,6 +27,6 @@ namespace FPTBlog.Src.UserModule.Interface {
         public ReportUser GetMonthlyReport();
         public void SavePost(User user, Post post);
         public void UnsavePost(User user, Post post);
-        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize);
+        public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize, string searchTitle, string searchCategoryId);
     }
 }

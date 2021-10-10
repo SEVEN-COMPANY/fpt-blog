@@ -41,7 +41,6 @@ namespace FPTBlog.Src.UserModule {
                 searchCategoryId = "";
             }
 
-
             var categoryDropList = this.CategoryService.GetCategoryDropList();
             categoryDropList.Add(new SelectListItem() { Value = "", Text = "All" });
             this.ViewData["categories"] = new SelectList(categoryDropList);
@@ -87,8 +86,8 @@ namespace FPTBlog.Src.UserModule {
             this.ViewData["categories"] = new SelectList(categoryDropList);
 
 
-            var (listFollower, countFollower) = this.UserService.CalculateFollower(user.UserId);
-            var (listFollowing, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
+            var (_, countFollower) = this.UserService.CalculateFollower(user.UserId);
+            var (_, countFollowing) = this.UserService.CalculateFollowing(user.UserId);
 
             var (posts, countPost) = this.PostService.GetPostsForProfile(user.UserId, pageSize, pageIndex, searchTitle, searchCategoryId, PostStatus.APPROVED);
             List<PostViewModel> listBlogs = new List<PostViewModel>();
@@ -111,10 +110,17 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpGet("me/save")]
-        public IActionResult GetSavePost(int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetSavePost(int pageSize = 12, int pageIndex = 0, string searchTitle = "", string searchCategoryId = "") {
             var user = (User) this.ViewData["user"];
 
-            var (posts, count) = this.UserService.GetSavePost(user.UserId, pageIndex, pageSize);
+            if (searchTitle == null) {
+                searchTitle = "";
+            }
+            if (searchCategoryId == null) {
+                searchCategoryId = "";
+            }
+
+            var (posts, count) = this.UserService.GetSavePost(user.UserId, pageIndex, pageSize, searchTitle, searchCategoryId);
             List<PostViewModel> listPosts = new List<PostViewModel>();
             foreach (var item in posts) {
                 PostViewModel pvm = new PostViewModel() {
@@ -140,7 +146,5 @@ namespace FPTBlog.Src.UserModule {
         public IActionResult ChangePassPage() {
             return View(Routers.UserPutPassword.Page);
         }
-
-
     }
 }
