@@ -53,6 +53,12 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
+        public void UnFollowUser(User followingUser, User follower){
+            FollowInfo followInfo = this.Db.FollowInfo.FirstOrDefault(item => item.FollowerId == follower.UserId && item.FollowingUserId == followingUser.UserId);
+            this.Db.FollowInfo.Remove(followInfo);
+            this.Db.SaveChanges();
+        }
+
         public (List<User>, int) GetUsersStatusAndRoleWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole) {
             List<User> list = new List<User>();
             if (searchStatus == 0 && searchRole == 0) {
@@ -83,7 +89,7 @@ namespace FPTBlog.Src.UserModule {
         }
 
         public bool IsFollow(string userId, string followerId) {
-            List<FollowInfo> followInfos = this.Db.FollowInfo.Where(item => item.FollowerId == followerId && item.FollowingUserId == userId).ToList();
+            FollowInfo followInfos = this.Db.FollowInfo.FirstOrDefault(item => item.FollowerId == followerId && item.FollowingUserId == userId);
             if (followInfos != null) {
                 return true;
             }

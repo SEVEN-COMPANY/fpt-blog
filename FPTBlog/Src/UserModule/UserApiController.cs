@@ -106,32 +106,37 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpPost("follow")]
-        public IActionResult FollowUser(string followerId) {
+        public IActionResult FollowUser([FromBody]FollowUnfollowUserDto input) {
             IDictionary<string, User> dataRes = new Dictionary<string, User>();
             ServerApiResponse<IDictionary<string, User>> res = new ServerApiResponse<IDictionary<string, User>>();
             User user = (User) this.ViewData["user"];
 
-            if (user.UserId == followerId) {
+            ValidationResult result = new FollowUnfollowUserDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            if (user.UserId == input.FollowerId) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            User follower = this.UserService.GetUserByUserId(followerId);
+            User follower = this.UserService.GetUserByUserId(input.FollowerId);
             if (follower == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if (this.UserService.IsFollow(user.UserId, followerId)) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
-                return new BadRequestObjectResult(res.getResponse());
+            if (this.UserService.IsFollow(user.UserId, input.FollowerId)) {
+                this.UserService.UnFollowUser(user, follower);
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNFOLLOW_SUCCESS);
+            }
+            else{
+                this.UserService.FollowUser(user, follower);
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_FOLLOW_SUCCESS);
             }
 
-            this.UserService.FollowUser(user, follower);
-
-            dataRes.Add("followingUser", user);
-            dataRes.Add("follower", follower);
-            res.data = dataRes;
             return new ObjectResult(res.getResponse());
         }
 
