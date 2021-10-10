@@ -106,41 +106,67 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpPost("follow")]
-        public IActionResult FollowUser(string followerId) {
-            if (followerId == null) {
-                followerId = "";
-            }
-
-            IDictionary<string, User> dataRes = new Dictionary<string, User>();
-            ServerApiResponse<IDictionary<string, User>> res = new ServerApiResponse<IDictionary<string, User>>();
+        public IActionResult FollowUser([FromBody] FollowUnfollowUserDto input) {
+            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
             User user = (User) this.ViewData["user"];
 
-            if (user.UserId == followerId) {
+            ValidationResult result = new FollowUnfollowUserDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            if (user.UserId == input.FollowerId) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            User follower = this.UserService.GetUserByUserId(followerId);
+            User follower = this.UserService.GetUserByUserId(input.FollowerId);
             if (follower == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            Console.WriteLine(this.UserService.IsFollow(user.UserId, followerId));
-
-            if (this.UserService.IsFollow(user.UserId, followerId)) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
-                return new BadRequestObjectResult(res.getResponse());
+            if (this.UserService.IsFollow(user.UserId, input.FollowerId)) {
+                this.UserService.UnfollowUser(user, follower);
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNFOLLOW_SUCCESS);
+            }
+            else {
+                this.UserService.FollowUser(user, follower);
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_FOLLOW_SUCCESS);
             }
 
-            this.UserService.FollowUser(user, follower);
-
-            dataRes.Add("followingUser", user);
-            dataRes.Add("follower", follower);
-            res.data = dataRes;
             return new ObjectResult(res.getResponse());
         }
 
+        [HttpPost("save")]
+        public IActionResult SavePost([FromBody] SaveUnsavePostDto input) {
+            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
+            User user = (User) this.ViewData["user"];
+
+            ValidationResult result = new SaveUnsavePostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            if (this.UserService.IsSave(user.UserId, input.PostId)) {
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNSAVE_SUCCESS);
+                this.UserService.UnsavePost(user, post);
+            }
+            else {
+                res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
+                this.UserService.SavePost(user, post);
+            }
+
+            return new ObjectResult(res.getResponse());
+        }
     }
 
 }
