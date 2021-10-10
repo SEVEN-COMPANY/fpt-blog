@@ -25,14 +25,6 @@ namespace FPTBlog.Src.RewardModule {
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             return (pagelist, count);
         }
-        public Reward GetRewardById(string id) {
-            Reward reward = (Reward) this.RewardRepository.Get(id);
-
-            return reward;
-        }
-        public (List<UserReward>, int) GetUserReward(int pageIndex, int pageSize, string userId) {
-            return this.UserRewardRepository.GetUserReward(pageIndex, pageSize, userId);
-        }
 
     }
 }

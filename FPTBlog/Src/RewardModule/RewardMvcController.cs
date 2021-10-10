@@ -33,7 +33,7 @@ namespace FPTBlog.Src.RewardModule {
 
         [Route("update")]
         public IActionResult GetUpdateForm(string rewardId) {
-            var reward = this.RewardService.GetRewardById(rewardId);
+            var reward = this.RewardService.GetRewardByRewardId(rewardId);
             this.ViewData["reward"] = reward;
 
 

@@ -106,7 +106,7 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpPost("follow")]
-        public IActionResult FollowUser([FromBody]FollowUnfollowUserDto input) {
+        public IActionResult FollowUser([FromBody] FollowUnfollowUserDto input) {
             ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
             User user = (User) this.ViewData["user"];
 
@@ -131,7 +131,7 @@ namespace FPTBlog.Src.UserModule {
                 this.UserService.UnfollowUser(user, follower);
                 res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNFOLLOW_SUCCESS);
             }
-            else{
+            else {
                 this.UserService.FollowUser(user, follower);
                 res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_FOLLOW_SUCCESS);
             }
@@ -140,7 +140,7 @@ namespace FPTBlog.Src.UserModule {
         }
 
         [HttpPost("save")]
-        public IActionResult SavePost([FromBody] SaveUnsavePostDto input){
+        public IActionResult SavePost([FromBody] SaveUnsavePostDto input) {
             ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
             User user = (User) this.ViewData["user"];
 
@@ -156,11 +156,11 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if(this.UserService.IsSave(user.UserId, input.PostId)){
+            if (this.UserService.IsSave(user.UserId, input.PostId)) {
                 res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNSAVE_SUCCESS);
                 this.UserService.UnsavePost(user, post);
             }
-            else{
+            else {
                 res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
                 this.UserService.SavePost(user, post);
             }

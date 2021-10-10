@@ -16,6 +16,7 @@ using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using FPTBlog.Src.UserModule.Interface;
 
 namespace FPTBlog.Src.PostModule {
     [Route("/api/post")]
@@ -25,11 +26,13 @@ namespace FPTBlog.Src.PostModule {
         private readonly IPostService PostService;
         private readonly ICategoryService CategoryService;
         private readonly ITagService TagService;
-        public PostApiController(IUploadFileService uploadFileService, IPostService postService, ICategoryService categoryService, ITagService tagService) {
+        private readonly IUserService UserService;
+        public PostApiController(IUploadFileService uploadFileService, IPostService postService, ICategoryService categoryService, ITagService tagService, IUserService userService) {
             this.UploadFileService = uploadFileService;
             this.PostService = postService;
             this.CategoryService = categoryService;
             this.TagService = tagService;
+            this.UserService = userService;
         }
 
         [HttpPost("image")]
@@ -348,6 +351,31 @@ namespace FPTBlog.Src.PostModule {
             this.PostService.RemovePost(post);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+
+        [HttpPost("save")]
+        public IActionResult SavePost(string postId) {
+            if (postId == null) {
+                postId = "";
+            }
+
+            IDictionary<string, object> dataRes = new Dictionary<string, object>();
+            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
+            User user = (User) this.ViewData["user"];
+
+            Post post = this.PostService.GetPostByPostId(postId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            this.UserService.SavePost(user, post);
+
+            dataRes.Add("user", user);
+            dataRes.Add("post", post);
+            res.data = dataRes;
             return new ObjectResult(res.getResponse());
         }
     }
