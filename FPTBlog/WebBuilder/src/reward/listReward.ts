@@ -1,10 +1,12 @@
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
 import { pageChange } from '../package/helper/pagination';
+import { previewImage } from '../package/helper/previewImage';
 import { slideOver } from '../package/modal';
 
-pageChange('listTagForm');
+pageChange('listRewardForm');
 slideOver('modal');
+previewImage('file', 'preview-image');
 
 const rewardForm = document.getElementById('createRewardForm');
 rewardForm?.addEventListener('submit', function (event) {

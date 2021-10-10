@@ -24,7 +24,7 @@ namespace FPTBlog.Src.RewardModule.DTO {
             RuleFor(x => x.RewardId).NotEmpty().NotNull();
             RuleFor(x => x.Name).NotEmpty().NotNull();
             RuleFor(x => x.Description).NotEmpty().NotNull();
-            RuleFor(x => x.File).NotNull();
+
         }
     }
 }
