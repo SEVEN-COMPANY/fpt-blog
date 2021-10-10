@@ -30,5 +30,9 @@ namespace FPTBlog.Src.RewardModule {
 
             return reward;
         }
+        public (List<UserReward>, int) GetUserReward(int pageIndex, int pageSize, string userId) {
+            return this.UserRewardRepository.GetUserReward(pageIndex, pageSize, userId);
+        }
+
     }
 }
