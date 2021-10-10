@@ -38,5 +38,6 @@ export const routers = {
     },
     reward: {
         create: '/api/reward',
+        update: '/api/reward',
     },
 };
