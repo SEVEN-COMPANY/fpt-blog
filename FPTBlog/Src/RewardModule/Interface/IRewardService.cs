@@ -11,6 +11,9 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public UserReward GetUserReward(Reward reward, User user);
         public void UpdateReward(Reward reward);
         public (List<Reward>, int) GetRewardByName(int pageIndex, int pageSize, string searchName);
+        public UserReward IsUseReward(string rewardId);
+
+        public void DeleteReward(string rewardId);
 
     }
 }
