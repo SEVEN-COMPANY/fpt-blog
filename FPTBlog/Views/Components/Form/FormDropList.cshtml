@@ -8,7 +8,8 @@
     <label class="block font-semibold capitalize">
         @Model.Label
     </label>
-    <select class="block w-full px-2 py-1 duration-300 border outline-none h-9 focus:border-tango-500 safari"
+    <select
+        class="block w-full px-2 py-1 duration-300 border outline-none h-9 focus:border-tango-500 safari focus:ring-tango-500"
         id="@Model.Name" name="@Model.Name">
         @foreach (SelectListItem item in list.Items)
         {

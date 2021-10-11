@@ -32,24 +32,31 @@ namespace FPTBlog.Src.UserModule {
 
         // follower lay nhung thang dang follow minh
         [HttpGet("follower")]
-        public IActionResult GetFollower(string userId, int pageSize = 12, int pageIndex = 0, string searchName = ""){
+        public IActionResult GetFollower(string userId, int pageSize = 12, int pageIndex = 0, string searchName = "") {
             var (list, countFollower) = this.UserService.GetFollowerForPage(userId, pageIndex, pageSize, searchName);
+            var (_, countFollowing) = this.UserService.CalculateFollowing(userId);
+            var (_, countPost) = this.PostService.GetPostsForProfile(userId, 1, 0, "", "", PostStatus.APPROVED);
 
-            return Json(new {
-                list = list,
-                countFollower = countFollower
-            });
+            this.ViewData["users"] = list;
+            this.ViewData["countFollower"] = countFollower;
+            this.ViewData["countFollowing"] = countFollowing;
+            this.ViewData["countPost"] = countPost;
+
+            return View(Routers.UserGetFollower.Page);
         }
 
         // following la nhung thang minh follow no
         [HttpGet("following")]
-        public IActionResult GetFollowing(string userId, int pageSize = 12, int pageIndex = 0, string searchName = ""){
+        public IActionResult GetFollowing(string userId, int pageSize = 12, int pageIndex = 0, string searchName = "") {
             var (list, countFollowing) = this.UserService.GetFollowingForPage(userId, pageIndex, pageSize, searchName);
+            var (_, countFollower) = this.UserService.GetFollowerForPage(userId, pageIndex, pageSize, searchName);
+            var (_, countPost) = this.PostService.GetPostsForProfile(userId, 1, 0, "", "", PostStatus.APPROVED);
+            this.ViewData["users"] = list;
+            this.ViewData["countFollower"] = countFollower;
+            this.ViewData["countFollowing"] = countFollowing;
+            this.ViewData["countPost"] = countPost;
 
-            return Json(new {
-                list = list,
-                countFollowing = countFollowing
-            });
+            return View(Routers.UserGetFollower.Page);
         }
 
         [HttpGet("me")]
