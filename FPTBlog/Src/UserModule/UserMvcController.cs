@@ -30,6 +30,28 @@ namespace FPTBlog.Src.UserModule {
             return View(Routers.UserGetProfile.Page);
         }
 
+        // follower lay nhung thang dang follow minh
+        [HttpGet("follower")]
+        public IActionResult GetFollower(string userId, int pageSize = 12, int pageIndex = 0, string searchName = ""){
+            var (list, countFollower) = this.UserService.GetFollowerForPage(userId, pageIndex, pageSize, searchName);
+
+            return Json(new {
+                list = list,
+                countFollower = countFollower
+            });
+        }
+
+        // following la nhung thang minh follow no
+        [HttpGet("following")]
+        public IActionResult GetFollowing(string userId, int pageSize = 12, int pageIndex = 0, string searchName = ""){
+            var (list, countFollowing) = this.UserService.GetFollowingForPage(userId, pageIndex, pageSize, searchName);
+
+            return Json(new {
+                list = list,
+                countFollowing = countFollowing
+            });
+        }
+
         [HttpGet("me")]
         public IActionResult GetProfile(int pageSize = 12, int pageIndex = 0, string searchTitle = "", string searchCategoryId = "") {
             var user = (User) this.ViewData["user"];
@@ -140,7 +162,6 @@ namespace FPTBlog.Src.UserModule {
         public IActionResult UpdateUser() {
             return View(Routers.UserPutUser.Page);
         }
-
 
         [HttpGet("change-password")]
         public IActionResult ChangePassPage() {

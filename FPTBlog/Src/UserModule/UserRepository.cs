@@ -59,6 +59,19 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SaveChanges();
         }
 
+        public (List<User>, int) GetFollowerForPage(string userId, int pageIndex, int pageSize, string searchName) {
+            var (list, count) = CalculateFollower(userId);
+            List<User> listForPage = list.Where(item => item.Name.Contains(searchName)).Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+
+            return (listForPage, count);
+        }
+
+        public (List<User>, int) GetFollowingForPage(string userId, int pageIndex, int pageSize, string searchName) {
+            var (list, count) = CalculateFollowing(userId);
+            List<User> listForPage = list.Where(item => item.Name.Contains(searchName)).Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            return (listForPage, count);
+        }
+
         public (List<User>, int) GetUsersStatusAndRoleWithCount(int pageIndex, int pageSize, string searchName, UserStatus searchStatus, UserRole searchRole) {
             List<User> list = new List<User>();
             if (searchStatus == 0 && searchRole == 0) {
@@ -175,6 +188,5 @@ namespace FPTBlog.Src.UserModule {
 
             return (listForPAge, count);
         }
-
     }
 }
