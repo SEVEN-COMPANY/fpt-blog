@@ -14,7 +14,9 @@ namespace FPTBlog.Utils.Common {
 
 
         // Reward
-        public static readonly RouterItem RewardGetHome = new RouterItem() { Page = "/ViewsAdmin/Containers/Reward/UserList.cshtml", Link = "/" };
+        public static readonly RouterItem RewardGetHome = new RouterItem() { Page = "/ViewsAdmin/Containers/Reward/List.cshtml", Link = "/admin/reward" };
+        public static readonly RouterItem RewardPutUpdate = new RouterItem() { Page = "/ViewsAdmin/Containers/Reward/Update.cshtml", Link = "/admin/reward/update" };
+        public static readonly RouterItem RewardGetBadge = new RouterItem() { Page = "/ViewsAdmin/Containers/Reward/ListBadge.cshtml", Link = "/admin/reward/badge" };
 
 
         //user

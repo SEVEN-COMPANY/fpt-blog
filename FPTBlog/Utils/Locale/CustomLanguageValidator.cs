@@ -18,6 +18,8 @@ namespace FPTBlog.Utils.Locale {
         }
 
         public static class MessageKey {
+            public static readonly string MESSAGE_UNFOLLOW_SUCCESS = "MESSAGE_UNFOLLOW_SUCCESS";
+            public static readonly string MESSAGE_FOLLOW_SUCCESS = "MESSAGE_FOLLOW_SUCCESS";
             public static readonly string MESSAGE_POSTED_SUCCESS = "MESSAGE_POSTED_SUCCESS";
             public static readonly string MESSAGE_LOGIN_SUCCESS = "MESSAGE_LOGIN_SUCCESS";
             public static readonly string MESSAGE_REGISTER_SUCCESS = "MESSAGE_REGISTER_SUCCESS";
@@ -26,11 +28,15 @@ namespace FPTBlog.Utils.Locale {
             public static readonly string MESSAGE_ADD_SUCCESS = "MESSAGE_ADD_SUCCESS";
             public static readonly string MESSAGE_DELETE_SUCCESS = "MESSAGE_DELETE_SUCCESS";
             public static readonly string MESSAGE_SAVE_SUCCESS = "MESSAGE_SAVE_SUCCESS";
+            public static readonly string MESSAGE_UNSAVE_SUCCESS = "MESSAGE_UNSAVE_SUCCESS";
         }
         public CustomLanguageValidator() {
 
             // Success message
             // EN
+            AddTranslation("en", MessageKey.MESSAGE_UNSAVE_SUCCESS, "unsave success");
+            AddTranslation("en", MessageKey.MESSAGE_FOLLOW_SUCCESS, "follow success");
+            AddTranslation("en", MessageKey.MESSAGE_UNFOLLOW_SUCCESS, "unfollow success");
             AddTranslation("en", MessageKey.MESSAGE_POSTED_SUCCESS, "post success");
             AddTranslation("en", MessageKey.MESSAGE_LOGIN_SUCCESS, "login success");
             AddTranslation("en", MessageKey.MESSAGE_REGISTER_SUCCESS, "register success");

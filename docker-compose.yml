@@ -7,4 +7,4 @@ services:
                 ports:
                         - 1000:80
                 volumes:
-                        - ./config:/app/config
+                        - .config:/app/config
