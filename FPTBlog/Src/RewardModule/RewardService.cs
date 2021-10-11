@@ -26,5 +26,7 @@ namespace FPTBlog.Src.RewardModule {
             return (pagelist, count);
         }
 
+        public UserReward IsUseReward(string rewardId) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(rewardId));
+        public void DeleteReward(string rewardId) => this.RewardRepository.Remove(rewardId);
     }
 }
