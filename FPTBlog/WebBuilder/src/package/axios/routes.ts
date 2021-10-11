@@ -26,13 +26,19 @@ export const routers = {
         get: '/api/user',
         status: '/api/admin/user/status',
         role: '/api/admin/user/role',
+        follow: '/api/user/follow',
     },
     tag: {
         getAll: '/api/tag/all',
+        clearUnused: '/api/tag/unused',
         getByName: (name: string) => `/api/tag?name=${name}`,
     },
     auth: {
         login: '/api/auth/login',
         register: '/api/auth/register',
+    },
+    reward: {
+        create: '/api/reward',
+        update: '/api/reward',
     },
 };

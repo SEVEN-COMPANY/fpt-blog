@@ -2,7 +2,7 @@ using FPTBlog.Src.RewardModule.Interface;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 using System.Collections.Generic;
-
+using System.Linq;
 namespace FPTBlog.Src.RewardModule {
 
     public class RewardService : IRewardService {
@@ -19,6 +19,14 @@ namespace FPTBlog.Src.RewardModule {
         public void RemoveUserReward(UserReward UserReward) => this.UserRewardRepository.Remove(UserReward.UserRewardId);
         public UserReward GetUserReward(Reward reward, User user) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(reward.RewardId) && item.UserId.Equals(user.UserId));
         public void UpdateReward(Reward reward) => this.RewardRepository.Update(reward);
-        public List<Reward> GetAllReward() => (List<Reward>) this.RewardRepository.GetAll();
+        public (List<Reward>, int) GetRewardByName(int pageIndex, int pageSize, string searchName) {
+            List<Reward> list = (List<Reward>) this.RewardRepository.GetAll(item => item.Name.Contains(searchName));
+            var count = list.Count;
+            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            return (pagelist, count);
+        }
+
+        public UserReward IsUseReward(string rewardId) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(rewardId));
+        public void DeleteReward(string rewardId) => this.RewardRepository.Remove(rewardId);
     }
 }

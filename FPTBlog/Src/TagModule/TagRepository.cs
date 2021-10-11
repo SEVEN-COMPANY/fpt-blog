@@ -65,5 +65,8 @@ namespace FPTBlog.Src.TagModule {
 
             return (hotTrendingTag.Name, count);
         }
+
+        public List<string> GetUsedTagIds() => this.Db.PostTag.Select(item => item.TagId).ToList();
+
     }
 }

@@ -74,20 +74,24 @@ namespace FPTBlog.Src.RewardModule {
                 }
             }
 
-            if (!this.UploadFileService.CheckFileSize(input.File, 5)) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_TOO_LARGE);
-                return new BadRequestObjectResult(res.getResponse());
+            if (input.File != null) {
+
+                if (!this.UploadFileService.CheckFileSize(input.File, 5)) {
+                    res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_TOO_LARGE);
+                    return new BadRequestObjectResult(res.getResponse());
+                }
+
+                if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff" })) {
+                    res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_WRONG_EXTENSION);
+                    return new BadRequestObjectResult(res.getResponse());
+                }
+
+                var imageUrl = this.UploadFileService.Upload(input.File);
+                reward.ImageUrl = imageUrl;
             }
 
-            if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff" })) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_WRONG_EXTENSION);
-                return new BadRequestObjectResult(res.getResponse());
-            }
-
-            var imageUrl = this.UploadFileService.Upload(input.File);
             reward.Name = input.Name;
             reward.Description = input.Description;
-            reward.ImageUrl = imageUrl;
             this.RewardService.UpdateReward(reward);
 
             res.data = reward;
@@ -135,7 +139,7 @@ namespace FPTBlog.Src.RewardModule {
         }
 
         [HttpDelete("remove")]
-        public ObjectResult RemoveRewardHandler([FromBody] RemoveUserRewardDto input) {
+        public ObjectResult RemoveUserRewardHandler([FromBody] RemoveUserRewardDto input) {
             var res = new ServerApiResponse<UserReward>();
             ValidationResult result = new RemoveUserRewardDtoValidator().Validate(input);
             if (!result.IsValid) {
@@ -166,13 +170,32 @@ namespace FPTBlog.Src.RewardModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpGet("")]
-        public ObjectResult GetAllReward() {
-            var res = new ServerApiResponse<List<Reward>>();
-            List<Reward> rewards = this.RewardService.GetAllReward();
-            res.data = rewards;
-            return new ObjectResult(res.getResponse());
+        [HttpDelete("delete")]
+        public ObjectResult DeleteRewardHandler([FromBody] DeleteRewardDto input) {
+            var res = new ServerApiResponse<Reward>();
+            ValidationResult result = new DeleteRewardDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
 
+            var reward = this.RewardService.GetRewardByRewardId(input.RewardId);
+            if (reward == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "reward");
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            var deleteReward = this.RewardService.IsUseReward(input.RewardId);
+            if (deleteReward != null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "User Reward");
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            this.RewardService.DeleteReward(input.RewardId);
+            res.data = reward;
+            return new ObjectResult(res.getResponse());
         }
+
+
     }
 }

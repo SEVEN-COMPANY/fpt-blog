@@ -16,12 +16,43 @@ namespace FPTBlog.Src.RewardModule {
     [ServiceFilter(typeof(AuthGuard))]
     public class RewardMvcController : Controller {
 
+        private readonly IRewardService RewardService;
+        private readonly IUserService UserService;
+        private readonly IUploadFileService UploadFileService;
+        public RewardMvcController(IRewardService rewardService, IUploadFileService uploadFileService, IUserService userService) {
+            this.RewardService = rewardService;
+            this.UserService = userService;
+            this.UploadFileService = uploadFileService;
+        }
+
         [Route("")]
         public IActionResult GetAllBlogs() {
 
             return View(RoutersAdmin.RewardGetHome.Page);
         }
 
+        [Route("update")]
+        public IActionResult GetUpdateForm(string rewardId) {
+            var reward = this.RewardService.GetRewardByRewardId(rewardId);
+            this.ViewData["reward"] = reward;
 
+
+            return View(RoutersAdmin.RewardPutUpdate.Page);
+        }
+
+
+        [Route("badge")]
+        public IActionResult GetAllBadges(string searchName, int indexPage = 0, int pageSize = 12) {
+            if (searchName == null) {
+                searchName = "";
+            }
+
+            var (rewards, total) = this.RewardService.GetRewardByName(indexPage, pageSize, searchName);
+            this.ViewData["rewards"] = rewards;
+            this.ViewData["total"] = total;
+
+
+            return View(RoutersAdmin.RewardGetBadge.Page);
+        }
     }
 }
