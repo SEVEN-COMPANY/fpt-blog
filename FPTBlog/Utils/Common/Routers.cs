@@ -13,6 +13,7 @@ namespace FPTBlog.Utils.Common {
 
     public class Routers {
 
+        public static readonly RouterItem ServerURL = new RouterItem() { Page = "", Title = "", Link = "https://fptblog.vinhnhan.com" };
 
 
         // Home
@@ -39,6 +40,11 @@ namespace FPTBlog.Utils.Common {
         public static readonly RouterItem UpdateComment = new RouterItem() { Page = "/Views/Containers/Comment/UpdateComment.cshtml", Link = "comment/update" };
         public static readonly RouterItem UserGetProfile = new RouterItem() { Page = "/Views/Containers/User/Profile.cshtml", Title = "User", Link = "/user/profile" };
         public static readonly RouterItem UserGetMyProfile = new RouterItem() { Page = "/Views/Containers/User/MyProfile.cshtml", Title = "User", Link = "/user/me" };
+
+
+        public static readonly RouterItem UserGetFollower = new RouterItem() { Page = "/Views/Containers/User/Follower.cshtml", Title = "User", Link = "/user/follower" };
+        public static readonly RouterItem UserGetFollowing = new RouterItem() { Page = "/Views/Containers/User/Following.cshtml", Title = "User", Link = "/user/following" };
+
 
         public static readonly RouterItem UserPutUser = new RouterItem() { Page = "/Views/Containers/User/UpdateProfile.cshtml", Title = "Update User", Link = "/user/update" };
 

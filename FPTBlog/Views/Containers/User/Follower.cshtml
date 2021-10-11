@@ -1,18 +1,9 @@
-@using FPTBlog.Src.PostModule.Entity
 @{
     var profile = (User)ViewData["user"];
     this.ViewData["Title"] = profile.Name;
-    var posts = (List<PostViewModel>)this.ViewData["posts"];
-    SelectList categories = (SelectList)this.ViewData["categories"];
-}
-
-@section Styles {
-
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    var users = (List<User>)ViewData["users"];
 
 }
-
-@await Html.PartialAsync("../../Components/Form/FormToastify.cshtml")
 
 <div class="relative">
     <div class="flex flex-1 space-x-4">
@@ -21,32 +12,28 @@
         </div>
         <div class="flex w-2/3">
             <div class="flex flex-col items-center flex-1 px-2 py-4 space-y-2 border rounded-md shadow-lg">
-                <div class="w-full space-y-4 md:px-4 intro-y bg-opacity-90">
+                <div class="w-full max-w-md mx-auto space-y-4 md:px-4 intro-y bg-opacity-90">
                     <form class="flex-1 space-y-2 ">
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
                         new {Name="pageSize", Value="12"})
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
                         new {Name="indexPage", Value="0"})
 
-                        <div class="flex space-x-4">
+                        <div class="flex items-center justify-center space-x-4">
 
-                            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                            new {Name="searchTitle", Label="Search", Type="text", Value=
+                            @await Html.PartialAsync("../../Components/Form/TextFieldNoLabel.cshtml",
+                            new {Name="searchTitle", Label = "Name", Type="text", PlaceHolder="Name",Value=
                             this.Context.Request.Query["searchTitle"]})
-
-                            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
-                            new {Name="searchCategoryId", Label="Category",
-                            Value=this.Context.Request.Query["searchCategoryId"],
-                            List=categories})
-                        </div>
-                        <div class="md:w-1/5">
 
                             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                             new { Label="Search "})
+
+
                         </div>
+
                     </form>
 
-                    @if (posts.Count == 0)
+                    @if (users.Count == 0)
                     {
                         <div class="flex flex-col items-center justify-center flex-1 space-y-2">
                             <svg width="256" height="256" viewBox="0 0 256 256" fill="none"
@@ -97,9 +84,35 @@
 
                         <div>
                             <ul class="space-y-4 intro-y">
-                                @foreach (var item in posts)
+                                @foreach (var item in users)
                                 {
-                                    @await Html.PartialAsync("../../Components/Post/SidePost.cshtml", new {Value = item})
+
+                                    var profileLink = $"{Routers.UserGetProfile.Link}?userId={item.UserId}";
+
+                                    <div href="@profileLink" class="flex-shrink-0 block group">
+                                        <div class="flex items-center justify-between">
+
+                                            <div class="flex items-center ">
+                                                <div>
+                                                    <img class="inline-block rounded-full h-9 w-9" src="@item.AvatarUrl"
+                                                alt="@item.Name">
+                                                </div>
+                                                <div class="ml-3">
+                                                    <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                                                        @item.Name
+                                                    </p>
+                                                    @* <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                                                        @item.CreateDate
+                                                        </p> *@
+                                                </div>
+
+                                            </div>
+                                            <a href="@profileLink"
+                                        class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                                                View Profile
+                                            </a>
+                                        </div>
+                                    </div>
                                 }
 
                             </ul>
@@ -111,8 +124,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-<script src="/js/user-profile.js"></script>
-}

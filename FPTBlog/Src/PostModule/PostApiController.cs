@@ -355,28 +355,28 @@ namespace FPTBlog.Src.PostModule {
         }
 
 
-        [HttpPost("save")]
-        public IActionResult SavePost(string postId) {
-            if (postId == null) {
-                postId = "";
-            }
+        // [HttpPost("save")]
+        // public IActionResult SavePost(string postId) {
+        //     if (postId == null) {
+        //         postId = "";
+        //     }
 
-            IDictionary<string, object> dataRes = new Dictionary<string, object>();
-            ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
-            User user = (User) this.ViewData["user"];
+        //     IDictionary<string, object> dataRes = new Dictionary<string, object>();
+        //     ServerApiResponse<IDictionary<string, object>> res = new ServerApiResponse<IDictionary<string, object>>();
+        //     User user = (User) this.ViewData["user"];
 
-            Post post = this.PostService.GetPostByPostId(postId);
-            if (post == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
-                return new BadRequestObjectResult(res.getResponse());
-            }
+        //     Post post = this.PostService.GetPostByPostId(postId);
+        //     if (post == null) {
+        //         res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
+        //         return new BadRequestObjectResult(res.getResponse());
+        //     }
 
-            this.UserService.SavePost(user, post);
+        //     this.UserService.SavePost(user, post);
 
-            dataRes.Add("user", user);
-            dataRes.Add("post", post);
-            res.data = dataRes;
-            return new ObjectResult(res.getResponse());
-        }
+        //     dataRes.Add("user", user);
+        //     dataRes.Add("post", post);
+        //     res.data = dataRes;
+        //     return new ObjectResult(res.getResponse());
+        // }
     }
 }
