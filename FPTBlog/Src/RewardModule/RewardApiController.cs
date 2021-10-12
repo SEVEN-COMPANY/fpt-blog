@@ -25,6 +25,15 @@ namespace FPTBlog.Src.RewardModule {
             this.UploadFileService = uploadFileService;
         }
 
+        [HttpGet("")]
+        public ObjectResult GetRewardHandler(string rewardId) {
+            var res = new ServerApiResponse<Reward>();
+            var reward = this.RewardService.GetRewardByRewardId(rewardId);
+
+            res.data = reward;
+            return new ObjectResult(res.getResponse());
+        }
+
         [HttpPost("")]
         public ObjectResult CreateRewardHandler([FromForm] CreateRewardDto input) {
             var res = new ServerApiResponse<Reward>();
@@ -38,7 +47,7 @@ namespace FPTBlog.Src.RewardModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff" })) {
+            if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff", "svg" })) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_WRONG_EXTENSION);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -81,7 +90,7 @@ namespace FPTBlog.Src.RewardModule {
                     return new BadRequestObjectResult(res.getResponse());
                 }
 
-                if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff" })) {
+                if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff", "svg" })) {
                     res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_WRONG_EXTENSION);
                     return new BadRequestObjectResult(res.getResponse());
                 }
@@ -170,7 +179,7 @@ namespace FPTBlog.Src.RewardModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpDelete("delete")]
+        [HttpPut("delete")]
         public ObjectResult DeleteRewardHandler([FromBody] DeleteRewardDto input) {
             var res = new ServerApiResponse<Reward>();
             ValidationResult result = new DeleteRewardDtoValidator().Validate(input);

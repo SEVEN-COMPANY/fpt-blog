@@ -10,6 +10,7 @@ using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
 using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.RewardModule {
     [Route("admin/reward")]
@@ -30,11 +31,20 @@ namespace FPTBlog.Src.RewardModule {
             if (searchName == null) {
                 searchName = "";
             }
+            var now = DateTime.Now;
+            if (endDate == null) {
+                endDate = now.AddYears(5).ToString("yyyy-MM-dd");
+            }
+            if (startDate == null) {
+                startDate = now.AddYears(-5).ToString("yyyy-MM-dd");
+            }
 
-            List<RewardReport> rewardReports = this.RewardService.GetRewardReport(searchName, startDate, endDate, pageSize, pageIndex);
-            List<Reward> rewards = this.RewardService.GetRewards();
 
-            this.ViewData["rewards"] = rewards;
+            var (rewardReports, total) = this.RewardService.GetRewardReport(searchName, startDate, endDate, pageSize, pageIndex);
+            var rewards = this.RewardService.GetRewardsDropList();
+
+            this.ViewData["rewards"] = new SelectList(rewards, "");
+            this.ViewData["total"] = total;
             this.ViewData["rewardReports"] = rewardReports;
             return View(RoutersAdmin.RewardGetHome.Page);
         }

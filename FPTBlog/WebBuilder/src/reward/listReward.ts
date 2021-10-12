@@ -31,3 +31,20 @@ rewardForm?.addEventListener('submit', function (event) {
         });
     }
 });
+
+const deleteBtn = document.getElementsByClassName('delete-btn');
+
+for (let index = 0; index < deleteBtn.length; index++) {
+    const btn = deleteBtn[index];
+    btn.addEventListener('click', function () {
+        const rewardId = btn.getAttribute('data-rewardId');
+        const isSend = confirm('Are you to delete this badge?');
+        if (isSend) {
+            http.put(routers.reward.delete, { rewardId: rewardId }).then(() => {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            });
+        }
+    });
+}

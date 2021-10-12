@@ -55,8 +55,11 @@
         new {Name="title", Label="Title", Type="text", Value=post.Title})
 
         <div class="flex space-x-2">
-            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
-            new {Name="categoryId", Label="Category", Value=post.CategoryId, List=categories})
+            <div class="flex-1">
+
+                @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+                new {Name="categoryId", Label="Category", Value=post.CategoryId, List=categories})
+            </div>
             @await Html.PartialAsync("../../Components/Form/FormSelectBadge.cshtml",
             new {Name="tag", Label="Tag", Value="", Placeholder ="Enter tag"})
         </div>
