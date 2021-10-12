@@ -12,10 +12,12 @@
 
     </div>
     <div class="relative">
-        <input autocomplete="off" placeholder="@Model.Placeholder"
-            class="block w-full px-2 py-1 duration-300 border rounded-sm outline-none safari h-9 focus:border-tango-500 focus:ring-tango-500"
-            id="@Model.Name" name="@Model.Name" type="text" value="" />
-        <ul class="absolute left-0 z-20 w-full text-xs bg-white border shadow-sm top-full" id="@result">
+
+        <input autocomplete="off" placeholder="@Model.Placeholder" id="@Model.Name" name="@Model.Name" type="text"
+            value=""
+            class="block w-full duration-200 border-gray-300 rounded-md shadow-sm outline-none focus:ring-tango-500 focus:border-tango-500 sm:text-sm">
+
+        <ul class="absolute left-0 z-30 w-full text-xs bg-white border shadow-sm top-full" id="@result">
 
         </ul>
     </div>

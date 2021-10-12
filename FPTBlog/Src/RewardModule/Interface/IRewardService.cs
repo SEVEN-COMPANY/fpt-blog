@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.RewardModule.Interface {
     public interface IRewardService {
@@ -14,8 +15,9 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public UserReward IsUseReward(string rewardId);
 
         public void DeleteReward(string rewardId);
-        public List<RewardReport> GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex);
+        public (List<RewardReport>, int) GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex);
         public List<Reward> GetRewards();
+        public List<SelectListItem> GetRewardsDropList();
 
     }
 }
