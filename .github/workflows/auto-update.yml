@@ -39,7 +39,7 @@ jobs:
                                   file: ./Dockerfile
                                   builder: ${{steps.buildx.outputs.name}}
                                   push: true
-                                  tags: heaty566/mono-fpt-blog:latest
+                                  tags: heaty566/mono-fpt-v2-blog:latest
                         - name: Verify
                           run: |
                                   echo ${{steps.docker_build_server.outputs.digest}}
