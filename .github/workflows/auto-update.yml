@@ -58,5 +58,5 @@ jobs:
                                   script: |
                                           cd app
                                           cd fptblog
-                                          docker pull heaty566/mono-fpt-blog:latest 
+                                          docker pull heaty566/mono-fpt-v2-blog:latest 
                                           docker-compose up -d
