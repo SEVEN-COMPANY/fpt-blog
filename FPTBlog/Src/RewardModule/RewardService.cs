@@ -58,6 +58,8 @@ namespace FPTBlog.Src.RewardModule {
                     }
                 }
 
+                rewardReport.UserRewards = (List<UserReward>) this.UserRewardRepository.GetAll(item => item.UserId == user.UserId);
+
                 rewardReports.Add(rewardReport);
             }
 
