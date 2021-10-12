@@ -17,6 +17,7 @@ module.exports = {
         'tag-list': ['./src/tag/list.ts'],
         'post-list': ['./src/post/listPost.ts'],
         'reward-list': ['./src/reward/listReward.ts'],
+        'user-reward-list': ['./src/reward/user-list.ts'],
         'reward-update': ['./src/reward/update.ts'],
         'user-profile': ['./src/user/profile.ts'],
     },

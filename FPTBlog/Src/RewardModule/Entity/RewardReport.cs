@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace FPTBlog.Src.RewardModule.Entity {
     public class RewardReport {
 
@@ -7,7 +9,9 @@ namespace FPTBlog.Src.RewardModule.Entity {
             this.TotalPost = 0;
             this.TotalInteraction = 0;
             this.ToTalView = 0;
+            this.UserRewards = new List<UserReward>();
         }
+
 
         public string UserId {
             get; set;
@@ -25,6 +29,10 @@ namespace FPTBlog.Src.RewardModule.Entity {
         }
 
         public int ToTalView {
+            get; set;
+        }
+
+        public List<UserReward> UserRewards {
             get; set;
         }
     }

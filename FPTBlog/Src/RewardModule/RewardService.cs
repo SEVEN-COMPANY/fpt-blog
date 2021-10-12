@@ -7,6 +7,7 @@ using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.RewardModule {
 
@@ -35,7 +36,7 @@ namespace FPTBlog.Src.RewardModule {
             return (pagelist, count);
         }
 
-        public List<RewardReport> GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex) {
+        public (List<RewardReport>, int) GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex) {
             DateTime startDateTime = Convert.ToDateTime(startDate);
             DateTime endDateTime = Convert.ToDateTime(endDate);
             List<RewardReport> rewardReports = new List<RewardReport>();
@@ -58,15 +59,26 @@ namespace FPTBlog.Src.RewardModule {
                     }
                 }
 
+                rewardReport.UserRewards = (List<UserReward>) this.UserRewardRepository.GetAll(item => item.UserId == user.UserId);
+
                 rewardReports.Add(rewardReport);
             }
 
-            return rewardReports;
+            return (rewardReports, list.Count);
         }
 
 
         public UserReward IsUseReward(string rewardId) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(rewardId));
         public void DeleteReward(string rewardId) => this.RewardRepository.Remove(rewardId);
         public List<Reward> GetRewards() => (List<Reward>) this.RewardRepository.GetAll();
+
+        public List<SelectListItem> GetRewardsDropList() {
+            var rewards = new List<SelectListItem>();
+            var list = this.RewardRepository.GetAll();
+            foreach (var item in list) {
+                rewards.Add(new SelectListItem() { Value = item.RewardId, Text = item.Name });
+            }
+            return rewards;
+        }
     }
 }
