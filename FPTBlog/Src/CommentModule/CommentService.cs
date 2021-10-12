@@ -15,7 +15,7 @@ namespace FPTBlog.Src.CommentModule {
 
         public void UpdateComment(Comment comment) => this.CommentRepository.Update(comment);
 
-        public void RemoveComment(Comment comment) => this.CommentRepository.Remove(comment);
+        public void RemoveComment(Comment comment) => this.CommentRepository.RemoveAndItsChildComment(comment);
 
         public List<Comment> GetListSubCommentByOriCommentId(string oriCommentId) => (List<Comment>) this.CommentRepository.GetAll(item => item.OriCommentId == oriCommentId);
 

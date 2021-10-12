@@ -18,5 +18,14 @@ namespace FPTBlog.Src.CommentModule {
                                      select Comment).ToList();
             return comment;
         }
+
+        public void RemoveAndItsChildComment(Comment comment){
+            List<Comment> comments = this.Db.Comment.Where(item => item.OriCommentId == comment.CommentId).ToList();
+            if(comments.Count > 0){
+                this.Remove(comments);
+            }
+            this.Remove(comment);
+            this.Db.SaveChanges();
+        }
     }
 }
