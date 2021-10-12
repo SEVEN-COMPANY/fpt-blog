@@ -77,9 +77,8 @@ namespace FPTBlog.Src.PostModule {
         }
 
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId) {
-            var query = (from Post in this.Db.Post
-                         where Post.StudentId.Equals(studentId) && (Post.Status != PostStatus.APPROVED)
-                         select Post);
+            var query = this.GetAll(item => item.StudentId == studentId && item.Status != PostStatus.APPROVED, includeProperties: "Category").OrderBy(item => item.Status);
+
 
             List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
@@ -91,22 +90,6 @@ namespace FPTBlog.Src.PostModule {
             List<Post> posts = this.GetAll(item => item.Status == PostStatus.WAIT).ToList();
             return (posts, posts.Count);
         }
-
-        // private (List<Post>, int) GetPostsWithCount(IQueryable<Post> query, int pageSize, int pageIndex) {
-        //     List<Post> blogs = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-        //     int count = query.Count();
-
-
-        //     return (blogs, count);
-        // }
-
-
-        //     public (List<Post>, int) GetPostsWithCount(int pageSize, int pageIndex) {
-        //         var query = (from Blog in this.Db.Post
-        //                      orderby Blog.Like - Blog.Dislike + (Blog.View / 10)
-        //                      select Blog);
-        //         return this.GetEntityByPage(query, pageSize, pageIndex);
-        //     }
 
         public void LikePost(Post post, User user) {
             LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);

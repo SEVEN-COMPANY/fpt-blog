@@ -6,21 +6,18 @@
     var user = (User)this.ViewData["user"];
 }
 
-<div class="relative">
-    <div class="flex flex-1 space-x-4">
-        <div class="w-1/3">
+<div class="relative mt-4">
+    <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-1">
             @await Html.PartialAsync("../../Components/User/MyUserCard.cshtml", new {Value = this.ViewData})
         </div>
-        <div class="flex w-2/3">
+        <div class="flex col-span-2">
             <div
                 class="flex flex-col items-center justify-center flex-1 px-2 py-16 space-y-2 border rounded-md shadow-lg">
-                <div class="w-full space-y-4 md:px-4 md:w-96 intro-y bg-opacity-90">
+                <div class="w-full space-y-8 md:px-4 md:w-96 intro-y bg-opacity-90">
                     <h1 class="text-2xl font-semibold text-center"> Update User</h1>
-                    @* Form Start *@
-
                     @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
                     <form class="space-y-6 fade-in" id="updateUserForm">
-
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                         new { Name = "name", Label = "Name", Type = "text", Value = user.Name })
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
@@ -30,11 +27,8 @@
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                         new { Name = "phone", Label = "Phone", Type = "text", Value = user.Phone })
                         @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                        new { Label = "Update Information" })
+                        new {Label="Update Password", Icon = "../../Components/Icons/Save.cshtml" })
                     </form>
-                    @* Form End *@
-
-
                 </div>
             </div>
         </div>
