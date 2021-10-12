@@ -6,7 +6,7 @@
     var posts = (List<PostViewModel>)this.ViewData["posts"];
 }
 
-<div class="px-2 mx-auto mt-8 space-y-4 md:w-4/5 lg:w-3/5">
+<div class="px-2 mx-auto mt-8 space-y-8 md:w-4/5 lg:w-3/5">
     <h1 class="text-4xl font-semibold text-center">Search Post</h1>
     <form class="flex-1 space-y-2 intro-x">
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
@@ -14,18 +14,17 @@
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
         new {Name="indexPage", Value="0"})
 
-        <div class="flex space-x-4">
+        <div class="flex items-end space-x-4">
 
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
             new {Name="search", Label="Search", Type="text", Value= this.Context.Request.Query["search"]})
 
             @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
             new {Name="categoryId", Label="Category", Value=this.Context.Request.Query["categoryId"], List=categories})
-        </div>
-        <div class="md:w-1/5">
-
-            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-            new { Label="Search "})
+            <div class="mb-1">
+                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                new { Label="Search", Icon = "../../Components/Icons/Search.cshtml"})
+            </div>
         </div>
     </form>
     <div>

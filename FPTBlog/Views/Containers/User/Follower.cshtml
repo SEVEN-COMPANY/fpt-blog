@@ -1,15 +1,14 @@
-@using FPTBlog.Src.PostModule.Entity
 @{
     var profile = (User)ViewData["user"];
     this.ViewData["Title"] = profile.Name;
-    var posts = (List<PostViewModel>)this.ViewData["posts"];
-    SelectList categories = (SelectList)this.ViewData["categories"];
+    var users = (List<User>)ViewData["users"];
+
 }
 
 <div class="relative mt-4">
     <div class="grid grid-cols-3 gap-4">
         <div class="col-span-1">
-            @await Html.PartialAsync("../../Components/User/MyUserCard.cshtml", new {Value = this.ViewData})
+            @await Html.PartialAsync("../../Components/User/UserCard.cshtml", new {Value = this.ViewData})
         </div>
         <div class="flex col-span-2">
             <div class="flex flex-col items-center flex-1 px-2 py-4 space-y-2 border rounded-md shadow-lg">
@@ -21,15 +20,9 @@
                         new {Name="indexPage", Value="0"})
 
                         <div class="flex items-end space-x-4">
-
                             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                            new {Name="searchTitle", Label="Search", Type="text", Value=
+                            new {Name="searchTitle", Label = "", Type="text", PlaceHolder="Name",Value=
                             this.Context.Request.Query["searchTitle"]})
-
-                            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
-                            new {Name="searchCategoryId", Label="Category",
-                            Value=this.Context.Request.Query["searchCategoryId"],
-                            List=categories})
                             <div class="mb-1">
                                 @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                                 new { Label="Search", Icon = "../../Components/Icons/Search.cshtml"})
@@ -37,7 +30,7 @@
                         </div>
                     </form>
 
-                    @if (posts.Count == 0)
+                    @if (users.Count == 0)
                     {
                         <div class="flex flex-col items-center justify-center flex-1 my-8 space-y-2">
                             <svg width="256" height="256" viewBox="0 0 256 256" fill="none"
@@ -85,11 +78,41 @@
                     }
                     else
                     {
-                        <div class="grid grid-cols-2 gap-6 intro-y">
-                            @foreach (var item in posts)
-                            {
-                                @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
-                            }
+
+                        <div>
+                            <ul class="space-y-4 intro-y">
+                                @foreach (var item in users)
+                                {
+
+                                    var profileLink = $"{Routers.UserGetProfile.Link}?userId={item.UserId}";
+
+                                    <div href="@profileLink" class="flex-shrink-0 block group">
+                                        <div class="flex items-center justify-between">
+
+                                            <div class="flex items-center ">
+                                                <div>
+                                                    <img class="inline-block rounded-full h-9 w-9" src="@item.AvatarUrl"
+                                                alt="@item.Name">
+                                                </div>
+                                                <div class="ml-3">
+                                                    <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                                                        @item.Name
+                                                    </p>
+                                                    @* <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                                                        @item.CreateDate
+                                                        </p> *@
+                                                </div>
+
+                                            </div>
+                                            <a href="@profileLink"
+                                        class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                                                View Profile
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+
+                            </ul>
                         </div>
                     }
 
@@ -98,7 +121,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-<script src="/js/user-update.js"></script>
-}

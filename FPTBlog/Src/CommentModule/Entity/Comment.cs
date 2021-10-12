@@ -43,6 +43,16 @@ namespace FPTBlog.Src.CommentModule.Entity {
             get; set;
         }
 
+        /*
+        select min(salary)
+        from employee
+        group by roomId
+        */
+
+        public virtual Comment OriComment {
+            get; set;
+        }
+
         [ForeignKey("tblPost")]
         [StringLength(40)]
         public string PostId {

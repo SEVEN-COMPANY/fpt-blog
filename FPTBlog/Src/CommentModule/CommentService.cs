@@ -15,11 +15,16 @@ namespace FPTBlog.Src.CommentModule {
 
         public void UpdateComment(Comment comment) => this.CommentRepository.Update(comment);
 
-        public void RemoveComment(Comment comment) => this.CommentRepository.Remove(comment);
+        public void RemoveComment(Comment comment) => this.CommentRepository.RemoveAndItsChildComment(comment);
 
-        public List<Comment> GetListSubCommentByOriCommentId(string oriCommentId) => (List<Comment>) this.CommentRepository.GetAll(item => item.OriCommentId == oriCommentId);
+        public List<Comment> GetListOriCommentByPostId(string postId){
+            List<Comment> list = (List<Comment>)this.CommentRepository.GetAll(item => item.PostId == postId && item.OriCommentId == null, includeProperties: "User");
+            return list;
+        }
 
-        public List<Comment> GetListOriCommentByPostId(string postId) => this.CommentRepository.GetListOriCommentByPostId(postId);
-
+        public List<Comment> GetListSubComment(Comment comment){
+            List<Comment> list = (List<Comment>)this.CommentRepository.GetAll(item => item.OriCommentId == comment.CommentId && item.PostId == comment.PostId);
+            return list;
+        }
     }
 }
