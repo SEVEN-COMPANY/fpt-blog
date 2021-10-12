@@ -37,6 +37,7 @@
 
         gtag('config', 'G-WXKFSEWK00');
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.5.0/dist/lazyload.min.js"></script>
 
     <meta name="google-site-verification" content="s3ITW061jk73hJz1FkOClSYuBSi0MzC5F1jJwAWYPcQ" />
 
@@ -72,12 +73,19 @@
 
         @await Html.PartialAsync("../Components/Footer/Footer.cshtml")
     </main>
-
+    <script>
+        const lazyLoadInstance = new LazyLoad({});
+    </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="~/js/navbar.js"></script>
 
 
     @await RenderSectionAsync("Scripts", required: false)
+
+
+
+
+
 </body>
 
 </html>
