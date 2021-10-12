@@ -8,7 +8,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
         public Comment GetCommentByCommentId(string commentId);
         public void UpdateComment(Comment comment);
         public void RemoveComment(Comment comment);
-        public List<Comment> GetListSubCommentByOriCommentId(string oriCommentId);
         public List<Comment> GetListOriCommentByPostId(string postId);
+        public List<Comment> GetListSubComment(Comment comment);
     }
 }
