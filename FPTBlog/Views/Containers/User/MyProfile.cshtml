@@ -6,12 +6,12 @@
     SelectList categories = (SelectList)this.ViewData["categories"];
 }
 
-<div class="relative px-2">
-    <div class="flex-1 space-y-4 md:space-x-4 md:space-y-0 md:flex">
-        <div class="md:w-1/3">
+<div class="relative mt-4">
+    <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-1">
             @await Html.PartialAsync("../../Components/User/MyUserCard.cshtml", new {Value = this.ViewData})
         </div>
-        <div class="flex md:w-2/3">
+        <div class="flex col-span-2">
             <div class="flex flex-col items-center flex-1 px-2 py-4 space-y-2 border rounded-md shadow-lg">
                 <div class="w-full space-y-4 md:px-4 intro-y bg-opacity-90">
                     <form class="flex-1 space-y-2 ">
@@ -20,7 +20,7 @@
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
                         new {Name="indexPage", Value="0"})
 
-                        <div class="flex space-x-4">
+                        <div class="flex items-end space-x-4">
 
                             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                             new {Name="searchTitle", Label="Search", Type="text", Value=
@@ -30,17 +30,16 @@
                             new {Name="searchCategoryId", Label="Category",
                             Value=this.Context.Request.Query["searchCategoryId"],
                             List=categories})
-                        </div>
-                        <div class="md:w-1/5">
-
-                            @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                            new { Label="Search "})
+                            <div class="mb-1">
+                                @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
+                                new { Label="Search", Icon = "../../Components/Icons/Search.cshtml"})
+                            </div>
                         </div>
                     </form>
 
                     @if (posts.Count == 0)
                     {
-                        <div class="flex flex-col items-center justify-center flex-1 space-y-2">
+                        <div class="flex flex-col items-center justify-center flex-1 my-8 space-y-2">
                             <svg width="256" height="256" viewBox="0 0 256 256" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                                 <g>
@@ -86,17 +85,11 @@
                     }
                     else
                     {
-
-                        <div>
-                            <ul class="space-y-4 intro-y">
-                                @foreach (var item in posts)
-                                {
-                                    @await Html.PartialAsync("../../Components/Post/SidePost.cshtml", new {Value = item})
-
-
-                                }
-
-                            </ul>
+                        <div class="grid grid-cols-2 gap-6 intro-y">
+                            @foreach (var item in posts)
+                            {
+                                @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
+                            }
                         </div>
                     }
 
