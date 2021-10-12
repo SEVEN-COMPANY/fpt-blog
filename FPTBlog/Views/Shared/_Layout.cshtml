@@ -1,11 +1,11 @@
-﻿@{
+@{
     var title = $"{ViewData["Title"]} | FPT Blog";
     var imageUrl = ViewData["ImageUrl"] != null ? $"{ViewData["ImageUrl"]}" : "/images/seo.jpg";
     var description = ViewData["Description"] != null? $"{ViewData["Description"]}" : "FPT Blog where you can share your knowledge, express your emotion with other classmate";
 }
 
 <!DOCTYPE html>
-<html lang="en">
+
 
 <head>
     <meta charset="utf-8" />
@@ -30,13 +30,16 @@
     <meta name="theme-color" content="#ffffff">
 
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WXKFSEWK00"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-        gtag('config', 'G-WXKFSEWK00');
+    gtag('config', 'G-WXKFSEWK00');
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.5.0/dist/lazyload.min.js"></script>
 
     <meta name="google-site-verification" content="s3ITW061jk73hJz1FkOClSYuBSi0MzC5F1jJwAWYPcQ" />
 
@@ -45,6 +48,7 @@
     <meta name="keywords" content="Post, Blog, FPT University, FU BLOG" />
 
 
+    <meta property="fb:app_id" content="4350318748416847" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="@title" />
     <meta property="og:description" content="@description" />
@@ -72,7 +76,9 @@
 
         @await Html.PartialAsync("../Components/Footer/Footer.cshtml")
     </main>
-
+    <script>
+        const lazyLoadInstance = new LazyLoad({});
+    </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="~/js/navbar.js"></script>
 
