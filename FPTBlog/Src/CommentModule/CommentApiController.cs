@@ -107,21 +107,37 @@ namespace FPTBlog.Src.CommentModule.Interface {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("all")]
-        public IActionResult GetListOriComment([FromBody] GetOriCommentDto input) {
+        [HttpPost("post")]
+        public IActionResult GetListOriComment([FromBody] GetCommentOfPostDto input) {
             var res = new ServerApiResponse<Comment>();
 
-            ValidationResult result = new GetOriCommentDtoValidator().Validate(input);
+            ValidationResult result = new GetCommentOfPostDtoValidator().Validate(input);
             if (!result.IsValid) {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            List<Comment> list = this.CommentService.GetListOriCommentByPostId(input.PostId);
-            this.ViewData["listComment"] = list;
+            Post post = this.PostService.GetPostByPostId(input.PostId);
+            if (post == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            List<Comment> listOriComment = this.CommentService.GetListOriCommentByPostId(input.PostId);
+
+            List<CommentViewModel> listComment = new List<CommentViewModel>();
+
+            foreach(var oriComment in listOriComment){
+                CommentViewModel commentViewModel = new CommentViewModel();
+                commentViewModel.OriComment = oriComment;
+                commentViewModel.SubComments = this.CommentService.GetListSubComment(oriComment);
+                listComment.Add(commentViewModel);
+            }
+
+            this.ViewData["listComment"] = listComment;
 
             return Json(new {
-                listComment = list
+                listComment = listComment
             });
 
         }
