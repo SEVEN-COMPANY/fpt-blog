@@ -14,6 +14,8 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public UserReward IsUseReward(string rewardId);
 
         public void DeleteReward(string rewardId);
+        public List<RewardReport> GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex);
+        public List<Reward> GetRewards();
 
     }
 }

@@ -11,10 +11,10 @@
 }
 
 
-<div class="w-full px-2 py-8 mx-auto space-y-8">
+<div class="w-full px-2 py-8 mx-auto space-y-16">
     <div class="space-y-8">
-        <div class="flex items-end space-x-4">
-            <h1 class="text-xl font-semibold">Today</h1>
+        <div class="flex items-end space-x-2">
+            <h1 class="text-xl font-semibold tracking-wide">TODAY</h1>
             <div class="flex-1 h-0.5 bg-tango-200"></div>
         </div>
         <div class="flex flex-col md:flex-row md:space-x-8 md:space-y-0 intro-y">
@@ -26,40 +26,40 @@
                 }
             </div>
         </div>
-
     </div>
-    <div class="space-y-4">
-        <div class="flex items-end space-x-4">
-            <h1 class="text-xl font-semibold">MOST POPULAR</h1>
+
+    <div class="space-y-8">
+        <div class="flex items-end space-x-2">
+            <h1 class="text-xl font-semibold tracking-wide">MOST POPULAR</h1>
             <div class="flex-1 h-0.5 bg-tango-200"></div>
         </div>
-        <div class="flex flex-col space-y-4 md:flex-row md:space-x-2 md:space-y-0 intro-y">
+        <div class="grid grid-cols-4 gap-6 intro-y">
             @foreach (var item in middle4)
             {
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
             }
         </div>
     </div>
-    <div class="space-y-4">
-        <div class="flex items-end space-x-4">
-            <h1 class="text-xl font-semibold">MOST POPULAR</h1>
+
+    <div class="space-y-8">
+        <div class="flex items-end space-x-2">
+            <h1 class="text-xl font-semibold tracking-wide">MOST POPULAR</h1>
             <div class="flex-1 h-0.5 bg-tango-200"></div>
         </div>
-        <div class="flex flex-col space-y-4 md:flex-row md:space-x-2 md:space-y-0 ">
+
+        <div class="grid grid-cols-4 gap-6 intro-y">
             @foreach (var item in bottom4)
             {
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
             }
         </div>
-
     </div>
     <div class="space-y-8">
-        <div class="flex items-end space-x-4">
-            <h1 class="text-xl font-semibold">Today</h1>
+        <div class="flex items-end space-x-2">
+            <h1 class="text-xl font-semibold tracking-wide">MOST VIEW</h1>
             <div class="flex-1 h-0.5 bg-tango-200"></div>
         </div>
         <div class="flex flex-col md:flex-row md:space-x-8 md:space-y-0 ">
-
             <div class="flex flex-col flex-1 space-y-4">
                 @foreach (var item in bottom3)
                 {
@@ -68,9 +68,10 @@
             </div>
             @await Html.PartialAsync("../../Components/Post/MainPost.cshtml", new {Value = bottom1})
         </div>
-
     </div>
 </div>
+
+
 
 
 @section Scripts {

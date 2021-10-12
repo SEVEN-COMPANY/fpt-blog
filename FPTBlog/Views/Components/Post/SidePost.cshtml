@@ -6,7 +6,7 @@
     var categoryLink = $"{Routers.PostGetSearch.Link}?categoryId={value.Post.CategoryId}";
 }
 
-<div class="flex-1 md:space-x-2 md:flex fade-in post-image">
+<div class="flex-1 overflow-hidden bg-white rounded-md md:space-x-2 md:flex fade-in post-image">
     <a href="@link" class="flex-1 h-36 ">
         <img src="@value.Post.CoverUrl" alt="@value.Post.Title" class="object-cover w-full h-full ">
     </a>

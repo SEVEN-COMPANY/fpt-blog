@@ -75,20 +75,30 @@
         </div>
         <div class="flex items-center space-x-4">
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-            new { Label="Save Changes"})
-
-            <a href="@previewLink"
-                class="block px-4 py-2 font-medium text-center text-white duration-200 rounded-sm bg-tango-500 hover:bg-tango-600 fade-in"
-                onclick="return confirm('Do you save your post, click ok to go to preview page?')" target="_blank">
+            new { Label="Save Changes", Icon = "../../Components/Icons/Save.cshtml"})
+            <a href="@previewLink" target="_blank"
+                onclick="return confirm('Do you save your post, click ok to go to preview page?')"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white duration-200 border border-transparent rounded-md shadow-sm bg-tango-500 hover:bg-tango-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path fill-rule="evenodd"
+                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        clip-rule="evenodd" />
+                </svg>
                 Preview
             </a>
-
             <button id="post-send"
-                class="block px-4 py-2 font-medium text-white duration-200 rounded-sm bg-tango-500 fade-in hover:bg-tango-600">
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white duration-200 border border-transparent rounded-md shadow-sm bg-tango-500 hover:bg-tango-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd" />
+                </svg>
                 Submit Post Request
             </button>
         </div>
-
     </form>
 </div>
 

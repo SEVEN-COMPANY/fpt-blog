@@ -2,13 +2,13 @@ using FluentValidation;
 
 
 namespace FPTBlog.Src.CommentModule.DTO {
-    public class GetOriCommentDto {
+    public class GetCommentOfPostDto {
         public string PostId {
             get; set;
         }
     }
-    public class GetOriCommentDtoValidator : AbstractValidator<GetOriCommentDto> {
-        public GetOriCommentDtoValidator() {
+    public class GetCommentOfPostDtoValidator : AbstractValidator<GetCommentOfPostDto> {
+        public GetCommentOfPostDtoValidator() {
             RuleFor(x => x.PostId).NotEmpty().NotNull();
         }
     }
