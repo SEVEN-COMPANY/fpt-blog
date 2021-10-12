@@ -26,8 +26,16 @@ namespace FPTBlog.Src.RewardModule {
         }
 
         [Route("")]
-        public IActionResult GetAllBlogs() {
+        public IActionResult GetRewards(string searchName, string startDate, string endDate, int pageSize = 12, int pageIndex = 0) {
+            if (searchName == null) {
+                searchName = "";
+            }
 
+            List<RewardReport> rewardReports = this.RewardService.GetRewardReport(searchName, startDate, endDate, pageSize, pageIndex);
+            List<Reward> rewards = this.RewardService.GetRewards();
+
+            this.ViewData["rewards"] = rewards;
+            this.ViewData["rewardReports"] = rewardReports;
             return View(RoutersAdmin.RewardGetHome.Page);
         }
 
