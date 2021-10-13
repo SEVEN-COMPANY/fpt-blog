@@ -33,6 +33,15 @@ namespace FPTBlog.Src.RewardModule {
             res.data = reward;
             return new ObjectResult(res.getResponse());
         }
+        [HttpGet("userReward")]
+        public ObjectResult GetUserRewardHandler(string userId) {
+            var res = new ServerApiResponse<List<UserReward>>();
+            var rewards = this.RewardService.GetUserAllRewards(userId);
+
+            res.data = rewards;
+            return new ObjectResult(res.getResponse());
+        }
+
 
         [HttpPost("")]
         public ObjectResult CreateRewardHandler([FromForm] CreateRewardDto input) {
