@@ -10,16 +10,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/auth/register.ts":
-/*!******************************!*\
-  !*** ./src/auth/register.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar registerForm = document.getElementById('registerForm');\r\nregisterForm === null || registerForm === void 0 ? void 0 : registerForm.addEventListener('submit', function (event) {\r\n    event.preventDefault();\r\n    var username = document.getElementById('username');\r\n    var password = document.getElementById('password');\r\n    var name = document.getElementById('name');\r\n    var confirmPassword = document.getElementById('confirmPassword');\r\n    if (username !== null && password !== null && name !== null && confirmPassword !== null) {\r\n        var input = {\r\n            username: username.value,\r\n            password: password.value,\r\n            name: name.value,\r\n            confirmPassword: confirmPassword.value,\r\n        };\r\n        axios_1.http.post(routes_1.routers.auth.register, input).then(function () { return window.location.assign(routes_1.routerLinks.loginForm); });\r\n    }\r\n    else {\r\n        console.log('register form wrong');\r\n    }\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/auth/register.ts?");
-
-/***/ }),
-
 /***/ "./src/package/axios/index.ts":
 /*!************************************!*\
   !*** ./src/package/axios/index.ts ***!
@@ -58,6 +48,16 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 
 eval("\r\n// @ts-nocheck\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.toastify = void 0;\r\nvar toastify = function (option) { return Toastify(option).showToast(); };\r\nexports.toastify = toastify;\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/package/toastify/index.ts?");
 
+/***/ }),
+
+/***/ "./src/reward/removeUserReward.ts":
+/*!****************************************!*\
+  !*** ./src/reward/removeUserReward.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar axios_1 = __webpack_require__(/*! ../package/axios */ \"./src/package/axios/index.ts\");\r\nvar routes_1 = __webpack_require__(/*! ../package/axios/routes */ \"./src/package/axios/routes.ts\");\r\nvar btnClose = document.getElementById('modal-btn-close-remove');\r\nvar wrapper = document.getElementById('modal-wrapper-remove');\r\nvar bg = document.getElementById('modal-bg-remove');\r\nvar panel = document.getElementById('modal-panel-remove');\r\nvar btnAccept = document.getElementById('modal-btn-accept-remove');\r\nvar btnCancel = document.getElementById('modal-btn-cancel-remove');\r\nvar rows = document.getElementsByTagName('tr');\r\nvar userId = null;\r\nvar rewardId = null;\r\nvar modalToggle = function () {\r\n    wrapper === null || wrapper === void 0 ? void 0 : wrapper.classList.add('invisible');\r\n};\r\nfor (var index = 0; index < rows.length; index++) {\r\n    var element = rows[index];\r\n    var btns = element.getElementsByClassName('modal-btn');\r\n    var _loop_1 = function (index_1) {\r\n        var btn = btns[index_1];\r\n        console.log(btn);\r\n        if (btn)\r\n            btn.addEventListener('click', function () {\r\n                wrapper === null || wrapper === void 0 ? void 0 : wrapper.classList.remove('invisible');\r\n                bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-100');\r\n                bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-0');\r\n                panel === null || panel === void 0 ? void 0 : panel.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');\r\n                panel === null || panel === void 0 ? void 0 : panel.classList.remove('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');\r\n                panel === null || panel === void 0 ? void 0 : panel.removeEventListener('transitionend', modalToggle);\r\n                userId = btn.getAttribute('data-userId');\r\n                rewardId = btn.getAttribute('data-rewardId');\r\n            });\r\n    };\r\n    for (var index_1 = 0; index_1 < btns.length; index_1++) {\r\n        _loop_1(index_1);\r\n    }\r\n}\r\nbtnAccept === null || btnAccept === void 0 ? void 0 : btnAccept.addEventListener('click', function () {\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-100');\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-0');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');\r\n    panel === null || panel === void 0 ? void 0 : panel.addEventListener('transitionend', modalToggle);\r\n    if (userId !== null && rewardId !== null) {\r\n        var input = {\r\n            userId: userId,\r\n            rewardId: rewardId,\r\n        };\r\n        axios_1.http.put(routes_1.routers.reward.removeUserReward, input).then(function () {\r\n            window.location.reload();\r\n        });\r\n    }\r\n});\r\nbtnClose === null || btnClose === void 0 ? void 0 : btnClose.addEventListener('click', function () {\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-100');\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-0');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');\r\n    panel === null || panel === void 0 ? void 0 : panel.addEventListener('transitionend', modalToggle);\r\n});\r\nbtnCancel === null || btnCancel === void 0 ? void 0 : btnCancel.addEventListener('click', function () {\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.remove('opacity-100');\r\n    bg === null || bg === void 0 ? void 0 : bg.classList.add('opacity-0');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');\r\n    panel === null || panel === void 0 ? void 0 : panel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');\r\n    panel === null || panel === void 0 ? void 0 : panel.addEventListener('transitionend', modalToggle);\r\n});\r\n\n\n//# sourceURL=webpack://mono-webpack/./src/reward/removeUserReward.ts?");
+
 /***/ })
 
 /******/ 	});
@@ -91,7 +91,7 @@ eval("\r\n// @ts-nocheck\r\nObject.defineProperty(exports, \"__esModule\", ({ va
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/auth/register.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/reward/removeUserReward.ts");
 /******/ 	
 /******/ })()
 ;
