@@ -18,6 +18,7 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public (List<RewardReport>, int) GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex);
         public List<Reward> GetRewards();
         public List<SelectListItem> GetRewardsDropList();
+        public List<UserReward> GetUserAllRewards(string userId);
 
     }
 }

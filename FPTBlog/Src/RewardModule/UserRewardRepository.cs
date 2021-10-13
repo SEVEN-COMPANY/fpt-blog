@@ -11,17 +11,15 @@ namespace FPTBlog.Src.RewardModule {
             this.Db = db;
         }
 
-        public (List<UserReward>, int) GetUserReward(int pageIndex, int pageSize, string userId) {
+        public List<UserReward> GetUserAllRewards(string userId) {
             var query = (from UserReward in this.Db.UserReward
                          where (UserReward.UserId.Equals(userId))
                          select UserReward);
-
-            List<UserReward> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            List<UserReward> list = query.ToList();
             foreach (var userReward in list) {
                 this.Db.Entry(userReward).Reference(item => item.Reward).Load();
             }
-            int count = query.Count();
-            return (list, count);
+            return list;
         }
 
     }

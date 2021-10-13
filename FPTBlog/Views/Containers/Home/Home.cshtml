@@ -33,7 +33,7 @@
             <h1 class="text-xl font-semibold tracking-wide">MOST POPULAR</h1>
             <div class="flex-1 h-0.5 bg-tango-200"></div>
         </div>
-        <div class="grid grid-cols-4 gap-6 intro-y">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-4 intro-y">
             @foreach (var item in middle4)
             {
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
@@ -47,7 +47,7 @@
             <div class="flex-1 h-0.5 bg-tango-200"></div>
         </div>
 
-        <div class="grid grid-cols-4 gap-6 intro-y">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-4 intro-y">
             @foreach (var item in bottom4)
             {
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})

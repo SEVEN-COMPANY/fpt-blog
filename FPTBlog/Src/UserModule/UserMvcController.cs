@@ -10,17 +10,20 @@ using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.CategoryModule.Interface;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using FPTBlog.Src.RewardModule.Interface;
 
 namespace FPTBlog.Src.UserModule {
     [Route("user")]
     [ServiceFilter(typeof(AuthGuard))]
     public class UserMvcController : Controller {
         private readonly IPostService PostService;
+        private readonly IRewardService RewardService;
         private readonly IUserService UserService;
         private readonly ICategoryService CategoryService;
-        public UserMvcController(IUserService UserService, IPostService PostService, ICategoryService CategoryService) {
+        public UserMvcController(IUserService UserService, IRewardService rewardService, IPostService PostService, ICategoryService CategoryService) {
             this.UserService = UserService;
             this.PostService = PostService;
+            this.RewardService = rewardService;
             this.CategoryService = CategoryService;
         }
 
@@ -37,6 +40,7 @@ namespace FPTBlog.Src.UserModule {
             var (_, countFollowing) = this.UserService.CalculateFollowing(userId);
             var (_, countPost) = this.PostService.GetPostsForProfile(userId, 1, 0, "", "", PostStatus.APPROVED);
 
+            this.ViewData["rewards"] = this.RewardService.GetUserAllRewards(userId);
             this.ViewData["users"] = list;
             this.ViewData["countFollower"] = countFollower;
             this.ViewData["countFollowing"] = countFollowing;
@@ -51,11 +55,12 @@ namespace FPTBlog.Src.UserModule {
             var (list, countFollowing) = this.UserService.GetFollowingForPage(userId, pageIndex, pageSize, searchName);
             var (_, countFollower) = this.UserService.GetFollowerForPage(userId, pageIndex, pageSize, searchName);
             var (_, countPost) = this.PostService.GetPostsForProfile(userId, 1, 0, "", "", PostStatus.APPROVED);
+
+            this.ViewData["rewards"] = this.RewardService.GetUserAllRewards(userId);
             this.ViewData["users"] = list;
             this.ViewData["countFollower"] = countFollower;
             this.ViewData["countFollowing"] = countFollowing;
             this.ViewData["countPost"] = countPost;
-
             return View(Routers.UserGetFollower.Page);
         }
 
@@ -88,6 +93,7 @@ namespace FPTBlog.Src.UserModule {
                 listBlogs.Add(pvm);
             }
 
+            this.ViewData["rewards"] = this.RewardService.GetUserAllRewards(user.UserId);
             this.ViewData["user"] = user;
             this.ViewData["countFollower"] = countFollower;
             this.ViewData["countFollowing"] = countFollowing;
@@ -129,6 +135,8 @@ namespace FPTBlog.Src.UserModule {
                 listBlogs.Add(pvm);
             }
 
+
+            this.ViewData["rewards"] = this.RewardService.GetUserAllRewards(user.UserId);
             this.ViewData["user"] = user;
             this.ViewData["countFollower"] = countFollower;
             this.ViewData["countFollowing"] = countFollowing;
@@ -167,11 +175,15 @@ namespace FPTBlog.Src.UserModule {
 
         [HttpGet("update")]
         public IActionResult UpdateUser() {
+            var user = (User) this.ViewData["user"];
+            this.ViewData["rewards"] = this.RewardService.GetUserAllRewards(user.UserId);
             return View(Routers.UserPutUser.Page);
         }
 
         [HttpGet("change-password")]
         public IActionResult ChangePassPage() {
+            var user = (User) this.ViewData["user"];
+            this.ViewData["rewards"] = this.RewardService.GetUserAllRewards(user.UserId);
             return View(Routers.UserPutPassword.Page);
         }
     }

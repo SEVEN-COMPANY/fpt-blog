@@ -177,5 +177,8 @@
     }
 }
 
-.navbar {
+.tooltip:hover .content {
+    opacity: 1;
+    transform: translateY(4px);
+    visibility: visible;
 }
