@@ -5,17 +5,14 @@ using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Utils.Common;
 using FluentValidation.Results;
 using FPTBlog.Utils.Locale;
-using System.Collections.Generic;
-
 using System;
 
 using FPTBlog.Src.PostModule.Interface;
-
+using FPTBlog.Src.AuthModule;
 
 namespace FPTBlog.Src.CategoryModule {
     [Route("/api/category")]
-    // [ServiceFilter(typeof(AuthGuard))]
-
+    [ServiceFilter(typeof(AuthGuard))]
     public class CategoryApiController : Controller {
         private readonly ICategoryService CategoryService;
 
