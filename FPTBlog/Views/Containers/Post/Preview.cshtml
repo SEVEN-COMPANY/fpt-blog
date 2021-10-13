@@ -20,7 +20,7 @@
 
 }
 
-<div class="max-w-3xl py-8 pb-16 mx-auto space-y-4">
+<div class="py-8 pb-16 space-y-4 ">
     <div class="flex flex-col ">
 
 
@@ -41,18 +41,19 @@
             <p class="mt-2 text-xs opacity-60">This screen displays exactly what other will see your post.</p>
         }
     </div>
-
-    <div class="space-y-1 ">
-        <p class="font-semibold capitalize ">@value.Post.Category.Name</p>
-        <p class="text-sm font-medium opacity-60">@value.Post.CreateDate</p>
-    </div>
-    <div class="ql-editor intro-y">
-        @content
-        <div class="flex flex-wrap items-center space-x-2">
-            @foreach (var item in value.Post.PostTags)
-            {
-                <div class="text-sm text-blue-600">#@item.Tag.Name</div>
-            }
+    <div class="max-w-3xl mx-auto ">
+        <div class="space-y-1 ">
+            <p class="font-semibold capitalize ">@value.Post.Category.Name</p>
+            <p class="text-sm font-medium opacity-60">@value.Post.CreateDate</p>
+        </div>
+        <div class="ql-editor intro-y">
+            @content
+            <div class="flex flex-wrap items-center space-x-2">
+                @foreach (var item in value.Post.PostTags)
+                {
+                    <div class="text-sm text-blue-600">#@item.Tag.Name</div>
+                }
+            </div>
         </div>
     </div>
 
