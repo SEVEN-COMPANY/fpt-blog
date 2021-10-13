@@ -80,5 +80,9 @@ namespace FPTBlog.Src.RewardModule {
             }
             return rewards;
         }
+
+        public List<UserReward> GetUserAllRewards(string userId) {
+            return this.UserRewardRepository.GetUserAllRewards(userId);
+        }
     }
 }
