@@ -19,6 +19,7 @@ module.exports = {
         'reward-list': ['./src/reward/listReward.ts'],
         'user-reward-list': ['./src/reward/user-list.ts'],
         'reward-update': ['./src/reward/update.ts'],
+        'reward-remove-user-reward': ['./src/reward/removeUserReward.ts'],
         'user-profile': ['./src/user/profile.ts'],
     },
     output: {

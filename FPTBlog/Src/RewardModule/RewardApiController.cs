@@ -148,7 +148,7 @@ namespace FPTBlog.Src.RewardModule {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpDelete("remove")]
+        [HttpPut("remove")]
         public ObjectResult RemoveUserRewardHandler([FromBody] RemoveUserRewardDto input) {
             var res = new ServerApiResponse<UserReward>();
             ValidationResult result = new RemoveUserRewardDtoValidator().Validate(input);
