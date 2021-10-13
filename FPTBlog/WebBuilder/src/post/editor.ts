@@ -132,7 +132,7 @@ handleSelectBadge(
 
 const send = document.getElementById('post-send');
 send?.addEventListener('click', function () {
-    const isSend = confirm('Are you sure?');
+    const isSend = confirm('Remember to save your post, Are you sure?');
     if (isSend) {
         const postIdElement = document.getElementById('postId') as HTMLInputElement;
         http.post<ServerResponse<null>>(routers.post.sendPost, { PostId: postIdElement.value }).then(() => {
