@@ -89,7 +89,7 @@ namespace FPTBlog {
             services.AddScoped<IRewardRepository, RewardRepository>();
             services.AddScoped<IUserRewardRepository, UserRewardRepository>();
             services.AddScoped<IRewardService, RewardService>();
-
+            services.AddSession();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -134,9 +134,9 @@ namespace FPTBlog {
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
-
 
 
             app.UseEndpoints(endpoints => {
