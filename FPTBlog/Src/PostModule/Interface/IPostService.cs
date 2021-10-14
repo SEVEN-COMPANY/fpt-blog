@@ -37,7 +37,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search);
 
         public List<SelectListItem> GetPostStatusDropList();
-        public Dictionary<string, DateTime> ConvertStringToView(string input);
+        public Dictionary<string, DateTime> ConvertStringToViewSession(string input);
         public string ConvertViewSessionToString(Dictionary<string, DateTime> list);
     }
 }

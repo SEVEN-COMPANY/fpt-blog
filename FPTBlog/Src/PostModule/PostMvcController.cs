@@ -111,7 +111,7 @@ namespace FPTBlog.Src.PostModule {
             string now = DateTime.Now.ToLongTimeString();
             DateTime timeNow = DateTime.Parse(now);
             string time = this.HttpContext.Session.GetString(ViewSession);
-            Dictionary<string, DateTime> list = this.PostService.ConvertStringToView(time);
+            Dictionary<string, DateTime> list = this.PostService.ConvertStringToViewSession(time);
             if (list == null) {
                 list = new Dictionary<string, DateTime>();
             }

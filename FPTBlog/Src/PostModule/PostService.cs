@@ -136,7 +136,7 @@ namespace FPTBlog.Src.PostModule {
             return status;
         }
 
-        public Dictionary<string, DateTime> ConvertStringToView(string input) {
+        public Dictionary<string, DateTime> ConvertStringToViewSession(string input) {
             Dictionary<string, DateTime> list = new Dictionary<string, DateTime>();
             if (input != null && input.Trim().Length != 0) {
                 var arr = input.Split(",");
