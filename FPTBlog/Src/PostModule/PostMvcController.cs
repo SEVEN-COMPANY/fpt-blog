@@ -9,6 +9,7 @@ using FPTBlog.Utils.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace FPTBlog.Src.PostModule {
     [Route("post")]
@@ -18,6 +19,7 @@ namespace FPTBlog.Src.PostModule {
         private readonly IUploadFileService UploadFileService;
         private readonly IPostService PostService;
         private readonly ICategoryService CategoryService;
+        private const string ViewSession = "ViewSession";
         public PostMvcController(IUploadFileService uploadFileService, IPostService postService, ICategoryService categoryService) {
             this.UploadFileService = uploadFileService;
             this.PostService = postService;
@@ -106,8 +108,26 @@ namespace FPTBlog.Src.PostModule {
         [HttpGet("")]
         public IActionResult GetBlogByBlogId(string postId) {
             var post = this.PostService.GetViewPostByPostId(postId);
-            post.Post.View += 1;
-            this.PostService.UpdatePost(post.Post);
+            string now = DateTime.Now.ToLongTimeString();
+            DateTime timeNow = DateTime.Parse(now);
+            string time = this.HttpContext.Session.GetString(ViewSession);
+            Dictionary<string, DateTime> list = this.PostService.ConvertStringToView(time);
+            if (list == null) {
+                list = new Dictionary<string, DateTime>();
+            }
+            foreach (var item in list) {
+                if (item.Key == postId) {
+                    if (item.Value.AddMinutes(post.Post.ReadTime) < DateTime.Now) {
+                        post.Post.View += 1;
+                        this.PostService.UpdatePost(post.Post);
+                    }
+                    list.Remove(postId);
+                }
+
+            }
+            list.Add(postId, timeNow);
+
+            this.HttpContext.Session.SetString(ViewSession, this.PostService.ConvertViewSessionToString(list));
 
             this.ViewData["post"] = post;
             return View(Routers.PostGetPost.Page);

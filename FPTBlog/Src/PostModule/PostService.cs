@@ -136,5 +136,35 @@ namespace FPTBlog.Src.PostModule {
             return status;
         }
 
+        public Dictionary<string, DateTime> ConvertStringToView(string input) {
+            Dictionary<string, DateTime> list = new Dictionary<string, DateTime>();
+            if (input != null && input.Trim().Length != 0) {
+                var arr = input.Split(",");
+                foreach (var item in arr) {
+                    var arr2 = item.Split(";");
+                    string postId = arr2[0];
+                    var time = DateTime.Parse(arr2[1]);
+                    list.Add(postId, time);
+                }
+            }
+            return list;
+        }
+
+        public string ConvertViewSessionToString(Dictionary<string, DateTime> list) {
+            string viewSession = "";
+            foreach (var item in list) {
+                string[] arr = { item.Key, item.Value.ToShortTimeString() };
+                var readAblePhrase = string.Join(";", arr);
+                if (viewSession == "") {
+                    viewSession = readAblePhrase;
+                }
+                else {
+                    viewSession += "," + readAblePhrase;
+                }
+
+            }
+            return viewSession;
+        }
+
     }
 }
