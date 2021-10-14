@@ -98,6 +98,7 @@ namespace FPTBlog {
                 c.CronExpression = "* * * * *"; // every 1 minute
             });
 
+            services.AddSession();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -142,9 +143,9 @@ namespace FPTBlog {
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
-
 
 
             app.UseEndpoints(endpoints => {
