@@ -38,6 +38,8 @@ using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule;
 using FPTBlog.Src.RewardModule.Interface;
 using FPTBlog.Src.RewardModule;
+using FPTBlog.Src.NotificationModule.Interface;
+using FPTBlog.Src.NotificationModule;
 
 namespace FPTBlog {
     public class Startup {
@@ -93,6 +95,10 @@ namespace FPTBlog {
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            // Notification Module
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<INotificationService, NotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
