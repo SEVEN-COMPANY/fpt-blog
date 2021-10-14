@@ -30,5 +30,8 @@ namespace FPTBlog.Src.UserModule.Interface {
         public void SavePost(User user, Post post);
         public void UnsavePost(User user, Post post);
         public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize, string searchTitle, string searchCategoryId);
+
+        public List<User> GetUsersHave_N_Posts(int N);
+        public List<User> GetUsersHave_N_Followers(int N);
     }
 }

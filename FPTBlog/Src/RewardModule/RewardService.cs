@@ -25,7 +25,12 @@ namespace FPTBlog.Src.RewardModule {
 
         public void CreateReward(Reward reward) => this.RewardRepository.Add(reward);
         public Reward GetRewardByRewardId(string rewardId) => this.RewardRepository.Get(rewardId);
-        public void GiveUserReward(UserReward userReward) => this.UserRewardRepository.Add(userReward);
+        public void GiveUserReward(UserReward userReward) {
+            var userRewardDb = this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId == userReward.RewardId && item.UserId == userReward.UserId);
+            if (userRewardDb == null) {
+                this.UserRewardRepository.Add(userReward);
+            }
+        }
         public void RemoveUserReward(UserReward UserReward) => this.UserRewardRepository.Remove(UserReward.UserRewardId);
         public UserReward GetUserReward(Reward reward, User user) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(reward.RewardId) && item.UserId.Equals(user.UserId));
         public void UpdateReward(Reward reward) => this.RewardRepository.Update(reward);
@@ -67,7 +72,6 @@ namespace FPTBlog.Src.RewardModule {
             return (rewardReports, list.Count);
         }
 
-
         public UserReward IsUseReward(string rewardId) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(rewardId));
         public void DeleteReward(string rewardId) => this.RewardRepository.Remove(rewardId);
         public List<Reward> GetRewards() => (List<Reward>) this.RewardRepository.GetAll();
@@ -83,6 +87,35 @@ namespace FPTBlog.Src.RewardModule {
 
         public List<UserReward> GetUserAllRewards(string userId) {
             return this.UserRewardRepository.GetUserAllRewards(userId);
+        }
+
+        public void GiveRewardForUserHave_N_Posts(int N) {
+            string rewardName = string.Empty;
+            if (N == 5) {
+                rewardName = RewardName.Hunter;
+            }
+            if (N == 10) {
+                rewardName = RewardName.Killer;
+            }
+            if (N == 25) {
+                rewardName = RewardName.Hero;
+            }
+            if (N == 50) {
+                rewardName = RewardName.Monster;
+            }
+
+            Reward reward = this.RewardRepository.GetFirstOrDefault(item => item.Name == rewardName);
+
+            List<User> users = this.UserRepository.GetUsersHave_N_Posts(N);
+
+            foreach (var user in users) {
+                UserReward userReward = new UserReward();
+                userReward.UserId = user.UserId;
+                userReward.User = user;
+                userReward.RewardId = reward.RewardId;
+                userReward.Reward = reward;
+                this.GiveUserReward(userReward);
+            }
         }
     }
 }
