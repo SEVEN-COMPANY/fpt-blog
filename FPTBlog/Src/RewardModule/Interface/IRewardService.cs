@@ -18,6 +18,6 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public List<Reward> GetRewards();
         public List<SelectListItem> GetRewardsDropList();
         public List<UserReward> GetUserAllRewards(string userId);
-
+        // public List<User>
     }
 }
