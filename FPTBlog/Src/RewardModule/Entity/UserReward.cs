@@ -42,7 +42,7 @@ namespace FPTBlog.Src.RewardModule.Entity {
         }
 
         public UserReward() {
-            this.RewardId = Guid.NewGuid().ToString();
+            this.UserRewardId = Guid.NewGuid().ToString();
             this.UserId = "";
             this.RewardId = "";
             this.CreateDate = DateTime.Now.ToShortDateString();

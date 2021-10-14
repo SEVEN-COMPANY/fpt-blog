@@ -1,4 +1,4 @@
-﻿using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,6 @@ namespace FPTBlog.Src.UserModule {
     public class UserService : IUserService {
         private readonly IUserRepository UserRepository;
         public UserService(IUserRepository userRepository) {
-
             this.UserRepository = userRepository;
         }
 
@@ -75,5 +74,9 @@ namespace FPTBlog.Src.UserModule {
         public (List<User>, int) GetFollowerForPage(string userId, int pageIndex, int pageSize, string searchName) => this.UserRepository.GetFollowerForPage(userId, pageIndex, pageSize, searchName);
 
         public (List<User>, int) GetFollowingForPage(string userId, int pageIndex, int pageSize, string searchName) => this.UserRepository.GetFollowingForPage(userId, pageIndex, pageSize, searchName);
+
+        public List<User> GetUsersHave_N_Posts(int N) => this.UserRepository.GetUsersHave_N_Posts(N);
+
+        public List<User> GetUsersHave_N_Followers(int N) => this.UserRepository.GetUsersHave_N_Followers(N);
     }
 }
