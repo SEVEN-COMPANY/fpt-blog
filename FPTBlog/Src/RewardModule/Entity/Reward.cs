@@ -34,38 +34,33 @@ namespace FPTBlog.Src.RewardModule.Entity {
             get; set;
         }
 
+        [Required]
+        public RewardType Type {
+            get; set;
+        }
+
+        [Required]
+        public int Constraint {
+            get; set;
+        }
         public Reward() {
             this.RewardId = Guid.NewGuid().ToString();
             this.Name = "";
             this.Description = "";
+            this.Constraint = 0;
             this.ImageUrl = "https://picsum.photos/128";
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
     }
 
-    public class RewardName {
-        // Student can get this badge if they have the highest interactive post in this month
-        public static string Conqueror = "Conqueror";
-
-        // Students can get this badge if they post the most posts in a month
-        public static string Spammer = "Spammer";
-
-        // Students can get this badge if they have more than 100 followers
-        public static string Attractor = "Attractor";
-
-        // 	Students can get this badge if they have more than 5 posts
-        public static string Hunter = "Hunter";
-
-        // Students can get this badge if they have more than 10 posts
-        public static string Killer = "Killer";
-
-        // Students can get this badge if they have a post which have most viewers
-        public static string Hero = "Hero";
-
-        // Students can get this badge if they have more than 25 posts
-        public static string Monster = "Monster";
-
-        // Students can get this badge if they have more than 50 posts
-        public static string Terminator = "Terminator";
+    public enum RewardType {
+        Post = 1,
+        Viewer_For_A_Post = 2,
+        Interaction_For_A_Post = 3,
+        Follower = 4,
+        Most_Post_In_N_Month_FromNow = 5,
+        Most_View_For_A_Post_In_N_Month_FromNow = 6,
+        Most_Interaction_For_A_Post_In_N_Month_FromNow = 7,
+        Freedom = 8
     }
 }
