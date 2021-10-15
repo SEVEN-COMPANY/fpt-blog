@@ -135,16 +135,7 @@ namespace FPTBlog.Src.RewardModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            var userReward = new UserReward();
-            userReward.UserRewardId = Guid.NewGuid().ToString();
-            userReward.CreateDate = DateTime.Now.ToShortDateString();
-            userReward.RewardId = input.RewardId;
-            userReward.Reward = reward;
-            userReward.UserId = input.UserId;
-            userReward.User = user;
-
-            this.RewardService.GiveUserReward(userReward);
-            res.data = userReward;
+            this.RewardService.GiveUserReward(user, reward);
             return new ObjectResult(res.getResponse());
         }
 

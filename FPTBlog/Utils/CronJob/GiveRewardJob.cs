@@ -28,10 +28,7 @@ namespace FPTBlog.Utils.CronJob {
         }
 
         public override Task DoWork(CancellationToken cancellationToken) {
-            this.RewardService.GiveRewardForUserHave_N_Posts(5);
-            this.RewardService.GiveRewardForUserHave_N_Posts(10);
-            this.RewardService.GiveRewardForUserHave_N_Posts(25);
-            this.RewardService.GiveRewardForUserHave_N_Posts(50);
+            this.RewardService.GiveRewardJob();
 
             Console.WriteLine($"{DateTime.Now:hh:mm:ss} Give reward cron job is working.");
             return Task.CompletedTask;

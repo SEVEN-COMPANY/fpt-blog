@@ -33,5 +33,10 @@ namespace FPTBlog.Src.UserModule.Interface {
 
         public List<User> GetUsersHave_N_Posts(int N);
         public List<User> GetUsersHave_N_Followers(int N);
+        public List<User> GetUsersHave_N_View_For_A_Post(int N);
+        public List<User> GetUsersHave_N_Interaction_For_A_Post(int N);
+        public User GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(int N);
+        public User GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(int N);
+        public User GetUserHave_Most_Post_In_N_Month_FromNow(int N);
     }
 }
