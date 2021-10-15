@@ -58,15 +58,6 @@ namespace FPTBlog.Src.UserModule {
             return View(RoutersAdmin.UserGetUserList.Page);
         }
 
-        [HttpGet("chart")]
-        public IActionResult GetChart() {
 
-            var (totalStudent, totalLecturer) = this.UserService.GetUserChartInformation();
-
-            this.ViewData["totalStudent"] = totalStudent;
-            this.ViewData["totalLecturer"] = totalLecturer;
-
-            return View(RoutersAdmin.UserGetUserList.Page);
-        }
     }
 }
