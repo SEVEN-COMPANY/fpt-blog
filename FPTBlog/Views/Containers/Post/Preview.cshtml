@@ -20,7 +20,7 @@
 
 }
 
-<div class="py-8 pb-16 space-y-4 ">
+<div class="px-4 py-8 pb-16 space-y-4 ">
     <div class="flex flex-col ">
 
 
@@ -83,7 +83,7 @@
                 <h1 class="text-xl font-semibold tracking-wide">MOST POPULAR</h1>
                 <div class="flex-1 h-0.5 bg-tango-200"></div>
             </div>
-            <div class="grid grid-cols-4 gap-6 intro-y">
+            <div class="grid gap-4 lg:grid-cols-4 lg:gap-6 intro-y">
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml",new {Value = value})
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml",new {Value = value})
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml",new {Value = value})
