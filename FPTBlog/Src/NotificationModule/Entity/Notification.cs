@@ -7,7 +7,8 @@ using FPTBlog.Src.PostModule.Entity;
 namespace FPTBlog.Src.NotificationModule.Entity {
     public enum NotificationLevel {
         INFOMATION = 1,
-        WARNING = 2
+        WARNING = 2,
+        BAN = 3
     }
 
     [Table("tblNotification")]
