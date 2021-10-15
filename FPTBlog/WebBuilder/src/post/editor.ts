@@ -60,7 +60,7 @@ saveChangePostBtn?.addEventListener('click', function () {
             postId: postIdElement.value,
             readTime: readTime,
             coverUrl: coverImage,
-            description: `${editor.root.innerText.split(' ').slice(0, 30).join(' ')}...`,
+            description: `${editor.root.innerText.replace(/\n/g, '').split(' ').slice(0, 30).join(' ')}...`,
         };
 
         http.post<ServerResponse<null>>(routers.post.save, input);
