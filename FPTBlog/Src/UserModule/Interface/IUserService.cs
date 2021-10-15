@@ -30,5 +30,14 @@ namespace FPTBlog.Src.UserModule.Interface {
         public void SavePost(User user, Post post);
         public void UnsavePost(User user, Post post);
         public (List<Post>, int) GetSavePost(string userId, int pageIndex, int pageSize, string searchTitle, string searchCategoryId);
+
+        public List<User> GetUsersHave_N_Posts(int N);
+        public List<User> GetUsersHave_N_Followers(int N);
+        public List<User> GetUsersHave_N_View_For_A_Post(int N);
+        public List<User> GetUsersHave_N_Interaction_For_A_Post(int N);
+        public User GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(int N);
+        public User GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(int N);
+        public User GetUserHave_Most_Post_In_N_Month_FromNow(int N);
+        public (int, int) GetUserChartInformation();
     }
 }

@@ -34,12 +34,33 @@ namespace FPTBlog.Src.RewardModule.Entity {
             get; set;
         }
 
+        [Required]
+        public RewardType Type {
+            get; set;
+        }
+
+        [Required]
+        public int Constraint {
+            get; set;
+        }
         public Reward() {
             this.RewardId = Guid.NewGuid().ToString();
             this.Name = "";
             this.Description = "";
+            this.Constraint = 0;
             this.ImageUrl = "https://picsum.photos/128";
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
+    }
+
+    public enum RewardType {
+        Post = 1,
+        Viewer_For_A_Post = 2,
+        Interaction_For_A_Post = 3,
+        Follower = 4,
+        Most_Post_In_N_Month_FromNow = 5,
+        Most_View_For_A_Post_In_N_Month_FromNow = 6,
+        Most_Interaction_For_A_Post_In_N_Month_FromNow = 7,
+        Freedom = 8
     }
 }

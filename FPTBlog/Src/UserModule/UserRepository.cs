@@ -14,6 +14,8 @@ namespace FPTBlog.Src.UserModule {
             this.Db = db;
         }
 
+        #region OK
+
         // Đếm những đứa follow mình
         public (List<User>, int) CalculateFollower(string userId) {
             List<FollowInfo> followInfos = this.Db.FollowInfo.Where(item => item.FollowingUserId == userId).ToList();
@@ -159,7 +161,6 @@ namespace FPTBlog.Src.UserModule {
             this.Db.SavePost.Add(savePost);
             this.Db.SaveChanges();
         }
-
         public void UnsavePost(User user, Post post) {
             SavePost savePost = this.Db.SavePost.FirstOrDefault(item => item.UserId == user.UserId && item.PostId == post.PostId);
             this.Db.SavePost.Remove(savePost);
@@ -169,24 +170,140 @@ namespace FPTBlog.Src.UserModule {
             List<Post> list;
             if (searchCategoryId == "") {
                 list = (from Post in this.Db.Post
-                             join SavePost in this.Db.SavePost
-                             on Post.PostId equals SavePost.PostId
-                             where SavePost.UserId.Equals(userId)
-                             select Post)
+                        join SavePost in this.Db.SavePost
+                        on Post.PostId equals SavePost.PostId
+                        where SavePost.UserId.Equals(userId)
+                        select Post)
                              .Where(item => item.Title.Contains(searchTitle)).ToList();
             }
             else {
                 list = (from Post in this.Db.Post
-                             join SavePost in this.Db.SavePost
-                             on Post.PostId equals SavePost.PostId
-                             where SavePost.UserId.Equals(userId)
-                             select Post)
+                        join SavePost in this.Db.SavePost
+                        on Post.PostId equals SavePost.PostId
+                        where SavePost.UserId.Equals(userId)
+                        select Post)
                              .Where(item => item.Title.Contains(searchTitle) && item.CategoryId == searchCategoryId).ToList();
             }
             int count = list.Count;
             List<Post> listForPAge = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
 
             return (listForPAge, count);
+        }
+        #endregion
+        public List<User> GetUsersHave_N_Posts(int N) {
+            // get all user have N post or more
+            var userIds = this.Db.Post.AsEnumerable()
+                                   .GroupBy(item => item.StudentId)
+                                   .Where(item => item.Count() >= N)
+                                   .Select(item => item.Key)
+                                   .ToList();
+
+            List<User> users = new List<User>();
+            foreach (var userId in userIds) {
+                users.Add(this.Db.User.FirstOrDefault(item => item.UserId == userId));
+            }
+
+            return users;
+        }
+
+        public List<User> GetUsersHave_N_Followers(int N) {
+            // get all user have N follower or more
+            var userIds = this.Db.FollowInfo.AsEnumerable()
+                            .GroupBy(item => item.FollowerId)
+                            .Where(item => item.Count() >= N)
+                            .Select(item => item.Key)
+                            .ToList();
+
+            List<User> users = new List<User>();
+            foreach (var userId in userIds) {
+                users.Add(this.Db.User.FirstOrDefault(item => item.UserId == userId));
+            }
+
+            return users;
+        }
+
+        public List<User> GetUsersHave_N_View_For_A_Post(int N) {
+            var userIds = this.Db.Post.AsEnumerable()
+                                        .Where(item => item.View >= N)
+                                        .Select(item => item.StudentId)
+                                        .ToList();
+
+            List<User> users = new List<User>();
+            foreach (var userId in userIds) {
+                users.Add(this.Db.User.FirstOrDefault(item => item.UserId == userId));
+            }
+
+            return users;
+        }
+
+        public List<User> GetUsersHave_N_Interaction_For_A_Post(int N) {
+            var userIds = this.Db.Post.AsEnumerable()
+                                        .Where(item => item.Like + item.Dislike >= N)
+                                        .Select(item => item.StudentId)
+                                        .ToList();
+
+            List<User> users = new List<User>();
+            foreach (var userId in userIds) {
+                users.Add(this.Db.User.FirstOrDefault(item => item.UserId == userId));
+            }
+
+            return users;
+        }
+
+        public User GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(int N) {
+            string rangeMonth = DateTime.Now.AddMonths(-N).ToShortDateString();
+            DateTime rangeMonthDate = Convert.ToDateTime(rangeMonth);
+
+            var userIds = this.Db.Post.AsEnumerable()
+                                  .Where(item => DateTime.Compare(Convert.ToDateTime(item.CreateDate), rangeMonthDate) > 0
+                                                && item.Status == PostStatus.APPROVED)
+                                  .OrderByDescending(item => item.View)
+                                  .Select(item => item.StudentId)
+                                  .ToList();
+            if(userIds.Count > 0){
+                User user = this.GetFirstOrDefault(item => item.UserId == userIds[0]);
+                return user;
+            }
+
+            return null;
+        }
+
+        public User GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(int N) {
+            string rangeMonth = DateTime.Now.AddMonths(-N).ToShortDateString();
+            DateTime rangeMonthDate = Convert.ToDateTime(rangeMonth);
+
+            var userIds = this.Db.Post.AsEnumerable()
+                                  .Where(item => DateTime.Compare(Convert.ToDateTime(item.CreateDate), rangeMonthDate) > 0
+                                                && item.Status == PostStatus.APPROVED)
+                                  .OrderByDescending(item => item.Like + item.Dislike)
+                                  .Select(item => item.StudentId)
+                                  .ToList();
+
+            if(userIds.Count > 0){
+                User user = this.GetFirstOrDefault(item => item.UserId == userIds[0]);
+                return user;
+            }
+
+            return null;
+        }
+
+        public User GetUserHave_Most_Post_In_N_Month_FromNow(int N) {
+            string rangeMonth = DateTime.Now.AddMonths(-N).ToShortDateString();
+            DateTime rangeMonthDate = Convert.ToDateTime(rangeMonth);
+
+            var userIds = this.Db.Post.AsEnumerable()
+                                   .Where(item => DateTime.Compare(Convert.ToDateTime(item.CreateDate), rangeMonthDate) > 0
+                                                && item.Status == PostStatus.APPROVED)
+                                   .GroupBy(item => item.StudentId)
+                                   .OrderByDescending(item => item.Count())
+                                   .Select(item => item.Key)
+                                   .ToList();
+            if(userIds.Count > 0){
+                User user = this.GetFirstOrDefault(item => item.UserId == userIds[0]);
+                return user;
+            }
+
+            return null;
         }
     }
 }

@@ -172,6 +172,19 @@ namespace FPTBlog.Src.UserModule {
 
             return new ObjectResult(res.getResponse());
         }
+
+        [HttpGet("test")]
+        public IActionResult Test(){
+            User user = this.UserService.GetUserHave_Most_Post_In_N_Month_FromNow(1);
+            User user1 = this.UserService.GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(1);
+            User user2 = this.UserService.GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(1);
+
+            return Json(new{
+                user = user,
+                user1 = user1,
+                user2 = user2
+            });
+        }
     }
 
 }

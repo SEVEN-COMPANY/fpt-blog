@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FPTBlog.Src.CommentModule.Entity;
 using FPTBlog.Src.PostModule.Entity;
@@ -36,5 +37,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search);
 
         public List<SelectListItem> GetPostStatusDropList();
+        public Dictionary<string, DateTime> ConvertStringToViewSession(string input);
+        public string ConvertViewSessionToString(Dictionary<string, DateTime> list);
     }
 }

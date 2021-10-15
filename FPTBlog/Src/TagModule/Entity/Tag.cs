@@ -15,7 +15,7 @@ namespace FPTBlog.Src.TagModule.Entity {
         }
 
         [Required]
-        [StringLength(30)]
+
         public string Name {
             get; set;
         }
