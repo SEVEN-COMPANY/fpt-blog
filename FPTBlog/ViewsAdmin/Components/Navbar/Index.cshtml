@@ -23,7 +23,7 @@ new {Label = "Logout", Link = Routers.AuthGetLogout.Link, Icon = "../Icons/Logou
                 <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
                     <div class="flex items-center flex-shrink-0 px-4">
                         <a href="@Routers.CommonGetHome.Link" class="inline-block">
-                            <h1 class="text-3xl font-semibold fade-in text-tango-500">FPT Blog</h1>
+                            @await Html.PartialAsync("../../../Views/Components/Icons/Logo-lg.cshtml")
                         </a>
                     </div>
                     <nav class="flex-1 mt-5" aria-label="Sidebar">
