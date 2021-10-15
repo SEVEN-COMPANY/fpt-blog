@@ -15,5 +15,6 @@ namespace FPTBlog.Src.CategoryModule.Interface {
 
         public List<SelectListItem> GetCategoryStatusDropList();
         public List<SelectListItem> GetCategoryDropList();
+        public List<CategoryChart> GetCategoryChart();
     }
 }
