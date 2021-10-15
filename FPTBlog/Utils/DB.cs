@@ -36,6 +36,9 @@ namespace FPTBlog.Utils {
         public DbSet<LikePost> LikePost {
             get; set;
         }
+        public DbSet<LikeComment> LikeComment {
+            get; set;
+        }
 
         public DbSet<FollowInfo> FollowInfo{
             get;set;
