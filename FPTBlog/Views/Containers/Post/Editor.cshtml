@@ -20,7 +20,7 @@
 
 @await Html.PartialAsync("../../Components/Form/FormToastify.cshtml")
 
-<div class="flex-1 max-w-3xl px-2 pt-8 pb-16 mx-auto intro-y">
+<div class="flex-1 max-w-3xl px-4 pb-16 mx-auto lg:pt-8 intro-y">
 
     <div class="space-y-4" id="createBlogForm">
         <div class="flex items-center justify-between">
@@ -54,7 +54,7 @@
         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
         new {Name="title", Label="Title", Type="text", Value=post.Title})
 
-        <div class="flex space-x-2">
+        <div class="flex flex-col space-y-2 lg:space-y-0 lg:space-x-2 md:flex-row">
             <div class="flex-1">
 
                 @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
@@ -76,7 +76,7 @@
         </div>
         <div>
         </div>
-        <div class="flex flex-col space-x-2 md:items-center md:flex-row">
+        <div class="flex flex-col space-y-2 lg:space-y-0 lg:space-x-2 md:items-center md:flex-row">
             @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
             new { Label="Save Changes", Icon = "../../Components/Icons/Save.cshtml"})
             <a href="@previewLink" target="_blank"
