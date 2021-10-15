@@ -53,6 +53,10 @@ namespace FPTBlog.Utils {
         public DbSet<SavePost> SavePost {
             get; set;
         }
+
+        public DbSet<LikeComment> LikeComment {
+            get; set;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 

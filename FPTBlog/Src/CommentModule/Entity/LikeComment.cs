@@ -3,27 +3,28 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.PostModule.Entity {
+namespace FPTBlog.Src.CommentModule.Entity
+{
     public enum Expression {
         LIKE = 1,
         DISLIKE = 2
     }
-
-    [Table("tblLikePost")]
-    public class LikePost {
+    [Table("tblLikeComment")]
+    public class LikeComment
+    {
         [Key]
         [Required]
-        public string LikePostId {
+        public string LikeCommentId {
             get; set;
         }
 
         [Required]
-        public string PostId {
+        public string CommentId {
             get; set;
         }
 
-        [ForeignKey("PostId")]
-        public virtual Post Post {
+        [ForeignKey("CommentId")]
+        public virtual Comment Comment {
             get; set;
         }
 
@@ -48,8 +49,8 @@ namespace FPTBlog.Src.PostModule.Entity {
             get; set;
         }
 
-        public LikePost() {
-            this.LikePostId = Guid.NewGuid().ToString();
+        public LikeComment() {
+            this.LikeCommentId = Guid.NewGuid().ToString();
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
     }

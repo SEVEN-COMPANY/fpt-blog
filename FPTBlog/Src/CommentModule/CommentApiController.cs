@@ -142,5 +142,45 @@ namespace FPTBlog.Src.CommentModule.Interface {
 
         }
 
+        [HttpPost("like")]
+        public IActionResult LikeComment([FromBody] LikeCommentDto input) {
+            var res = new ServerApiResponse<Comment>();
+            ValidationResult result = new LikeCommentDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Comment comment = this.CommentService.GetCommentByCommentId(input.CommentId);
+            if (comment == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "commentId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.CommentService.LikeComment(comment, user);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("dislike")]
+        public IActionResult DislikeComment([FromBody] LikeCommentDto input) {
+            var res = new ServerApiResponse<Comment>();
+            ValidationResult result = new LikeCommentDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Comment comment= this.CommentService.GetCommentByCommentId(input.CommentId);
+            if (comment == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "commentId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.CommentService.DislikeComment(comment, user);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
     }
 }
