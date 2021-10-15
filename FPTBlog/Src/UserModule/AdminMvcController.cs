@@ -58,20 +58,6 @@ namespace FPTBlog.Src.UserModule {
             return View(RoutersAdmin.UserGetUserList.Page);
         }
 
-        [HttpGet("profile")]
-        public IActionResult Profile() {
-            return View(RoutersAdmin.UserProfile.Page);
-        }
-
-        [HttpGet("update")]
-        public IActionResult UpdateUser() {
-            return View(RoutersAdmin.UserPutUser.Page);
-        }
-
-        [HttpGet("change-password")]
-        public IActionResult ChangePassPage() {
-            return View(RoutersAdmin.UserPutPassword.Page);
-        }
 
     }
 }

@@ -182,3 +182,7 @@
     transform: translateY(4px);
     visibility: visible;
 }
+
+.max-w-badge {
+    max-width: 10rem;
+}

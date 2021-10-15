@@ -91,5 +91,20 @@ namespace FPTBlog.Src.UserModule {
         public User GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(int N) => this.UserRepository.GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(N);
 
         public User GetUserHave_Most_Post_In_N_Month_FromNow(int N) => this.UserRepository.GetUserHave_Most_Post_In_N_Month_FromNow(N);
+        public (int, int) GetUserChartInformation() {
+            List<User> users = (List<User>) this.UserRepository.GetAll();
+            int totalStudent = 0;
+            int totalLecturer = 0;
+            foreach (User user in users) {
+                if (user.Role == UserRole.STUDENT) {
+                    totalStudent++;
+                }
+                if (user.Role == UserRole.LECTURER) {
+                    totalLecturer++;
+                }
+            }
+
+            return (totalStudent, totalLecturer);
+        }
     }
 }

@@ -38,5 +38,6 @@ namespace FPTBlog.Src.UserModule.Interface {
         public User GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(int N);
         public User GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(int N);
         public User GetUserHave_Most_Post_In_N_Month_FromNow(int N);
+        public (int, int) GetUserChartInformation();
     }
 }

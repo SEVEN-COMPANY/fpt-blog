@@ -14,7 +14,7 @@
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
         new {Name="indexPage", Value="0"})
 
-        <div class="flex items-end space-x-4">
+        <div class="flex items-end justify-center space-x-4">
 
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
             new {Name="search", Label="Search", Type="text", Value= this.Context.Request.Query["search"]})
