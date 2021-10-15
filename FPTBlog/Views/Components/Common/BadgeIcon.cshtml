@@ -1,12 +1,12 @@
 <div class="w-6 h-6 m-0.5">
     <div class="relative tooltip">
-        <img class="object-cover w-full h-full" src="@Model.ImageUrl" alt="@Model.Name" />
+        <img class="z-0 object-cover w-full h-full" src="@Model.ImageUrl" alt="@Model.Name" />
         <div
-            class="absolute z-10 invisible p-2 duration-300 delay-500 transform translate-y-4 border rounded-md shadow-md opacity-0 -left-32 bg-tango-50 content">
+            class="absolute z-40 invisible px-4 py-6 duration-300 delay-500 transform translate-y-4 border rounded-md shadow-md opacity-0 -left-16 bg-tango-50 content">
             <div class="flex">
                 <div class="flex-1 space-y-2">
                     <h3 class="font-semibold text-center">@Model.Name</h3>
-                    <p class="w-screen max-w-xs text-sm text-left break-words text-tango-700">
+                    <p class="w-screen text-sm text-left break-words max-w-badge text-tango-700">
                         @Model.Description
                     </p>
                 </div>

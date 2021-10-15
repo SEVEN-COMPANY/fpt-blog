@@ -3,6 +3,7 @@ import { slideOver } from '../package/modal/index';
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
 import { ServerResponse } from '../package/interface/serverResponse';
+import { ApexOptions } from 'apexcharts';
 pageChange('listCategoryForm');
 slideOver('modal');
 interface CreateCategoryDto {
@@ -36,3 +37,55 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
         http.post<ServerResponse<null>>(routers.category.create, input).then();
     }
 });
+
+const buildChart = () => {
+    const viewChart = document.getElementById('view-chart');
+    const label = viewChart?.getElementsByTagName('span')[0] as HTMLSpanElement;
+    const chartElement = document.getElementById('chart');
+    let chart: ApexCharts;
+    let isClick = false;
+
+    viewChart?.addEventListener('click', function () {
+        if (!isClick) {
+            http.get<ServerResponse<{ name: string; total: number }[]>>(routers.category.chart).then(({ data }) => {
+                const names = data.data.map((item) => item.name);
+                const totals = data.data.map((item) => item.total);
+
+                const options: ApexOptions = {
+                    series: totals,
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                    },
+                    title: {
+                        text: 'Category and post chart',
+                        align: 'center',
+                    },
+                    labels: names,
+                    responsive: [
+                        {
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200,
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                },
+                            },
+                        },
+                    ],
+                };
+                isClick = true;
+                chart = new ApexCharts(chartElement, options);
+                label.innerText = 'Close Chart';
+                chart.render();
+            });
+        } else {
+            isClick = false;
+            label.innerText = 'View Chart';
+            chart.destroy();
+        }
+    });
+};
+buildChart();

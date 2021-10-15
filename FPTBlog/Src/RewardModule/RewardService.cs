@@ -23,9 +23,21 @@ namespace FPTBlog.Src.RewardModule {
             this.PostRepository = postRepository;
         }
 
+        #region OK
         public void CreateReward(Reward reward) => this.RewardRepository.Add(reward);
         public Reward GetRewardByRewardId(string rewardId) => this.RewardRepository.Get(rewardId);
-        public void GiveUserReward(UserReward userReward) => this.UserRewardRepository.Add(userReward);
+        public void GiveUserReward(User user, Reward reward) {
+            UserReward userReward =new UserReward(){
+                                User = user,
+                                UserId = user.UserId,
+                                Reward = reward,
+                                RewardId = reward.RewardId
+                            };
+            var userRewardDb = this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId == userReward.RewardId && item.UserId == userReward.UserId);
+            if (userRewardDb == null) {
+                this.UserRewardRepository.Add(userReward);
+            }
+        }
         public void RemoveUserReward(UserReward UserReward) => this.UserRewardRepository.Remove(UserReward.UserRewardId);
         public UserReward GetUserReward(Reward reward, User user) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(reward.RewardId) && item.UserId.Equals(user.UserId));
         public void UpdateReward(Reward reward) => this.RewardRepository.Update(reward);
@@ -35,6 +47,9 @@ namespace FPTBlog.Src.RewardModule {
             var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             return (pagelist, count);
         }
+
+        public Reward GetRewardTypeAndConstraint(RewardType type, int constraint) => this.RewardRepository.GetFirstOrDefault(item => item.Type == type && item.Constraint == constraint);
+
 
         public (List<RewardReport>, int) GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex) {
             DateTime startDateTime = Convert.ToDateTime(startDate);
@@ -67,7 +82,6 @@ namespace FPTBlog.Src.RewardModule {
             return (rewardReports, list.Count);
         }
 
-
         public UserReward IsUseReward(string rewardId) => this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId.Equals(rewardId));
         public void DeleteReward(string rewardId) => this.RewardRepository.Remove(rewardId);
         public List<Reward> GetRewards() => (List<Reward>) this.RewardRepository.GetAll();
@@ -84,5 +98,67 @@ namespace FPTBlog.Src.RewardModule {
         public List<UserReward> GetUserAllRewards(string userId) {
             return this.UserRewardRepository.GetUserAllRewards(userId);
         }
+        #endregion
+
+
+
+        public void GiveRewardJob() {
+            List<Reward> rewards = this.RewardRepository.GetAll().ToList();
+            if(rewards.Count == 0){
+                return;
+            }
+
+            List<User> givenRewardUsers = null; // list user được tặng huy hiệu
+            User givenRewardUser = null; // user đơn lẻ được tặng huy hiệu
+            foreach(var reward in rewards){
+                switch(reward.Type){
+                    case RewardType.Post:
+                        givenRewardUsers = this.UserRepository.GetUsersHave_N_Posts(reward.Constraint);
+                        foreach(var user in givenRewardUsers){
+                            this.GiveUserReward(user, reward);
+                        }
+                        break;
+
+                    case RewardType.Viewer_For_A_Post:
+                        givenRewardUsers = this.UserRepository.GetUsersHave_N_View_For_A_Post(reward.Constraint);
+                        foreach(var user in givenRewardUsers){
+                            this.GiveUserReward(user, reward);
+                        }
+                        break;
+
+                    case RewardType.Interaction_For_A_Post:
+                        givenRewardUsers = this.UserRepository.GetUsersHave_N_Interaction_For_A_Post(reward.Constraint);
+                        foreach(var user in givenRewardUsers){
+                            this.GiveUserReward(user, reward);
+                        }
+                        break;
+
+                    case RewardType.Follower:
+                        givenRewardUsers = this.UserRepository.GetUsersHave_N_Followers(reward.Constraint);
+                        foreach(var user in givenRewardUsers){
+                            this.GiveUserReward(user, reward);
+                        }
+                        break;
+
+                    case RewardType.Most_Post_In_N_Month_FromNow:
+                        givenRewardUser = this.UserRepository.GetUserHave_Most_Post_In_N_Month_FromNow(reward.Constraint);
+                        this.GiveUserReward(givenRewardUser, reward);
+                        break;
+
+                    case RewardType.Most_View_For_A_Post_In_N_Month_FromNow:
+                        givenRewardUser = this.UserRepository.GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(reward.Constraint);
+                        this.GiveUserReward(givenRewardUser, reward);
+                        break;
+
+                    case RewardType.Most_Interaction_For_A_Post_In_N_Month_FromNow:
+                        givenRewardUser = this.UserRepository.GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(reward.Constraint);
+                        this.GiveUserReward(givenRewardUser, reward);
+                        break;
+
+
+                }
+            }
+        }
     }
 }
+

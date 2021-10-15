@@ -1,4 +1,4 @@
-﻿using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,10 @@ namespace FPTBlog.Src.UserModule {
     public class UserService : IUserService {
         private readonly IUserRepository UserRepository;
         public UserService(IUserRepository userRepository) {
-
             this.UserRepository = userRepository;
         }
+
+        #region  OK
 
         public void AddUser(User user) => this.UserRepository.Add(user);
         public User GetUserByUserId(string id) => this.UserRepository.Get(id);
@@ -75,5 +76,35 @@ namespace FPTBlog.Src.UserModule {
         public (List<User>, int) GetFollowerForPage(string userId, int pageIndex, int pageSize, string searchName) => this.UserRepository.GetFollowerForPage(userId, pageIndex, pageSize, searchName);
 
         public (List<User>, int) GetFollowingForPage(string userId, int pageIndex, int pageSize, string searchName) => this.UserRepository.GetFollowingForPage(userId, pageIndex, pageSize, searchName);
+
+        #endregion
+        public List<User> GetUsersHave_N_Posts(int N) => this.UserRepository.GetUsersHave_N_Posts(N);
+
+        public List<User> GetUsersHave_N_Followers(int N) => this.UserRepository.GetUsersHave_N_Followers(N);
+
+        public List<User> GetUsersHave_N_View_For_A_Post(int N) => this.UserRepository.GetUsersHave_N_View_For_A_Post(N);
+
+        public List<User> GetUsersHave_N_Interaction_For_A_Post(int N) => this.UserRepository.GetUsersHave_N_Interaction_For_A_Post(N);
+
+        public User GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(int N)=> this.UserRepository.GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(N);
+
+        public User GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(int N) => this.UserRepository.GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(N);
+
+        public User GetUserHave_Most_Post_In_N_Month_FromNow(int N) => this.UserRepository.GetUserHave_Most_Post_In_N_Month_FromNow(N);
+        public (int, int) GetUserChartInformation() {
+            List<User> users = (List<User>) this.UserRepository.GetAll();
+            int totalStudent = 0;
+            int totalLecturer = 0;
+            foreach (User user in users) {
+                if (user.Role == UserRole.STUDENT) {
+                    totalStudent++;
+                }
+                if (user.Role == UserRole.LECTURER) {
+                    totalLecturer++;
+                }
+            }
+
+            return (totalStudent, totalLecturer);
+        }
     }
 }

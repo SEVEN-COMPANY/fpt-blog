@@ -55,12 +55,21 @@ namespace FPTBlog.Src.RewardModule {
 
             var imageUrl = this.UploadFileService.Upload(input.File);
 
-            var reward = new Reward();
+            var reward = this.RewardService.GetRewardTypeAndConstraint(input.Type, input.Constraint);
+            if(reward != null){
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            reward = new Reward();
             reward.RewardId = Guid.NewGuid().ToString();
             reward.Name = input.Name;
             reward.Description = input.Description;
             reward.CreateDate = DateTime.Now.ToShortDateString();
             reward.ImageUrl = imageUrl;
+            reward.Type = input.Type;
+            reward.Constraint = input.Constraint;
+
             this.RewardService.CreateReward(reward);
             res.data = reward;
             return new ObjectResult(res.getResponse());
@@ -135,16 +144,7 @@ namespace FPTBlog.Src.RewardModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            var userReward = new UserReward();
-            userReward.UserRewardId = Guid.NewGuid().ToString();
-            userReward.CreateDate = DateTime.Now.ToShortDateString();
-            userReward.RewardId = input.RewardId;
-            userReward.Reward = reward;
-            userReward.UserId = input.UserId;
-            userReward.User = user;
-
-            this.RewardService.GiveUserReward(userReward);
-            res.data = userReward;
+            this.RewardService.GiveUserReward(user, reward);
             return new ObjectResult(res.getResponse());
         }
 

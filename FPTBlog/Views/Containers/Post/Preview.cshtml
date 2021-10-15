@@ -20,7 +20,7 @@
 
 }
 
-<div class="py-8 space-y-4">
+<div class="px-4 py-8 pb-16 space-y-4 ">
     <div class="flex flex-col ">
 
 
@@ -41,25 +41,26 @@
             <p class="mt-2 text-xs opacity-60">This screen displays exactly what other will see your post.</p>
         }
     </div>
-
-    <div class="space-y-1 ">
-        <p class="font-semibold capitalize ">@value.Post.Category.Name</p>
-        <p class="text-sm font-medium opacity-60">@value.Post.CreateDate</p>
-    </div>
-    <div class="ql-editor intro-y">
-        @content
-        <div class="flex flex-wrap items-center space-x-2">
-            @foreach (var item in value.Post.PostTags)
-            {
-                <div class="text-sm text-blue-600">#@item.Tag.Name</div>
-            }
+    <div class="max-w-3xl mx-auto ">
+        <div class="space-y-1 ">
+            <p class="font-semibold capitalize ">@value.Post.Category.Name</p>
+            <p class="text-sm font-medium opacity-60">@value.Post.CreateDate</p>
+        </div>
+        <div class="ql-editor intro-y">
+            @content
+            <div class="flex flex-wrap items-center space-x-2">
+                @foreach (var item in value.Post.PostTags)
+                {
+                    <div class="text-sm text-blue-600">#@item.Tag.Name</div>
+                }
+            </div>
         </div>
     </div>
 
     <div class="h-0.5 bg-tango-300 my-4">
     </div>
     <div class="space-y-8">
-        <p class="text-xs opacity-60">This screen show how your post appears in our page</p>
+        <p class="text-green-800 opacity-80">This screen show how your post appears in our page</p>
         <div class="space-y-8">
             <div class="flex items-end space-x-2">
                 <h1 class="text-xl font-semibold tracking-wide">TODAY</h1>
@@ -82,7 +83,7 @@
                 <h1 class="text-xl font-semibold tracking-wide">MOST POPULAR</h1>
                 <div class="flex-1 h-0.5 bg-tango-200"></div>
             </div>
-            <div class="grid grid-cols-4 gap-6 intro-y">
+            <div class="grid gap-4 lg:grid-cols-4 lg:gap-6 intro-y">
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml",new {Value = value})
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml",new {Value = value})
                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml",new {Value = value})

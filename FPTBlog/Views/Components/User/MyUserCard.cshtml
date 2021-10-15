@@ -8,7 +8,8 @@
     var followingLink = $"{Routers.UserGetFollowing.Link}?userId={profile.UserId}";
 }
 
-<div class="flex flex-col items-center justify-center px-2 py-16 space-y-2 border rounded-md shadow-lg intro-y">
+<div
+    class="relative flex flex-col items-center justify-center px-2 space-y-2 rounded-md lg:py-16 lg:border lg:shadow-lg intro-y">
     <div class="w-32 h-32 overflow-hidden border rounded-full ">
         <img src="https://picsum.photos/200" class="object-cover w-full h-full" />
     </div>
@@ -39,7 +40,7 @@
     {
         <div class="space-y-2 text-center">
             <p class="font-medium opacity-70">Reward</p>
-            <div class="flex items-center justify-center space-x-1">
+            <div class="grid grid-cols-4 gap-1 lg:grid-cols-6">
                 @foreach (var item in rewards)
                 {
                     @await Html.PartialAsync("../../Components/Common/BadgeIcon.cshtml",

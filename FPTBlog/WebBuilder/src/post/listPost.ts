@@ -1,6 +1,7 @@
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
 import { pageChange } from '../package/helper/pagination';
+import { ApexOptions } from 'apexcharts';
 pageChange('listPostForm');
 
 interface ApprovedPostDto {
@@ -41,18 +42,21 @@ for (let index = 0; index < btn.length; index++) {
             approvedPostForm?.addEventListener('submit', function (event) {
                 const approvedStatus = document.getElementById('approvedStatus') as HTMLSelectElement;
                 const note = document.getElementById('note') as HTMLInputElement;
-
                 event.preventDefault();
-                const input: ApprovedPostDto = {
-                    note: note.value,
-                    status: approvedStatus.value,
-                    postId: postId,
-                };
-                http.post(routers.post.approvedPost, input).then(() => {
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                });
+
+                const isView = confirm('Remember read the post before submitting');
+                if (isView) {
+                    const input: ApprovedPostDto = {
+                        note: note.value,
+                        status: approvedStatus.value,
+                        postId: postId,
+                    };
+                    http.post(routers.post.approvedPost, input).then(() => {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    });
+                }
             });
         }
     });

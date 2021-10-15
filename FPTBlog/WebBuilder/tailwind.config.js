@@ -17,6 +17,7 @@ module.exports = {
             18: '4.5rem',
             78: '19.5rem',
         },
+
         colors: {
             ...theme.colors,
             tango: {
@@ -110,6 +111,7 @@ module.exports = {
                 800: '#ACACAC',
                 900: '#939393',
             },
+            maxWidth: { ...theme.maxWidth },
         },
     },
     variants: {

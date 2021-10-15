@@ -16,7 +16,7 @@ namespace FPTBlog.Src.PostModule.Entity {
         }
 
         [Required]
-        [StringLength(40)]
+        [StringLength(250)]
         public string Title {
             get; set;
         }

@@ -14,6 +14,7 @@ using FPTBlog.Utils.Locale;
 
 
 using FPTBlog.Utils;
+using FPTBlog.Utils.CronJob;
 using FPTBlog.Utils.Interface;
 
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +39,8 @@ using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule;
 using FPTBlog.Src.RewardModule.Interface;
 using FPTBlog.Src.RewardModule;
+using FPTBlog.Src.NotificationModule.Interface;
+using FPTBlog.Src.NotificationModule;
 
 namespace FPTBlog {
     public class Startup {
@@ -90,9 +93,21 @@ namespace FPTBlog {
             services.AddScoped<IUserRewardRepository, UserRewardRepository>();
             services.AddScoped<IRewardService, RewardService>();
 
+            // Cron Job
+            services.AddCronJob<GiveRewardJob>(c => {
+                c.TimeZoneInfo = TimeZoneInfo.Local;
+                // c.CronExpression = "59 23 * * *"; // 23h59
+                c.CronExpression = "* * * * *"; // every 1 minute
+            });
+
+            services.AddSession();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            // Notification Module
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<INotificationService, NotificationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -134,9 +149,9 @@ namespace FPTBlog {
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
-
 
 
             app.UseEndpoints(endpoints => {
