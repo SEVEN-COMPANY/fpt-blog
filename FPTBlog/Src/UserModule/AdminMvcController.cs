@@ -58,20 +58,15 @@ namespace FPTBlog.Src.UserModule {
             return View(RoutersAdmin.UserGetUserList.Page);
         }
 
-        [HttpGet("profile")]
-        public IActionResult Profile() {
-            return View(RoutersAdmin.UserProfile.Page);
-        }
+        [HttpGet("chart")]
+        public IActionResult GetChart() {
 
-        [HttpGet("update")]
-        public IActionResult UpdateUser() {
-            return View(RoutersAdmin.UserPutUser.Page);
-        }
+            var (totalStudent, totalLecturer) = this.UserService.GetUserChartInformation();
 
-        [HttpGet("change-password")]
-        public IActionResult ChangePassPage() {
-            return View(RoutersAdmin.UserPutPassword.Page);
-        }
+            this.ViewData["totalStudent"] = totalStudent;
+            this.ViewData["totalLecturer"] = totalLecturer;
 
+            return View(RoutersAdmin.UserGetUserList.Page);
+        }
     }
 }

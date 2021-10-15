@@ -78,5 +78,21 @@ namespace FPTBlog.Src.UserModule {
         public List<User> GetUsersHave_N_Posts(int N) => this.UserRepository.GetUsersHave_N_Posts(N);
 
         public List<User> GetUsersHave_N_Followers(int N) => this.UserRepository.GetUsersHave_N_Followers(N);
+
+        public (int, int) GetUserChartInformation() {
+            List<User> users = (List<User>) this.UserRepository.GetAll();
+            int totalStudent = 0;
+            int totalLecturer = 0;
+            foreach (User user in users) {
+                if (user.Role == UserRole.STUDENT) {
+                    totalStudent++;
+                }
+                if (user.Role == UserRole.LECTURER) {
+                    totalLecturer++;
+                }
+            }
+
+            return (totalStudent, totalLecturer);
+        }
     }
 }
