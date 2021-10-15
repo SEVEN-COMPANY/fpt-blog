@@ -17,6 +17,7 @@ module.exports = {
             18: '4.5rem',
             78: '19.5rem',
         },
+        maxWidth: { ...theme.maxWidth, badge: '10rem' },
         colors: {
             ...theme.colors,
             tango: {
