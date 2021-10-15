@@ -48,6 +48,9 @@ namespace FPTBlog.Src.RewardModule {
             return (pagelist, count);
         }
 
+        public Reward GetRewardTypeAndConstraint(RewardType type, int constraint) => this.RewardRepository.GetFirstOrDefault(item => item.Type == type && item.Constraint == constraint);
+
+
         public (List<RewardReport>, int) GetRewardReport(string searchName, string startDate, string endDate, int pageSize, int pageIndex) {
             DateTime startDateTime = Convert.ToDateTime(startDate);
             DateTime endDateTime = Convert.ToDateTime(endDate);

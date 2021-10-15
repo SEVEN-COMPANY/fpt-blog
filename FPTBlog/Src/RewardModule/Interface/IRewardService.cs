@@ -18,6 +18,8 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public List<Reward> GetRewards();
         public List<SelectListItem> GetRewardsDropList();
         public List<UserReward> GetUserAllRewards(string userId);
+        public Reward GetRewardTypeAndConstraint(RewardType type, int constraint);
         public void GiveRewardJob();
+
     }
 }

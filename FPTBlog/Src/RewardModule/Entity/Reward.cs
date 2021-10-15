@@ -60,6 +60,7 @@ namespace FPTBlog.Src.RewardModule.Entity {
         Follower = 4,
         Most_Post_In_N_Month_FromNow = 5,
         Most_View_For_A_Post_In_N_Month_FromNow = 6,
-        Most_Interaction_For_A_Post_In_N_Month_FromNow = 7
+        Most_Interaction_For_A_Post_In_N_Month_FromNow = 7,
+        Freedom = 8
     }
 }
