@@ -3,14 +3,19 @@ using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.Entity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using System;
+using FPTBlog.Src.PostModule.Interface;
+using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Src.CategoryModule {
     public class CategoryService : ICategoryService {
         private readonly ICategoryRepository CategoryRepository;
+        private readonly IPostRepository PostRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository) {
+        public CategoryService(ICategoryRepository categoryRepository, IPostRepository postRepository) {
 
             this.CategoryRepository = categoryRepository;
+            this.PostRepository = postRepository;
         }
         public (List<Category>, int) GetCategories() {
             List<Category> list = (List<Category>) this.CategoryRepository.GetAll();
@@ -43,6 +48,32 @@ namespace FPTBlog.Src.CategoryModule {
             }
 
             return categories;
+        }
+
+        public List<CategoryChart> GetCategoryChart() {
+            string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
+            DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
+            List<CategoryChart> chart = new List<CategoryChart>();
+            var categories = this.CategoryRepository.GetAll();
+            foreach (var category in categories) {
+                var categoryChart = new CategoryChart();
+                categoryChart.name = category.Name;
+                int total = 0;
+                List<Post> posts = this.PostRepository.GetAll(item => item.CategoryId == category.CategoryId).ToList();
+                for (int i = posts.Count - 1; i >= 0; i--) {
+                    DateTime date = Convert.ToDateTime(posts[i].CreateDate);
+                    if (DateTime.Compare(date, thisMonthDate) < 0) {
+                        posts.Remove(posts[i]);
+                    }
+                    else {
+                        total += 1;
+                    }
+                }
+                categoryChart.total = total;
+                chart.Add(categoryChart);
+
+            }
+            return chart;
         }
     }
 }
