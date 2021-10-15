@@ -7,12 +7,13 @@
 }
 
 <div class="relative mt-4">
-    <div class="grid grid-cols-3 gap-4 ">
+    <div class="grid grid-cols-1 lg:gap-4 lg:grid-cols-3 ">
         <div class="z-20 col-span-1">
             @await Html.PartialAsync("../../Components/User/MyUserCard.cshtml", new {Value = this.ViewData})
         </div>
         <div class="flex col-span-2 ">
-            <div class="flex flex-col items-center flex-1 px-2 py-4 space-y-2 border rounded-md shadow-lg">
+            <div
+                class="flex flex-col items-center flex-1 px-4 py-4 space-y-2 rounded-md lg:px-2 lg:border lg:shadow-lg">
                 <div class="w-full space-y-4 md:px-4 intro-y bg-opacity-90">
                     <form class="flex-1 space-y-2 ">
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
@@ -20,7 +21,7 @@
                         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
                         new {Name="indexPage", Value="0"})
 
-                        <div class="flex items-end space-x-4">
+                        <div class="flex flex-col space-y-2 lg:items-end lg:flex-row lg:space-x-4">
 
                             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                             new {Name="searchTitle", Label="Search", Type="text", Value=
@@ -30,7 +31,7 @@
                             new {Name="searchCategoryId", Label="Category",
                             Value=this.Context.Request.Query["searchCategoryId"],
                             List=categories})
-                            <div class="mb-1">
+                            <div class="pb-1">
                                 @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
                                 new { Label="Search", Icon = "../../Components/Icons/Search.cshtml"})
                             </div>
@@ -85,7 +86,7 @@
                     }
                     else
                     {
-                        <div class="grid grid-cols-2 gap-6 intro-y">
+                        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 intro-y">
                             @foreach (var item in posts)
                             {
                                 @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
