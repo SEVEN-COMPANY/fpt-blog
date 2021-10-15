@@ -16,5 +16,11 @@ namespace FPTBlog.Src.NotificationModule {
         public void AddNotification(Notification notification) => this.NotificationRepository.Add(notification);
         public void UpdateCategory(Notification notification) => this.NotificationRepository.Update(notification);
         public void RemoveCategory(Notification notification) => this.NotificationRepository.Remove(notification);
+
+        public (List<Notification>, int) GetUserNotification(string userId) {
+            var notifications = this.NotificationRepository.GetAll(item => item.ReceiverId == userId).ToList();
+            int count = notifications.Count;
+            return (notifications, count);
+        }
     }
 }
