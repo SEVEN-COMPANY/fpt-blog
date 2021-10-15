@@ -23,6 +23,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             this.PostService = postService;
         }
 
+        #region Manage comment
         [HttpPost("")]
         public IActionResult AddCommentHandler([FromBody] AddCommentDto input) {
             var res = new ServerApiResponse<Comment>();
@@ -106,7 +107,9 @@ namespace FPTBlog.Src.CommentModule.Interface {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+        #endregion
 
+        #region Get list ori comment
         [HttpPost("post")]
         public IActionResult GetListOriComment([FromBody] GetCommentOfPostDto input) {
             var res = new ServerApiResponse<Comment>();
@@ -139,8 +142,10 @@ namespace FPTBlog.Src.CommentModule.Interface {
             return Json(new {
                 listComment = listComment
             });
-
         }
+        #endregion
+
+        #region Like and Dislike comment
         [HttpPost("like")]
         public IActionResult LikeComment([FromBody] LikeCommentDto input) {
             var res = new ServerApiResponse<Comment>();
@@ -182,6 +187,6 @@ namespace FPTBlog.Src.CommentModule.Interface {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
-
+        #endregion
     }
 }

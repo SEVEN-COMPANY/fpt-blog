@@ -10,13 +10,16 @@ namespace FPTBlog.Src.CommentModule {
             this.CommentRepository = commentRepository;
         }
 
+        #region Manage comment
         public void AddComment(Comment comment) => this.CommentRepository.Add(comment);
-
-        public Comment GetCommentByCommentId(string commentId) => this.CommentRepository.GetFirstOrDefault(item => item.CommentId == commentId);
 
         public void UpdateComment(Comment comment) => this.CommentRepository.Update(comment);
 
         public void RemoveComment(Comment comment) => this.CommentRepository.RemoveAndItsChildComment(comment);
+        #endregion
+
+        #region Get single or list comment
+        public Comment GetCommentByCommentId(string commentId) => this.CommentRepository.GetFirstOrDefault(item => item.CommentId == commentId);
 
         public List<Comment> GetListOriCommentByPostId(string postId){
             List<Comment> list = (List<Comment>)this.CommentRepository.GetAll(item => item.PostId == postId && item.OriCommentId == null, includeProperties: "User");
@@ -27,9 +30,12 @@ namespace FPTBlog.Src.CommentModule {
             List<Comment> list = (List<Comment>)this.CommentRepository.GetAll(item => item.OriCommentId == comment.CommentId && item.PostId == comment.PostId);
             return list;
         }
+        #endregion
 
+        #region Like and Dislike
         public void LikeComment(Comment comment, User user) => this.CommentRepository.LikeComment(comment, user);
 
         public void DislikeComment(Comment comment, User user) => this.CommentRepository.DislikeComment(comment, user);
+        #endregion
     }
 }
