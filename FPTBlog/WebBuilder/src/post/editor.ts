@@ -102,7 +102,8 @@ handleSelectBadge(
     },
     async (label: string) => {
         const postIdElement = document.getElementById('postId') as HTMLInputElement;
-
+        const tag = document.getElementById('tag') as HTMLInputElement;
+        tag.value = '';
         if (postIdElement) {
             const input: ToggleTagDto = {
                 postId: postIdElement.value,
@@ -110,8 +111,7 @@ handleSelectBadge(
             };
 
             const { data } = await http.post<ServerResponse<Tag[]>>(routers.post.addNewTagToPost, input);
-            const tag = document.getElementById('tag') as HTMLInputElement;
-            tag.value = '';
+
             return data.data.map((item) => item.name);
         }
         return [];

@@ -40,7 +40,7 @@
     {
         <div class="space-y-2 text-center">
             <p class="font-medium opacity-70">Reward</p>
-            <div class="flex items-center justify-center space-x-1">
+            <div class="grid grid-cols-6 gap-1">
                 @foreach (var item in rewards)
                 {
                     @await Html.PartialAsync("../../Components/Common/BadgeIcon.cshtml",
