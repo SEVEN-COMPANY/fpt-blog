@@ -115,31 +115,26 @@ export function handleSelectBadge(
     });
     //handle null
     if (inputElement !== null && searchResult !== null) {
-        inputElement.addEventListener('change', async function (event) {
-            const tagNameInput = event.currentTarget as HTMLInputElement;
-            handleOnEnter(tagNameInput.value).then((value) => {
-                const badgeElement = document.getElementById(`${id}Badge`) as HTMLDivElement;
-                if (badgeElement) {
-                    handleRenderBadge(badgeElement, value, handleOnDelete);
-                }
-            });
-        });
-
         //detect click outside
         handleOnClickOutside(inputElement, searchResult);
         // handle select drop list
         let currentSelect = -1;
         let currentLabel: string | null = null;
-
         inputElement?.addEventListener('keyup', async function (event: KeyboardEvent) {
-            if (event.code === 'Enter' && currentLabel !== null && currentSelect !== -1) {
-                // const input = inputElement as HTMLInputElement;
-                // input.value = currentLabel;
-                // const value = await handleOnEnter(currentLabel);
-                // const badgeElement = document.getElementById(`${id}Badge`) as HTMLDivElement;
-                // if (badgeElement) {
-                //     handleRenderBadge(badgeElement, value, handleOnDelete);
-                // }
+            console.log(currentLabel);
+            console.log(currentSelect);
+            console.log(event.code);
+            if (event.code === 'Enter' && currentLabel === null && currentSelect === -1) {
+                const tagNameInput = event.currentTarget as HTMLInputElement;
+                console.log('hello');
+
+                if (tagNameInput.value)
+                    handleOnEnter(tagNameInput.value).then((value) => {
+                        const badgeElement = document.getElementById(`${id}Badge`) as HTMLDivElement;
+                        if (badgeElement) {
+                            handleRenderBadge(badgeElement, value, handleOnDelete);
+                        }
+                    });
             } else if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
                 // const searchItems = searchResult.getElementsByClassName('search-item');
                 // if (searchItems.length) {
@@ -173,7 +168,9 @@ export function handleSelectBadge(
                     data.forEach((item) => {
                         const searchItem = getResultItemComponent(item, () => {
                             (inputElement as HTMLInputElement).value = '';
+
                             const searchItems = searchResult.getElementsByClassName('search-item');
+
                             handleOnEnter(item).then((value) => {
                                 const badgeElement = document.getElementById(`${id}Badge`) as HTMLDivElement;
                                 if (badgeElement) {

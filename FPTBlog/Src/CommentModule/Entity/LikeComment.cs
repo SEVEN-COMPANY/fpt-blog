@@ -45,11 +45,19 @@ namespace FPTBlog.Src.CommentModule.Entity
         }
 
         [Required]
+<<<<<<< HEAD
         public Expression expression {
+=======
+        public Expression Expression {
+>>>>>>> 1c795350fc512b63ecad4e0691086cbdd906aff9
             get; set;
         }
 
         public LikeComment() {
+<<<<<<< HEAD
+=======
+            this.LikeCommentId = Guid.NewGuid().ToString();
+>>>>>>> 1c795350fc512b63ecad4e0691086cbdd906aff9
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
     }

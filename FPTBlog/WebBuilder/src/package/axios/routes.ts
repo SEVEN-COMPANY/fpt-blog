@@ -6,6 +6,7 @@ export const routers = {
     category: {
         create: '/api/category',
         update: '/api/category',
+        chart: '/api/category/chart',
     },
     post: {
         create: '/api/post',
@@ -24,6 +25,7 @@ export const routers = {
         changePassword: '/api/user/change-password',
         update: '/api/user',
         get: '/api/user',
+        chart: '/api/admin/user/chart',
         status: '/api/admin/user/status',
         role: '/api/admin/user/role',
         follow: '/api/user/follow',

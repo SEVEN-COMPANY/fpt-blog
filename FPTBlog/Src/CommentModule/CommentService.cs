@@ -30,6 +30,7 @@ namespace FPTBlog.Src.CommentModule {
             List<Comment> list = (List<Comment>)this.CommentRepository.GetAll(item => item.OriCommentId == comment.CommentId && item.PostId == comment.PostId);
             return list;
         }
+<<<<<<< HEAD
         #endregion
 
         #region Like and Dislike
@@ -37,5 +38,11 @@ namespace FPTBlog.Src.CommentModule {
 
         public void DislikeComment(Comment comment, User user) => this.CommentRepository.DislikeComment(comment, user);
         #endregion
+=======
+
+        public void LikeComment(Comment comment, User user) => this.CommentRepository.LikeComment(comment, user);
+
+        public void DislikeComment(Comment comment, User user) => this.CommentRepository.DislikeComment(comment, user);
+>>>>>>> 1c795350fc512b63ecad4e0691086cbdd906aff9
     }
 }

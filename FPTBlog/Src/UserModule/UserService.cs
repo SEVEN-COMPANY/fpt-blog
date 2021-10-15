@@ -12,6 +12,8 @@ namespace FPTBlog.Src.UserModule {
             this.UserRepository = userRepository;
         }
 
+        #region  OK
+
         public void AddUser(User user) => this.UserRepository.Add(user);
         public User GetUserByUserId(string id) => this.UserRepository.Get(id);
         public User GetUserByGoogleId(string googleId) => this.UserRepository.GetFirstOrDefault(item => item.GoogleId.Equals(googleId));
@@ -75,10 +77,20 @@ namespace FPTBlog.Src.UserModule {
 
         public (List<User>, int) GetFollowingForPage(string userId, int pageIndex, int pageSize, string searchName) => this.UserRepository.GetFollowingForPage(userId, pageIndex, pageSize, searchName);
 
+        #endregion
         public List<User> GetUsersHave_N_Posts(int N) => this.UserRepository.GetUsersHave_N_Posts(N);
 
         public List<User> GetUsersHave_N_Followers(int N) => this.UserRepository.GetUsersHave_N_Followers(N);
 
+        public List<User> GetUsersHave_N_View_For_A_Post(int N) => this.UserRepository.GetUsersHave_N_View_For_A_Post(N);
+
+        public List<User> GetUsersHave_N_Interaction_For_A_Post(int N) => this.UserRepository.GetUsersHave_N_Interaction_For_A_Post(N);
+
+        public User GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(int N)=> this.UserRepository.GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(N);
+
+        public User GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(int N) => this.UserRepository.GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(N);
+
+        public User GetUserHave_Most_Post_In_N_Month_FromNow(int N) => this.UserRepository.GetUserHave_Most_Post_In_N_Month_FromNow(N);
         public (int, int) GetUserChartInformation() {
             List<User> users = (List<User>) this.UserRepository.GetAll();
             int totalStudent = 0;

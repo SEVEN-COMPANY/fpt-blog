@@ -44,11 +44,12 @@ namespace FPTBlog.Src.PostModule.Entity {
         }
 
         [Required]
-        public Expression expression {
+        public Expression Expression {
             get; set;
         }
 
         public LikePost() {
+            this.LikePostId = Guid.NewGuid().ToString();
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
     }

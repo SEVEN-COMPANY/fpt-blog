@@ -29,8 +29,8 @@
 }
 @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
 new {Name="postId", Value=value.Post.PostId})
-<div class="max-w-3xl py-8 pb-16 mx-auto space-y-4 ">
-    <div class="flex justify-between">
+<div class="max-w-3xl pb-16 mx-auto lg:space-y-4 lg:py-8 ">
+    <div class="flex flex-col justify-between px-4 space-y-4 lg:flex-row lg:space-y-0">
         <div class="flex items-center space-x-2">
             <div class="w-10 h-10 overflow-hidden rounded-full">
                 <img data-src="@value.Post.Student.AvatarUrl" alt="@value.Post.Student.Name"
@@ -43,7 +43,7 @@ new {Name="postId", Value=value.Post.PostId})
         </div>
         <div class="space-y-1 ">
             <a href="@categoryLink" class="font-semibold capitalize ">@value.Post.Category.Name</a>
-            <div class="flex items-center justify-center space-x-1">
+            <div class="flex items-center space-x-1 lg:justify-center">
                 <p class="text-sm font-medium opacity-60"> @value.Post.ReadTime min -</p>
 
                 <p class="text-sm font-medium opacity-60"> @value.Post.CreateDate</p>
@@ -52,7 +52,7 @@ new {Name="postId", Value=value.Post.PostId})
     </div>
 
 
-    <div class="ql-editor intro-y">
+    <div class="max-w-full overflow-hidden ql-editor intro-y">
         @content
         <div class="flex flex-wrap items-center space-x-2">
             @foreach (var item in value.Post.PostTags)
@@ -65,10 +65,10 @@ new {Name="postId", Value=value.Post.PostId})
     <div class="my-4 border-b border-tango-300 ">
     </div>
 
-    <div>
-        <div class="flex items-center justify-between">
+    <div class="px-4 lg:px-0">
+        <div class="flex flex-col justify-between space-y-4 lg:space-y-0 lg:items-center lg:flex-row">
             <div class="flex items-center space-x-2">
-                <div class="w-12 h-12 overflow-hidden rounded-full">
+                <div class="w-10 h-10 overflow-hidden rounded-full lg:w-12 lg:h-12">
                     <img data-src="@value.Post.Student.AvatarUrl" alt="@value.Post.Student.Name"
                         class="object-cover w-full h-full lazy" />
                 </div>

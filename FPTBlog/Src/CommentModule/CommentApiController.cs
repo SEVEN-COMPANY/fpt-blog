@@ -162,7 +162,6 @@ namespace FPTBlog.Src.CommentModule.Interface {
             User user = (User) this.ViewData["user"];
 
             this.CommentService.LikeComment(comment, user);
-            res.data = comment;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
@@ -183,7 +182,6 @@ namespace FPTBlog.Src.CommentModule.Interface {
             User user = (User) this.ViewData["user"];
 
             this.CommentService.DislikeComment(comment, user);
-            res.data = comment;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }

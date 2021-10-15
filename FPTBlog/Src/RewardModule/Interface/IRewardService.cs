@@ -7,7 +7,7 @@ namespace FPTBlog.Src.RewardModule.Interface {
     public interface IRewardService {
         public void CreateReward(Reward reward);
         public Reward GetRewardByRewardId(string rewardId);
-        public void GiveUserReward(UserReward userReward);
+        public void GiveUserReward(User user, Reward reward);
         public void RemoveUserReward(UserReward userReward);
         public UserReward GetUserReward(Reward reward, User user);
         public void UpdateReward(Reward reward);
@@ -18,6 +18,8 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public List<Reward> GetRewards();
         public List<SelectListItem> GetRewardsDropList();
         public List<UserReward> GetUserAllRewards(string userId);
-        public void GiveRewardForUserHave_N_Posts(int N);
+        public Reward GetRewardTypeAndConstraint(RewardType type, int constraint);
+        public void GiveRewardJob();
+
     }
 }

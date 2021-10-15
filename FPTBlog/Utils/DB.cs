@@ -56,6 +56,7 @@ namespace FPTBlog.Utils {
         public DbSet<SavePost> SavePost {
             get; set;
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 
