@@ -275,15 +275,16 @@ namespace FPTBlog.Src.PostModule {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
+
             Post post = this.PostService.GetPostByPostId(input.PostId);
             if (post == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "blogId");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
                 return new NotFoundObjectResult(res.getResponse());
             }
             User user = (User) this.ViewData["user"];
 
             this.PostService.LikePost(post, user);
-            res.data = post;
+
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
@@ -296,6 +297,7 @@ namespace FPTBlog.Src.PostModule {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
+
             Post post = this.PostService.GetPostByPostId(input.PostId);
             if (post == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
@@ -304,7 +306,6 @@ namespace FPTBlog.Src.PostModule {
             User user = (User) this.ViewData["user"];
 
             this.PostService.DislikePost(post, user);
-            res.data = post;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
