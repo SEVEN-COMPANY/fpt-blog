@@ -153,20 +153,46 @@
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 capitalize whitespace-nowrap">
                         <span class="flex items-center ">
-                            @item.Role.ToString().ToLower()
-                            <button data-userId="@item.UserId" data-userRole="@item.Role" class="ml-1 modal-role-btn"
-                            type="button">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            @if (item.Role == UserRole.STUDENT)
+                            {
+                                <span class="text-blue-400">
+                                    @item.Role.ToString().ToLower()
+                                </span>
+                                <button data-userId="@item.UserId" data-userRole="@item.Role"
+                            class="ml-1 text-blue-400 modal-role-btn" type="button">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
-                                    <path
+                                        <path
                                     d="M13.931 2.06873C13.3061 1.44389 12.2931 1.44389 11.6682 2.06873L5.59961 8.13736V10.4001H7.86235L13.931 4.33147C14.5558 3.70663 14.5558 2.69357 13.931 2.06873Z"
-                                    fill="#6C7280" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                    fill="currentColor" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
                                     d="M1.59961 4.8001C1.59961 3.91644 2.31595 3.2001 3.19961 3.2001H6.39961C6.84144 3.2001 7.19961 3.55827 7.19961 4.0001C7.19961 4.44193 6.84144 4.8001 6.39961 4.8001H3.19961V12.8001H11.1996V9.6001C11.1996 9.15827 11.5578 8.8001 11.9996 8.8001C12.4414 8.8001 12.7996 9.15827 12.7996 9.6001V12.8001C12.7996 13.6838 12.0833 14.4001 11.1996 14.4001H3.19961C2.31595 14.4001 1.59961 13.6838 1.59961 12.8001V4.8001Z"
-                                    fill="#6C7280" />
-                                </svg>
+                                    fill="currentColor" />
+                                    </svg>
 
-                            </button>
+                                </button>
+                            }
+                            else
+                            {
+                                <span class="text-tango-500">
+                                    @item.Role.ToString().ToLower()
+                                </span>
+                                <button data-userId="@item.UserId" data-userRole="@item.Role"
+                            class="ml-1 modal-role-btn text-tango-500" type="button">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                    d="M13.931 2.06873C13.3061 1.44389 12.2931 1.44389 11.6682 2.06873L5.59961 8.13736V10.4001H7.86235L13.931 4.33147C14.5558 3.70663 14.5558 2.69357 13.931 2.06873Z"
+                                    fill="currentColor" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M1.59961 4.8001C1.59961 3.91644 2.31595 3.2001 3.19961 3.2001H6.39961C6.84144 3.2001 7.19961 3.55827 7.19961 4.0001C7.19961 4.44193 6.84144 4.8001 6.39961 4.8001H3.19961V12.8001H11.1996V9.6001C11.1996 9.15827 11.5578 8.8001 11.9996 8.8001C12.4414 8.8001 12.7996 9.15827 12.7996 9.6001V12.8001C12.7996 13.6838 12.0833 14.4001 11.1996 14.4001H3.19961C2.31595 14.4001 1.59961 13.6838 1.59961 12.8001V4.8001Z"
+                                    fill="currentColor
+r" />
+                                    </svg>
+
+                                </button>
+
+                            }
                         </span>
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
