@@ -6,6 +6,7 @@ export const routers = {
     category: {
         create: '/api/category',
         update: '/api/category',
+        chart: '/api/category/chart',
     },
     post: {
         create: '/api/post',
