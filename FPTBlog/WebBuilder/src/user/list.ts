@@ -2,6 +2,7 @@ import { pageChange } from '../package/helper/pagination';
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
 import { ServerResponse } from '../package/interface/serverResponse';
+import { ApexOptions } from 'apexcharts';
 // modal of user status
 const btnClose = document.getElementById(`modal-btn-close`);
 const wrapper = document.getElementById(`modal-wrapper`);
@@ -238,3 +239,54 @@ btnRoleCancel?.addEventListener('click', function () {
     panelRole?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
     panelRole?.addEventListener('transitionend', modalRoleToggle);
 });
+
+const buildChart = () => {
+    const viewChart = document.getElementById('view-chart');
+    const label = viewChart?.getElementsByTagName('span')[0] as HTMLSpanElement;
+    const chartElement = document.getElementById('chart');
+    let chart: ApexCharts;
+    let isClick = false;
+
+    viewChart?.addEventListener('click', function () {
+        if (!isClick) {
+            http.get<ServerResponse<{ totalLecturer: number; totalStudent: number }>>(routers.user.chart).then(({ data }) => {
+                const options: ApexOptions = {
+                    series: [data.data.totalStudent, data.data.totalLecturer],
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                    },
+                    title: {
+                        text: 'User Chart',
+                        align: 'right',
+                    },
+                    labels: ['Student', 'Lecture'],
+                    responsive: [
+                        {
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200,
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                },
+                            },
+                        },
+                    ],
+                    colors: ['#f37124', '#60a5fa'],
+                };
+
+                isClick = true;
+                chart = new ApexCharts(chartElement, options);
+                label.innerText = 'Close Chart';
+                chart.render();
+            });
+        } else {
+            isClick = false;
+            label.innerText = 'View Chart';
+            chart.destroy();
+        }
+    });
+};
+buildChart();

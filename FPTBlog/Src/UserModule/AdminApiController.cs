@@ -62,13 +62,15 @@ namespace FPTBlog.Src.UserModule {
 
         [HttpGet("chart")]
         public IActionResult GetChart() {
-            var res = new ServerApiResponse<object>();
+            var res = new ServerApiResponse<dynamic>();
+
             var (totalStudent, totalLecturer) = this.UserService.GetUserChartInformation();
 
-            res.data = Json(new {
+
+            res.data = new {
                 totalStudent = totalStudent,
                 totalLecturer = totalLecturer
-            });
+            };
 
             return new ObjectResult(res.getResponse());
         }

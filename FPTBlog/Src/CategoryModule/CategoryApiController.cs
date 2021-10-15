@@ -9,7 +9,6 @@ using System;
 
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.AuthModule;
-using System.Collections.Generic;
 
 namespace FPTBlog.Src.CategoryModule {
     [Route("/api/category")]
@@ -79,7 +78,6 @@ namespace FPTBlog.Src.CategoryModule {
             category.Status = body.Status;
 
             this.CategoryService.UpdateCategory(category);
-            Console.WriteLine("ahuhuu");
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
