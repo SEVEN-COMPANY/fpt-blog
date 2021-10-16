@@ -159,6 +159,11 @@ const renderComment = (data: OriComment, user: User) => {
                               <path d="M2.37988 18.3499V8.5499C2.37988 7.1499 2.97988 6.6499 4.37988 6.6499H5.37988C6.77988 6.6499 7.37988 7.1499 7.37988 8.5499V18.3499C7.37988 19.7499 6.77988 20.2499 5.37988 20.2499H4.37988C2.97988 20.2499 2.37988 19.7499 2.37988 18.3499Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                               </path>
                          </svg>`;
+    likeBtn.addEventListener('click', function () {
+        http.post(routers.comment.likeComment, { commentId: data.commentId }).then(() => {
+            initComment();
+        });
+    });
     const likeLabel = document.createElement('span');
     likeLabel.classList.add('text-lg', 'font-medium', 'opacity-60', 'fade-in');
     likeLabel.innerText = String(data.like);
@@ -169,6 +174,12 @@ const renderComment = (data: OriComment, user: User) => {
                                  <path d="M21.6201 5.65V15.45C21.6201 16.85 21.0201 17.35 19.6201 17.35H18.6201C17.2201 17.35 16.6201 16.85 16.6201 15.45V5.65C16.6201 4.25 17.2201 3.75 18.6201 3.75H19.6201C21.0201 3.75 21.6201 4.25 21.6201 5.65Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                  </path>
                              </svg>`;
+
+    dislikeBtn.addEventListener('click', function () {
+        http.post(routers.comment.dislikeComment, { commentId: data.commentId }).then(() => {
+            initComment();
+        });
+    });
 
     const dislikeLabel = document.createElement('span');
     dislikeLabel.classList.add('text-lg', 'font-medium', 'opacity-60', 'fade-in');

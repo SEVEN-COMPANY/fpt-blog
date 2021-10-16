@@ -52,5 +52,7 @@ export const routers = {
         getComment: '/api/comment/post',
         deleteComment: '/api/comment/delete',
         updateComment: '/api/comment',
+        likeComment: '/api/comment/like',
+        dislikeComment: '/api/comment/dislike',
     },
 };

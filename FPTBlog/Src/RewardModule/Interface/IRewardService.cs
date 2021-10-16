@@ -21,5 +21,7 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public Reward GetRewardTypeAndConstraint(RewardType type, int constraint);
         public void GiveRewardJob();
 
+        public List<SelectListItem> GetRewardTypeDropList();
+
     }
 }
