@@ -1,7 +1,10 @@
+@using FPTBlog.Src.RewardModule
 @using FPTBlog.Src.RewardModule.Entity
 @{
     var rewards = (List<Reward>)this.ViewData["rewards"];
     var total = (int)this.ViewData["total"];
+
+    var rewardTypes = (SelectList)this.ViewData["rewardTypes"];
 }
 
 
@@ -50,6 +53,12 @@
                     Description
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Constraint Type
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Constraint
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Create Date
                 </th>
 
@@ -82,6 +91,12 @@
                     </td>
                     <td class="w-full px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @item.Description
+                    </td>
+                    <td class="w-full px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @RewardService.ConvertTypeConstranint(item.Type)
+                    </td>
+                    <td class="w-full px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Constraint
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @item.CreateDate
@@ -150,8 +165,14 @@
                                 <form class="space-y-4" id="createRewardForm">
                                     @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                                     new { Name = "name", Label = "Name", Type = "text", Value = "" })
+                                    @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+                                    new { Name = "type", Label = "Constraint Type", Type = "text", Value = ""
+                                    , IsLabel = false, List = rewardTypes })
+                                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                                    new { Name = "constraint", Label = "Constraint", Type = "number", Value = "0" })
                                     @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
                                     new { Name = "description", Label = "Description", Value = "" })
+
                                     @await Html.PartialAsync("../../Components/Form/UploadFile.cshtml",
                                     new { Name = "file", Label = "Image" })
                                     <div class="w-6 h-6">
