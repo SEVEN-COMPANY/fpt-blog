@@ -34,5 +34,7 @@ namespace FPTBlog.Utils.Common {
 
         // Tag
         public static readonly RouterAdminItem TagGetTagList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Tag/List.cshtml", Link = "/admin/tag" };
+        // Message
+        public static readonly RouterAdminItem NotificationList = new RouterAdminItem() { Page = "/ViewsAdmin/Containers/Notification/List.cshtml", Link = "/admin/notification" };
     }
 }

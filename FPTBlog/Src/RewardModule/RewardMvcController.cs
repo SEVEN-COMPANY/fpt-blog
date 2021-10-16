@@ -52,6 +52,8 @@ namespace FPTBlog.Src.RewardModule {
         [Route("update")]
         public IActionResult GetUpdateForm(string rewardId) {
             var reward = this.RewardService.GetRewardByRewardId(rewardId);
+
+            this.ViewData["rewardTypes"] = new SelectList(this.RewardService.GetRewardTypeDropList());
             this.ViewData["reward"] = reward;
 
 

@@ -74,7 +74,7 @@ namespace FPTBlog.Src.RewardModule {
                     }
                 }
 
-                rewardReport.UserRewards = (List<UserReward>) this.UserRewardRepository.GetAll(item => item.UserId == user.UserId);
+                rewardReport.UserRewards = (List<UserReward>) this.UserRewardRepository.GetAll(item => item.UserId == user.UserId, includeProperties: "Reward");
 
                 rewardReports.Add(rewardReport);
             }
@@ -88,7 +88,8 @@ namespace FPTBlog.Src.RewardModule {
 
         public List<SelectListItem> GetRewardsDropList() {
             var rewards = new List<SelectListItem>();
-            var list = this.RewardRepository.GetAll();
+            var list = this.RewardRepository.GetAll(item => item.Type == RewardType.Freedom);
+
             foreach (var item in list) {
                 rewards.Add(new SelectListItem() { Value = item.RewardId, Text = item.Name });
             }

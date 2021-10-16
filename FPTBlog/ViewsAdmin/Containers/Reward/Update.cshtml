@@ -1,6 +1,7 @@
 @using FPTBlog.Src.RewardModule.Entity
 @{
     var reward = (Reward)this.ViewData["reward"];
+    var rewardTypes = (SelectList)this.ViewData["rewardTypes"];
 }
 
 <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
@@ -43,6 +44,11 @@
                     new { Name = "rewardId", Value = reward.RewardId })
                     @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                     new { Name = "name", Label = "Name", Type = "text", Value = reward.Name })
+                    @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+                    new { Name = "type", Label = "Constraint Type", Type = "text", Value = ((int)reward.Type).ToString()
+                    , IsLabel = false, List = rewardTypes })
+                    @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+                    new { Name = "constraint", Label = "Constraint", Type = "number", Value = reward.Constraint })
                     @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
                     new { Name = "description", Label = "Description", Value = reward.Description })
                     @await Html.PartialAsync("../../Components/Form/UploadFile.cshtml",
