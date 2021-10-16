@@ -1,6 +1,7 @@
 using FPTBlog.Src.CommentModule.Interface;
 using FPTBlog.Src.CommentModule.Entity;
 using System.Collections.Generic;
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.CommentModule {
     public class CommentService : ICommentService {
@@ -26,5 +27,9 @@ namespace FPTBlog.Src.CommentModule {
             List<Comment> list = (List<Comment>)this.CommentRepository.GetAll(item => item.OriCommentId == comment.CommentId && item.PostId == comment.PostId);
             return list;
         }
+
+        public void LikeComment(Comment comment, User user) => this.CommentRepository.LikeComment(comment, user);
+
+        public void DislikeComment(Comment comment, User user) => this.CommentRepository.DislikeComment(comment, user);
     }
 }

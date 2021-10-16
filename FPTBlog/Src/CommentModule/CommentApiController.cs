@@ -85,7 +85,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpDelete("")]
+        [HttpPut("delete")]
         public IActionResult RemoveCommentHandler([FromBody] RemoveCommentDto input) {
             var res = new ServerApiResponse<Comment>();
 
@@ -107,9 +107,9 @@ namespace FPTBlog.Src.CommentModule.Interface {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpPost("post")]
-        public IActionResult GetListOriComment([FromBody] GetCommentOfPostDto input) {
-            var res = new ServerApiResponse<Comment>();
+        [HttpGet("post")]
+        public IActionResult GetListOriComment([FromQuery] GetCommentOfPostDto input) {
+            var res = new ServerApiResponse<List<CommentViewModel>>();
 
             ValidationResult result = new GetCommentOfPostDtoValidator().Validate(input);
             if (!result.IsValid) {
@@ -127,20 +127,58 @@ namespace FPTBlog.Src.CommentModule.Interface {
 
             List<CommentViewModel> listComment = new List<CommentViewModel>();
 
-            foreach(var oriComment in listOriComment){
+            foreach (var oriComment in listOriComment) {
                 CommentViewModel commentViewModel = new CommentViewModel();
                 commentViewModel.OriComment = oriComment;
                 commentViewModel.SubComments = this.CommentService.GetListSubComment(oriComment);
                 listComment.Add(commentViewModel);
             }
 
-            this.ViewData["listComment"] = listComment;
+            res.data = listComment;
 
-            return Json(new {
-                listComment = listComment
-            });
+            return new ObjectResult(res.getResponse());
 
         }
 
+        [HttpPost("like")]
+        public IActionResult LikeComment([FromBody] LikeCommentDto input) {
+            var res = new ServerApiResponse<Comment>();
+            ValidationResult result = new LikeCommentDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Comment comment = this.CommentService.GetCommentByCommentId(input.CommentId);
+            if (comment == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "commentId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.CommentService.LikeComment(comment, user);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("dislike")]
+        public IActionResult DislikeComment([FromBody] LikeCommentDto input) {
+            var res = new ServerApiResponse<Comment>();
+            ValidationResult result = new LikeCommentDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            Comment comment= this.CommentService.GetCommentByCommentId(input.CommentId);
+            if (comment == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "commentId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+            User user = (User) this.ViewData["user"];
+
+            this.CommentService.DislikeComment(comment, user);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
     }
 }
