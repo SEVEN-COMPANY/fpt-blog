@@ -22,11 +22,12 @@
         @await Html.PartialAsync("../../Components/Form/BtnFuncIcon.cshtml",
         new { Label = "button", Icon = "../../Components/Icons/DraftListBtn.cshtml", Id="createNewPost" })
     </div>
+    @if (posts.Count <= 0)
+    {
+        <p class="font-medium opacity-80">Hey, Create your first awesome post!</p>
+
+    }
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 intro-y">
-        @if (posts.Count <= 0)
-        {
-            <p>Draft is empty</p>
-        }
 
         @foreach (var item in posts)
         {

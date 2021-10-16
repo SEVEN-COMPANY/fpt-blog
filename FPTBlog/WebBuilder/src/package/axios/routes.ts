@@ -47,4 +47,10 @@ export const routers = {
         delete: '/api/reward/delete',
         removeUserReward: '/api/reward/remove',
     },
+    comment: {
+        create: '/api/comment',
+        getComment: '/api/comment/post',
+        deleteComment: '/api/comment/delete',
+        updateComment: '/api/comment',
+    },
 };

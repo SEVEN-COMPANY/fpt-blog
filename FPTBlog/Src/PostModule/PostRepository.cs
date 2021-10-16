@@ -37,6 +37,7 @@ namespace FPTBlog.Src.PostModule {
             tag.PostTags.Remove(postTag);
             this.Db.Tag.Update(tag);
             this.Db.PostTag.Remove(postTag);
+            this.Db.SaveChanges();
         }
 
         public List<Tag> GetTagsFromPost(Post post) {
@@ -91,29 +92,41 @@ namespace FPTBlog.Src.PostModule {
             return (posts, posts.Count);
         }
 
+        private void AddLikeOrDislikePost(Post post, User user, Expression expression) {
+            LikePost likeOrDislike = new LikePost();
+            likeOrDislike.PostId = post.PostId;
+            likeOrDislike.Post = post;
+            likeOrDislike.UserId = user.UserId;
+            likeOrDislike.User = user;
+            likeOrDislike.Expression = expression;
+
+            this.Db.LikePost.Add(likeOrDislike);
+            this.Db.SaveChanges();
+        }
+
         public void LikePost(Post post, User user) {
             LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);
-            if (obj == null || (obj != null && (int) obj.expression == 2)) {
-                if (obj != null && (int) obj.expression == 2) {
-                    post.Dislike -= 1;
-                    this.Db.Post.Update(post);
-                    this.Db.LikePost.Remove(obj);
-                }
+
+            if (obj == null) {
                 post.Like += 1;
                 this.Db.Post.Update(post);
-                LikePost like = new LikePost();
-                like.LikePostId = Guid.NewGuid().ToString();
-                like.PostId = post.PostId;
-                like.Post = post;
-                like.UserId = user.UserId;
-                like.User = user;
-                like.CreateDate = DateTime.Now.ToShortDateString();
-                like.expression = Expression.LIKE;
-                this.Db.LikePost.Add(like);
+                this.AddLikeOrDislikePost(post, user, Expression.LIKE);
                 this.Db.SaveChanges();
                 return;
             }
-            if (obj != null && (int) obj.expression == 1) {
+
+            if (obj != null && obj.Expression == Expression.DISLIKE) {
+                post.Dislike -= 1;
+                post.Like += 1;
+
+                this.Db.Post.Update(post);
+                this.Db.LikePost.Remove(obj);
+                this.AddLikeOrDislikePost(post, user, Expression.LIKE);
+                this.Db.SaveChanges();
+                return;
+            }
+
+            if (obj != null && obj.Expression == Expression.LIKE) {
                 post.Like -= 1;
                 this.Db.Post.Update(post);
                 this.Db.LikePost.Remove(obj);
@@ -124,31 +137,31 @@ namespace FPTBlog.Src.PostModule {
 
         public void DislikePost(Post post, User user) {
             LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);
-            if (obj == null || (obj != null && (int) obj.expression == 1)) {
-                if (obj != null && (int) obj.expression == 1) {
-                    post.Like -= 1;
-                    this.Db.Post.Update(post);
-                    this.Db.LikePost.Remove(obj);
-                }
+            if (obj == null) {
                 post.Dislike += 1;
                 this.Db.Post.Update(post);
-                LikePost dislike = new LikePost();
-                dislike.LikePostId = Guid.NewGuid().ToString();
-                dislike.PostId = post.PostId;
-                dislike.Post = post;
-                dislike.UserId = user.UserId;
-                dislike.User = user;
-                dislike.CreateDate = DateTime.Now.ToShortDateString();
-                dislike.expression = Expression.DISLIKE;
-                this.Db.LikePost.Add(dislike);
+                this.AddLikeOrDislikePost(post, user, Expression.DISLIKE);
                 this.Db.SaveChanges();
                 return;
             }
-            if (obj != null && (int) obj.expression == 2) {
+
+            if (obj != null && obj.Expression == Expression.LIKE) {
+                post.Like -= 1;
+                post.Dislike += 1;
+
+                this.Db.Post.Update(post);
+                this.Db.LikePost.Remove(obj);
+                this.AddLikeOrDislikePost(post, user, Expression.DISLIKE);
+                this.Db.SaveChanges();
+                return;
+            }
+
+            if (obj != null && obj.Expression == Expression.DISLIKE) {
                 post.Dislike -= 1;
                 this.Db.Post.Update(post);
                 this.Db.LikePost.Remove(obj);
                 this.Db.SaveChanges();
+
                 return;
             }
         }
