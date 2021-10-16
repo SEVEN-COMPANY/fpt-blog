@@ -27,7 +27,5 @@ namespace FPTBlog.Utils.Repository.Interface {
 
         void Remove(ICollection<T> entities);
 
-        // IEnumerable<T> GetEntityByPage(IEnumerable<T> enumrable, int pageSize, int pageIndex);
-
     }
 }

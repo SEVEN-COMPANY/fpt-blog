@@ -10,7 +10,7 @@
 
 ## Case Study
 
-## Feature by roles
+## Feature by role
 
 - Common Role
      - Login and register account
