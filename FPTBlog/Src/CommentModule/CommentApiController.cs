@@ -85,7 +85,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             return new ObjectResult(res.getResponse());
         }
 
-        [HttpDelete("")]
+        [HttpPut("delete")]
         public IActionResult RemoveCommentHandler([FromBody] RemoveCommentDto input) {
             var res = new ServerApiResponse<Comment>();
 

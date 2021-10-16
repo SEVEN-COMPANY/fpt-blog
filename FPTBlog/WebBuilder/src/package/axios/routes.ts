@@ -50,5 +50,7 @@ export const routers = {
     comment: {
         create: '/api/comment',
         getComment: '/api/comment/post',
+        deleteComment: '/api/comment/delete',
+        updateComment: '/api/comment',
     },
 };
