@@ -15,11 +15,15 @@ rewardForm?.addEventListener('submit', function (event) {
     const description = document.getElementById('description') as HTMLInputElement;
     const name = document.getElementById('name') as HTMLInputElement;
     const file = document.getElementById('file') as HTMLInputElement;
+    const type = document.getElementById('type') as HTMLSelectElement;
+    const constraint = document.getElementById('constraint') as HTMLInputElement;
     if (description != null && name != null && file != null) {
         const image = file.files ? file.files[0] : null;
         const fd = new FormData();
 
         fd.append('name', name.value);
+        fd.append('type', type.value);
+        fd.append('constraint', constraint.value);
         fd.append('description', description.value);
         if (image) {
             fd.append('file', image);
