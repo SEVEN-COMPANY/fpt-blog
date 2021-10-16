@@ -164,22 +164,22 @@ namespace FPTBlog.Src.RewardModule {
 
         public static string ConvertTypeConstranint(RewardType type) {
             switch (type) {
-                case RewardType.Follower:
-                return "Number of follower";
-                case RewardType.Freedom:
-                return "Free to give";
-                case RewardType.Interaction_For_A_Post:
-                return "Interaction of a post";
-                case RewardType.Most_Interaction_For_A_Post_In_N_Month_FromNow:
-                return "The best post of a month";
-                case RewardType.Most_Post_In_N_Month_FromNow:
-                return "123";
-                case RewardType.Most_View_For_A_Post_In_N_Month_FromNow:
-                return "123";
                 case RewardType.Post:
                 return "Number of post";
                 case RewardType.Viewer_For_A_Post:
                 return "View of a post";
+                case RewardType.Interaction_For_A_Post:
+                return "Interaction of a post";
+                case RewardType.Follower:
+                return "Number of follower";
+                case RewardType.Most_Post_In_N_Month_FromNow:
+                return "Most post in N month";
+                case RewardType.Most_View_For_A_Post_In_N_Month_FromNow:
+                return "Most interaction in N month";
+                case RewardType.Most_Interaction_For_A_Post_In_N_Month_FromNow:
+                return "The best post of a month";
+                case RewardType.Freedom:
+                return "Free to give";
             }
 
             return "";
