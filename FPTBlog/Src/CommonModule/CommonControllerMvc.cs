@@ -55,8 +55,8 @@ namespace FPTBlog.Src.CommonModule {
 
             this.ViewData["top1"] = listTop4[0];
             this.ViewData["top3"] = listTop4.GetRange(1, 3);
-            this.ViewData["middle4"] = listMiddle8.GetRange(0, 3);
-            this.ViewData["bottom4"] = listMiddle8.GetRange(4, 7);
+            this.ViewData["middle4"] = listMiddle8.GetRange(0, 4);
+            this.ViewData["bottom4"] = listMiddle8.GetRange(3, 4);
             this.ViewData["bottom1"] = listBottom4[0];
             this.ViewData["bottom3"] = listBottom4.GetRange(1, 3);
             return View(Routers.CommonGetHome.Page);
