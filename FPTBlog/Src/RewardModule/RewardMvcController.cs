@@ -65,6 +65,8 @@ namespace FPTBlog.Src.RewardModule {
                 searchName = "";
             }
 
+
+            this.ViewData["rewardTypes"] = new SelectList(this.RewardService.GetRewardTypeDropList());
             var (rewards, total) = this.RewardService.GetRewardByName(indexPage, pageSize, searchName);
             this.ViewData["rewards"] = rewards;
             this.ViewData["total"] = total;

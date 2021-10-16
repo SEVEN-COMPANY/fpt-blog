@@ -27,12 +27,12 @@ namespace FPTBlog.Src.RewardModule {
         public void CreateReward(Reward reward) => this.RewardRepository.Add(reward);
         public Reward GetRewardByRewardId(string rewardId) => this.RewardRepository.Get(rewardId);
         public void GiveUserReward(User user, Reward reward) {
-            UserReward userReward =new UserReward(){
-                                User = user,
-                                UserId = user.UserId,
-                                Reward = reward,
-                                RewardId = reward.RewardId
-                            };
+            UserReward userReward = new UserReward() {
+                User = user,
+                UserId = user.UserId,
+                Reward = reward,
+                RewardId = reward.RewardId
+            };
             var userRewardDb = this.UserRewardRepository.GetFirstOrDefault(item => item.RewardId == userReward.RewardId && item.UserId == userReward.UserId);
             if (userRewardDb == null) {
                 this.UserRewardRepository.Add(userReward);
@@ -104,60 +104,101 @@ namespace FPTBlog.Src.RewardModule {
 
         public void GiveRewardJob() {
             List<Reward> rewards = this.RewardRepository.GetAll().ToList();
-            if(rewards.Count == 0){
+            if (rewards.Count == 0) {
                 return;
             }
 
             List<User> givenRewardUsers = null; // list user được tặng huy hiệu
             User givenRewardUser = null; // user đơn lẻ được tặng huy hiệu
-            foreach(var reward in rewards){
-                switch(reward.Type){
+            foreach (var reward in rewards) {
+                switch (reward.Type) {
                     case RewardType.Post:
-                        givenRewardUsers = this.UserRepository.GetUsersHave_N_Posts(reward.Constraint);
-                        foreach(var user in givenRewardUsers){
-                            this.GiveUserReward(user, reward);
-                        }
-                        break;
+                    givenRewardUsers = this.UserRepository.GetUsersHave_N_Posts(reward.Constraint);
+                    foreach (var user in givenRewardUsers) {
+                        this.GiveUserReward(user, reward);
+                    }
+                    break;
 
                     case RewardType.Viewer_For_A_Post:
-                        givenRewardUsers = this.UserRepository.GetUsersHave_N_View_For_A_Post(reward.Constraint);
-                        foreach(var user in givenRewardUsers){
-                            this.GiveUserReward(user, reward);
-                        }
-                        break;
+                    givenRewardUsers = this.UserRepository.GetUsersHave_N_View_For_A_Post(reward.Constraint);
+                    foreach (var user in givenRewardUsers) {
+                        this.GiveUserReward(user, reward);
+                    }
+                    break;
 
                     case RewardType.Interaction_For_A_Post:
-                        givenRewardUsers = this.UserRepository.GetUsersHave_N_Interaction_For_A_Post(reward.Constraint);
-                        foreach(var user in givenRewardUsers){
-                            this.GiveUserReward(user, reward);
-                        }
-                        break;
+                    givenRewardUsers = this.UserRepository.GetUsersHave_N_Interaction_For_A_Post(reward.Constraint);
+                    foreach (var user in givenRewardUsers) {
+                        this.GiveUserReward(user, reward);
+                    }
+                    break;
 
                     case RewardType.Follower:
-                        givenRewardUsers = this.UserRepository.GetUsersHave_N_Followers(reward.Constraint);
-                        foreach(var user in givenRewardUsers){
-                            this.GiveUserReward(user, reward);
-                        }
-                        break;
+                    givenRewardUsers = this.UserRepository.GetUsersHave_N_Followers(reward.Constraint);
+                    foreach (var user in givenRewardUsers) {
+                        this.GiveUserReward(user, reward);
+                    }
+                    break;
 
                     case RewardType.Most_Post_In_N_Month_FromNow:
-                        givenRewardUser = this.UserRepository.GetUserHave_Most_Post_In_N_Month_FromNow(reward.Constraint);
-                        this.GiveUserReward(givenRewardUser, reward);
-                        break;
+                    givenRewardUser = this.UserRepository.GetUserHave_Most_Post_In_N_Month_FromNow(reward.Constraint);
+                    this.GiveUserReward(givenRewardUser, reward);
+                    break;
 
                     case RewardType.Most_View_For_A_Post_In_N_Month_FromNow:
-                        givenRewardUser = this.UserRepository.GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(reward.Constraint);
-                        this.GiveUserReward(givenRewardUser, reward);
-                        break;
+                    givenRewardUser = this.UserRepository.GetUserHave_Most_View_For_A_Post_In_N_Month_FromNow(reward.Constraint);
+                    this.GiveUserReward(givenRewardUser, reward);
+                    break;
 
                     case RewardType.Most_Interaction_For_A_Post_In_N_Month_FromNow:
-                        givenRewardUser = this.UserRepository.GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(reward.Constraint);
-                        this.GiveUserReward(givenRewardUser, reward);
-                        break;
+                    givenRewardUser = this.UserRepository.GetUserHave_Most_Interaction_For_A_Post_In_N_Month_FromNow(reward.Constraint);
+                    this.GiveUserReward(givenRewardUser, reward);
+                    break;
 
 
                 }
             }
+        }
+
+
+
+        public static string ConvertTypeConstranint(RewardType type) {
+            switch (type) {
+                case RewardType.Follower:
+                return "Number of follower";
+                case RewardType.Freedom:
+                return "Free to give";
+                case RewardType.Interaction_For_A_Post:
+                return "Interaction of a post";
+                case RewardType.Most_Interaction_For_A_Post_In_N_Month_FromNow:
+                return "The best post of a month";
+                case RewardType.Most_Post_In_N_Month_FromNow:
+                return "123";
+                case RewardType.Most_View_For_A_Post_In_N_Month_FromNow:
+                return "123";
+                case RewardType.Post:
+                return "Number of post";
+                case RewardType.Viewer_For_A_Post:
+                return "View of a post";
+            }
+
+            return "";
+        }
+
+        public List<SelectListItem> GetRewardTypeDropList() {
+            var rewardType = new List<SelectListItem>();
+
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Post).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Post) });
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Viewer_For_A_Post).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Viewer_For_A_Post) });
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Interaction_For_A_Post).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Interaction_For_A_Post) });
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Follower).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Follower) });
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Most_Post_In_N_Month_FromNow).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Most_Post_In_N_Month_FromNow) });
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Most_View_For_A_Post_In_N_Month_FromNow).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Most_View_For_A_Post_In_N_Month_FromNow) });
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Most_Interaction_For_A_Post_In_N_Month_FromNow).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Most_Interaction_For_A_Post_In_N_Month_FromNow) });
+            rewardType.Add(new SelectListItem() { Value = ((int) RewardType.Freedom).ToString(), Text = RewardService.ConvertTypeConstranint(RewardType.Freedom) });
+
+
+            return rewardType;
         }
     }
 }
