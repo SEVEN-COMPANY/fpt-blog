@@ -237,5 +237,32 @@ namespace FPTBlog.Src.PostModule {
             return (list, count);
 
         }
+
+        public List<PostChart> GetPostChart() {
+            var today = DateTime.Now.Date;
+            List<PostChart> chart = new List<PostChart>();
+            for (int i = -29; i <= 0; i++) {
+
+                var posts = (from Post in this.Db.Post
+                             select Post).ToList()
+                             .Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i))
+                             .ToList();
+
+                var users = (from User in this.Db.User
+                             select User).ToList()
+                .Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i))
+                .ToList();
+
+                PostChart postChart = new PostChart();
+
+                postChart.Post = posts.Count;
+                postChart.View = posts.Sum(x => x.View);
+                postChart.User = users.Count;
+                postChart.date = today.AddDays(i).ToShortDateString();
+                chart.Add(postChart);
+
+            }
+            return chart;
+        }
     }
 }

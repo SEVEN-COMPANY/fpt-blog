@@ -20,6 +20,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         public Report GetMonthlyReport();
         public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status);
         public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search);
-
+        public List<PostChart> GetPostChart();
     }
 }

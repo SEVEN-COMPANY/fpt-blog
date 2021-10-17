@@ -379,5 +379,13 @@ namespace FPTBlog.Src.PostModule {
         //     res.data = dataRes;
         //     return new ObjectResult(res.getResponse());
         // }
+
+        [HttpGet("chart")]
+        public ObjectResult PostChart() {
+            var res = new ServerApiResponse<dynamic>();
+            var postChart = this.PostService.GetPostChart();
+            res.data = postChart;
+            return new ObjectResult(res.getResponse());
+        }
     }
 }
