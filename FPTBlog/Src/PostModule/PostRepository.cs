@@ -242,9 +242,7 @@ namespace FPTBlog.Src.PostModule {
             var today = DateTime.Now.Date;
             List<PostChart> chart = new List<PostChart>();
             for (int i = -29; i <= 0; i++) {
-                // var users = this.Db.User.Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i)).Count();
-                // var interacts = this.Db.LikePost.Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i)).Count()
-                // + this.Db.Comment.Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i)).Count();
+
                 var posts = (from Post in this.Db.Post
                              select Post).ToList()
                              .Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i))
