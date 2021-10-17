@@ -60,12 +60,13 @@ export function responseSuccessInterceptor(response: AxiosResponse<any>) {
 
             toastify({
                 text: successMessage.slice(0, 1).toUpperCase() + successMessage.slice(1, successMessage.length),
-                duration: 2000,
+                duration: 4000,
                 newWindow: true,
                 close: true,
                 gravity: 'top',
                 position: 'right',
-                backgroundColor: '#fa983a',
+                backgroundColor: '#4CAF50',
+                avatar: '/images/check.svg',
                 stopOnFocus: true,
             });
         }
@@ -93,12 +94,13 @@ export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>
                 if (sideMessage) {
                     toastify({
                         text: errorMessage.slice(0, 1).toUpperCase() + errorMessage.slice(1, errorMessage.length),
-                        duration: 2000,
+                        duration: 4000,
                         newWindow: true,
                         close: true,
                         gravity: 'top',
                         position: 'right',
-                        backgroundColor: 'rgb(239, 68, 68)',
+                        avatar: '/images/minus.svg',
+                        backgroundColor: '#F44336',
                         stopOnFocus: true,
                     });
                 }
