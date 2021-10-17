@@ -90,14 +90,6 @@
 
 [![Login Page](doc/login-page.jpg)](https://fptblog.vinhnhan.com/auth/login)
 
-### Admin Users List Page
-
-[![Admin Users List Page](doc/admin-user-list.png)](https://fptblog.vinhnhan.com/admin/user/list)
-
-### Admin User Profile Page
-
-[![Admin User Profile Page](doc/admin-profile.png)](https://fptblog.vinhnhan.com/admin/user/profile)
-
 ### VPS Panel Management
 
 ![VPS Page](doc/vps.jpg)
