@@ -32,6 +32,7 @@ export const routers = {
     },
     tag: {
         getAll: '/api/tag/all',
+        chart: '/api/tag/chart',
         clearUnused: '/api/tag/unused',
         getByName: (name: string) => `/api/tag?name=${name}`,
     },

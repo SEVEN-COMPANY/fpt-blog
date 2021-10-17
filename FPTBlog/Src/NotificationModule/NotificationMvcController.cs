@@ -5,7 +5,7 @@ using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.NotificationModule {
-    [Route("/admin/notification")]
+    [Route("notification")]
     [ServiceFilter(typeof(AuthGuard))]
     public class NotificationMvcController : Controller {
         private readonly INotificationService NotificationService;

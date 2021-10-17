@@ -26,7 +26,7 @@ for (let index = 0; index < rows.length; index++) {
     const btns = element.getElementsByClassName('modal-btn');
     for (let index = 0; index < btns.length; index++) {
         const btn = btns[index] as HTMLButtonElement;
-        console.log(btn);
+
         if (btn)
             btn.addEventListener('click', function () {
                 wrapper?.classList.remove('invisible');

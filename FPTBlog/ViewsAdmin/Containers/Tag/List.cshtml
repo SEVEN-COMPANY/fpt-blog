@@ -12,7 +12,7 @@
 
 <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
     <h1 class="text-2xl font-semibold ">Tag Management</h1>
-    <div class="flex items-end justify-between">
+    <div class="flex flex-col justify-between lg:items-end lg:flex-row">
 
         <form class="flex items-end space-x-4 " id="listTagForm">
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
@@ -109,6 +109,9 @@
 
             </dl>
         </div>
+
+    </div>
+    <div id="chart">
 
     </div>
 </div>
