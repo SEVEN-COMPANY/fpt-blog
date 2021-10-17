@@ -8,7 +8,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
     public enum NotificationLevel {
         INFOMATION = 1,
         WARNING = 2,
-        BAN = 3
+        BANED = 3
     }
 
     [Table("tblNotification")]
@@ -24,6 +24,12 @@ namespace FPTBlog.Src.NotificationModule.Entity {
         public string Content {
             get; set;
         }
+
+        [Required]
+        public string Description {
+            get; set;
+        }
+
 
         [Required]
         public NotificationLevel Level {
@@ -58,6 +64,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
         public Notification() {
             this.NotificationId = Guid.NewGuid().ToString();
             this.Content = "";
+            this.Description = "";
             this.Level = NotificationLevel.INFOMATION;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Sender = null;
@@ -66,7 +73,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
 
         public override string ToString() {
             return "Notification: \n NotificationId: " + NotificationId + " \nContent: " + Content
-            + " \nLevel: " + Level + " \nCreateDate: " + CreateDate
+            + " \nDescription: " + Description + " \nLevel: " + Level + " \nCreateDate: " + CreateDate
             + " \nSenderId" + SenderId + " \nReceiverId" + ReceiverId;
         }
     }
