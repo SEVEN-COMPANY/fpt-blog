@@ -6,8 +6,6 @@
 
 ## [Live Demo](https://fptblog.vinhnhan.com) - [Live Document](https://fptblog.vinhnhan.com)
 
-# FPT BLog - ASP.NET + Entity Framework
-
 ## Case Study
 
 ## Feature by role
@@ -29,7 +27,7 @@
 - Frontend
      - cshtml - Server Side Rendering
      - Tailwind - Style
-     - Javascript + Webpack (TS)
+     - Javascript(TS) + Webpack
 - Backend
      - ASP.NET - Server Core
      - Entity Framework - Object–relational mapping
@@ -40,6 +38,7 @@
      - SOLID Principles
 - Deployment
      - Docker - Container Management
+     - Nginx - Loader Balancer
      - Github Action - CI/CD
      - Digital Ocean - VPS
 
@@ -75,6 +74,18 @@
 
 ## Project Picture
 
+### Home Page
+
+[![Login Page](doc/home.jpg)](https://fptblog.vinhnhan.com/auth/login)
+
+### Post Editor
+
+[![Login Page](doc/editor.jpg)](https://fptblog.vinhnhan.com/auth/login)
+
+### Manager Page
+
+[![Login Page](doc/manager.jpg)](https://fptblog.vinhnhan.com/auth/login)
+
 ### Login Page
 
 [![Login Page](doc/login-page.jpg)](https://fptblog.vinhnhan.com/auth/login)
@@ -95,4 +106,4 @@
 
 Feel free to create an issue request anytime we will check it out and fix it as soon as possible. Thank You So Much.
 
-### Mono Infinity © 2021
+## © 2021 Mono Infinity - FPT University

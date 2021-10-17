@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.RewardModule.Entity;
+using FPTBlog.Src.NotificationModule.Entity;
 
 namespace FPTBlog.Utils {
     public class DB : DbContext {
@@ -37,8 +38,8 @@ namespace FPTBlog.Utils {
             get; set;
         }
 
-        public DbSet<FollowInfo> FollowInfo{
-            get;set;
+        public DbSet<FollowInfo> FollowInfo {
+            get; set;
         }
 
 
@@ -55,6 +56,9 @@ namespace FPTBlog.Utils {
         }
 
         public DbSet<LikeComment> LikeComment {
+            get; set;
+        }
+        public DbSet<Notification> Notification {
             get; set;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {

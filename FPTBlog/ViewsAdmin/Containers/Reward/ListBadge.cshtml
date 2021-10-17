@@ -37,7 +37,7 @@
     </div>
 </div>
 <div class="mt-2 overflow-hidden border-b border-gray-200 rounded-lg shadow intro-y">
-    <table class="min-w-full divide-y divide-gray-200 ">
+    <table class="min-w-full overflow-auto divide-y divide-gray-200 ">
         <thead class="bg-tango-100">
             <tr>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
@@ -49,7 +49,7 @@
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Image
                 </th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase ">
                     Description
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
@@ -89,7 +89,7 @@
                             <img src="@item.ImageUrl" alt="@item.Name" class="object-cover w-full h-full" />
                         </div>
                     </td>
-                    <td class="w-full px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                    <td class="w-full max-w-sm px-6 py-4 text-sm text-gray-500 break-words ">
                         @item.Description
                     </td>
                     <td class="w-full px-6 py-4 text-sm text-gray-500 whitespace-nowrap">

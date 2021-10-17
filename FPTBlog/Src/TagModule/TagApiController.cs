@@ -97,5 +97,13 @@ namespace FPTBlog.Src.TagModule {
             return new ObjectResult(res.getResponse());
         }
 
+        [HttpGet("chart")]
+        public ObjectResult CategoryChart() {
+            var res = new ServerApiResponse<dynamic>();
+            var tagChart = this.TagService.GetTagChart();
+            res.data = tagChart;
+            return new ObjectResult(res.getResponse());
+        }
+
     }
 }

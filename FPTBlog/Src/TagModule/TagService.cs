@@ -70,5 +70,8 @@ namespace FPTBlog.Src.TagModule {
             }
             return removeUnusedTag;
         }
+        public List<TagChart> GetTagChart() {
+            return this.TagRepository.GetTagChart();
+        }
     }
 }
