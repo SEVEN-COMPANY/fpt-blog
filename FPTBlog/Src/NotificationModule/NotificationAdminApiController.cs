@@ -10,46 +10,45 @@ using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.NotificationModule {
-    public class NotificationAdminApiController {
-        [Route("/api/admin/notification")]
-        [ServiceFilter(typeof(AuthGuard))]
-        public class NotificationApiController : Controller {
-            private readonly INotificationService NotificationService;
-            private readonly IUserService UserService;
 
-            public NotificationApiController(IUserService userService, INotificationService notificationService) {
-                this.NotificationService = notificationService;
-                this.UserService = userService;
+    [Route("/api/admin/notification")]
+    [ServiceFilter(typeof(AuthGuard))]
+    public class NotificationAdminApiController : Controller {
+        private readonly INotificationService NotificationService;
+        private readonly IUserService UserService;
+
+        public NotificationAdminApiController(IUserService userService, INotificationService notificationService) {
+            this.NotificationService = notificationService;
+            this.UserService = userService;
+        }
+
+        [HttpPost("")]
+        public ObjectResult HandleAddNotification([FromBody] AddNotificationDTO body) {
+            var res = new ServerApiResponse<Notification>();
+            ValidationResult result = new AddNotificationDTOValidator().Validate(body);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
             }
 
-            [HttpPost("")]
-            public ObjectResult HandleAddNotification([FromBody] AddNotificationDTO body) {
-                var res = new ServerApiResponse<Notification>();
-                ValidationResult result = new AddNotificationDTOValidator().Validate(body);
-                if (!result.IsValid) {
-                    res.mapDetails(result);
-                    return new BadRequestObjectResult(res.getResponse());
-                }
-
-                var isNotExistReceiver = this.UserService.GetUserByUserId(body.ReceiverId);
-                if (isNotExistReceiver == null) {
-                    res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "receiverId");
-                    return new NotFoundObjectResult(res.getResponse());
-                }
-
-                User sender = (User) this.ViewData["user"];
-                var notification = new Notification();
-                notification.Content = body.Content;
-                notification.Description = body.Description;
-                notification.SenderId = sender.UserId;
-                notification.ReceiverId = body.ReceiverId;
-                notification.Level = body.Level;
-
-                this.NotificationService.AddNotification(notification);
-
-                res.data = notification;
-                return new ObjectResult(res.getResponse());
+            var isNotExistReceiver = this.UserService.GetUserByUserId(body.ReceiverId);
+            if (isNotExistReceiver == null) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "receiverId");
+                return new NotFoundObjectResult(res.getResponse());
             }
+
+            User sender = (User) this.ViewData["user"];
+            var notification = new Notification();
+            notification.Content = body.Content;
+            notification.Description = body.Description;
+            notification.SenderId = sender.UserId;
+            notification.ReceiverId = body.ReceiverId;
+            notification.Level = body.Level;
+
+            this.NotificationService.AddNotification(notification);
+
+            res.data = notification;
+            return new ObjectResult(res.getResponse());
         }
     }
 }

@@ -7,6 +7,7 @@ namespace FPTBlog.Src.NotificationModule.Interface {
         public void AddNotification(Notification notification);
         public void UpdateCategory(Notification notification);
         public void RemoveCategory(Notification notification);
+        public Notification GetNotificationByNotificationId(string notificationId);
 
         public (List<Notification>, int) GetUserNotification(string userId);
 
