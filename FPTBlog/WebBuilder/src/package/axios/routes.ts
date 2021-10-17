@@ -32,6 +32,7 @@ export const routers = {
     },
     tag: {
         getAll: '/api/tag/all',
+        chart: '/api/tag/chart',
         clearUnused: '/api/tag/unused',
         getByName: (name: string) => `/api/tag?name=${name}`,
     },
@@ -52,5 +53,7 @@ export const routers = {
         getComment: '/api/comment/post',
         deleteComment: '/api/comment/delete',
         updateComment: '/api/comment',
+        likeComment: '/api/comment/like',
+        dislikeComment: '/api/comment/dislike',
     },
 };

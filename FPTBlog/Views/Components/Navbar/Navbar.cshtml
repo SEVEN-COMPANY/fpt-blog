@@ -211,6 +211,12 @@
                                 @await Html.PartialAsync("../../Components/Common/IconToolTip.cshtml",
                             new {Icon ="../Icons/Profile.cshtml", Description = "View Profile" })
                             </a>
+                            <a href="@Routers.NotificationMe.Link">
+                                @await Html.PartialAsync("../../Components/Common/IconToolTip.cshtml",
+                            new {Icon ="../Icons/Notification.cshtml", Description = "Notification" })
+                            </a>
+
+
 
                             @if (user.Role == UserRole.LECTURER)
                             {

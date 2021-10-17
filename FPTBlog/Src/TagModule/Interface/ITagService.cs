@@ -16,5 +16,6 @@ namespace FPTBlog.Src.TagModule.Interface {
         public (int, int) GetCreatedTag();
         public (string, int) GetHotTrendingTag();
         public List<Tag> RemoveUnusedTag();
+        public List<TagChart> GetTagChart();
     }
 }

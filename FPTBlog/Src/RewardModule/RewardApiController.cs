@@ -62,10 +62,8 @@ namespace FPTBlog.Src.RewardModule {
             }
 
             reward = new Reward();
-            reward.RewardId = Guid.NewGuid().ToString();
             reward.Name = input.Name;
             reward.Description = input.Description;
-            reward.CreateDate = DateTime.Now.ToShortDateString();
             reward.ImageUrl = imageUrl;
             reward.Type = input.Type;
             reward.Constraint = input.Constraint;
@@ -111,6 +109,8 @@ namespace FPTBlog.Src.RewardModule {
 
             reward.Name = input.Name;
             reward.Description = input.Description;
+            reward.Type = input.Type;
+            reward.Constraint = input.Constraint;
             this.RewardService.UpdateReward(reward);
 
             res.data = reward;

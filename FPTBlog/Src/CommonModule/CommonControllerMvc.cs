@@ -25,23 +25,40 @@ namespace FPTBlog.Src.CommonModule {
 
         [HttpGet("")]
         public IActionResult GetPostForHome() {
-            var (listPopular, _) = this.PostService.GetPopularPosts(16);
+            var (listNewest, _) = this.PostService.GetNewestPosts(4);
+            var (listPopular, _) = this.PostService.GetPopularPosts(8);
+            var (listHighView, _) = this.PostService.GetHighestPointPosts(4);
 
-
-            List<PostViewModel> listMiddle4 = new List<PostViewModel>();
-            foreach (var item in listPopular) {
-                listMiddle4.Add(new PostViewModel() {
+            List<PostViewModel> listTop4 = new List<PostViewModel>();
+            foreach (var item in listNewest) {
+                listTop4.Add(new PostViewModel() {
                     Post = item,
                     NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
                 });
             }
 
-            this.ViewData["top1"] = listMiddle4.GetRange(0, 1)[0];
-            this.ViewData["top3"] = listMiddle4.GetRange(1, 3);
-            this.ViewData["middle4"] = listMiddle4.GetRange(3, 4);
-            this.ViewData["bottom4"] = listMiddle4.GetRange(8, 4);
-            this.ViewData["bottom1"] = listMiddle4.GetRange(12, 1)[0];
-            this.ViewData["bottom3"] = listMiddle4.GetRange(13, 3);
+            List<PostViewModel> listMiddle8 = new List<PostViewModel>();
+            foreach (var item in listPopular) {
+                listMiddle8.Add(new PostViewModel() {
+                    Post = item,
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                });
+            }
+
+            List<PostViewModel> listBottom4 = new List<PostViewModel>();
+            foreach (var item in listHighView) {
+                listBottom4.Add(new PostViewModel() {
+                    Post = item,
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                });
+            }
+
+            this.ViewData["top1"] = listTop4[0];
+            this.ViewData["top3"] = listTop4.GetRange(1, 3);
+            this.ViewData["middle4"] = listMiddle8.GetRange(0, 4);
+            this.ViewData["bottom4"] = listMiddle8.GetRange(3, 4);
+            this.ViewData["bottom1"] = listBottom4[0];
+            this.ViewData["bottom3"] = listBottom4.GetRange(1, 3);
             return View(Routers.CommonGetHome.Page);
         }
     }

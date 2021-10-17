@@ -52,6 +52,8 @@ namespace FPTBlog.Src.RewardModule {
         [Route("update")]
         public IActionResult GetUpdateForm(string rewardId) {
             var reward = this.RewardService.GetRewardByRewardId(rewardId);
+
+            this.ViewData["rewardTypes"] = new SelectList(this.RewardService.GetRewardTypeDropList());
             this.ViewData["reward"] = reward;
 
 
@@ -65,6 +67,8 @@ namespace FPTBlog.Src.RewardModule {
                 searchName = "";
             }
 
+
+            this.ViewData["rewardTypes"] = new SelectList(this.RewardService.GetRewardTypeDropList());
             var (rewards, total) = this.RewardService.GetRewardByName(indexPage, pageSize, searchName);
             this.ViewData["rewards"] = rewards;
             this.ViewData["total"] = total;
