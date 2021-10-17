@@ -39,6 +39,7 @@ namespace FPTBlog.Src.NotificationModule {
             User sender = (User) this.ViewData["user"];
             var notification = new Notification();
             notification.Content = body.Content;
+            notification.Description = body.Description;
             notification.SenderId = sender.UserId;
             notification.ReceiverId = body.ReceiverId;
             notification.Level = body.Level;

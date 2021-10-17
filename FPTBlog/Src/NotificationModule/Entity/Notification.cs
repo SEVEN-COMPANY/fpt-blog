@@ -26,6 +26,12 @@ namespace FPTBlog.Src.NotificationModule.Entity {
         }
 
         [Required]
+        public string Description {
+            get; set;
+        }
+
+
+        [Required]
         public NotificationLevel Level {
             get; set;
         }
@@ -58,6 +64,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
         public Notification() {
             this.NotificationId = Guid.NewGuid().ToString();
             this.Content = "";
+            this.Description = "";
             this.Level = NotificationLevel.INFOMATION;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Sender = null;
@@ -66,7 +73,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
 
         public override string ToString() {
             return "Notification: \n NotificationId: " + NotificationId + " \nContent: " + Content
-            + " \nLevel: " + Level + " \nCreateDate: " + CreateDate
+            + " \nDescription: " + Description + " \nLevel: " + Level + " \nCreateDate: " + CreateDate
             + " \nSenderId" + SenderId + " \nReceiverId" + ReceiverId;
         }
     }
