@@ -14,7 +14,7 @@ namespace FPTBlog.Src.NotificationModule {
             this.NotificationService = notificationService;
         }
 
-        [HttpGet("/me")]
+        [HttpGet("me")]
         public IActionResult GetNotifications() {
             User user = (User) this.ViewData["user"];
             var (notifications, total) = this.NotificationService.GetUserNotification(user.UserId);
@@ -22,7 +22,7 @@ namespace FPTBlog.Src.NotificationModule {
             this.ViewData["notifications"] = notifications;
             this.ViewData["totalNotifications"] = total;
 
-            return View();
+            return View(Routers.NotificationMe.Page);
         }
 
     }

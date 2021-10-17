@@ -50,6 +50,10 @@ namespace FPTBlog.Utils.Common {
 
         public static readonly RouterItem UserPutPassword = new RouterItem() { Page = "/Views/Containers/User/ChangePassword.cshtml", Title = "Change Password", Link = "/user/change-password" };
 
+
+        // Notification
+        public static readonly RouterItem NotificationMe = new RouterItem() { Page = "/Views/Containers/Notification/Notification.cshtml", Title = "My Notification", Link = "/notification/me" };
+
         //Common
         public static readonly RouterItem NotFoundPage = new RouterItem() { Page = "/Views/Containers/Error/404.cshtml", Title = "", Link = "" };
         public static readonly RouterItem ErrorPage = new RouterItem() { Page = "/Views/Containers/Error/500.cshtml", Title = "", Link = "" };

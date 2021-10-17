@@ -6,12 +6,12 @@
     var categoryLink = $"{Routers.PostGetSearch.Link}?categoryId={value.Post.CategoryId}";
 }
 
-<div href="@link" class="overflow-hidden bg-white rounded-md shadow-lg fade-in">
+<div href="@link" class="flex flex-col overflow-hidden bg-white rounded-md shadow-lg fade-in">
     <a href="@link" class="block h-64 lg:h-48">
         <img src="" alt="@value.Post.Title" data-src="@value.Post.CoverUrl" class="object-cover w-full h-full lazy ">
     </a>
-    <div class="px-4 py-6">
-        <div class="space-y-2">
+    <div class="flex flex-col flex-1 px-4 py-6">
+        <div class="flex flex-col flex-1 space-y-2">
             <div class="flex items-center justify-between text-xs">
                 <div class="flex items-center space-x-1 ">
                     <div class="w-1 h-6 bg-tango-500"></div>
@@ -21,10 +21,10 @@
                     @value.Post.ReadTime min read
                 </p>
             </div>
-            <a href="@link" class="text-lg font-semibold">@value.Post.Title</a>
+            <a href="@link" class="flex-1 text-lg font-semibold">@value.Post.Title</a>
             <a href="@profileLink" class="block text-xs opacity-60">@value.Post.Student.Name</a>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between flex-1">
 
             <div class="flex space-x-2">
                 <div class="flex items-center space-x-0.5">
