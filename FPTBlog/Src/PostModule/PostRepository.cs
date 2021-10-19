@@ -1,11 +1,13 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
+
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
+
 using FPTBlog.Utils;
 using FPTBlog.Utils.Repository;
 
@@ -15,7 +17,7 @@ namespace FPTBlog.Src.PostModule {
         public PostRepository(DB db) : base(db) {
             this.Db = db;
         }
-
+        #region Add, Remove, Get a tag from post
         public void AddTagToPost(Post post, Tag tag) {
             PostTag postTag = new PostTag();
             postTag.PostId = post.PostId;
@@ -50,6 +52,9 @@ namespace FPTBlog.Src.PostModule {
                               select Tag).ToList();
             return tags;
         }
+        #endregion
+
+        #region Get For Page
         public (List<Post>, int) GetPostsByCategoryWithCount(int pageSize, int pageIndex, string name) {
             var query = (from Category in this.Db.Category
                          join Post in this.Db.Post
@@ -76,7 +81,6 @@ namespace FPTBlog.Src.PostModule {
             return (list, count);
 
         }
-
         public (List<Post>, int) GetPostsOfStudentWithStatus(int pageSize, int pageIndex, string studentId) {
             var query = this.GetAll(item => item.StudentId == studentId && item.Status != PostStatus.APPROVED, includeProperties: "Category").OrderBy(item => item.Status);
 
@@ -86,12 +90,36 @@ namespace FPTBlog.Src.PostModule {
             return (list, count);
 
         }
+        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status) {
 
-        public (List<Post>, int) GetWaitPostsWithCount() {
-            List<Post> posts = this.GetAll(item => item.Status == PostStatus.WAIT).ToList();
-            return (posts, posts.Count);
+            var query = (from Post in this.Db.Post
+                         where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search))) && Post.Status == status && Post.Status != PostStatus.DRAFT
+                         select Post);
+
+            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            foreach (var post in list) {
+                this.Db.Entry(post).Reference(item => item.Student).Load();
+            }
+            int count = query.Count();
+            return (list, count);
+
         }
+        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search) {
+            var query = (from Post in this.Db.Post
+                         where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search)) && Post.Status != PostStatus.DRAFT)
+                         select Post);
 
+            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            foreach (var post in list) {
+                this.Db.Entry(post).Reference(item => item.Student).Load();
+            }
+            int count = query.Count();
+            return (list, count);
+
+        }
+        #endregion
+
+        #region Like, Dislike
         private void AddLikeOrDislikePost(Post post, User user, Expression expression) {
             LikePost likeOrDislike = new LikePost();
             likeOrDislike.PostId = post.PostId;
@@ -103,7 +131,6 @@ namespace FPTBlog.Src.PostModule {
             this.Db.LikePost.Add(likeOrDislike);
             this.Db.SaveChanges();
         }
-
         public void LikePost(Post post, User user) {
             LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);
 
@@ -134,7 +161,6 @@ namespace FPTBlog.Src.PostModule {
                 return;
             }
         }
-
         public void DislikePost(Post post, User user) {
             LikePost obj = this.Db.LikePost.FirstOrDefault(item => item.PostId == post.PostId && item.UserId == user.UserId);
             if (obj == null) {
@@ -165,6 +191,7 @@ namespace FPTBlog.Src.PostModule {
                 return;
             }
         }
+        #endregion
 
         public Report GetMonthlyReport() {
             Report report = new Report();
@@ -209,35 +236,7 @@ namespace FPTBlog.Src.PostModule {
             return report;
         }
 
-        public (List<Post>, int) GetPostsByStatus(int pageSize, int pageIndex, string search, PostStatus status) {
-
-            var query = (from Post in this.Db.Post
-                         where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search))) && Post.Status == status && Post.Status != PostStatus.DRAFT
-                         select Post);
-
-            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            foreach (var post in list) {
-                this.Db.Entry(post).Reference(item => item.Student).Load();
-            }
-            int count = query.Count();
-            return (list, count);
-
-        }
-
-        public (List<Post>, int) GetAllPosts(int pageSize, int pageIndex, string search) {
-            var query = (from Post in this.Db.Post
-                         where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search)) && Post.Status != PostStatus.DRAFT)
-                         select Post);
-
-            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-            foreach (var post in list) {
-                this.Db.Entry(post).Reference(item => item.Student).Load();
-            }
-            int count = query.Count();
-            return (list, count);
-
-        }
-
+        #region Chart
         public List<PostChart> GetPostChart() {
             var today = DateTime.Now.Date;
             List<PostChart> chart = new List<PostChart>();
@@ -264,5 +263,6 @@ namespace FPTBlog.Src.PostModule {
             }
             return chart;
         }
+        #endregion
     }
 }

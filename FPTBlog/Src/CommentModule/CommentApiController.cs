@@ -1,14 +1,21 @@
+using System;
+using System.Collections.Generic;
+
 using FluentValidation.Results;
+
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
+
 using Microsoft.AspNetCore.Mvc;
-using FPTBlog.Src.CommentModule.Entity;
+
 using FPTBlog.Src.UserModule.Entity;
-using System.Collections.Generic;
+
+using FPTBlog.Src.CommentModule.Entity;
 using FPTBlog.Src.CommentModule.DTO;
+
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
-using System;
+
 using FPTBlog.Src.AuthModule;
 
 namespace FPTBlog.Src.CommentModule.Interface {
@@ -23,6 +30,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             this.PostService = postService;
         }
 
+        # region Add, Update, Remove
         [HttpPost("")]
         public IActionResult AddCommentHandler([FromBody] AddCommentDto input) {
             var res = new ServerApiResponse<Comment>();
@@ -106,6 +114,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+        # endregion
 
         [HttpGet("post")]
         public IActionResult GetListOriComment([FromQuery] GetCommentOfPostDto input) {
@@ -140,6 +149,8 @@ namespace FPTBlog.Src.CommentModule.Interface {
 
         }
 
+
+        # region Like, Dislike
         [HttpPost("like")]
         public IActionResult LikeComment([FromBody] LikeCommentDto input) {
             var res = new ServerApiResponse<Comment>();
@@ -180,5 +191,6 @@ namespace FPTBlog.Src.CommentModule.Interface {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+        # endregion
     }
 }

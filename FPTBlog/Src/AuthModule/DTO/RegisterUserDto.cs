@@ -1,6 +1,6 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
+
 using FPTBlog.Utils.Validator;
 using FPTBlog.Utils.Locale;
 

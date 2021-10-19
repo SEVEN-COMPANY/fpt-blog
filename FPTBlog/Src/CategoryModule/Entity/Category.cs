@@ -48,10 +48,5 @@ namespace FPTBlog.Src.CategoryModule.Entity {
             this.Status = CategoryStatus.ACTIVE;
             this.CreateDate = DateTime.Now.ToShortDateString();
         }
-
-        public override string ToString() {
-            return "Category: \nCategoryId: " + CategoryId + " \nName: " + Name + " \nDescription: " + Description +
-            " \nCreateDate: " + CreateDate + " \nStatus: " + Status;
-        }
     }
 }

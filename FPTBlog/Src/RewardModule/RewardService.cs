@@ -1,12 +1,14 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using FPTBlog.Src.RewardModule.Interface;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
-using System.Collections.Generic;
-using System.Linq;
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
-using System;
+
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.RewardModule {
