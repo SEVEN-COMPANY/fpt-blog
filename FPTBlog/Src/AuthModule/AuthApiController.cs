@@ -1,15 +1,18 @@
-
-using FPTBlog.Utils.Common;
-using Microsoft.AspNetCore.Mvc;
 using System;
-using FPTBlog.Src.AuthModule.DTO;
-using FluentValidation.Results;
-using FPTBlog.Src.UserModule.Interface;
-using FPTBlog.Utils.Locale;
-using FPTBlog.Src.UserModule.Entity;
-using FPTBlog.Src.AuthModule.Interface;
+
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+using FPTBlog.Src.AuthModule.DTO;
+using FPTBlog.Src.AuthModule.Interface;
+
+using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.UserModule.Interface;
+
 using FPTBlog.Utils.Interface;
+using FPTBlog.Utils.Locale;
+using FPTBlog.Utils.Common;
+using FluentValidation.Results;
 
 
 namespace FPTBlog.Src.AuthModule {
@@ -91,8 +94,5 @@ namespace FPTBlog.Src.AuthModule {
 
             return new ObjectResult(res.getResponse());
         }
-
-
-
     }
 }

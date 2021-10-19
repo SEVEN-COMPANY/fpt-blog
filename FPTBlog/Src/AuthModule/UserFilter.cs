@@ -1,14 +1,11 @@
-
 using System.Collections.Generic;
 using System;
+
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using FPTBlog.Src.UserModule.Entity;
+
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Utils.Interface;
-using FPTBlog.Utils.Locale;
-using FPTBlog.Utils.Common;
 
 namespace FPTBlog.Src.AuthModule {
     public class UserFilter : IActionFilter {
@@ -62,7 +59,6 @@ namespace FPTBlog.Src.AuthModule {
 
             }
             catch (Exception error) {
-                Console.WriteLine(error);
                 return false;
             }
         }
