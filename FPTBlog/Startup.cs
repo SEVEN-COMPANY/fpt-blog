@@ -96,8 +96,8 @@ namespace FPTBlog {
             // Cron Job
             services.AddCronJob<GiveRewardJob>(c => {
                 c.TimeZoneInfo = TimeZoneInfo.Local;
-                // c.CronExpression = "59 23 * * *"; // 23h59
-                c.CronExpression = "* * * * *"; // every 1 minute
+                c.CronExpression = "59 23 * * *"; // 23h59
+                // c.CronExpression = "* * * * *"; // every 1 minute
             });
 
             services.AddSession();

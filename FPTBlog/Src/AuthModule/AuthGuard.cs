@@ -1,11 +1,13 @@
-
 using System.Collections.Generic;
 using System;
-using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
+
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
+
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
+
 using FPTBlog.Utils.Interface;
 using FPTBlog.Utils.Locale;
 using FPTBlog.Utils.Common;
@@ -16,15 +18,12 @@ namespace FPTBlog.Src.AuthModule {
         private readonly IUserRepository UserRepository;
         private readonly IUserService UserService;
         public AuthGuard(IJwtService jwtService, IUserRepository userRepository, IUserService userService) {
-
             this.JWTService = jwtService;
             this.UserRepository = userRepository;
             this.UserService = userService;
         }
 
         public void OnActionExecuted(ActionExecutedContext context) {
-
-
         }
 
         public void OnActionExecuting(ActionExecutingContext context) {
@@ -36,7 +35,6 @@ namespace FPTBlog.Src.AuthModule {
                     ViewName = Routers.AuthPostLogin.Page,
                 };
                 return;
-
             }
         }
 
@@ -45,7 +43,6 @@ namespace FPTBlog.Src.AuthModule {
             try {
                 var cookies = new Dictionary<string, string>();
                 var values = ((string) context.HttpContext.Request.Headers["Cookie"]).Split(',', ';');
-
 
                 foreach (var parts in values) {
                     var cookieArray = parts.Trim().Split('=');
@@ -81,7 +78,6 @@ namespace FPTBlog.Src.AuthModule {
                 if (user.Status == UserStatus.DISABLE) {
                     return false;
                 }
-
 
                 return true;
 

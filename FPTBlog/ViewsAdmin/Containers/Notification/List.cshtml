@@ -1,20 +1,41 @@
+@using FPTBlog.Src.NotificationModule.Entity
+@using FPTBlog.Utils.Common
+
+
+@{
+    var notifications = (List<Notification>)this.ViewData["notifications"];
+    var total = (int)this.ViewData["total"];
+    var levelSearch = (SelectList)this.ViewData["levelSearch"];
+    var level = (SelectList)this.ViewData["level"];
+    var now = DateTime.Now;
+
+}
+
 <div class="px-4 py-2 space-y-4 border-b border-gray-200 rounded-lg shadow ">
     <h1 class="text-2xl font-semibold ">Notication Management</h1>
     <div class="flex items-end justify-between">
 
         <form class="flex items-end space-x-4 " id="listCategoryForm">
 
+            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+            new { Name = "searchLevel", Label = "Level", Type = "text", Value = (string)
+            this.Context.Request.Query["searchLevel"] ?? "" , IsLabel = false, List = levelSearch
+            })
+
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-            new { Name = "searchName", Label = "Search", Type = "text", Value = (string)
-            this.Context.Request.Query["searchName"] ?? "" , PlaceHolder= "Name", IsLabel = false
+            new { Name = "startDate", Label = "Start Date", Type = "date", Value = (string)
+            this.Context.Request.Query["startDate"] ?? now.AddYears(-5).ToString("yyyy-MM-dd") , IsLabel = false
+            })
+
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "endDate", Label = "End Date", Type = "date", Value = (string)
+            this.Context.Request.Query["endDate"] ?? now.AddYears(5).ToString("yyyy-MM-dd") , IsLabel = false
             })
 
             @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
             new { Name = "pageSize", Value = (string) this.Context.Request.Query["pageSize"] ?? "12" })
             @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
             new { Name = "pageIndex",Value = (string) this.Context.Request.Query["pageIndex"] ?? "0" })
-
-
 
             <div class="my-1">
                 @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
@@ -38,25 +59,55 @@
                     #
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Name
+                    Sender
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Description
+                    Receiver
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Status
+                    Notification ID
+                </th>
+                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Level
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Create Date
                 </th>
 
                 <th scope="col" class="relative px-6 py-3">
-                    <span class="sr-only">Edit</span>
+                    <span class="sr-only">View more</span>
                 </th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200 fade-in">
+            @for (int i = 0; i < notifications.Count; i++)
+            {
+                var item = notifications[i];
 
+                <tr class="duration-200 hover:bg-indigo-100">
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                        @(i+1)
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Sender.Name
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Receiver.Name
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.NotificationId
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.Level
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                        @item.CreateDate
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <!-- This example requires Tailwind CSS v2.0+ -->

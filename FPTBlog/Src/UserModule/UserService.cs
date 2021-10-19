@@ -1,9 +1,10 @@
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.UserModule.Interface;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using FPTBlog.Src.PostModule.Entity;
+
+using System.Collections.Generic;
+
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.UserModule {
     public class UserService : IUserService {

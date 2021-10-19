@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FluentValidation;
 
 namespace FPTBlog.Src.PostModule.DTO {

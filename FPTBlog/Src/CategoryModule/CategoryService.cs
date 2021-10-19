@@ -17,19 +17,15 @@ namespace FPTBlog.Src.CategoryModule {
             this.CategoryRepository = categoryRepository;
             this.PostRepository = postRepository;
         }
-        public (List<Category>, int) GetCategories() {
-            List<Category> list = (List<Category>) this.CategoryRepository.GetAll();
-            var count = list.Count;
-            return (list, count);
-        }
-        public void AddCategory(Category category) => this.CategoryRepository.Add(category);
-        public Category GetCategoryByCategoryId(string categoryId) => this.CategoryRepository.Get(categoryId);
-        public Category GetCategoryByName(string name) => this.CategoryRepository.GetFirstOrDefault(item => item.Name.Equals(name));
-        public void UpdateCategory(Category category) => this.CategoryRepository.Update(category);
-        public void RemoveCategory(Category category) => this.CategoryRepository.Remove(category);
-        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) => this.CategoryRepository.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
-        public (List<Category>, int) GetAllCategories(int pageIndex, int pageSize, string searchName) => this.CategoryRepository.GetAllCategories(pageIndex, pageSize, searchName);
 
+        #region Add, Update, Remove
+        public void AddCategory(Category category) => this.CategoryRepository.Add(category);
+        public void UpdateCategory(Category category) => this.CategoryRepository.Update(category);
+        #endregion
+
+
+        #region Get For Page
+        public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) => this.CategoryRepository.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
         public List<SelectListItem> GetCategoryStatusDropList() {
             var status = new List<SelectListItem>(){
                 new SelectListItem(){ Value = CategoryStatus.ACTIVE.ToString(), Text = "Active"},
@@ -38,7 +34,6 @@ namespace FPTBlog.Src.CategoryModule {
 
             return status;
         }
-
         public List<SelectListItem> GetCategoryDropList() {
             var categories = new List<SelectListItem>();
 
@@ -49,7 +44,10 @@ namespace FPTBlog.Src.CategoryModule {
 
             return categories;
         }
+        #endregion
 
+
+        #region  Chart
         public List<CategoryChart> GetCategoryChart() {
             string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
             DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
@@ -75,5 +73,14 @@ namespace FPTBlog.Src.CategoryModule {
             }
             return chart;
         }
+        #endregion
+
+        public (List<Category>, int) GetCategories() {
+            List<Category> list = (List<Category>) this.CategoryRepository.GetAll();
+            var count = list.Count;
+            return (list, count);
+        }
+        public Category GetCategoryByCategoryId(string categoryId) => this.CategoryRepository.Get(categoryId);
+        public Category GetCategoryByName(string name) => this.CategoryRepository.GetFirstOrDefault(item => item.Name.Equals(name));
     }
 }

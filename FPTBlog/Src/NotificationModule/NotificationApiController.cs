@@ -21,29 +21,10 @@ namespace FPTBlog.Src.NotificationModule {
             this.UserService = userService;
         }
 
-        [HttpPost("")]
-        public ObjectResult HandleAddNotification([FromBody] AddNotificationDTO body) {
+        [HttpGet("")]
+        public ObjectResult GetNotificationHandler(string notificationId) {
             var res = new ServerApiResponse<Notification>();
-            ValidationResult result = new AddNotificationDTOValidator().Validate(body);
-            if (!result.IsValid) {
-                res.mapDetails(result);
-                return new BadRequestObjectResult(res.getResponse());
-            }
-
-            var isNotExistReceiver = this.UserService.GetUserByUserId(body.ReceiverId);
-            if (isNotExistReceiver == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "receiverId");
-                return new NotFoundObjectResult(res.getResponse());
-            }
-
-            User sender = (User) this.ViewData["user"];
-            var notification = new Notification();
-            notification.Content = body.Content;
-            notification.SenderId = sender.UserId;
-            notification.ReceiverId = body.ReceiverId;
-            notification.Level = body.Level;
-
-            this.NotificationService.AddNotification(notification);
+            var notification = this.NotificationService.GetNotificationByNotificationId(notificationId);
 
             res.data = notification;
             return new ObjectResult(res.getResponse());

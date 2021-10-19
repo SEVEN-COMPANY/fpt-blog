@@ -1,6 +1,5 @@
 ﻿using FPTBlog.Src.AuthModule.Interface;
 
-
 namespace FPTBlog.Src.AuthModule {
     public class AuthService : IAuthService {
         public string HashingPassword(string password) {

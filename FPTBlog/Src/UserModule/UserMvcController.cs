@@ -1,16 +1,17 @@
-using System;
+using System.Collections.Generic;
+
 using FPTBlog.Utils.Common;
-using Microsoft.AspNetCore.Mvc;
+
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.AuthModule;
-using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.CategoryModule.Interface;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 using FPTBlog.Src.RewardModule.Interface;
+
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.UserModule {
     [Route("user")]

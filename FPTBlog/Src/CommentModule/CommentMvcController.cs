@@ -1,7 +1,6 @@
-using FPTBlog.Utils.Common;
-using FPTBlog.Utils.Locale;
 using Microsoft.AspNetCore.Mvc;
-using FPTBlog.Src.CommentModule.Entity;
+
+using FPTBlog.Utils.Common;
 using FPTBlog.Src.CommentModule.Interface;
 
 namespace FPTBlog.Src.CommentModule {

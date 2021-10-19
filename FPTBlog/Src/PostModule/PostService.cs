@@ -166,5 +166,9 @@ namespace FPTBlog.Src.PostModule {
             return viewSession;
         }
 
+        public List<PostChart> GetPostChart() {
+            return this.PostRepository.GetPostChart();
+        }
+
     }
 }

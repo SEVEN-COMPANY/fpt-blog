@@ -1,13 +1,11 @@
-
-using System;
 using Microsoft.AspNetCore.Mvc;
-using FPTBlog.Src.CategoryModule.Interface;
-using FPTBlog.Src.CategoryModule.DTO;
-using FPTBlog.Src.CategoryModule.Entity;
-using FPTBlog.Src.AuthModule;
-using FPTBlog.Utils.Common;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
+using FPTBlog.Src.CategoryModule.Interface;
+using FPTBlog.Src.CategoryModule.Entity;
+using FPTBlog.Src.AuthModule;
+
+using FPTBlog.Utils.Common;
 
 namespace FPTBlog.Src.CategoryModule {
     [Route("/admin/category")]
@@ -33,17 +31,10 @@ namespace FPTBlog.Src.CategoryModule {
             SelectList list = new SelectList(statusList, "");
             this.ViewData["statusSearch"] = list;
 
-            if ((int) searchStatus == 0) {
-                var (allCategories, allTotal) = this.CategoryService.GetAllCategories(pageIndex, pageSize, searchName);
-                this.ViewData["categories"] = allCategories;
-                this.ViewData["total"] = allTotal;
-            }
-            else {
-                var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
-                this.ViewData["categories"] = categories;
-                this.ViewData["total"] = total;
-            }
 
+            var (categories, total) = this.CategoryService.GetCategoriesAndCount(pageIndex, pageSize, searchName, searchStatus);
+            this.ViewData["categories"] = categories;
+            this.ViewData["total"] = total;
 
             return View(RoutersAdmin.CategoryGetCategoryList.Page);
         }
