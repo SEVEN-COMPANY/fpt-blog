@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.TagModule.Entity;
@@ -25,6 +26,6 @@ namespace FPTBlog.Src.PostModule.Interface {
         #endregion
         public List<Tag> GetTagsFromPost(Post blog);
         public Report GetMonthlyReport();
-        public List<PostChart> GetPostChart();
+        public List<PostChart> GetPostChart(DateTime fromDate, DateTime toDate);
     }
 }

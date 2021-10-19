@@ -237,28 +237,32 @@ namespace FPTBlog.Src.PostModule {
         }
 
         #region Chart
-        public List<PostChart> GetPostChart() {
-            var today = DateTime.Now.Date;
+        public List<PostChart> GetPostChart(DateTime fromDate, DateTime toDate) {
             List<PostChart> chart = new List<PostChart>();
-            for (int i = -29; i <= 0; i++) {
+
+            TimeSpan bigInterval = toDate - fromDate;
+            TimeSpan smallInterval = new TimeSpan(bigInterval.Ticks / 10);
+            DateTime temp = fromDate;
+            while (temp < toDate) {
+                DateTime currentFromDate = temp;
+                DateTime currentToDate = temp + smallInterval;
 
                 var posts = (from Post in this.Db.Post
                              select Post).ToList()
-                             .Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i))
-                             .ToList();
+                                       .Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) < currentToDate))
+                                       .ToList();
 
                 var users = (from User in this.Db.User
                              select User).ToList()
-                .Where(x => Convert.ToDateTime(x.CreateDate) == today.AddDays(i))
-                .ToList();
-
+.Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) < currentToDate))
+.ToList();
                 PostChart postChart = new PostChart();
-
                 postChart.Post = posts.Count;
                 postChart.View = posts.Sum(x => x.View);
                 postChart.User = users.Count;
-                postChart.date = today.AddDays(i).ToShortDateString();
+                postChart.date = currentToDate.ToShortDateString();
                 chart.Add(postChart);
+                temp = temp + smallInterval;
 
             }
             return chart;
