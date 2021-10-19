@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
+
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.RewardModule.Interface;
+
 using FPTBlog.Utils;
 using FPTBlog.Utils.Repository;
-using System.Linq;
+
 namespace FPTBlog.Src.RewardModule {
     public class UserRewardRepository : Repository<UserReward>, IUserRewardRepository {
         private readonly DB Db;

@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+using System;
 using FluentValidation.Results;
+
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.PostModule.DTO;
@@ -7,8 +8,10 @@ using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
+
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.PostModule {
@@ -55,5 +58,22 @@ namespace FPTBlog.Src.PostModule {
             return new ObjectResult(res.getResponse());
         }
 
+        [HttpGet("chart")]
+        public ObjectResult PostChart(string fromDate, string toDate) {
+            var now = DateTime.Now;
+
+            if (fromDate == null || toDate == null) {
+                toDate = now.ToString("yyyy-MM-dd");
+                fromDate = now.AddYears(-1).ToString("yyyy-MM-dd");
+            }
+
+
+            var res = new ServerApiResponse<dynamic>();
+            DateTime fDate = Convert.ToDateTime(fromDate);
+            DateTime tDate = Convert.ToDateTime(toDate);
+            var postChart = this.PostService.GetPostChart(fDate, tDate);
+            res.data = postChart;
+            return new ObjectResult(res.getResponse());
+        }
     }
 }

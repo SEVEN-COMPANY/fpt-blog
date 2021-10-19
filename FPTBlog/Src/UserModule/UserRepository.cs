@@ -1,11 +1,13 @@
-﻿using FPTBlog.Src.UserModule.Entity;
-using FPTBlog.Src.UserModule.Interface;
-using FPTBlog.Utils;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using System;
-using FPTBlog.Utils.Repository;
+
+using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.PostModule.Entity;
+
+using FPTBlog.Utils;
+using FPTBlog.Utils.Repository;
 
 namespace FPTBlog.Src.UserModule {
     public class UserRepository : Repository<User>, IUserRepository {

@@ -1,16 +1,19 @@
+using System.Collections.Generic;
+
 using FPTBlog.Utils.Common;
+using FPTBlog.Utils.Locale;
+
 using Microsoft.AspNetCore.Mvc;
+
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.UserModule.DTO;
-using FPTBlog.Utils.Locale;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
+
+using FluentValidation.Results;
 
 namespace FPTBlog.Src.UserModule {
     [Route("/api/user")]

@@ -42,7 +42,6 @@ namespace FPTBlog.Utils {
             get; set;
         }
 
-
         public DbSet<Reward> Reward {
             get; set;
         }

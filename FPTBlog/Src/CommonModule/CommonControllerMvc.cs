@@ -1,12 +1,16 @@
-using System;
-using FPTBlog.Utils.Common;
-using Microsoft.AspNetCore.Mvc;
-using FPTBlog.Src.AuthModule;
-using FPTBlog.Utils.Interface;
-using FPTBlog.Src.PostModule.Interface;
-using FPTBlog.Src.CategoryModule.Interface;
-using FPTBlog.Src.PostModule.Entity;
 using System.Collections.Generic;
+
+using Microsoft.AspNetCore.Mvc;
+
+using FPTBlog.Src.AuthModule;
+
+using FPTBlog.Src.PostModule.Interface;
+using FPTBlog.Src.PostModule.Entity;
+
+using FPTBlog.Src.CategoryModule.Interface;
+
+using FPTBlog.Utils.Interface;
+using FPTBlog.Utils.Common;
 
 namespace FPTBlog.Src.CommonModule {
 

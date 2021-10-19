@@ -1,14 +1,19 @@
+using System;
+
+using FluentValidation.Results;
+
 using Microsoft.AspNetCore.Mvc;
+
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.CategoryModule.DTO;
 using FPTBlog.Src.CategoryModule.Entity;
-using FPTBlog.Utils.Common;
-using FluentValidation.Results;
-using FPTBlog.Utils.Locale;
-using System;
+
+using FPTBlog.Src.AuthModule;
 
 using FPTBlog.Src.PostModule.Interface;
-using FPTBlog.Src.AuthModule;
+
+using FPTBlog.Utils.Locale;
+using FPTBlog.Utils.Common;
 
 namespace FPTBlog.Src.CategoryModule {
     [Route("/api/category")]
@@ -21,6 +26,7 @@ namespace FPTBlog.Src.CategoryModule {
             this.CategoryService = categoryService;
         }
 
+        # region Add, Update, Remove
         [HttpPost("")]
         public ObjectResult HandleCreateCategory([FromBody] CreateCategoryDTO body) {
 
@@ -82,7 +88,9 @@ namespace FPTBlog.Src.CategoryModule {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+        # endregion
 
+        # region Chart
         [HttpGet("chart")]
         public ObjectResult CategoryChart() {
             var res = new ServerApiResponse<dynamic>();
@@ -91,5 +99,6 @@ namespace FPTBlog.Src.CategoryModule {
             res.data = categoryChart;
             return new ObjectResult(res.getResponse());
         }
+        # endregion
     }
 }

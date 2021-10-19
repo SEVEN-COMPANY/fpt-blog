@@ -1,11 +1,13 @@
 using System.Collections.Generic;
-using System;
+
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.PostModule.Interface;
-using Microsoft.AspNetCore.Mvc;
-using FPTBlog.Utils.Common;
 using FPTBlog.Src.PostModule.Entity;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
+using FPTBlog.Utils.Common;
 
 namespace FPTBlog.Src.PostModule {
     [Route("/admin/post")]

@@ -166,5 +166,9 @@ namespace FPTBlog.Src.PostModule {
             return viewSession;
         }
 
+      public List<PostChart> GetPostChart(DateTime fromDate, DateTime toDate) {
+            return this.PostRepository.GetPostChart(fromDate, toDate);
+        }
+
     }
 }

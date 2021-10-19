@@ -56,12 +56,18 @@ const buildChart = () => {
                     chart: {
                         width: 380,
                         type: 'pie',
+                        toolbar: {
+                            show: true,
+                        },
                     },
                     title: {
                         text: 'Category and post chart',
                         align: 'center',
                     },
                     labels: names,
+                    tooltip: {
+                        enabled: true,
+                    },
                     responsive: [
                         {
                             breakpoint: 480,

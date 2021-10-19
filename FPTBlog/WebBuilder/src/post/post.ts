@@ -87,7 +87,7 @@ const initComment = () => {
                 const mainComment = renderComment(item.oriComment, data.data);
 
                 const subWrapper = document.createElement('div');
-                subWrapper.classList.add('pl-4', 'ml-4', 'border-l-2', 'border-tango-300');
+                subWrapper.classList.add('pl-2', 'lg:pl-4', 'lg:ml-4', 'border-l-2', 'border-tango-300');
 
                 item.subComments.map((item2) => {
                     subWrapper.appendChild(renderComment(item2, data.data));
@@ -135,7 +135,7 @@ const renderTextarea = (content: string, callback: (value: string) => void) => {
 
 const renderComment = (data: OriComment, user: User) => {
     const wrapper = document.createElement('div');
-    wrapper.classList.add('space-y-4');
+    wrapper.classList.add('space-y-4', 'fade-in');
     const btnWrapper = document.createElement('div');
 
     if (user.userId === data.user.userId) {
@@ -193,8 +193,8 @@ const renderComment = (data: OriComment, user: User) => {
 
     const userInfo = `
                      <div class="flex items-center space-x-2">
-                            <div class="w-12 h-12 overflow-hidden rounded-full">
-                                <img src="${data.user.avatarUrl}" data-src="${data.user.avatarUrl}" alt="${data.user.name}" class="object-cover w-full h-full lazy">
+                            <div class="w-10 h-10 overflow-hidden rounded-full">
+                                <img  src="${data.user.avatarUrl}" data-src="${data.user.avatarUrl}" alt="${data.user.name}" class="object-cover w-full h-full lazy">
                             </div>
                             <div>
                                 <a class="font-semibold" href="/user/profile?userId=${data.user.userId}">${data.user.name}</a>
@@ -211,7 +211,7 @@ const renderComment = (data: OriComment, user: User) => {
         replyBtn.addEventListener('click', function () {
             const textarea = renderTextarea('', (value: string) => {
                 http.post(routers.comment.create, {
-                    content: value,
+                    content: value.replace(/\s{2,}/g, ' '),
                     postId: postId.value,
                     oriCommentId: data.oriCommentId ? data.oriCommentId : data.commentId,
                 }).then(() => {
@@ -246,7 +246,7 @@ const renderComment = (data: OriComment, user: User) => {
     contentWrapper.appendChild(btnContainer);
 
     const topWrapper = document.createElement('div');
-    topWrapper.classList.add('flex', 'items-center', 'justify-between');
+    topWrapper.classList.add('flex', 'flex-col', 'lg:flex-row', 'lg:items-center', 'justify-between');
     topWrapper.innerHTML = userInfo;
     topWrapper.appendChild(btnWrapper);
 

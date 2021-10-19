@@ -1,15 +1,19 @@
 using System;
+
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.PostModule.Interface;
 using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
+
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+
+using System.Collections.Generic;
 
 namespace FPTBlog.Src.PostModule {
     [Route("post")]
@@ -112,6 +116,9 @@ namespace FPTBlog.Src.PostModule {
             DateTime timeNow = DateTime.Parse(now);
             string time = this.HttpContext.Session.GetString(ViewSession);
             Dictionary<string, DateTime> list = this.PostService.ConvertStringToViewSession(time);
+
+            bool isRead = false;
+
             if (list == null) {
                 list = new Dictionary<string, DateTime>();
             }
@@ -119,16 +126,30 @@ namespace FPTBlog.Src.PostModule {
                 if (item.Key == postId) {
                     if (item.Value.AddMinutes(post.Post.ReadTime) < DateTime.Now) {
                         post.Post.View += 1;
-                        this.PostService.UpdatePost(post.Post);
                     }
+                    isRead = true;
                     list.Remove(postId);
+                    break;
                 }
-
             }
+            if (!isRead) {
+                post.Post.View += 1;
+            }
+            this.PostService.UpdatePost(post.Post);
             list.Add(postId, timeNow);
 
             this.HttpContext.Session.SetString(ViewSession, this.PostService.ConvertViewSessionToString(list));
+            var (suggestion, _) = this.PostService.GetPostsAndCount(0, 3, "", "");
+            List<PostViewModel> listSuggestion = new List<PostViewModel>();
+            foreach (var item in suggestion) {
+                PostViewModel pvm = new PostViewModel() {
+                    NumberOfComment = this.PostService.GetCommentOfPost(item).Item2
+                };
 
+                pvm.Post = item;
+                listSuggestion.Add(pvm);
+            }
+            this.ViewData["suggestion"] = listSuggestion;
             this.ViewData["post"] = post;
             return View(Routers.PostGetPost.Page);
         }

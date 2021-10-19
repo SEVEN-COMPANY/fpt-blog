@@ -10,6 +10,7 @@ export const routers = {
     },
     post: {
         create: '/api/post',
+        chart: '/api/admin/post/chart',
         addNewTagToPost: '/api/post/tag',
         getTagOfPost: (postId: string) => `/api/post/tag?postId=${postId}`,
         save: '/api/post/save',

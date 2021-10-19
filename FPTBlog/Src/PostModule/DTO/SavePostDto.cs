@@ -1,4 +1,3 @@
-
 using FluentValidation;
 
 namespace FPTBlog.Src.PostModule.DTO {

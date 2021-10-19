@@ -49,6 +49,7 @@ saveChangePostBtn?.addEventListener('click', function () {
     wrapperElement.innerHTML = editor.root.innerHTML;
     let coverImage = 'https://picsum.photos/300';
     const imageElement = wrapperElement.getElementsByTagName('img');
+
     if (imageElement.length) {
         coverImage = imageElement[0].getAttribute('src') || 'https://picsum.photos/300';
     }
