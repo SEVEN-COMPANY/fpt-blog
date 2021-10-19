@@ -1,11 +1,12 @@
-using FPTBlog.Src.CommentModule.Interface;
-using FPTBlog.Utils;
 using System.Linq;
 using System.Collections.Generic;
+
+using FPTBlog.Src.CommentModule.Interface;
 using FPTBlog.Src.CommentModule.Entity;
-using FPTBlog.Utils.Repository;
-using System;
 using FPTBlog.Src.UserModule.Entity;
+
+using FPTBlog.Utils;
+using FPTBlog.Utils.Repository;
 
 namespace FPTBlog.Src.CommentModule {
     public class CommentRepository : Repository<Comment>, ICommentRepository {
