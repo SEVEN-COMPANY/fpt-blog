@@ -1,11 +1,13 @@
-using FPTBlog.Utils.Common;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
+
+using FPTBlog.Utils.Common;
+
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
-using System;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace FPTBlog.Src.UserModule {
 
