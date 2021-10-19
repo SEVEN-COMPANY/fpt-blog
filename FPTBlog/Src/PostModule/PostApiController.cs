@@ -383,14 +383,6 @@ namespace FPTBlog.Src.PostModule {
         //     return new ObjectResult(res.getResponse());
         // }
 
-        [HttpGet("chart")]
-        public ObjectResult PostChart(string fromDate, string toDate) {
-            var res = new ServerApiResponse<dynamic>();
-            DateTime fDate = Convert.ToDateTime(fromDate);
-            DateTime tDate = Convert.ToDateTime(toDate);
-            var postChart = this.PostService.GetPostChart(fDate, tDate);
-            res.data = postChart;
-            return new ObjectResult(res.getResponse());
-        }
+
     }
 }
