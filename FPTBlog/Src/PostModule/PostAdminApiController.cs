@@ -60,6 +60,14 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpGet("chart")]
         public ObjectResult PostChart(string fromDate, string toDate) {
+            var now = DateTime.Now;
+
+            if (fromDate == null || toDate == null) {
+                toDate = now.ToString("yyyy-MM-dd");
+                fromDate = now.AddYears(-1).ToString("yyyy-MM-dd");
+            }
+
+
             var res = new ServerApiResponse<dynamic>();
             DateTime fDate = Convert.ToDateTime(fromDate);
             DateTime tDate = Convert.ToDateTime(toDate);

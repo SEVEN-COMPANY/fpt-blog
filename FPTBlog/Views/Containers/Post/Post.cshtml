@@ -125,7 +125,7 @@ new {Name="postId", Value=value.Post.PostId})
         </div>
         <div class="mt-20 space-y-4">
             <h2 class="text-sm font-semibold opacity-80">Relative Post</h2>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid gap-4 lg:grid-cols-3">
                 @for (int i = 0; i < suggestion.Count; i++)
                 {
                     var item = suggestion[i];
@@ -134,6 +134,7 @@ new {Name="postId", Value=value.Post.PostId})
             </div>
         </div>
         <div class="mt-16 space-y-4">
+            <h2 class="text-sm font-semibold opacity-80">Comment</h2>
             <div class="flex py-2 border-b border-tango-300">
                 <textarea placeholder="Share your thought about this post" id="comment"
                     class="flex-1 border-none outline-none resize-none focus:ring-transparent"></textarea>
