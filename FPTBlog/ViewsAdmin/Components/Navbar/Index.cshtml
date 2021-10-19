@@ -3,7 +3,6 @@
 
     var user = (User)this.ViewData["user"];
     var link = $"{Routers.UserGetMyProfile.Link}";
-    Console.WriteLine( );
     var listItem = new[]{
 new {Label = "Post", Link = RoutersAdmin.PostGetList.Link, Icon = "../Icons/Post.cshtml"},
 new {Label = "User", Link = RoutersAdmin.UserGetUserList.Link, Icon = "../Icons/UserIcon.cshtml"},

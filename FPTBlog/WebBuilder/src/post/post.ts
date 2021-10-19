@@ -135,7 +135,7 @@ const renderTextarea = (content: string, callback: (value: string) => void) => {
 
 const renderComment = (data: OriComment, user: User) => {
     const wrapper = document.createElement('div');
-    wrapper.classList.add('space-y-4');
+    wrapper.classList.add('space-y-4', 'fade-in');
     const btnWrapper = document.createElement('div');
 
     if (user.userId === data.user.userId) {
@@ -211,7 +211,7 @@ const renderComment = (data: OriComment, user: User) => {
         replyBtn.addEventListener('click', function () {
             const textarea = renderTextarea('', (value: string) => {
                 http.post(routers.comment.create, {
-                    content: value,
+                    content: value.replace(/\s{2,}/g, ' '),
                     postId: postId.value,
                     oriCommentId: data.oriCommentId ? data.oriCommentId : data.commentId,
                 }).then(() => {
