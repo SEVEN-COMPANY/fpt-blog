@@ -64,6 +64,7 @@
 
 
     <link href="/style/styles.css" rel="stylesheet" />
+    <link href="/style/toastify.css" rel="stylesheet">
     @await RenderSectionAsync("Styles", required: false)
 </head>
 
@@ -83,7 +84,7 @@
         const lazyLoadInstance = new LazyLoad({});
     </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 
     @await RenderSectionAsync("Scripts", required: false)

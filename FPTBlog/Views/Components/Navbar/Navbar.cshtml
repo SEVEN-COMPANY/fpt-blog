@@ -3,6 +3,7 @@
 
     var user = (User)this.ViewData["user"] ?? new User();
     var listNavbar = new[] { "Club", "Cyber Security", "Student", "IT" };
+    var howToWriteLink = "/post?PostId=d4b7bf50-03fe-4429-8e72-886dc0c6db5d";
 }
 
 <div class="fixed z-30 w-full duration-300 transform bg-white shadow-md navbar" id="navbar-layout">
@@ -253,7 +254,9 @@
                             <a href="@link" class="duration-300 text-shark-300 hover:text-tango-500">@item</a>
                         </li>
                     }
-
+                    <li>
+                        <a href="@howToWriteLink" class="duration-300 text-shark-300 hover:text-tango-500">New Post?</a>
+                    </li>
 
                 </ul>
             </div>

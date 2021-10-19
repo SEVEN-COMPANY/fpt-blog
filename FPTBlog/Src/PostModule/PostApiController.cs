@@ -287,7 +287,7 @@ namespace FPTBlog.Src.PostModule {
             User user = (User) this.ViewData["user"];
 
             this.PostService.LikePost(post, user);
-
+            res.data = post;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
@@ -307,7 +307,7 @@ namespace FPTBlog.Src.PostModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
             User user = (User) this.ViewData["user"];
-
+            res.data = post;
             this.PostService.DislikePost(post, user);
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
@@ -383,12 +383,6 @@ namespace FPTBlog.Src.PostModule {
         //     return new ObjectResult(res.getResponse());
         // }
 
-        [HttpGet("chart")]
-        public ObjectResult PostChart() {
-            var res = new ServerApiResponse<dynamic>();
-            var postChart = this.PostService.GetPostChart();
-            res.data = postChart;
-            return new ObjectResult(res.getResponse());
-        }
+
     }
 }
