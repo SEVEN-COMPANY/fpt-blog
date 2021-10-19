@@ -1,4 +1,3 @@
-@using FPTBlog.Src.CategoryModule.Entity
 @using FPTBlog.Src.UserModule.Entity
 @using FPTBlog.Utils.Common
 
@@ -109,11 +108,9 @@
                     Name
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Username
+                    Username/Email
                 </th>
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Email
-                </th>
+
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Role
                 </th>
@@ -122,6 +119,10 @@
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Create Date
+                </th>
+
+                <th scope="col" class="relative px-6 py-3">
+                    <span class="sr-only">Chat</span>
                 </th>
 
                 <th scope="col" class="relative px-6 py-3">
@@ -143,10 +144,14 @@
                         @item.Name
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @item.Username
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @item.Email
+                        @if (item.Email != "")
+                        {
+                            @item.Email
+                        }
+                        else
+                        {
+                            @item.Username
+                        }
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 capitalize whitespace-nowrap">
                         <span class="flex items-center ">
@@ -201,6 +206,10 @@ r" />
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @item.CreateDate
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                        <a href="@linkProfile" target="_blank" class="text-indigo-600 hover:text-indigo-900">View
+                            Message</a>
                     </td>
                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                         <a href="@linkProfile" target="_blank" class="text-indigo-600 hover:text-indigo-900">View

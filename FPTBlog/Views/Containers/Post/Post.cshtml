@@ -17,6 +17,7 @@
 
 
     var value = (PostViewModel)this.ViewData["post"];
+    var suggestion = (List<PostViewModel>)this.ViewData["suggestion"];
     var content = new HtmlString(value.Post.Content);
     this.ViewData["Title"] = value.Post.Title;
     this.ViewData["ImageUrl"] = value.Post.CoverUrl;
@@ -121,11 +122,19 @@ new {Name="postId", Value=value.Post.PostId})
                 <div class="fb-share-button" data-href="@facebookLink" data-layout="button_count" data-size="small"><a
                         target="_blank" href="@facebookExtendLink" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
             </div>
-
-
         </div>
-
+        <div class="mt-20 space-y-4">
+            <h2 class="text-sm font-semibold opacity-80">Relative Post</h2>
+            <div class="grid gap-4 lg:grid-cols-3">
+                @for (int i = 0; i < suggestion.Count; i++)
+                {
+                    var item = suggestion[i];
+                    @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
+                }
+            </div>
+        </div>
         <div class="mt-16 space-y-4">
+            <h2 class="text-sm font-semibold opacity-80">Comment</h2>
             <div class="flex py-2 border-b border-tango-300">
                 <textarea placeholder="Share your thought about this post" id="comment"
                     class="flex-1 border-none outline-none resize-none focus:ring-transparent"></textarea>

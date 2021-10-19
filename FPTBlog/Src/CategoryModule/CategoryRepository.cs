@@ -1,9 +1,10 @@
-using System;
-using FPTBlog.Src.CategoryModule.Entity;
-using FPTBlog.Src.CategoryModule.Interface;
-using FPTBlog.Utils;
 using System.Linq;
 using System.Collections.Generic;
+
+using FPTBlog.Src.CategoryModule.Entity;
+using FPTBlog.Src.CategoryModule.Interface;
+
+using FPTBlog.Utils;
 using FPTBlog.Utils.Repository;
 
 namespace FPTBlog.Src.CategoryModule {
@@ -15,17 +16,13 @@ namespace FPTBlog.Src.CategoryModule {
         }
 
         public (List<Category>, int) GetCategoriesAndCount(int pageIndex, int pageSize, string searchName, CategoryStatus searchStatus) {
-            List<Category> list = (List<Category>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
-            var count = list.Count();
-
-
-            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-
-            return (pagelist, count);
-        }
-
-        public (List<Category>, int) GetAllCategories(int pageIndex, int pageSize, string searchName) {
-            List<Category> list = (List<Category>) this.GetAll(item => item.Name.Contains(searchName));
+            List<Category> list = new List<Category>();
+            if ((int) searchStatus == 0) {
+                list = (List<Category>) this.GetAll(item => item.Name.Contains(searchName));
+            }
+            else {
+                list = (List<Category>) this.GetAll(item => item.Name.Contains(searchName) && item.Status == searchStatus);
+            }
             var count = list.Count();
 
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.RewardModule.Interface;
 using FPTBlog.Utils;

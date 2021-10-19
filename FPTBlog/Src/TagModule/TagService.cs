@@ -1,9 +1,9 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
+
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
-using FPTBlog.Utils.Repository;
+
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FPTBlog.Src.TagModule {

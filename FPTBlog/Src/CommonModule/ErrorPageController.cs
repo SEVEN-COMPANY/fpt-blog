@@ -1,6 +1,7 @@
 using FPTBlog.Utils.Common;
-using Microsoft.AspNetCore.Mvc;
 using FPTBlog.Src.AuthModule;
+
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace FPTBlog.Src.CommonModule {

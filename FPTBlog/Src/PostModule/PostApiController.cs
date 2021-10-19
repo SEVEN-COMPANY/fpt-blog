@@ -1,6 +1,8 @@
-using System.Linq;
+using System;
 using System.Collections.Generic;
+
 using FluentValidation.Results;
+
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.PostModule.DTO;
 using FPTBlog.Src.PostModule.Entity;
@@ -10,13 +12,14 @@ using FPTBlog.Src.CategoryModule.Interface;
 using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.TagModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
+using FPTBlog.Src.UserModule.Interface;
+
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
 using FPTBlog.Utils.Locale;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using FPTBlog.Src.UserModule.Interface;
 
 namespace FPTBlog.Src.PostModule {
     [Route("/api/post")]
@@ -284,7 +287,7 @@ namespace FPTBlog.Src.PostModule {
             User user = (User) this.ViewData["user"];
 
             this.PostService.LikePost(post, user);
-
+            res.data = post;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
@@ -304,7 +307,7 @@ namespace FPTBlog.Src.PostModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
             User user = (User) this.ViewData["user"];
-
+            res.data = post;
             this.PostService.DislikePost(post, user);
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
@@ -379,5 +382,7 @@ namespace FPTBlog.Src.PostModule {
         //     res.data = dataRes;
         //     return new ObjectResult(res.getResponse());
         // }
+
+
     }
 }

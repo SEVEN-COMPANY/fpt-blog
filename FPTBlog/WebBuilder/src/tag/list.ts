@@ -33,6 +33,12 @@ const buildChart = () => {
                     chart: {
                         width: 380,
                         type: 'pie',
+                        toolbar: {
+                            show: true,
+                        },
+                    },
+                    tooltip: {
+                        enabled: true,
                     },
                     title: {
                         text: 'Top 10 trending tag',

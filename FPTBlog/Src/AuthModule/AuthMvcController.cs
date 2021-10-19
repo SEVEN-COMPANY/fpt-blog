@@ -1,20 +1,21 @@
-﻿using FPTBlog.Utils.Common;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.AspNetCore.Http;
+
 using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.AuthModule.Interface;
-using Microsoft.AspNetCore.Http;
+
+using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace FPTBlog.Src.AuthModule {
 
     [Route("/auth")]
     [ServiceFilter(typeof(UserFilter))]
     public class AuthMvcController : Controller {
-
-
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
         private readonly IJwtService JwtService;
@@ -23,7 +24,6 @@ namespace FPTBlog.Src.AuthModule {
             this.UserService = userService;
             this.JwtService = jwtService;
         }
-
 
         [HttpGet("login")]
         public IActionResult LoginPage() {
@@ -60,8 +60,6 @@ namespace FPTBlog.Src.AuthModule {
             return Redirect(Routers.CommonGetHome.Link);
 
         }
-
-
 
         [HttpGet("register")]
         public IActionResult RegisterPage() {

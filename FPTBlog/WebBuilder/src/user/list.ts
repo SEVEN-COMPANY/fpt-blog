@@ -255,6 +255,9 @@ const buildChart = () => {
                     chart: {
                         width: 380,
                         type: 'pie',
+                        toolbar: {
+                            show: true,
+                        },
                     },
                     title: {
                         text: 'User Chart',
@@ -274,6 +277,9 @@ const buildChart = () => {
                             },
                         },
                     ],
+                    tooltip: {
+                        enabled: true,
+                    },
                     colors: ['#f37124', '#60a5fa'],
                 };
 
