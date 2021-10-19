@@ -1,3 +1,4 @@
+using System;
 using FluentValidation.Results;
 
 using FPTBlog.Src.AuthModule;
@@ -58,9 +59,11 @@ namespace FPTBlog.Src.PostModule {
         }
 
         [HttpGet("chart")]
-        public ObjectResult PostChart() {
+        public ObjectResult PostChart(string fromDate, string toDate) {
             var res = new ServerApiResponse<dynamic>();
-            var postChart = this.PostService.GetPostChart();
+            DateTime fDate = Convert.ToDateTime(fromDate);
+            DateTime tDate = Convert.ToDateTime(toDate);
+            var postChart = this.PostService.GetPostChart(fDate, tDate);
             res.data = postChart;
             return new ObjectResult(res.getResponse());
         }

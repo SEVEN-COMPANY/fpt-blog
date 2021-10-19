@@ -47,7 +47,7 @@ namespace FPTBlog.Src.PostModule.Interface {
         #endregion
 
         #region Chart
-        public List<PostChart> GetPostChart();
+        public List<PostChart> GetPostChart(DateTime fromDate, DateTime toDate);
         #endregion
     }
 }
