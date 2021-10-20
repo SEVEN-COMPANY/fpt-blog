@@ -58,11 +58,8 @@ namespace FPTBlog.Utils {
             get; set;
         }
 
-        public DbSet<Notification> Notification {
-            get; set;
-        }
 
-        public DbSet<Message> Message {
+        public DbSet<Notification> notification {
             get; set;
         }
 

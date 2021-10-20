@@ -60,5 +60,6 @@ export const routers = {
     },
     notification: {
         create: '/api/admin/notification',
+        get: '/api/admin/notification',
     },
 };

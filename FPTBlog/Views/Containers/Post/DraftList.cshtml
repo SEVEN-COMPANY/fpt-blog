@@ -16,7 +16,7 @@
     </h2>
     <div>
         @await Html.PartialAsync("../../Components/Form/BtnFuncIcon.cshtml",
-        new { Label = "button", Icon = "../../Components/Icons/DraftListBtn.cshtml", Id="createNewPost" })
+        new { Label = "New Draft", Icon = "../../Components/Icons/DraftListBtn.cshtml", Id="createNewPost" })
     </div>
     @if (posts.Count <= 0)
     {
