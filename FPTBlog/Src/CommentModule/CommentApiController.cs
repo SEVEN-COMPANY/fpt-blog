@@ -30,7 +30,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             this.PostService = postService;
         }
 
-        # region Add, Update, Remove
+        #region Manage comment
         [HttpPost("")]
         public IActionResult AddCommentHandler([FromBody] AddCommentDto input) {
             var res = new ServerApiResponse<Comment>();
@@ -114,11 +114,12 @@ namespace FPTBlog.Src.CommentModule.Interface {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
-        # endregion
+        #endregion
 
-        [HttpGet("post")]
-        public IActionResult GetListOriComment([FromQuery] GetCommentOfPostDto input) {
-            var res = new ServerApiResponse<List<CommentViewModel>>();
+        #region Get list ori comment
+        [HttpPost("post")]
+        public IActionResult GetListOriComment([FromBody] GetCommentOfPostDto input) {
+            var res = new ServerApiResponse<Comment>();
 
             ValidationResult result = new GetCommentOfPostDtoValidator().Validate(input);
             if (!result.IsValid) {
@@ -143,14 +144,14 @@ namespace FPTBlog.Src.CommentModule.Interface {
                 listComment.Add(commentViewModel);
             }
 
-            res.data = listComment;
 
-            return new ObjectResult(res.getResponse());
-
+            return Json(new {
+                listComment = listComment
+            });
         }
+        #endregion
 
-
-        # region Like, Dislike
+        #region Like and Dislike comment
         [HttpPost("like")]
         public IActionResult LikeComment([FromBody] LikeCommentDto input) {
             var res = new ServerApiResponse<Comment>();
@@ -179,7 +180,6 @@ namespace FPTBlog.Src.CommentModule.Interface {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
-
             Comment comment= this.CommentService.GetCommentByCommentId(input.CommentId);
             if (comment == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "commentId");
@@ -191,6 +191,6 @@ namespace FPTBlog.Src.CommentModule.Interface {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
-        # endregion
+        #endregion
     }
 }
