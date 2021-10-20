@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.NotificationModule.Entity;
+using FPTBlog.Src.ChatModule.Entity;
 
 namespace FPTBlog.Utils {
     public class DB : DbContext {
@@ -60,6 +61,11 @@ namespace FPTBlog.Utils {
         public DbSet<Notification> Notification {
             get; set;
         }
+
+        public DbSet<Message> Message {
+            get; set;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 
