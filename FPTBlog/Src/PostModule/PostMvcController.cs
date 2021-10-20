@@ -88,7 +88,7 @@ namespace FPTBlog.Src.PostModule {
             }
 
             var categoryDropList = this.CategoryService.GetCategoryDropList();
-            categoryDropList.Add(new SelectListItem() { Value = "", Text = "All" });
+            categoryDropList.Insert(0, new SelectListItem() { Value = "", Text = "All" });
             this.ViewData["categories"] = new SelectList(categoryDropList);
 
             var (posts, total) = this.PostService.GetPostsAndCount(pageIndex, pageSize, search, categoryId);

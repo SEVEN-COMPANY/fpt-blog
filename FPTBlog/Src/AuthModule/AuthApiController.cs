@@ -13,7 +13,9 @@ using FPTBlog.Utils.Interface;
 using FPTBlog.Utils.Locale;
 using FPTBlog.Utils.Common;
 using FluentValidation.Results;
-
+using FPTBlog.Src.NotificationModule.Interface;
+using FPTBlog.Src.NotificationModule.Entity;
+using System.Collections.Generic;
 
 namespace FPTBlog.Src.AuthModule {
     [Route("/api/auth")]
@@ -22,11 +24,12 @@ namespace FPTBlog.Src.AuthModule {
 
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
-        private readonly IJwtService JwtService;
-        public AuthApiController(IAuthService authService, IJwtService jwtService, IUserService userService) {
+        private readonly IJwtService JwtService; private readonly INotificationService NotificationService;
+        public AuthApiController(IAuthService authService, IJwtService jwtService, IUserService userService, INotificationService notificationService) {
             this.AuthService = authService;
             this.UserService = userService;
             this.JwtService = jwtService;
+            this.NotificationService = notificationService;
         }
 
         [HttpPost("login")]
@@ -46,8 +49,20 @@ namespace FPTBlog.Src.AuthModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if ((int) user.Status == 0) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_DISSABLED_ACCOUNT);
+            if (user.Status == UserStatus.DISABLE) {
+
+                var (notifications, _) = this.NotificationService.GetUserNotification(user.UserId);
+                var context = new Dictionary<string, object>();
+                for (int i = 0; i < notifications.Count; i++) {
+                    var item = notifications[i];
+                    if (item.Level == NotificationLevel.BANNED) {
+                        context.Add("Reason", item.Content);
+                        context.Add("ID", item.NotificationId);
+                        break;
+                    }
+                }
+
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, context);
                 return new BadRequestObjectResult(res.getResponse());
             }
 

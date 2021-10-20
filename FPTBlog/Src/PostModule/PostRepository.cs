@@ -247,19 +247,17 @@ namespace FPTBlog.Src.PostModule {
                 DateTime currentFromDate = temp;
                 DateTime currentToDate = temp + smallInterval;
 
-                var posts = (from Post in this.Db.Post
-                             select Post).ToList()
-                                       .Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) < currentToDate))
-                                       .ToList();
+                var posts = this.Db.Post.ToList().Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) <= currentToDate)).ToList();
+                var users = this.Db.User.ToList().Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) <= currentToDate)).ToList();
+                var likes = this.Db.LikePost.ToList().Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) <= currentToDate)).ToList();
+                var comments = this.Db.Comment.ToList().Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) <= currentToDate)).ToList();
 
-                var users = (from User in this.Db.User
-                             select User).ToList()
-.Where(x => (Convert.ToDateTime(x.CreateDate) > currentFromDate) && (Convert.ToDateTime(x.CreateDate) < currentToDate))
-.ToList();
                 PostChart postChart = new PostChart();
                 postChart.Post = posts.Count;
                 postChart.View = posts.Sum(x => x.View);
                 postChart.User = users.Count;
+                postChart.Interact = likes.Count + comments.Count;
+
                 postChart.date = currentToDate.ToShortDateString();
                 chart.Add(postChart);
                 temp = temp + smallInterval;

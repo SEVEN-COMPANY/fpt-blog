@@ -18,7 +18,11 @@ namespace FPTBlog.Src.NotificationModule {
         }
 
         [HttpGet("")]
-        public IActionResult GetNotifications(NotificationLevel searchLevel, string startDate, string endDate, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetNotifications(string search, NotificationLevel searchLevel, string startDate, string endDate, int pageSize = 12, int pageIndex = 0) {
+            if (search == null) {
+                search = "";
+            }
+
             var now = DateTime.Now;
             if (endDate == null) {
                 endDate = now.AddYears(5).ToString("yyyy-MM-dd");
@@ -27,14 +31,14 @@ namespace FPTBlog.Src.NotificationModule {
                 startDate = now.AddYears(-5).ToString("yyyy-MM-dd");
             }
 
-            this.ViewData["level"] = new SelectList(this.NotificationService.GetNotificationLevelDropList(), NotificationLevel.INFOMATION);
+            this.ViewData["level"] = new SelectList(this.NotificationService.GetNotificationLevelDropList(), NotificationLevel.INFORMATION);
             // get status search list for search by status
             var levelList = this.NotificationService.GetNotificationLevelDropList();
-            levelList.Add(new SelectListItem() { Text = "All", Value = "" });
+            levelList.Insert(0, new SelectListItem() { Text = "All", Value = "" });
             SelectList listLevel = new SelectList(levelList, "");
             this.ViewData["levelSearch"] = listLevel;
 
-            var (notifications, total) = this.NotificationService.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, searchLevel, startDate, endDate);
+            var (notifications, total) = this.NotificationService.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, search, searchLevel, startDate, endDate);
             this.ViewData["notifications"] = notifications;
             this.ViewData["total"] = total;
             return View(RoutersAdmin.NotificationList.Page);
