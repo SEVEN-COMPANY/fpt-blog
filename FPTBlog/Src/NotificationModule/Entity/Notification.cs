@@ -6,9 +6,9 @@ using FPTBlog.Src.PostModule.Entity;
 
 namespace FPTBlog.Src.NotificationModule.Entity {
     public enum NotificationLevel {
-        INFOMATION = 1,
+        INFORMATION = 1,
         WARNING = 2,
-        BANED = 3
+        BANNED = 3
     }
 
     [Table("tblNotification")]
@@ -65,7 +65,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
             this.NotificationId = Guid.NewGuid().ToString();
             this.Content = "";
             this.Description = "";
-            this.Level = NotificationLevel.INFOMATION;
+            this.Level = NotificationLevel.INFORMATION;
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.Sender = null;
             this.Receiver = null;

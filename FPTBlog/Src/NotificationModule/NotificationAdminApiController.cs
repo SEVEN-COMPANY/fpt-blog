@@ -50,5 +50,15 @@ namespace FPTBlog.Src.NotificationModule {
             res.data = notification;
             return new ObjectResult(res.getResponse());
         }
+
+
+        [HttpGet("")]
+        public ObjectResult GetNotificationHandler(string notificationId) {
+            var res = new ServerApiResponse<Notification>();
+            var notification = this.NotificationService.GetNotificationByNotificationId(notificationId);
+
+            res.data = notification;
+            return new ObjectResult(res.getResponse());
+        }
     }
 }

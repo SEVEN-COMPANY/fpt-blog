@@ -95,14 +95,11 @@
                     else
                     {
 
-                        <div>
-                            <ul class="space-y-4 intro-y">
-                                @foreach (var item in posts)
-                                {
-                                    @await Html.PartialAsync("../../Components/Post/SidePost.cshtml", new {Value = item})
-                                }
-
-                            </ul>
+                        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 intro-y">
+                            @foreach (var item in posts)
+                            {
+                                @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
+                            }
                         </div>
                     }
 

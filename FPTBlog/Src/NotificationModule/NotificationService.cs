@@ -29,8 +29,8 @@ namespace FPTBlog.Src.NotificationModule {
 
         public List<SelectListItem> GetNotificationLevelDropList() {
             var level = new List<SelectListItem>(){
-                new SelectListItem(){ Value = NotificationLevel.BANED.ToString(), Text = "Baned"},
-                new SelectListItem(){  Value =  NotificationLevel.INFOMATION.ToString(), Text = "Infomation"},
+                new SelectListItem(){ Value = NotificationLevel.BANNED.ToString(), Text = "Baned"},
+                new SelectListItem(){  Value =  NotificationLevel.INFORMATION.ToString(), Text = "Infomation"},
                 new SelectListItem(){  Value =  NotificationLevel.WARNING.ToString(), Text = "Warning"}
             };
 
