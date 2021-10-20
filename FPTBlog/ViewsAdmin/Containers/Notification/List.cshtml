@@ -13,7 +13,11 @@
     <h1 class="text-2xl font-semibold ">Notication Management</h1>
     <div class="flex items-end justify-between">
 
-        <form class="flex items-end space-x-4 " id="listCategoryForm">
+        <form class="flex items-end space-x-4 " id="listNotificationForm">
+            @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
+            new { Name = "search", Label = "Search", Type = "text", Value = (string)
+            this.Context.Request.Query["search"] ?? "" , PlaceHolder= "", IsLabel = false
+            })
 
             @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
             new { Name = "searchLevel", Label = "Level", Type = "text", Value = (string)

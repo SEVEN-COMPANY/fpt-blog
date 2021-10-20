@@ -1,4 +1,4 @@
-using FPTBlog.Src.TagModule.Entity;
+﻿using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Utils.Interface;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using FPTBlog.Src.PostModule.Entity;
 using FPTBlog.Src.RewardModule.Entity;
 using FPTBlog.Src.NotificationModule.Entity;
+using FPTBlog.Src.ChatModule.Entity;
 
 namespace FPTBlog.Utils {
     public class DB : DbContext {

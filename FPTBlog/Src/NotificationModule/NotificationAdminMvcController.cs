@@ -18,7 +18,11 @@ namespace FPTBlog.Src.NotificationModule {
         }
 
         [HttpGet("")]
-        public IActionResult GetNotifications(NotificationLevel searchLevel, string startDate, string endDate, int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetNotifications(string search, NotificationLevel searchLevel, string startDate, string endDate, int pageSize = 12, int pageIndex = 0) {
+            if (search == null) {
+                search = "";
+            }
+
             var now = DateTime.Now;
             if (endDate == null) {
                 endDate = now.AddYears(5).ToString("yyyy-MM-dd");
@@ -34,7 +38,7 @@ namespace FPTBlog.Src.NotificationModule {
             SelectList listLevel = new SelectList(levelList, "");
             this.ViewData["levelSearch"] = listLevel;
 
-            var (notifications, total) = this.NotificationService.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, searchLevel, startDate, endDate);
+            var (notifications, total) = this.NotificationService.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, search, searchLevel, startDate, endDate);
             this.ViewData["notifications"] = notifications;
             this.ViewData["total"] = total;
             return View(RoutersAdmin.NotificationList.Page);
