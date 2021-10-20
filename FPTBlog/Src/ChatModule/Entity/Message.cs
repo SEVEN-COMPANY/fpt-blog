@@ -33,12 +33,22 @@ namespace FPTBlog.Src.ChatModule.Entity {
             get; set;
         }
 
+        [ForeignKey("tblUser")]
+        [StringLength(40)]
+        public string OwnerId {
+            get; set;
+        }
+        public virtual User Owner {
+            get; set;
+        }
+
 
         public Message() {
             this.MessageId = Guid.NewGuid().ToString();
             this.Content = "";
             this.CreateDate = DateTime.Now.ToShortDateString();
             this.SenderId = null;
+            this.OwnerId = null;
         }
     }
 }
