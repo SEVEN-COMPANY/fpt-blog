@@ -34,7 +34,7 @@ namespace FPTBlog.Src.NotificationModule {
             this.ViewData["level"] = new SelectList(this.NotificationService.GetNotificationLevelDropList(), NotificationLevel.INFORMATION);
             // get status search list for search by status
             var levelList = this.NotificationService.GetNotificationLevelDropList();
-            levelList.Add(new SelectListItem() { Text = "All", Value = "" });
+            levelList.Insert(0, new SelectListItem() { Text = "All", Value = "" });
             SelectList listLevel = new SelectList(levelList, "");
             this.ViewData["levelSearch"] = listLevel;
 

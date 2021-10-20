@@ -1,8 +1,7 @@
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
-import { pageChange } from '../package/helper/pagination';
 import { ServerResponse } from '../package/interface/serverResponse';
-pageChange('listNotificationForm');
+
 interface User {
     userId: string;
     googleId: string;
@@ -88,11 +87,6 @@ for (let index = 0; index < btn.length; index++) {
                             <h4 class="text-sm font-semibold">Content</h4>
                             <p class="opacity-70">${data.data.content}</p>
 
-                        </div>
-                        <div class="space-y-1">
-                            <h4 class="text-sm font-semibold">Description</h4>
-                            <span class="text-xs font-semibold opacity-70">This message only appears with administrators</span>
-                            <p class="opacity-70">${data.data.description}</p>
                         </div>
                     </div>`;
             notificationContent.innerHTML = content;
