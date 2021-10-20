@@ -62,7 +62,7 @@ namespace FPTBlog.Utils.Locale {
             AddTranslation("en", ErrorMessageKey.ERROR_UPDATE_FAIL, "update fail");
             AddTranslation("en", ErrorMessageKey.ERROR_DELETE_FAIL, "delete fail");
             AddTranslation("en", ErrorMessageKey.ERROR_WRONG, "is wrong");
-            AddTranslation("en", ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, "your account has been disabled, if you have a problem please contact");
+            AddTranslation("en", ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, "your account has been disabled by an administrator. \n Reason: {Reason} \n If you have a problem please contact us at support@fptblog.vinhnhan.com with Ticket ID: {ID}");
             AddTranslation("en", ErrorMessageKey.ERROR_NOT_FOUND, "is not found");
             AddTranslation("en", ErrorMessageKey.ERROR_NOT_ALLOW, "not allow");
             AddTranslation("en", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_CHARACTER, "should contain at least 1 uppercase, 1 lowercase, 1 number");

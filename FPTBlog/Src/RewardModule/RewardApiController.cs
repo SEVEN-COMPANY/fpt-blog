@@ -207,6 +207,16 @@ namespace FPTBlog.Src.RewardModule {
             return new ObjectResult(res.getResponse());
         }
 
+        #region Chart
+        [HttpGet("chart")]
+        public ObjectResult CommentChart() {
+            var res = new ServerApiResponse<dynamic>();
+            var rewardChart = this.RewardService.GetRewardChart();
+
+            res.data = rewardChart;
+            return new ObjectResult(res.getResponse());
+        }
+        #endregion
 
     }
 }

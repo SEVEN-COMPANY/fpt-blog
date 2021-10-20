@@ -6,7 +6,7 @@
     var posts = (List<PostViewModel>)this.ViewData["posts"];
 }
 
-<div class="px-4 mx-auto space-y-8 lg:mt-8 md:w-4/5 lg:w-3/5">
+<div class="px-4 mx-auto space-y-8 lg:mt-8 ">
     <h1 class="text-4xl font-semibold text-center">Search Post</h1>
     <form class="flex-1 space-y-2 intro-x">
         @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
@@ -28,10 +28,10 @@
         </div>
     </form>
     <div>
-        <ul class="space-y-4 intro-y">
+        <ul class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 intro-y">
             @foreach (var item in posts)
             {
-                @await Html.PartialAsync("../../Components/Post/SidePost.cshtml", new {Value = item})
+                @await Html.PartialAsync("../../Components/Post/InlinePost.cshtml", new {Value = item})
             }
 
         </ul>

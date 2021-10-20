@@ -16,6 +16,11 @@ const btnAcceptBlock = document.getElementById(`modal-btn-accept-block`);
 const btnAcceptUnblock = document.getElementById(`modal-btn-accept-unblock`);
 const btnCancel = document.getElementById(`modal-btn-cancel`);
 
+enum NotificationLevel {
+    INFORMATION = 1,
+    WARNING = 2,
+    BANED = 3,
+}
 pageChange('listUserForm');
 
 interface ToggleUserDto {
@@ -80,37 +85,63 @@ for (let index = 0; index < rows.length; index++) {
 }
 
 btnAcceptBlock?.addEventListener('click', function () {
-    bg?.classList.remove('opacity-100');
-    bg?.classList.add('opacity-0');
-    panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
-    panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
-    panel?.addEventListener('transitionend', modalToggle);
-
     if (userId !== null) {
         const input: ToggleUserDto = {
             userId: userId,
         };
 
-        http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
-            window.location.reload();
+        const content = document.getElementById('content') as HTMLInputElement;
+        const description = document.getElementById('description') as HTMLInputElement;
+
+        const notificationInput = {
+            receiverId: userId,
+            level: NotificationLevel.BANED,
+            content: content.value,
+            description: description.value,
+        };
+
+        http.post(routers.notification.create, notificationInput).then(() => {
+            http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
+                bg?.classList.remove('opacity-100');
+                bg?.classList.add('opacity-0');
+                panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+                panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+                panel?.addEventListener('transitionend', modalToggle);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            });
         });
     }
 });
 
 btnAcceptUnblock?.addEventListener('click', function () {
-    bg?.classList.remove('opacity-100');
-    bg?.classList.add('opacity-0');
-    panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
-    panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
-    panel?.addEventListener('transitionend', modalToggle);
-
     if (userId !== null) {
         const input: ToggleUserDto = {
             userId: userId,
         };
+        const content = document.getElementById('content') as HTMLInputElement;
+        const description = document.getElementById('description') as HTMLInputElement;
 
-        http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
-            window.location.reload();
+        const notificationInput = {
+            receiverId: userId,
+            level: NotificationLevel.INFORMATION,
+            content: content.value,
+            description: description.value,
+        };
+        http.post(routers.notification.create, notificationInput).then(() => {
+            http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
+                bg?.classList.remove('opacity-100');
+                bg?.classList.add('opacity-0');
+                panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+                panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+                panel?.addEventListener('transitionend', modalToggle);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            });
         });
     }
 });

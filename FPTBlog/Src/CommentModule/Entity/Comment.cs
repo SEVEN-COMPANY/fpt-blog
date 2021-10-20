@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.PostModule.Entity;
 
@@ -44,6 +43,12 @@ namespace FPTBlog.Src.CommentModule.Entity {
             get; set;
         }
 
+        /*
+        select min(salary)
+        from employee
+        group by roomId
+        */
+
         public virtual Comment OriComment {
             get; set;
         }
@@ -67,7 +72,6 @@ namespace FPTBlog.Src.CommentModule.Entity {
             get; set;
         }
 
-
         public Comment() {
             this.CommentId = Guid.NewGuid().ToString();
             this.Content = "<p>Content</p>";
@@ -77,6 +81,12 @@ namespace FPTBlog.Src.CommentModule.Entity {
             this.OriCommentId = null;
             this.PostId = null;
             this.UserId = null;
+        }
+
+        public override string ToString() {
+            return "Comment: \n CommentId: " + CommentId + " \nContent: " + Content
+            + " \nLike: " + Like + " \nDislike: " + Dislike + " \nCreateDate: " + CreateDate
+            + " \nSubcommentId" + OriCommentId + " \nBlogId" + PostId + " \nUserId" + UserId;
         }
     }
 }

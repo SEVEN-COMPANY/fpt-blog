@@ -45,6 +45,7 @@ export const routers = {
         create: '/api/reward',
         update: '/api/reward',
         getOne: '/api/reward',
+        chart: '/api/reward/chart',
         give: '/api/reward/give',
         delete: '/api/reward/delete',
         removeUserReward: '/api/reward/remove',
@@ -56,5 +57,8 @@ export const routers = {
         updateComment: '/api/comment',
         likeComment: '/api/comment/like',
         dislikeComment: '/api/comment/dislike',
+    },
+    notification: {
+        create: '/api/admin/notification',
     },
 };

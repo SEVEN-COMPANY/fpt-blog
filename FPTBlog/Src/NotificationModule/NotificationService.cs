@@ -25,18 +25,16 @@ namespace FPTBlog.Src.NotificationModule {
             return (notifications, count);
         }
 
-        public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, NotificationLevel searchLevel, string startDate, string endDate) => this.NotificationRepository.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, searchLevel, startDate, endDate);
+        public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, string search, NotificationLevel searchLevel, string startDate, string endDate) => this.NotificationRepository.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, search, searchLevel, startDate, endDate);
 
         public List<SelectListItem> GetNotificationLevelDropList() {
             var level = new List<SelectListItem>(){
-                new SelectListItem(){ Value = NotificationLevel.BANED.ToString(), Text = "Baned"},
-                new SelectListItem(){  Value =  NotificationLevel.INFOMATION.ToString(), Text = "Infomation"},
+                new SelectListItem(){ Value = NotificationLevel.BANNED.ToString(), Text = "Baned"},
+                new SelectListItem(){  Value =  NotificationLevel.INFORMATION.ToString(), Text = "Infomation"},
                 new SelectListItem(){  Value =  NotificationLevel.WARNING.ToString(), Text = "Warning"}
             };
 
             return level;
         }
-
-
     }
 }
