@@ -41,6 +41,8 @@ using FPTBlog.Src.RewardModule.Interface;
 using FPTBlog.Src.RewardModule;
 using FPTBlog.Src.NotificationModule.Interface;
 using FPTBlog.Src.NotificationModule;
+using FPTBlog.Src.ChatModule.Interface;
+using FPTBlog.Src.ChatModule;
 
 namespace FPTBlog {
     public class Startup {
@@ -108,6 +110,10 @@ namespace FPTBlog {
             // Notification Module
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationService, NotificationService>();
+
+            // Chat Module
+            services.AddScoped<IChatRepository, ChatRepository>();
+            services.AddScoped<IChatService, ChatService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

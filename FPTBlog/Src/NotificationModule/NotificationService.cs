@@ -25,7 +25,7 @@ namespace FPTBlog.Src.NotificationModule {
             return (notifications, count);
         }
 
-        public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, NotificationLevel searchLevel, string startDate, string endDate) => this.NotificationRepository.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, searchLevel, startDate, endDate);
+        public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, string search, NotificationLevel searchLevel, string startDate, string endDate) => this.NotificationRepository.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, search, searchLevel, startDate, endDate);
 
         public List<SelectListItem> GetNotificationLevelDropList() {
             var level = new List<SelectListItem>(){
@@ -36,7 +36,5 @@ namespace FPTBlog.Src.NotificationModule {
 
             return level;
         }
-
-
     }
 }
