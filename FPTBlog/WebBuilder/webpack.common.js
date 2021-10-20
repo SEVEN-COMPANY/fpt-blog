@@ -21,6 +21,7 @@ module.exports = {
         'reward-update': ['./src/reward/update.ts'],
         'reward-remove-user-reward': ['./src/reward/removeUserReward.ts'],
         'user-profile': ['./src/user/profile.ts'],
+        'notification-list': ['./src/notification/list.ts'],
     },
     output: {
         path: __dirname + '/../wwwroot/js',

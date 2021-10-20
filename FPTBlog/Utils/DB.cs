@@ -57,6 +57,11 @@ namespace FPTBlog.Utils {
             get; set;
         }
 
+
+        public DbSet<Notification> notification {
+            get; set;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 

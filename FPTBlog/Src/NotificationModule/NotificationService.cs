@@ -17,7 +17,7 @@ namespace FPTBlog.Src.NotificationModule {
         public void AddNotification(Notification notification) => this.NotificationRepository.Add(notification);
         public void UpdateCategory(Notification notification) => this.NotificationRepository.Update(notification);
         public void RemoveCategory(Notification notification) => this.NotificationRepository.Remove(notification);
-        public Notification GetNotificationByNotificationId(string notificationId) => this.NotificationRepository.Get(notificationId);
+        public Notification GetNotificationByNotificationId(string notificationId) => this.NotificationRepository.GetFirstOrDefault(item => item.NotificationId == notificationId, includeProperties: "Sender,Receiver");
 
         public (List<Notification>, int) GetUserNotification(string userId) {
             var notifications = this.NotificationRepository.GetAll(item => item.ReceiverId == userId).ToList();
