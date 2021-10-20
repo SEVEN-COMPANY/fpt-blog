@@ -110,7 +110,7 @@ namespace FPTBlog.Src.PostModule.Entity {
 
         public Post() {
             this.PostId = Guid.NewGuid().ToString();
-            this.Title = "Draft";
+            this.Title = "New Draft";
             this.Content = "<p>Hello there</p>";
             this.Description = "Description";
             this.CoverUrl = "https://picsum.photos/128";

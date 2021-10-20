@@ -203,6 +203,34 @@ namespace FPTBlog.Src.RewardModule {
 
             return rewardType;
         }
+
+        #region  Chart
+        public List<RewardChart> GetRewardChart() {
+            string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
+            DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
+            List<RewardChart> chart = new List<RewardChart>();
+            var rewards = this.RewardRepository.GetAll();
+            foreach (var reward in rewards) {
+                var rewardChart = new RewardChart();
+                rewardChart.name = reward.Name;
+                int total = 0;
+                List<UserReward> userRewards = this.UserRewardRepository.GetAll(item => item.RewardId == reward.RewardId).ToList();
+                for (int i = userRewards.Count - 1; i >= 0; i--) {
+                    DateTime date = Convert.ToDateTime(userRewards[i].CreateDate);
+                    if (DateTime.Compare(date, thisMonthDate) < 0) {
+                        userRewards.Remove(userRewards[i]);
+                    }
+                    else {
+                        total += 1;
+                    }
+                }
+                rewardChart.total = total;
+                chart.Add(rewardChart);
+
+            }
+            return chart;
+        }
+        #endregion
     }
 }
 

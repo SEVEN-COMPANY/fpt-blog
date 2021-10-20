@@ -23,11 +23,11 @@
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                         new { Name = "email", Label = "Email", Type = "text", Value = user.Email })
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
-                        new { Name = "address", Label = "address", Type = "text", Value = user.Address })
+                        new { Name = "address", Label = "Address", Type = "text", Value = user.Address })
                         @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
                         new { Name = "phone", Label = "Phone", Type = "text", Value = user.Phone })
                         @await Html.PartialAsync("../../Components/Form/FormBtn.cshtml",
-                        new {Label="Update Password", Icon = "../../Components/Icons/Save.cshtml" })
+                        new {Label="Update Profile", Icon = "../../Components/Icons/Save.cshtml" })
                     </form>
                 </div>
             </div>

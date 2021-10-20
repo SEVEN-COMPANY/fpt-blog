@@ -140,10 +140,10 @@
                     <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap ">
                         @(i+1)
                     </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                    <td class="px-6 py-4 text-sm text-gray-500 ">
                         @item.Name
                     </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                    <td class="px-6 py-4 text-sm text-gray-500 break-words">
                         @if (item.Email != "")
                         {
                             @item.Email
@@ -207,11 +207,11 @@ r" />
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @item.CreateDate
                     </td>
-                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                        <a href="@linkProfile" target="_blank" class="text-indigo-600 hover:text-indigo-900">View
+                    <td class="px-2 py-4 text-sm font-medium text-right whitespace-nowrap">
+                        <a href="@linkProfile" target="_blank" class="text-indigo-600 hover:text-indigo-900">
                             Message</a>
                     </td>
-                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                    <td class="px-2 py-4 text-sm font-medium text-right whitespace-nowrap">
                         <a href="@linkProfile" target="_blank" class="text-indigo-600 hover:text-indigo-900">View
                             Profile</a>
                     </td>
@@ -267,6 +267,19 @@ r" />
                             Are you sure you want to unblock this account? This account will be unblock from the FPT
                             Blog system.
                         </p>
+                        <div class="mt-2">
+
+
+                            @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
+                            new { Name = "content", Label = "Content", Value = "" })
+                            <span class="text-xs opacity-80">This message for user</span>
+                        </div>
+                        <div class="mt-2">
+
+                            @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
+                            new { Name = "description", Label = "Description", Value = "" })
+                            <span class="text-xs opacity-80">This is note for adminstrator</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -288,7 +301,6 @@ r" />
     </div>
 </div>
 
-<!-- This example requires Tailwind CSS v2.0+ -->
 <div class="fixed inset-0 z-10 invisible overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
     id="modal-role-wrapper">
     <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
@@ -351,6 +363,10 @@ r" />
         </div>
     </div>
 </div>
+
+
+
+
 
 
 @section Scripts {

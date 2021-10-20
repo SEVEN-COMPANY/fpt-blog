@@ -1,12 +1,11 @@
+using FPTBlog.Src.CommentModule.Interface;
+using FPTBlog.Utils;
+using System;
 using System.Linq;
 using System.Collections.Generic;
-
-using FPTBlog.Src.CommentModule.Interface;
 using FPTBlog.Src.CommentModule.Entity;
-using FPTBlog.Src.UserModule.Entity;
-
-using FPTBlog.Utils;
 using FPTBlog.Utils.Repository;
+using FPTBlog.Src.UserModule.Entity;
 
 namespace FPTBlog.Src.CommentModule {
     public class CommentRepository : Repository<Comment>, ICommentRepository {
@@ -14,49 +13,41 @@ namespace FPTBlog.Src.CommentModule {
         public CommentRepository(DB Db) : base(Db) {
             this.Db = Db;
         }
-
-        public void RemoveAndItsChildComment(Comment comment) {
+        #region Remove comment
+        public void RemoveAndItsChildComment(Comment comment){
             List<Comment> comments = this.Db.Comment.Where(item => item.OriCommentId == comment.CommentId).ToList();
-            if (comments.Count > 0) {
+            if(comments.Count > 0){
                 this.Remove(comments);
             }
             this.Remove(comment);
             this.Db.SaveChanges();
         }
+        #endregion
 
-        private void AddLikeOrDislikeComment(Comment comment, User user, Expression expression) {
-            LikeComment likeOrDislike = new LikeComment();
-            likeOrDislike.CommentId = comment.CommentId;
-            likeOrDislike.Comment = comment;
-            likeOrDislike.UserId = user.UserId;
-            likeOrDislike.User = user;
-            likeOrDislike.Expression = expression;
-
-            this.Db.LikeComment.Add(likeOrDislike);
-            this.Db.SaveChanges();
-        }
-
+        #region Like and dislike comment
         public void LikeComment(Comment comment, User user) {
             LikeComment obj = this.Db.LikeComment.FirstOrDefault(item => item.CommentId == comment.CommentId && item.UserId == user.UserId);
-
-            if (obj == null) {
+            if (obj == null || (obj != null && (int) obj.Expression == 2)) {
+                if (obj != null && (int) obj.Expression == 2) {
+                    comment.Dislike -= 1;
+                    this.Db.Comment.Update(comment);
+                    this.Db.LikeComment.Remove(obj);
+                }
                 comment.Like += 1;
                 this.Db.Comment.Update(comment);
-                this.AddLikeOrDislikeComment(comment, user, Expression.LIKE);
-                return;
-            }
-
-            if (obj != null && obj.Expression == Expression.DISLIKE) {
-                comment.Like += 1;
-                comment.Dislike -= 1;
-                this.Db.Comment.Update(comment);
-                this.Db.LikeComment.Remove(obj);
-                this.AddLikeOrDislikeComment(comment, user, Expression.LIKE);
+                LikeComment like = new LikeComment();
+                like.LikeCommentId = Guid.NewGuid().ToString();
+                like.CommentId = comment.CommentId;
+                like.Comment = comment;
+                like.UserId = user.UserId;
+                like.User = user;
+                like.CreateDate = DateTime.Now.ToShortDateString();
+                like.Expression = Expression.LIKE;
+                this.Db.LikeComment.Add(like);
                 this.Db.SaveChanges();
                 return;
             }
-
-            if (obj != null && obj.Expression == Expression.LIKE) {
+            if (obj != null && (int) obj.Expression == 1) {
                 comment.Like -= 1;
                 this.Db.Comment.Update(comment);
                 this.Db.LikeComment.Remove(obj);
@@ -64,26 +55,36 @@ namespace FPTBlog.Src.CommentModule {
                 return;
             }
         }
-
         public void DislikeComment(Comment comment, User user) {
             LikeComment obj = this.Db.LikeComment.FirstOrDefault(item => item.CommentId == comment.CommentId && item.UserId == user.UserId);
-            if (obj == null || (obj != null && obj.Expression == Expression.LIKE)) {
-                if (obj != null && obj.Expression == Expression.LIKE) {
+            if (obj == null || (obj != null && (int) obj.Expression == 1)) {
+                if (obj != null && (int) obj.Expression == 1) {
                     comment.Like -= 1;
                     this.Db.Comment.Update(comment);
                     this.Db.LikeComment.Remove(obj);
                 }
                 comment.Dislike += 1;
                 this.Db.Comment.Update(comment);
-                this.AddLikeOrDislikeComment(comment, user, Expression.DISLIKE);
+                LikeComment dislike = new LikeComment();
+                dislike.LikeCommentId = Guid.NewGuid().ToString();
+                dislike.CommentId = comment.CommentId;
+                dislike.Comment = comment;
+                dislike.UserId = user.UserId;
+                dislike.User = user;
+                dislike.CreateDate = DateTime.Now.ToShortDateString();
+                dislike.Expression = Expression.DISLIKE;
+                this.Db.LikeComment.Add(dislike);
+                this.Db.SaveChanges();
                 return;
             }
-            if (obj != null && obj.Expression == Expression.DISLIKE) {
+            if (obj != null && (int) obj.Expression == 2) {
                 comment.Dislike -= 1;
                 this.Db.Comment.Update(comment);
                 this.Db.LikeComment.Remove(obj);
+                this.Db.SaveChanges();
                 return;
             }
         }
+        #endregion
     }
 }

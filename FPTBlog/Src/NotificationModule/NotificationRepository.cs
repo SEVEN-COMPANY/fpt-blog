@@ -14,9 +14,11 @@ namespace FPTBlog.Src.NotificationModule {
             this.DB = dB;
         }
 
-        public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, NotificationLevel searchLevel, string startDate, string endDate) {
+        public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, string search, NotificationLevel searchLevel, string startDate, string endDate) {
             DateTime startDateTime = Convert.ToDateTime(startDate);
             DateTime endDateTime = Convert.ToDateTime(endDate);
+
+            List<Notification> resultList = new List<Notification>();
 
             List<Notification> list = new List<Notification>();
             if (searchLevel == 0) {
@@ -27,19 +29,17 @@ namespace FPTBlog.Src.NotificationModule {
             }
 
             foreach (var item in list) {
+                this.DB.Entry(item).Reference(item => item.Receiver).Load();
+                this.DB.Entry(item).Reference(item => item.Sender).Load();
+
                 DateTime date = Convert.ToDateTime(item.CreateDate);
-                if (!(DateTime.Compare(date, startDateTime) > 0 && (DateTime.Compare(date, endDateTime) < 0))) {
-                    list.Remove(item);
+                if ((DateTime.Compare(date, startDateTime) > 0 && (DateTime.Compare(date, endDateTime) < 0)) && (item.Receiver.Username.Contains(search) || item.Receiver.Email.Contains(search) || item.NotificationId.Contains(search))) {
+                    resultList.Add(item);
                 }
             }
 
-            var count = list.Count();
-            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
-
-            foreach (var notification in pagelist) {
-                this.DB.Entry(notification).Reference(item => item.Receiver).Load();
-                this.DB.Entry(notification).Reference(item => item.Sender).Load();
-            }
+            var count = resultList.Count();
+            var pagelist = resultList.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             return (pagelist, count);
         }
 
