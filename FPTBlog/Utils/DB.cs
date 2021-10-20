@@ -1,4 +1,4 @@
-﻿using FPTBlog.Src.TagModule.Entity;
+using FPTBlog.Src.TagModule.Entity;
 using FPTBlog.Src.UserModule.Entity;
 using FPTBlog.Src.CategoryModule.Entity;
 using FPTBlog.Utils.Interface;
@@ -37,6 +37,9 @@ namespace FPTBlog.Utils {
         public DbSet<LikePost> LikePost {
             get; set;
         }
+        public DbSet<LikeComment> LikeComment {
+            get; set;
+        }
 
         public DbSet<FollowInfo> FollowInfo {
             get; set;
@@ -54,12 +57,6 @@ namespace FPTBlog.Utils {
             get; set;
         }
 
-        public DbSet<LikeComment> LikeComment {
-            get; set;
-        }
-        public DbSet<Notification> Notification {
-            get; set;
-        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
 

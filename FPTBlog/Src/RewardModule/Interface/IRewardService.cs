@@ -20,7 +20,7 @@ namespace FPTBlog.Src.RewardModule.Interface {
         public List<UserReward> GetUserAllRewards(string userId);
         public Reward GetRewardTypeAndConstraint(RewardType type, int constraint);
         public void GiveRewardJob();
-
+        public List<RewardChart> GetRewardChart();
         public List<SelectListItem> GetRewardTypeDropList();
 
     }
