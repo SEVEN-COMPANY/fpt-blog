@@ -27,7 +27,7 @@ namespace FPTBlog.Src.NotificationModule {
                 startDate = now.AddYears(-5).ToString("yyyy-MM-dd");
             }
 
-            this.ViewData["level"] = new SelectList(this.NotificationService.GetNotificationLevelDropList(), NotificationLevel.INFOMATION);
+            this.ViewData["level"] = new SelectList(this.NotificationService.GetNotificationLevelDropList(), NotificationLevel.INFORMATION);
             // get status search list for search by status
             var levelList = this.NotificationService.GetNotificationLevelDropList();
             levelList.Add(new SelectListItem() { Text = "All", Value = "" });

@@ -1,3 +1,4 @@
+import { ApexOptions } from 'apexcharts';
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
 import { pageChange } from '../package/helper/pagination';
@@ -74,3 +75,60 @@ if (rewardId && rewardId.value) {
         });
     });
 }
+const buildChart = () => {
+    const viewChart = document.getElementById('view-chart');
+    const label = viewChart?.getElementsByTagName('span')[0] as HTMLSpanElement;
+    const chartElement = document.getElementById('chart');
+    let chart: ApexCharts;
+    let isClick = false;
+
+    viewChart?.addEventListener('click', function () {
+        if (!isClick) {
+            http.get<ServerResponse<{ name: string; total: number }[]>>(routers.reward.chart).then(({ data }) => {
+                const names = data.data.map((item) => item.name);
+                const totals = data.data.map((item) => item.total);
+
+                const options: ApexOptions = {
+                    series: totals,
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                        toolbar: {
+                            show: true,
+                        },
+                    },
+                    title: {
+                        text: 'Reward of user',
+                        align: 'center',
+                    },
+                    labels: names,
+                    tooltip: {
+                        enabled: true,
+                    },
+                    responsive: [
+                        {
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200,
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                },
+                            },
+                        },
+                    ],
+                };
+                isClick = true;
+                chart = new ApexCharts(chartElement, options);
+                label.innerText = 'Close Chart';
+                chart.render();
+            });
+        } else {
+            isClick = false;
+            label.innerText = 'View Chart';
+            chart.destroy();
+        }
+    });
+};
+buildChart();

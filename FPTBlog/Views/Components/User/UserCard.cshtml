@@ -5,6 +5,7 @@
     var rewards = (List<UserReward>)viewData["rewards"];
     var followerLink = $"{Routers.UserGetFollower.Link}?userId={profile.UserId}";
     var followingLink = $"{Routers.UserGetFollowing.Link}?userId={profile.UserId}";
+    var profileLink = $"{Routers.UserGetProfile.Link}?userId={profile.UserId}";
 }
 
 <div
@@ -14,7 +15,7 @@
     </div>
     <div class="text-center">
         <h1 class="duration-300 hover:text-tango-500 ">
-            <a href="@Routers.UserGetMyProfile.Link" class="text-xl font-semibold">@profile.Name</a>
+            <a href="@profileLink" class="text-xl font-semibold">@profile.Name</a>
         </h1>
         <p class="text-sm font-medium opacity-70">@profile.Username</p>
     </div>
@@ -51,8 +52,15 @@
     }
     <div>
         <div class="flex items-center mt-4 space-x-2">
+
             <button type="button" id="follow-btn" data-userId="@profile.UserId"
-                class="px-4 py-2 duration-300 border rounded-sm shadow-md hover:bg-tango-500 hover:text-white ">
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white duration-200 border border-transparent rounded-md shadow-sm bg-tango-500 hover:bg-tango-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 -ml-1" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                        d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                </svg>
+
                 Follow
             </button>
         </div>

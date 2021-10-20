@@ -42,10 +42,6 @@
                 new { Label = "Search", Icon = "../../Components/Icons/Search.cshtml" })
             </div>
         </form>
-        <div class="my-1">
-            @await Html.PartialAsync("../../Components/Form/BtnFuncIcon.cshtml",
-            new { Label = " Create New Notification", Icon = "../../Components/Icons/Plus.cshtml", Id="modal-btn" })
-        </div>
     </div>
     <div id="chart">
 
@@ -59,10 +55,10 @@
                     #
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Sender
+                    Receiver
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Receiver
+                    Username/Email
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Notification ID
@@ -89,22 +85,45 @@
                         @(i+1)
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @item.Sender.Name
+                        @item.Receiver.Name
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @item.Receiver.Name
+                        @if (item.Receiver.Email != "")
+                        {
+                            @item.Receiver.Email
+                        }
+                        else
+                        {
+                            @item.Receiver.Username
+                        }
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @item.NotificationId
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @item.Level
+                        @if (item.Level == NotificationLevel.BANNED)
+                        {
+                            <span class="text-xs font-semibold text-red-500 capitalize"> @item.Level.ToString().ToLower()</span>
+                        }
+                        @if (item.Level == NotificationLevel.INFORMATION)
+                        {
+                            <span class="text-xs font-semibold text-green-500 capitalize">
+                                @item.Level.ToString().ToLower()</span>
+                        }
+                        @if (item.Level == NotificationLevel.WARNING)
+                        {
+                            <span class="text-xs font-semibold text-yellow-500 capitalize">
+                                @item.Level.ToString().ToLower()</span>
+                        }
+
+
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @item.CreateDate
                     </td>
-                    <td>
-
+                    <td class="px-6 py-4 text-right whitespace-nowrap">
+                        <button class="text-sm font-medium text-indigo-600 hover:text-indigo-900 view-more"
+                        data-notificationId="@item.NotificationId">View More</button>
                     </td>
                 </tr>
             }

@@ -1,7 +1,9 @@
+import { ApexOptions } from 'apexcharts';
 import { http } from '../package/axios';
 import { routers } from '../package/axios/routes';
 import { pageChange } from '../package/helper/pagination';
 import { previewImage } from '../package/helper/previewImage';
+import { ServerResponse } from '../package/interface/serverResponse';
 import { slideOver } from '../package/modal';
 
 pageChange('listRewardForm');
