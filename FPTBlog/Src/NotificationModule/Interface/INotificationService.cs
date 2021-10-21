@@ -8,8 +8,9 @@ namespace FPTBlog.Src.NotificationModule.Interface {
         public void UpdateCategory(Notification notification);
         public void RemoveCategory(Notification notification);
         public Notification GetNotificationByNotificationId(string notificationId);
-
         public (List<Notification>, int) GetUserNotification(string userId);
+
+        public (List<Notification>, int) GetUserNotificationTimeWithCount(string userId, int pageIndex, int pageSize, string search, string startDate, string endDate);
 
         public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, string search, NotificationLevel searchLevel, string startDate, string endDate);
         public List<SelectListItem> GetNotificationLevelDropList();
