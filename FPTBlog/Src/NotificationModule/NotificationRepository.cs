@@ -43,5 +43,27 @@ namespace FPTBlog.Src.NotificationModule {
             return (pagelist, count);
         }
 
+        public (List<Notification>, int) GetUserNotificationTimeWithCount(string userId, int pageIndex, int pageSize, string search, string startDate, string endDate) {
+            DateTime startDateTime = Convert.ToDateTime(startDate);
+            DateTime endDateTime = Convert.ToDateTime(endDate);
+
+            List<Notification> resultList = new List<Notification>();
+
+            List<Notification> list = (List<Notification>) this.GetAll(item => item.ReceiverId == userId);
+
+            foreach (var item in list) {
+                this.DB.Entry(item).Reference(item => item.Receiver).Load();
+                this.DB.Entry(item).Reference(item => item.Sender).Load();
+
+                DateTime date = Convert.ToDateTime(item.CreateDate);
+                if ((DateTime.Compare(date, startDateTime) > 0 && (DateTime.Compare(date, endDateTime) < 0)) && item.NotificationId.Contains(search)) {
+                    resultList.Add(item);
+                }
+            }
+
+            var count = resultList.Count();
+            var pagelist = resultList.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            return (pagelist, count);
+        }
     }
 }

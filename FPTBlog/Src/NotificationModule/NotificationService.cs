@@ -24,6 +24,7 @@ namespace FPTBlog.Src.NotificationModule {
             int count = notifications.Count;
             return (notifications, count);
         }
+        public (List<Notification>, int) GetUserNotificationTimeWithCount(string userId, int pageIndex, int pageSize, string search, string startDate, string endDate) => this.NotificationRepository.GetUserNotificationTimeWithCount(userId, pageIndex, pageSize, search, startDate, endDate);
 
         public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, string search, NotificationLevel searchLevel, string startDate, string endDate) => this.NotificationRepository.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, search, searchLevel, startDate, endDate);
 
