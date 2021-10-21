@@ -22,16 +22,13 @@ namespace FPTBlog.Src.NotificationModule {
 
             List<Notification> list = new List<Notification>();
             if (searchLevel == 0) {
-                list = (List<Notification>) this.GetAll();
+                list = (List<Notification>) this.GetAll(includeProperties: "Receiver,Sender");
             }
             else {
-                list = (List<Notification>) this.GetAll(item => item.Level == searchLevel);
+                list = (List<Notification>) this.GetAll(item => item.Level == searchLevel, includeProperties: "Receiver,Sender");
             }
 
             foreach (var item in list) {
-                this.DB.Entry(item).Reference(item => item.Receiver).Load();
-                this.DB.Entry(item).Reference(item => item.Sender).Load();
-
                 DateTime date = Convert.ToDateTime(item.CreateDate);
                 if ((DateTime.Compare(date, startDateTime) > 0 && (DateTime.Compare(date, endDateTime) < 0)) && (item.Receiver.Username.Contains(search) || item.Receiver.Email.Contains(search) || item.NotificationId.Contains(search))) {
                     resultList.Add(item);
