@@ -14,13 +14,25 @@
      - Login and register account
      - Update user information
      - Change password
+     - Write new post
+     - Like or dislike posts
+     - Follow or unfollow users
+     - View profile other users
+     - Write comment
+     - Check notification
+     - Save or unsave posts
      - Search and view posts
 - FPT Student Role
      - Write new post
 - FPT Lecture Role
-     - CURD category, tag
-     - Accept student posts
-     - Block Particular user, or category
+     - Manage and view chart tags
+     - Manage and view chart users
+     - Manage and view chart posts
+     - Manage and view chart rewards
+     - Manage and view chart categorys
+     - Manage notification
+     - View analytic
+     - Block particular user, or category
 
 ## Technology
 
