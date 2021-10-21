@@ -10,18 +10,23 @@ using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Locale;
 
 using FluentValidation.Results;
+using FPTBlog.Src.NotificationModule.Interface;
+using FPTBlog.Src.NotificationModule.Entity;
 
 namespace FPTBlog.Src.UserModule {
     [Route("api/admin/user")]
     [ServiceFilter(typeof(AuthGuard))]
     public class AdminApiController : Controller {
         private readonly IAuthService AuthService;
+        private readonly INotificationService NotificationService;
 
         private readonly IUserService UserService;
-        public AdminApiController(IUserService userService, IAuthService authService) {
+        public AdminApiController(IUserService userService, IAuthService authService, INotificationService notificationService) {
             this.UserService = userService;
             this.AuthService = authService;
+            this.NotificationService = notificationService;
         }
+
         [HttpPut("status")]
         public IActionResult ToggleUserStatusHandler([FromBody] ToggleUserDto body) {
             var res = new ServerApiResponse<string>();
@@ -37,6 +42,21 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
             this.UserService.ToggleUserStatusAdminHandler(user);
+
+            User sender = (User) this.ViewData["user"];
+            var notification = new Notification();
+            notification.Content = body.Content;
+            notification.Description = body.Description;
+            notification.SenderId = sender.UserId;
+            notification.ReceiverId = body.UserId;
+            if (user.Status == UserStatus.ENABLE) {
+                notification.Level = NotificationLevel.BANNED;
+            }
+            else {
+                notification.Level = NotificationLevel.INFORMATION;
+            }
+
+            this.NotificationService.AddNotification(notification);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
@@ -57,6 +77,16 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
             this.UserService.ToggleUserRoleAdminHandler(user);
+
+            User sender = (User) this.ViewData["user"];
+            var notification = new Notification();
+            notification.Content = body.Content;
+            notification.Description = body.Description;
+            notification.SenderId = sender.UserId;
+            notification.ReceiverId = body.UserId;
+            notification.Level = NotificationLevel.INFORMATION;
+
+            this.NotificationService.AddNotification(notification);
 
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
