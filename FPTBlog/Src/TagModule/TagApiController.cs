@@ -96,6 +96,7 @@ namespace FPTBlog.Src.TagModule {
             List<Tag> unUseTags = this.TagService.RemoveUnusedTag();
 
             res.data = unUseTags;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 

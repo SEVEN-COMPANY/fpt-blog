@@ -13,6 +13,7 @@ namespace FPTBlog.Utils.Locale {
             public static readonly string ERROR_PASSWORD_CONTAIN_CHARACTER = "ERROR_PASSWORD_CONTAIN_CHARACTER";
             public static readonly string ERROR_PASSWORD_CONTAIN_WHITESPACE = "ERROR_PASSWORD_CONTAIN_WHITESPACE";
             public static readonly string ERROR_OLD_PASSWORD_IS_WRONG = "ERROR_OLD_PASSWORD_IS_WRONG";
+            public static readonly string ERROR_REWARD_BELONG_USER = "ERROR_REWARD_BELONG_USER";
             public static readonly string FILE_TOO_LARGE = "FILE_TOO_LARGE";
             public static readonly string FILE_WRONG_EXTENSION = "FILE_WRONG_EXTENSION";
         }
@@ -46,16 +47,10 @@ namespace FPTBlog.Utils.Locale {
             AddTranslation("en", MessageKey.MESSAGE_DELETE_SUCCESS, "delete success");
             AddTranslation("en", MessageKey.MESSAGE_SAVE_SUCCESS, "save success");
 
-            // VI
-            AddTranslation("vi", MessageKey.MESSAGE_LOGIN_SUCCESS, "đăng nhập thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_REGISTER_SUCCESS, "đăng kí thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_LOGOUT_SUCCESS, "đăng xuất thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_UPDATE_SUCCESS, "cập nhật thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_ADD_SUCCESS, "thêm mới thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_DELETE_SUCCESS, "xóa thành công");
 
             // Error message
             // EN
+            AddTranslation("en", ErrorMessageKey.ERROR_REWARD_BELONG_USER, "This reward had belonged to a user");
             AddTranslation("en", ErrorMessageKey.ERROR_LOGIN_FAIL, "username or password is wrong");
             AddTranslation("en", ErrorMessageKey.ERROR_EXISTED, "is already exist");
             AddTranslation("en", ErrorMessageKey.ERROR_FAIL_TO_SAVE, "database error");
@@ -70,6 +65,16 @@ namespace FPTBlog.Utils.Locale {
             AddTranslation("en", ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG, "old password is wrong");
             AddTranslation("en", ErrorMessageKey.FILE_TOO_LARGE, "file is too large");
             AddTranslation("en", ErrorMessageKey.FILE_WRONG_EXTENSION, "file is wrong extension");
+
+            // VI
+            AddTranslation("vi", MessageKey.MESSAGE_LOGIN_SUCCESS, "đăng nhập thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_REGISTER_SUCCESS, "đăng kí thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_LOGOUT_SUCCESS, "đăng xuất thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_UPDATE_SUCCESS, "cập nhật thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_ADD_SUCCESS, "thêm mới thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_DELETE_SUCCESS, "xóa thành công");
+
+
 
             // VI
             AddTranslation("vi", ErrorMessageKey.ERROR_LOGIN_FAIL, "username hoặc password không đúng");

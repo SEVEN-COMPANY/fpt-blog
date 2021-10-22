@@ -81,7 +81,7 @@ export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>
         const details = error.response.data.details;
         for (const key in details) {
             const error = document.getElementById(`${key.toUpperCase()}ERROR`);
-
+            const sideMessage = document.getElementById('toastify');
             if (error) {
                 error.innerHTML = `${error.getAttribute('data-label')} ${details[key]}`;
             }
@@ -89,21 +89,20 @@ export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>
             if (error && (key === 'errorMessage' || key === 'message')) {
                 const errorMessage: string = `${details[key]}`;
                 error.innerHTML = errorMessage.slice(0, 1).toUpperCase() + errorMessage.slice(1, errorMessage.length);
-                const sideMessage = document.getElementById('toastify');
-
-                if (sideMessage) {
-                    toastify({
-                        text: errorMessage.slice(0, 1).toUpperCase() + errorMessage.slice(1, errorMessage.length),
-                        duration: 4000,
-                        newWindow: true,
-                        close: true,
-                        gravity: 'top',
-                        position: 'right',
-                        avatar: '/images/minus.svg',
-                        backgroundColor: '#F44336',
-                        stopOnFocus: true,
-                    });
-                }
+            }
+            if (sideMessage && (key === 'errorMessage' || key === 'message')) {
+                const errorMessage: string = `${details[key]}`;
+                toastify({
+                    text: errorMessage.slice(0, 1).toUpperCase() + errorMessage.slice(1, errorMessage.length),
+                    duration: 4000,
+                    newWindow: true,
+                    close: true,
+                    gravity: 'top',
+                    position: 'right',
+                    avatar: '/images/minus.svg',
+                    backgroundColor: '#F44336',
+                    stopOnFocus: true,
+                });
             }
         }
     }

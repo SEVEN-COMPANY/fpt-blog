@@ -77,6 +77,7 @@ namespace FPTBlog.Src.PostModule {
             this.PostService.AddPost(post);
 
             res.data = post;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -288,7 +289,7 @@ namespace FPTBlog.Src.PostModule {
 
             this.PostService.LikePost(post, user);
             res.data = post;
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -309,7 +310,7 @@ namespace FPTBlog.Src.PostModule {
             User user = (User) this.ViewData["user"];
             res.data = post;
             this.PostService.DislikePost(post, user);
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
