@@ -79,6 +79,7 @@ const initComment = () => {
     const postId = document.getElementById('postId') as HTMLInputElement;
     const commentWrapper = document.getElementById('comment-wrapper') as HTMLDivElement;
     const url = `${routers.comment.getComment}?postId=${postId.value}`;
+
     http.get<ServerResponse<User>>(routers.user.get).then(({ data }) => {
         http.get<ServerResponse<Comment[]>>(url).then(({ data: comments }) => {
             commentWrapper.innerHTML = '';

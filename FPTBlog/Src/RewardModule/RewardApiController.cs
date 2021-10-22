@@ -143,7 +143,7 @@ namespace FPTBlog.Src.RewardModule {
 
             var isGive = this.RewardService.GetUserReward(reward, user);
             if (isGive != null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "user reward");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_REWARD_BELONG_USER);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
@@ -175,7 +175,7 @@ namespace FPTBlog.Src.RewardModule {
 
             var userReward = this.RewardService.GetUserReward(reward, user);
             if (userReward == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "user reward");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
@@ -202,7 +202,7 @@ namespace FPTBlog.Src.RewardModule {
 
             var deleteReward = this.RewardService.IsUseReward(input.RewardId);
             if (deleteReward != null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "User Reward");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_REWARD_BELONG_USER);
                 return new BadRequestObjectResult(res.getResponse());
             }
 

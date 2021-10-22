@@ -34,7 +34,11 @@ createCategoryForm?.addEventListener('submit', function (event: Event) {
             status: status,
         };
 
-        http.post<ServerResponse<null>>(routers.category.create, input).then();
+        http.post<ServerResponse<null>>(routers.category.create, input).then(() => {
+            setTimeout(() => {
+                window.location.reload();
+            }, 700);
+        });
     }
 });
 

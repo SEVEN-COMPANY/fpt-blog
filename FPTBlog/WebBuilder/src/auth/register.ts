@@ -26,7 +26,11 @@ registerForm?.addEventListener('submit', function (event: Event) {
             confirmPassword: confirmPassword.value,
         };
 
-        http.post<ServerResponse<null>>(routers.auth.register, input).then(() => window.location.assign(routerLinks.loginForm));
+        http.post<ServerResponse<null>>(routers.auth.register, input).then(() => {
+            setTimeout(() => {
+                window.location.assign(routerLinks.loginForm);
+            }, 700);
+        });
     } else {
         console.log('register form wrong');
     }
