@@ -46,13 +46,6 @@ namespace FPTBlog.Utils.Locale {
             AddTranslation("en", MessageKey.MESSAGE_DELETE_SUCCESS, "delete success");
             AddTranslation("en", MessageKey.MESSAGE_SAVE_SUCCESS, "save success");
 
-            // VI
-            AddTranslation("vi", MessageKey.MESSAGE_LOGIN_SUCCESS, "đăng nhập thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_REGISTER_SUCCESS, "đăng kí thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_LOGOUT_SUCCESS, "đăng xuất thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_UPDATE_SUCCESS, "cập nhật thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_ADD_SUCCESS, "thêm mới thành công");
-            AddTranslation("vi", MessageKey.MESSAGE_DELETE_SUCCESS, "xóa thành công");
 
             // Error message
             // EN
@@ -70,6 +63,16 @@ namespace FPTBlog.Utils.Locale {
             AddTranslation("en", ErrorMessageKey.ERROR_OLD_PASSWORD_IS_WRONG, "old password is wrong");
             AddTranslation("en", ErrorMessageKey.FILE_TOO_LARGE, "file is too large");
             AddTranslation("en", ErrorMessageKey.FILE_WRONG_EXTENSION, "file is wrong extension");
+
+            // VI
+            AddTranslation("vi", MessageKey.MESSAGE_LOGIN_SUCCESS, "đăng nhập thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_REGISTER_SUCCESS, "đăng kí thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_LOGOUT_SUCCESS, "đăng xuất thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_UPDATE_SUCCESS, "cập nhật thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_ADD_SUCCESS, "thêm mới thành công");
+            AddTranslation("vi", MessageKey.MESSAGE_DELETE_SUCCESS, "xóa thành công");
+
+
 
             // VI
             AddTranslation("vi", ErrorMessageKey.ERROR_LOGIN_FAIL, "username hoặc password không đúng");

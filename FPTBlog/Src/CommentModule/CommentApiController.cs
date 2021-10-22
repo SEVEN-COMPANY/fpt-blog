@@ -168,7 +168,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             User user = (User) this.ViewData["user"];
 
             this.CommentService.LikeComment(comment, user);
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -188,7 +188,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             User user = (User) this.ViewData["user"];
 
             this.CommentService.DislikeComment(comment, user);
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
         #endregion
