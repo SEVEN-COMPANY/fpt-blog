@@ -11,19 +11,6 @@ namespace FPTBlog.Src.CommentModule {
             this.CommentService = commentService;
         }
 
-        [HttpGet("add")]
-        public IActionResult AddCommentPage() {
-            return View(Routers.AddComment.Page);
-        }
 
-        [HttpGet("update")]
-        public IActionResult UpdateCommentPage() {
-            return View(Routers.UpdateComment.Page);
-        }
-
-        [HttpDelete("remove")]
-        public IActionResult RemoveCommentPage() {
-            return View(Routers.CommonGetHome.Page);
-        }
     }
 }

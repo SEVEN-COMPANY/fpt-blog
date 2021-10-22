@@ -13,6 +13,7 @@ namespace FPTBlog.Utils.Locale {
             public static readonly string ERROR_PASSWORD_CONTAIN_CHARACTER = "ERROR_PASSWORD_CONTAIN_CHARACTER";
             public static readonly string ERROR_PASSWORD_CONTAIN_WHITESPACE = "ERROR_PASSWORD_CONTAIN_WHITESPACE";
             public static readonly string ERROR_OLD_PASSWORD_IS_WRONG = "ERROR_OLD_PASSWORD_IS_WRONG";
+            public static readonly string ERROR_REWARD_BELONG_USER = "ERROR_REWARD_BELONG_USER";
             public static readonly string FILE_TOO_LARGE = "FILE_TOO_LARGE";
             public static readonly string FILE_WRONG_EXTENSION = "FILE_WRONG_EXTENSION";
         }
@@ -49,6 +50,7 @@ namespace FPTBlog.Utils.Locale {
 
             // Error message
             // EN
+            AddTranslation("en", ErrorMessageKey.ERROR_REWARD_BELONG_USER, "This reward had belonged to a user");
             AddTranslation("en", ErrorMessageKey.ERROR_LOGIN_FAIL, "username or password is wrong");
             AddTranslation("en", ErrorMessageKey.ERROR_EXISTED, "is already exist");
             AddTranslation("en", ErrorMessageKey.ERROR_FAIL_TO_SAVE, "database error");

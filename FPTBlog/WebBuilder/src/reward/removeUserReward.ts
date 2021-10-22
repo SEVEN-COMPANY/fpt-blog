@@ -56,7 +56,9 @@ btnAccept?.addEventListener('click', function () {
         };
 
         http.put<ServerResponse<null>>(routers.reward.removeUserReward, input).then(() => {
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 700);
         });
     }
 });
