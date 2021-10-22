@@ -46,7 +46,7 @@ namespace FPTBlog.Src.NotificationModule {
             notification.Level = body.Level;
 
             this.NotificationService.AddNotification(notification);
-
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             res.data = notification;
             return new ObjectResult(res.getResponse());
         }

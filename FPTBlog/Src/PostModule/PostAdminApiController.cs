@@ -54,7 +54,7 @@ namespace FPTBlog.Src.PostModule {
             post.Status = input.Status;
             post.Note = input.Note;
             this.PostService.UpdatePost(post);
-
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 

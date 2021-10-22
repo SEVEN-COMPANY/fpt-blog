@@ -79,7 +79,7 @@ namespace FPTBlog.Src.AuthModule {
                 Secure = true
 
             });
-
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_LOGIN_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -106,7 +106,7 @@ namespace FPTBlog.Src.AuthModule {
             user.CreateDate = DateTime.Now.ToShortDateString();
             user.Password = this.AuthService.HashingPassword(body.Password);
             this.UserService.AddUser(user);
-
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_REGISTER_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
     }
