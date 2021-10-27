@@ -4,9 +4,19 @@
 
 [![Grocery Store Logo](doc/logo.svg)](https://fptblog.vinhnhan.com)
 
-## [Live Demo](https://fptblog.vinhnhan.com) - [Live Document](https://fptblog.vinhnhan.com)
+## [Live Demo](https://fptblog.vinhnhan.com) - [Live Document](https://heaty566.github.io/fpt-blog-doc/document.pdf)
 
 ## Case Study
+
+Trong kỷ nguyên số, nguồn thông tin và dữ liệu trên Internet được xem như một tài nguyên tri thức vô cùng phong phú. Con người có thể dễ dàng tìm kiếm thông tin,
+dữ liệu thông qua nguồn tài nguyên này. Tuy nhiên, với biển dữ liệu lớn này, SV đang gặp khó khăn trong việc chọn lọc nội dung, chủ đề cấp thiết nhất cho ngành học,
+môn học của mình tại trường ĐH. Bên cạnh đó, những SV đã trích lọc được những kinh nghiệm, kiến thức thông qua các môn học,
+các chủ đề lại không có nền tảng để phổ biến đến đúng đối tượng-là các sinh viên trong trường.
+
+Hệ thống ra đời nhằm hỗ trợ các bạn sinh viên trường F, là những writer, reader theo các chuyên mục, chuyên ngành hay môn học nào đó.
+Nơi đây, các bạn writer có thể viết bài, đăng bài; các bạn reader được cập nhật các nội dung có chất lượng, gần gũi với các vấn đề học tập,
+cá nhân mình đang gặp phải. Ngoài ra, các mentor/lecturer tham gia với vai trò kiểm duyệt nội dung bài. Các bài blog có nội dung hay,
+thiết thực, được quan tâm nhiều, được phản hồi nhiều sẽ được trao các phần thưởng danh dự tương ứng.
 
 ## Feature by role
 

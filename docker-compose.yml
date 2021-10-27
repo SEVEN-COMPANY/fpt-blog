@@ -1,11 +1,36 @@
 version: "3"
 services:
-        server:
-                build: .
+        server-1:
                 image: heaty566/mono-fpt-v2-blog:latest
-                container_name: mono-fpt-v2-blog
-                ports:
-                        - 1000:80
+                container_name: mono-fpt-v2-blog-1
+                networks:
+                        - reverse-proxy
+                expose:
+                        - 80
                 volumes:
-                        - .config:/app/config
-                        - .share:/app/wwwroot
+                        - ./config:/app/config
+                        - ./share:/app/wwwroot/public
+        server-2:
+                image: heaty566/mono-fpt-v2-blog:latest
+                container_name: mono-fpt-v2-blog-2
+                networks:
+                        - reverse-proxy
+                expose:
+                        - 80
+                volumes:
+                        - ./config:/app/config
+                        - ./share:/app/wwwroot/public
+        server-3:
+                image: heaty566/mono-fpt-v2-blog:latest
+                container_name: mono-fpt-v2-blog-3
+                networks:
+                        - reverse-proxy
+                expose:
+                        - 80
+                volumes:
+                        - ./config:/app/config
+                        - ./share:/app/wwwroot/public
+
+networks:
+        reverse-proxy:
+                external: true
