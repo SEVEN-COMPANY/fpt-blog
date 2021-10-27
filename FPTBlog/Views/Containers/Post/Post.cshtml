@@ -28,6 +28,8 @@
     var facebookLink = $"{Routers.ServerURL.Link}{Routers.PostGetPost.Link}?postId={value.Post.PostId}";
     var facebookExtendLink = $"https://www.facebook.com/sharer/sharer.php?u={facebookLink}&amp;src=sdkpreparse";
 }
+
+@await Html.PartialAsync("../../Components/Form/FormToastify.cshtml")
 @await Html.PartialAsync("../../Components/Form/FormHidden.cshtml",
 new {Name="postId", Value=value.Post.PostId})
 <div class="max-w-3xl pb-16 mx-auto lg:space-y-4 lg:py-8 ">

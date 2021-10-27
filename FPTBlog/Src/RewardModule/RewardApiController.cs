@@ -49,7 +49,7 @@ namespace FPTBlog.Src.RewardModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff", "svg" })) {
+            if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "svg" })) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_WRONG_EXTENSION);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -57,7 +57,7 @@ namespace FPTBlog.Src.RewardModule {
             var imageUrl = this.UploadFileService.Upload(input.File);
 
             var reward = this.RewardService.GetRewardTypeAndConstraint(input.Type, input.Constraint);
-            if(reward != null){
+            if (reward != null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -71,11 +71,12 @@ namespace FPTBlog.Src.RewardModule {
 
             this.RewardService.CreateReward(reward);
             res.data = reward;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
         [HttpPut("")]
-        public ObjectResult HandleCreateReward([FromForm] UpdateRewardDto input) {
+        public ObjectResult HandleUpdateReward([FromForm] UpdateRewardDto input) {
             var res = new ServerApiResponse<Reward>();
             ValidationResult result = new UpdateRewardDtoValidator().Validate(input);
 
@@ -99,7 +100,7 @@ namespace FPTBlog.Src.RewardModule {
                     return new BadRequestObjectResult(res.getResponse());
                 }
 
-                if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "jpg", "png", "jpeg", "gif", "tiff", "svg" })) {
+                if (!this.UploadFileService.CheckFileExtension(input.File, new string[] { "svg" })) {
                     res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.FILE_WRONG_EXTENSION);
                     return new BadRequestObjectResult(res.getResponse());
                 }
@@ -115,6 +116,7 @@ namespace FPTBlog.Src.RewardModule {
             this.RewardService.UpdateReward(reward);
 
             res.data = reward;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -141,11 +143,12 @@ namespace FPTBlog.Src.RewardModule {
 
             var isGive = this.RewardService.GetUserReward(reward, user);
             if (isGive != null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "user reward");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_REWARD_BELONG_USER);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             this.RewardService.GiveUserReward(user, reward);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -172,12 +175,13 @@ namespace FPTBlog.Src.RewardModule {
 
             var userReward = this.RewardService.GetUserReward(reward, user);
             if (userReward == null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "user reward");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             this.RewardService.RemoveUserReward(userReward);
             res.data = userReward;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -198,12 +202,13 @@ namespace FPTBlog.Src.RewardModule {
 
             var deleteReward = this.RewardService.IsUseReward(input.RewardId);
             if (deleteReward != null) {
-                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_EXISTED, "User Reward");
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_REWARD_BELONG_USER);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
             this.RewardService.DeleteReward(input.RewardId);
             res.data = reward;
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_DELETE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 

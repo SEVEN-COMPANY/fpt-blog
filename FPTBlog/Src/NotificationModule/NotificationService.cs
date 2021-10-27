@@ -20,17 +20,18 @@ namespace FPTBlog.Src.NotificationModule {
         public Notification GetNotificationByNotificationId(string notificationId) => this.NotificationRepository.GetFirstOrDefault(item => item.NotificationId == notificationId, includeProperties: "Sender,Receiver");
 
         public (List<Notification>, int) GetUserNotification(string userId) {
-            var notifications = this.NotificationRepository.GetAll(item => item.ReceiverId == userId).ToList();
+            var notifications = this.NotificationRepository.GetAll(item => item.ReceiverId == userId).OrderByDescending(item => item.CreateDate).ToList();
             int count = notifications.Count;
             return (notifications, count);
         }
+        public (List<Notification>, int) GetUserNotificationTimeWithCount(string userId, int pageIndex, int pageSize, string search, string startDate, string endDate) => this.NotificationRepository.GetUserNotificationTimeWithCount(userId, pageIndex, pageSize, search, startDate, endDate);
 
         public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, string search, NotificationLevel searchLevel, string startDate, string endDate) => this.NotificationRepository.GetNotificationsLevelAndTimeWithCount(pageIndex, pageSize, search, searchLevel, startDate, endDate);
 
         public List<SelectListItem> GetNotificationLevelDropList() {
             var level = new List<SelectListItem>(){
-                new SelectListItem(){ Value = NotificationLevel.BANNED.ToString(), Text = "Baned"},
-                new SelectListItem(){  Value =  NotificationLevel.INFORMATION.ToString(), Text = "Infomation"},
+                new SelectListItem(){ Value = NotificationLevel.BANNED.ToString(), Text = "Banned"},
+                new SelectListItem(){  Value =  NotificationLevel.INFORMATION.ToString(), Text = "Information"},
                 new SelectListItem(){  Value =  NotificationLevel.WARNING.ToString(), Text = "Warning"}
             };
 

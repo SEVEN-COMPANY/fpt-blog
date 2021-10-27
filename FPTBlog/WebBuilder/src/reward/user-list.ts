@@ -11,7 +11,7 @@ const wrapper = document.getElementById(`modal-wrapper`);
 const bg = document.getElementById(`modal-bg`);
 const panel = document.getElementById(`modal-panel`);
 const rewardId = document.getElementById('rewardId') as HTMLSelectElement;
-
+const rewardForm = document.getElementById('giveRewardForm');
 interface Reward {
     rewardId: string;
     name: string;
@@ -35,13 +35,13 @@ for (let index = 0; index < rewardBtn.length; index++) {
         panel?.removeEventListener('transitionend', modalToggle);
 
         const userId = btn.getAttribute('data-userid');
-        const rewardForm = document.getElementById('giveRewardForm');
+
         rewardForm?.addEventListener('submit', function (event) {
             event.preventDefault();
             http.post(routers.reward.give, { userId: userId, rewardId: rewardId.value }).then(() => {
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 700);
             });
         });
     });

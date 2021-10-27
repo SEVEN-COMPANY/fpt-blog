@@ -117,9 +117,9 @@ namespace FPTBlog.Src.CommentModule.Interface {
         #endregion
 
         #region Get list ori comment
-        [HttpPost("post")]
-        public IActionResult GetListOriComment([FromBody] GetCommentOfPostDto input) {
-            var res = new ServerApiResponse<Comment>();
+        [HttpGet("post")]
+        public IActionResult GetListOriComment([FromQuery] GetCommentOfPostDto input) {
+            var res = new ServerApiResponse<List<CommentViewModel>>();
 
             ValidationResult result = new GetCommentOfPostDtoValidator().Validate(input);
             if (!result.IsValid) {
@@ -144,10 +144,8 @@ namespace FPTBlog.Src.CommentModule.Interface {
                 listComment.Add(commentViewModel);
             }
 
-
-            return Json(new {
-                listComment = listComment
-            });
+            res.data = listComment;
+            return new ObjectResult(res.getResponse());
         }
         #endregion
 
@@ -168,7 +166,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             User user = (User) this.ViewData["user"];
 
             this.CommentService.LikeComment(comment, user);
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 
@@ -180,7 +178,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
                 res.mapDetails(result);
                 return new BadRequestObjectResult(res.getResponse());
             }
-            Comment comment= this.CommentService.GetCommentByCommentId(input.CommentId);
+            Comment comment = this.CommentService.GetCommentByCommentId(input.CommentId);
             if (comment == null) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "commentId");
                 return new NotFoundObjectResult(res.getResponse());
@@ -188,7 +186,7 @@ namespace FPTBlog.Src.CommentModule.Interface {
             User user = (User) this.ViewData["user"];
 
             this.CommentService.DislikeComment(comment, user);
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
         #endregion

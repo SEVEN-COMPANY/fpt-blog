@@ -25,6 +25,8 @@ pageChange('listUserForm');
 
 interface ToggleUserDto {
     userId: string;
+    content: string;
+    description: string;
 }
 
 enum UserRole {
@@ -86,62 +88,49 @@ for (let index = 0; index < rows.length; index++) {
 
 btnAcceptBlock?.addEventListener('click', function () {
     if (userId !== null) {
-        const input: ToggleUserDto = {
-            userId: userId,
-        };
-
         const content = document.getElementById('content') as HTMLInputElement;
         const description = document.getElementById('description') as HTMLInputElement;
-
-        const notificationInput = {
-            receiverId: userId,
-            level: NotificationLevel.BANED,
+        const input: ToggleUserDto = {
+            userId: userId,
             content: content.value,
             description: description.value,
         };
 
-        http.post(routers.notification.create, notificationInput).then(() => {
-            http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
-                bg?.classList.remove('opacity-100');
-                bg?.classList.add('opacity-0');
-                panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
-                panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
-                panel?.addEventListener('transitionend', modalToggle);
+        http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
+            bg?.classList.remove('opacity-100');
+            bg?.classList.add('opacity-0');
+            panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+            panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+            panel?.addEventListener('transitionend', modalToggle);
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         });
     }
 });
 
 btnAcceptUnblock?.addEventListener('click', function () {
     if (userId !== null) {
-        const input: ToggleUserDto = {
-            userId: userId,
-        };
         const content = document.getElementById('content') as HTMLInputElement;
         const description = document.getElementById('description') as HTMLInputElement;
 
-        const notificationInput = {
-            receiverId: userId,
-            level: NotificationLevel.INFORMATION,
+        const input: ToggleUserDto = {
+            userId: userId,
             content: content.value,
             description: description.value,
         };
-        http.post(routers.notification.create, notificationInput).then(() => {
-            http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
-                bg?.classList.remove('opacity-100');
-                bg?.classList.add('opacity-0');
-                panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
-                panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
-                panel?.addEventListener('transitionend', modalToggle);
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            });
+        http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
+            bg?.classList.remove('opacity-100');
+            bg?.classList.add('opacity-0');
+            panel?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+            panel?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+            panel?.addEventListener('transitionend', modalToggle);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         });
     }
 });
@@ -229,6 +218,8 @@ btnRoleAcceptUpgrade?.addEventListener('click', function () {
     if (userId !== null) {
         const input: ToggleUserDto = {
             userId: userId,
+            content: '',
+            description: '',
         };
 
         http.put<ServerResponse<null>>(routers.user.role, input).then(() => {
@@ -247,6 +238,8 @@ btnRoleAcceptDowngrade?.addEventListener('click', function () {
     if (userId !== null) {
         const input: ToggleUserDto = {
             userId: userId,
+            content: '',
+            description: '',
         };
 
         http.put<ServerResponse<null>>(routers.user.role, input).then(() => {
