@@ -49,8 +49,6 @@ namespace FPTBlog.Src.CategoryModule {
 
         #region  Chart
         public List<CategoryChart> GetCategoryChart() {
-            string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
-            DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
             List<CategoryChart> chart = new List<CategoryChart>();
             var categories = this.CategoryRepository.GetAll();
             foreach (var category in categories) {
@@ -60,12 +58,7 @@ namespace FPTBlog.Src.CategoryModule {
                 List<Post> posts = this.PostRepository.GetAll(item => item.CategoryId == category.CategoryId).ToList();
                 for (int i = posts.Count - 1; i >= 0; i--) {
                     DateTime date = Convert.ToDateTime(posts[i].CreateDate);
-                    if (DateTime.Compare(date, thisMonthDate) < 0) {
-                        posts.Remove(posts[i]);
-                    }
-                    else {
-                        total += 1;
-                    }
+                    total += 1;
                 }
                 categoryChart.total = total;
                 chart.Add(categoryChart);

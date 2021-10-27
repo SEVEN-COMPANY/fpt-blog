@@ -36,7 +36,7 @@ namespace FPTBlog.Src.NotificationModule {
             }
 
             var count = resultList.Count();
-            var pagelist = resultList.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            var pagelist = resultList.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).OrderByDescending(item => item.CreateDate).ToList();
             return (pagelist, count);
         }
 

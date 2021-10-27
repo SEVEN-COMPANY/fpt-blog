@@ -69,8 +69,6 @@ namespace FPTBlog.Src.TagModule {
 
         public List<string> GetUsedTagIds() => this.Db.PostTag.Select(item => item.TagId).ToList();
         public List<TagChart> GetTagChart() {
-            string thisMonth = DateTime.Now.AddMonths(-1).ToShortDateString();
-            DateTime thisMonthDate = Convert.ToDateTime(thisMonth);
             List<TagChart> chart = new List<TagChart>();
             List<Tag> tags = new List<Tag>();
             List<Post> posts = this.Db.Post.ToList();
@@ -81,7 +79,7 @@ namespace FPTBlog.Src.TagModule {
                         join Post in this.Db.Post
                         on PostTag.PostId equals Post.PostId
                         where PostTag.PostId.Equals(Post.PostId)
-                        select PostTag).ToList().Where(x => Convert.ToDateTime(x.Post.CreateDate) >= thisMonthDate).ToList();
+                        select PostTag).ToList();
 
             var top10 = postTags.GroupBy(x => x).OrderByDescending(g => g.Count()).SelectMany(x => x.Take(1)).Take(10).ToList();
 

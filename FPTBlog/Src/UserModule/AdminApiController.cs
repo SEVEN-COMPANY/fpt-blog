@@ -50,10 +50,10 @@ namespace FPTBlog.Src.UserModule {
             notification.SenderId = sender.UserId;
             notification.ReceiverId = body.UserId;
             if (user.Status == UserStatus.ENABLE) {
-                notification.Level = NotificationLevel.BANNED;
+                notification.Level = NotificationLevel.INFORMATION;
             }
             else {
-                notification.Level = NotificationLevel.INFORMATION;
+                notification.Level = NotificationLevel.BANNED;
             }
 
             this.NotificationService.AddNotification(notification);
