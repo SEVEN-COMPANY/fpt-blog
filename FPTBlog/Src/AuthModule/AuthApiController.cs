@@ -34,7 +34,7 @@ namespace FPTBlog.Src.AuthModule {
 
         [HttpPost("login")]
         public ObjectResult LoginHandler([FromBody] LoginUserDto body) {
-            var res = new ServerApiResponse<string>();
+            var res = new ServerApiResponse<User>();
 
             ValidationResult result = new LoginUserDtoValidator().Validate(body);
             if (!result.IsValid) {
@@ -61,7 +61,7 @@ namespace FPTBlog.Src.AuthModule {
                         break;
                     }
                 }
-
+                res.data = user;
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, context);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -79,6 +79,7 @@ namespace FPTBlog.Src.AuthModule {
                 Secure = true
 
             });
+
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_LOGIN_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
