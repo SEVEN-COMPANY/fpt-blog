@@ -27,6 +27,7 @@ interface ToggleUserDto {
     userId: string;
     content: string;
     description: string;
+    level: string;
 }
 
 enum UserRole {
@@ -88,12 +89,14 @@ for (let index = 0; index < rows.length; index++) {
 
 btnAcceptBlock?.addEventListener('click', function () {
     if (userId !== null) {
+        const level = document.getElementById('level') as HTMLInputElement;
         const content = document.getElementById('content') as HTMLInputElement;
         const description = document.getElementById('description') as HTMLInputElement;
         const input: ToggleUserDto = {
             userId: userId,
             content: content.value,
             description: description.value,
+            level: level.value,
         };
 
         http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
@@ -119,6 +122,7 @@ btnAcceptUnblock?.addEventListener('click', function () {
             userId: userId,
             content: content.value,
             description: description.value,
+            level: NotificationLevel.INFORMATION.toString(),
         };
 
         http.put<ServerResponse<null>>(routers.user.status, input).then(() => {
@@ -214,12 +218,13 @@ btnRoleAcceptUpgrade?.addEventListener('click', function () {
     panelRole?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
     panelRole?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
     panelRole?.addEventListener('transitionend', modalRoleToggle);
-
+    const level = document.getElementById('level') as HTMLInputElement;
     if (userId !== null) {
         const input: ToggleUserDto = {
             userId: userId,
-            content: '',
-            description: '',
+            content: 'test',
+            description: 'test',
+            level: level.value,
         };
 
         http.put<ServerResponse<null>>(routers.user.role, input).then(() => {
@@ -234,12 +239,13 @@ btnRoleAcceptDowngrade?.addEventListener('click', function () {
     panelRole?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
     panelRole?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
     panelRole?.addEventListener('transitionend', modalRoleToggle);
-
+    const level = document.getElementById('level') as HTMLInputElement;
     if (userId !== null) {
         const input: ToggleUserDto = {
             userId: userId,
-            content: '',
-            description: '',
+            content: 'test',
+            description: 'test',
+            level: level.value,
         };
 
         http.put<ServerResponse<null>>(routers.user.role, input).then(() => {

@@ -10,6 +10,10 @@ using FPTBlog.Src.AuthModule.Interface;
 
 using FPTBlog.Utils.Common;
 using FPTBlog.Utils.Interface;
+using FPTBlog.Src.NotificationModule.Interface;
+using System.Collections.Generic;
+using FPTBlog.Src.NotificationModule.Entity;
+using FPTBlog.Utils.Locale;
 
 namespace FPTBlog.Src.AuthModule {
 
@@ -19,10 +23,12 @@ namespace FPTBlog.Src.AuthModule {
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
         private readonly IJwtService JwtService;
-        public AuthMvcController(IAuthService authService, IJwtService jwtService, IUserService userService) {
+        private readonly INotificationService NotificationService;
+        public AuthMvcController(IAuthService authService, IJwtService jwtService, IUserService userService, INotificationService notificationService) {
             this.AuthService = authService;
             this.UserService = userService;
             this.JwtService = jwtService;
+            this.NotificationService = notificationService;
         }
 
         [HttpGet("login")]
@@ -36,6 +42,7 @@ namespace FPTBlog.Src.AuthModule {
 
         [HttpGet("google")]
         public IActionResult LoginGoogle([FromQuery(Name = "credential")] string credential) {
+            var res = new ServerApiResponse<User>();
             JwtSecurityToken jwtToken = this.JwtService.Decode(credential);
             string id = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
             User user = this.UserService.GetUserByGoogleId(id);
@@ -56,6 +63,23 @@ namespace FPTBlog.Src.AuthModule {
                 SameSite = SameSiteMode.None,
                 Secure = true
             });
+
+            if (user.Status == UserStatus.DISABLE) {
+
+                var (notifications, _) = this.NotificationService.GetUserNotification(user.UserId);
+                var context = new Dictionary<string, object>();
+                for (int i = 0; i < notifications.Count; i++) {
+                    var item = notifications[i];
+                    if (item.Level == NotificationLevel.BANNED || item.Level == NotificationLevel.WARNING) {
+                        context.Add("Reason", item.Content);
+                        context.Add("ID", item.NotificationId);
+                        break;
+                    }
+                }
+                res.data = user;
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, context);
+                return new BadRequestObjectResult(res.getResponse());
+            }
 
             return Redirect(Routers.CommonGetHome.Link);
 

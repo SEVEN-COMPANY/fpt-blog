@@ -67,10 +67,6 @@ for (let index = 0; index < btn.length; index++) {
             const content = `
                     <div class="mt-2 space-y-4">
                         <div class="space-y-1">
-                            <h4 class="text-sm font-semibold">Notification ID</h4>
-                            <p class="opacity-70">${data.data.notificationId}</p>
-                        </div>
-                        <div class="space-y-1">
                             <h4 class="text-sm font-semibold">Level</h4>
                             <p class="${level}">${data.data.level === 1 ? `Information` : data.data.level === 2 ? `Warning` : `Banned`}</p>
 
@@ -82,7 +78,7 @@ for (let index = 0; index < btn.length; index++) {
                         </div>
                         <div class="space-y-1">
                             <h4 class="text-sm font-semibold">Sender</h4>
-                            <p class="opacity-70">${data.data.receiver.name}</p>
+                            <p class="opacity-70">${data.data.sender.name}</p>
                         </div>
                         <div class="space-y-1">
                             <h4 class="text-sm font-semibold">Content</h4>

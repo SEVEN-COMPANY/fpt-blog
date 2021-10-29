@@ -24,7 +24,8 @@ namespace FPTBlog.Src.AuthModule {
 
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
-        private readonly IJwtService JwtService; private readonly INotificationService NotificationService;
+        private readonly IJwtService JwtService;
+        private readonly INotificationService NotificationService;
         public AuthApiController(IAuthService authService, IJwtService jwtService, IUserService userService, INotificationService notificationService) {
             this.AuthService = authService;
             this.UserService = userService;
@@ -34,7 +35,7 @@ namespace FPTBlog.Src.AuthModule {
 
         [HttpPost("login")]
         public ObjectResult LoginHandler([FromBody] LoginUserDto body) {
-            var res = new ServerApiResponse<string>();
+            var res = new ServerApiResponse<User>();
 
             ValidationResult result = new LoginUserDtoValidator().Validate(body);
             if (!result.IsValid) {
@@ -55,13 +56,13 @@ namespace FPTBlog.Src.AuthModule {
                 var context = new Dictionary<string, object>();
                 for (int i = 0; i < notifications.Count; i++) {
                     var item = notifications[i];
-                    if (item.Level == NotificationLevel.BANNED) {
+                    if (item.Level == NotificationLevel.BANNED || item.Level == NotificationLevel.WARNING) {
                         context.Add("Reason", item.Content);
                         context.Add("ID", item.NotificationId);
                         break;
                     }
                 }
-
+                res.data = user;
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, context);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -79,6 +80,7 @@ namespace FPTBlog.Src.AuthModule {
                 Secure = true
 
             });
+
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_LOGIN_SUCCESS);
             return new ObjectResult(res.getResponse());
         }

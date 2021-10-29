@@ -7,7 +7,7 @@ using FPTBlog.Src.UserModule.Interface;
 using FPTBlog.Src.AuthModule;
 using FPTBlog.Src.AuthModule.Interface;
 using FPTBlog.Src.UserModule.Entity;
-
+using FPTBlog.Src.NotificationModule.Interface;
 
 namespace FPTBlog.Src.UserModule {
 
@@ -17,9 +17,11 @@ namespace FPTBlog.Src.UserModule {
         private readonly IAuthService AuthService;
 
         private readonly IUserService UserService;
-        public AdminMvcController(IUserService userService, IAuthService authService) {
+        private readonly INotificationService NotificationService;
+        public AdminMvcController(IUserService userService, IAuthService authService, INotificationService notificationService) {
             this.UserService = userService;
             this.AuthService = authService;
+            this.NotificationService = notificationService;
         }
 
         [HttpGet("list")]
@@ -27,6 +29,10 @@ namespace FPTBlog.Src.UserModule {
             if (searchName == null) {
                 searchName = "";
             }
+
+
+            this.ViewData["notificationLevel"] = new SelectList(this.NotificationService.GetNotificationNegativeLevelDropList(), "");
+
             // get status user for update user status
             this.ViewData["status"] = new SelectList(this.UserService.GetUserStatusDropList(), UserStatus.ENABLE);
             // get status search list for search by status

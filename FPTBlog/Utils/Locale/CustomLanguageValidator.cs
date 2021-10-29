@@ -27,6 +27,7 @@ namespace FPTBlog.Utils.Locale {
             public static readonly string MESSAGE_LOGOUT_SUCCESS = "MESSAGE_LOGOUT_SUCCESS";
             public static readonly string MESSAGE_UPDATE_SUCCESS = "MESSAGE_UPDATE_SUCCESS";
             public static readonly string MESSAGE_ADD_SUCCESS = "MESSAGE_ADD_SUCCESS";
+            public static readonly string MESSAGE_BLOCK_USER = "MESSAGE_BLOCK_USER";
             public static readonly string MESSAGE_DELETE_SUCCESS = "MESSAGE_DELETE_SUCCESS";
             public static readonly string MESSAGE_SAVE_SUCCESS = "MESSAGE_SAVE_SUCCESS";
             public static readonly string MESSAGE_UNSAVE_SUCCESS = "MESSAGE_UNSAVE_SUCCESS";
@@ -46,6 +47,7 @@ namespace FPTBlog.Utils.Locale {
             AddTranslation("en", MessageKey.MESSAGE_ADD_SUCCESS, "add success");
             AddTranslation("en", MessageKey.MESSAGE_DELETE_SUCCESS, "delete success");
             AddTranslation("en", MessageKey.MESSAGE_SAVE_SUCCESS, "save success");
+            AddTranslation("en", MessageKey.MESSAGE_BLOCK_USER, "Thank you for your request, we will consider your case as soon as posbile and reply the result via your email");
 
 
             // Error message
@@ -57,7 +59,7 @@ namespace FPTBlog.Utils.Locale {
             AddTranslation("en", ErrorMessageKey.ERROR_UPDATE_FAIL, "update fail");
             AddTranslation("en", ErrorMessageKey.ERROR_DELETE_FAIL, "delete fail");
             AddTranslation("en", ErrorMessageKey.ERROR_WRONG, "is wrong");
-            AddTranslation("en", ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, "your account has been disabled by an administrator. \n Reason: {Reason} \n If you have a problem please contact us at support@fptblog.vinhnhan.com with Ticket ID: {ID}");
+            AddTranslation("en", ErrorMessageKey.ERROR_DISSABLED_ACCOUNT, "your account has been disabled by an administrator. \n Reason: {Reason} \n If you have a problem please contact us at support@fptblog.vinhnhan.com");
             AddTranslation("en", ErrorMessageKey.ERROR_NOT_FOUND, "is not found");
             AddTranslation("en", ErrorMessageKey.ERROR_NOT_ALLOW, "not allow");
             AddTranslation("en", ErrorMessageKey.ERROR_PASSWORD_CONTAIN_CHARACTER, "should contain at least 1 uppercase, 1 lowercase, 1 number");
