@@ -37,6 +37,10 @@ namespace FPTBlog.Src.NotificationModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
+            if (body.ReceiverId == null) {
+                body.ReceiverId = "";
+            }
+
             User sender = (User) this.ViewData["user"];
             var notification = new Notification();
             notification.Content = body.Content;
