@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.NotificationModule {
     [Route("/api/notification")]
-    [ServiceFilter(typeof(AuthGuard))]
     public class NotificationApiController : Controller {
         private readonly INotificationService NotificationService;
         private readonly IUserService UserService;
@@ -21,11 +20,39 @@ namespace FPTBlog.Src.NotificationModule {
             this.UserService = userService;
         }
 
+        [ServiceFilter(typeof(AuthGuard))]
         [HttpGet("")]
         public ObjectResult GetNotificationHandler(string notificationId) {
             var res = new ServerApiResponse<Notification>();
             var notification = this.NotificationService.GetNotificationByNotificationId(notificationId);
 
+            res.data = notification;
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("")]
+        public ObjectResult HandleAddNotification([FromBody] AddNotificationUserDTO body) {
+            var res = new ServerApiResponse<Notification>();
+            ValidationResult result = new AddNotificationUserDTOValidator().Validate(body);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            if (body.ReceiverId == null) {
+                body.ReceiverId = "";
+            }
+
+            User sender = this.UserService.GetUserByUsername(body.Username);
+            var notification = new Notification();
+            notification.Content = body.Content;
+            notification.Description = body.Description;
+            notification.SenderId = sender.UserId;
+            notification.ReceiverId = body.ReceiverId;
+            notification.Level = body.Level;
+
+            this.NotificationService.AddNotification(notification);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             res.data = notification;
             return new ObjectResult(res.getResponse());
         }
