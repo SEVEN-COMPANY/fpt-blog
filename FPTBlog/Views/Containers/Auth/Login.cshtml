@@ -11,6 +11,9 @@
         @* Form Start *@
 
         @await Html.PartialAsync("../../Components/Form/FormMsg.cshtml")
+        <button id="model-role-open"
+            class="flex items-center justify-center hidden px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-tango-500 hover:bg-tango-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tango-500">Send
+            Unlock Request</button>
         <form class="space-y-6 fade-in" id="loginForm">
             @await Html.PartialAsync("../../Components/Form/TextField.cshtml",
             new {Name="username", Label="Username", Type="text", Value=""})
@@ -20,7 +23,7 @@
             new {Label="Sign In" })
         </form>
         @* Form End *@
-        <button id="model-role-open">open</button>
+
         @* Support Start *@
         <div class="space-y-2">
             @await Html.PartialAsync("../../Components/Form/FormDivider.cshtml")
@@ -64,8 +67,11 @@
                     </h3>
 
 
-                    <div class="mt-2">
-
+                    <div class="mt-2 space-y-2">
+                        <p class="text-sm font-medium opacity-70">Please give us a reason for your case, we will
+                            consider it as soon as posible
+                            via your email,
+                            thank you so much.</p>
                         @await Html.PartialAsync("../../../ViewsAdmin/Components/Form/TextareaField.cshtml",
                         new { Name = "description", Label = "Description", Value = "" })
                         <p class="text-xs font-medium opacity-70">This message will be sent to an administrator to

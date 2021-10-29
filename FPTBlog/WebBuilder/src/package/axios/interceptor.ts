@@ -76,7 +76,7 @@ export function responseSuccessInterceptor(response: AxiosResponse<any>) {
 
 export function responseFailedInterceptor(error: AxiosError<ServerResponse<null>>) {
     handleCommonResponse();
-
+    console.log('3232');
     if (error.response?.data?.details) {
         const details = error.response.data.details;
         for (const key in details) {

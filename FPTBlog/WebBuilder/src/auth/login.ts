@@ -29,11 +29,19 @@ loginForm?.addEventListener('submit', function (event: Event) {
             password: password.value,
         };
 
-        http.post<ServerResponse<null>>(routers.auth.login, input).then(() => {
-            setTimeout(() => {
-                window.location.assign(routerLinks.home);
-            }, 700);
-        });
+        http.post<ServerResponse<null>>(routers.auth.login, input)
+            .then(() => {
+                setTimeout(() => {
+                    window.location.assign(routerLinks.home);
+                }, 700);
+            })
+            .catch(({ data }) => {
+                const btn = document.getElementById('model-role-open');
+                btn?.classList.add('hidden');
+                if (data.data) {
+                    btn?.classList.remove('hidden');
+                }
+            });
     } else {
         console.log('login form wrong');
     }

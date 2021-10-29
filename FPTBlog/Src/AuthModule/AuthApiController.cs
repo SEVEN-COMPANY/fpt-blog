@@ -24,7 +24,8 @@ namespace FPTBlog.Src.AuthModule {
 
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
-        private readonly IJwtService JwtService; private readonly INotificationService NotificationService;
+        private readonly IJwtService JwtService;
+        private readonly INotificationService NotificationService;
         public AuthApiController(IAuthService authService, IJwtService jwtService, IUserService userService, INotificationService notificationService) {
             this.AuthService = authService;
             this.UserService = userService;
