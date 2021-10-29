@@ -1,5 +1,5 @@
 using FluentValidation;
-
+using FPTBlog.Src.NotificationModule.Entity;
 
 namespace FPTBlog.Src.UserModule.DTO {
     public class ToggleUserDto {
@@ -12,12 +12,18 @@ namespace FPTBlog.Src.UserModule.DTO {
         public string Content {
             get; set;
         }
+
+
+        public NotificationLevel Level {
+            get; set;
+        }
     }
     public class ToggleUserDtoValidator : AbstractValidator<ToggleUserDto> {
         public ToggleUserDtoValidator() {
             RuleFor(x => x.UserId).NotEmpty().NotNull();
             RuleFor(x => x.Description).NotEmpty().NotNull();
             RuleFor(x => x.Content).NotEmpty().NotNull();
+            RuleFor(x => x.Level).NotEmpty().NotNull().IsInEnum();
         }
     }
 }

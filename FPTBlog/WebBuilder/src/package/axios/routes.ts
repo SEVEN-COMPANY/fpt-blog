@@ -59,6 +59,7 @@ export const routers = {
         dislikeComment: '/api/comment/dislike',
     },
     notification: {
+        createUser: '/api/notification',
         create: '/api/admin/notification',
         get: '/api/admin/notification',
     },

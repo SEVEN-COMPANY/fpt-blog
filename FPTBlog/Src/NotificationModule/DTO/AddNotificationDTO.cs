@@ -24,7 +24,6 @@ namespace FPTBlog.Src.NotificationModule.DTO {
             RuleFor(x => x.Content).NotEmpty().NotNull();
             RuleFor(x => x.Description).NotEmpty().NotNull();
             RuleFor(x => x.Level).NotEmpty().NotNull().IsInEnum();
-            RuleFor(x => x.ReceiverId).NotNull().NotEmpty();
         }
     }
 }

@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.NotificationModule {
     [Route("/api/notification")]
-    [ServiceFilter(typeof(AuthGuard))]
     public class NotificationApiController : Controller {
         private readonly INotificationService NotificationService;
         private readonly IUserService UserService;
@@ -21,11 +20,37 @@ namespace FPTBlog.Src.NotificationModule {
             this.UserService = userService;
         }
 
+        [ServiceFilter(typeof(AuthGuard))]
         [HttpGet("")]
         public ObjectResult GetNotificationHandler(string notificationId) {
             var res = new ServerApiResponse<Notification>();
             var notification = this.NotificationService.GetNotificationByNotificationId(notificationId);
 
+            res.data = notification;
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPost("")]
+        public ObjectResult HandleAddNotification([FromBody] AddNotificationUserDTO body) {
+            var res = new ServerApiResponse<Notification>();
+            ValidationResult result = new AddNotificationUserDTOValidator().Validate(body);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+
+            var (users, _) = this.UserService.GetUsersStatusAndRoleWithCount(0, 1, "", UserStatus.ENABLE, UserRole.LECTURER);
+
+            User sender = this.UserService.GetUserByUsername(body.Username);
+            var notification = new Notification();
+            notification.Content = "This user requests to unlock their account";
+            notification.Description = body.Description;
+            notification.SenderId = sender.UserId;
+            notification.ReceiverId = users[0].UserId;
+            notification.Level = NotificationLevel.INFORMATION;
+
+            this.NotificationService.AddNotification(notification);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_BLOCK_USER);
             res.data = notification;
             return new ObjectResult(res.getResponse());
         }

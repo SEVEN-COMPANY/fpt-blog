@@ -37,5 +37,13 @@ namespace FPTBlog.Src.NotificationModule {
 
             return level;
         }
+        public List<SelectListItem> GetNotificationNegativeLevelDropList() {
+            var level = new List<SelectListItem>(){
+                new SelectListItem(){ Value = NotificationLevel.BANNED.ToString(), Text = "Banned"},
+                new SelectListItem(){  Value =  NotificationLevel.WARNING.ToString(), Text = "Warning"}
+            };
+
+            return level;
+        }
     }
 }

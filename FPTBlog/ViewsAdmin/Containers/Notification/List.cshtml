@@ -63,7 +63,7 @@
                     Username/Email
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Notification ID
+                    Sender
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Level
@@ -100,7 +100,7 @@
                         }
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                        @item.NotificationId
+                        @item.Sender.Name
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                         @if (item.Level == NotificationLevel.BANNED)

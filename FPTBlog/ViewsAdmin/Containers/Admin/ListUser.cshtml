@@ -1,3 +1,4 @@
+@using FPTBlog.Src.NotificationModule.Entity
 @using FPTBlog.Src.UserModule.Entity
 @using FPTBlog.Utils.Common
 
@@ -9,7 +10,7 @@
     var status = (SelectList)this.ViewData["status"];
     var roleSearch = (SelectList)this.ViewData["roleSearch"];
     var role = (SelectList)this.ViewData["role"];
-
+    var notificationLevelList = (SelectList)this.ViewData["notificationLevel"];
     var studentThisMonth = (int)this.ViewData["studentThisMonth"];
     var studentLastMonth = (int)this.ViewData["studentLastMonth"];
     var lecturerThisMonth = (int)this.ViewData["lecturerThisMonth"];
@@ -259,17 +260,23 @@ r" />
                         Unblock account
                     </h3>
                     <div class="mt-2">
-                        <p id="modal-content-description-block" class="hidden text-sm text-gray-500">
-                            Are you sure you want to block this account? This account will be lock from the FPT Blog
-                            system.
-                        </p>
+                        <div id="modal-content-description-block" class="hidden space-y-2 text-sm text-gray-500">
+                            <p>
+                                Are you sure you want to block this account? This account will be lock from the FPT Blog
+                                system.
+                            </p>
+
+                            @await Html.PartialAsync("../../Components/Form/FormDropList.cshtml",
+                            new { Name = "level", Label = "Action Level", Type = "text", Value = (string)
+                            this.Context.Request.Query["searchLevel"] ?? "" , IsLabel = false, List =
+                            notificationLevelList
+                            })
+                        </div>
                         <p id="modal-content-description-unblock" class="hidden text-sm text-gray-500">
                             Are you sure you want to unblock this account? This account will be unblock from the FPT
                             Blog system.
                         </p>
                         <div class="mt-2">
-
-
                             @await Html.PartialAsync("../../Components/Form/TextareaField.cshtml",
                             new { Name = "content", Label = "Content", Value = "" })
                             <span class="text-xs opacity-80">This message for user</span>
