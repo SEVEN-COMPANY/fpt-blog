@@ -16,6 +16,34 @@ interface LoginUserDto {
     password: string;
 }
 
+interface NotificationDto {
+    username: string;
+    description: string;
+}
+
+const reportBtn = document.getElementById('report-btn');
+reportBtn?.addEventListener('click', function () {
+    const username = document.getElementById('username') as HTMLInputElement;
+    const description = document.getElementById('description') as HTMLTextAreaElement;
+
+    if (username !== null && description !== null) {
+        const input: NotificationDto = {
+            username: username.value,
+            description: description.value,
+        };
+
+        http.post<ServerResponse<null>>(routers.notification.createUser, input).then(() => {
+            bgRole?.classList.remove('opacity-100');
+            bgRole?.classList.add('opacity-0');
+            panelRole?.classList.remove('opacity-100', 'translate-y-0', 'sm:scale-100');
+            panelRole?.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+            panelRole?.addEventListener('transitionend', modalRoleToggle);
+            const btn = document.getElementById('model-role-open');
+            btn?.classList.add('hidden');
+        });
+    }
+});
+
 const loginForm = document.getElementById('loginForm');
 loginForm?.addEventListener('submit', function (event: Event) {
     event.preventDefault();
