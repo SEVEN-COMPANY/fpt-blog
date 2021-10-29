@@ -14,6 +14,7 @@ namespace FPTBlog.Src.NotificationModule.Interface {
 
         public (List<Notification>, int) GetNotificationsLevelAndTimeWithCount(int pageIndex, int pageSize, string search, NotificationLevel searchLevel, string startDate, string endDate);
         public List<SelectListItem> GetNotificationLevelDropList();
+        public List<SelectListItem> GetNotificationNegativeLevelDropList();
 
     }
 }

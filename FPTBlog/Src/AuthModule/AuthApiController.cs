@@ -55,7 +55,7 @@ namespace FPTBlog.Src.AuthModule {
                 var context = new Dictionary<string, object>();
                 for (int i = 0; i < notifications.Count; i++) {
                     var item = notifications[i];
-                    if (item.Level == NotificationLevel.BANNED) {
+                    if (item.Level == NotificationLevel.BANNED || item.Level == NotificationLevel.WARNING) {
                         context.Add("Reason", item.Content);
                         context.Add("ID", item.NotificationId);
                         break;
