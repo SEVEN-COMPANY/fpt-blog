@@ -60,7 +60,7 @@ namespace FPTBlog.Src.AuthModule {
                     return false;
                 }
                 var user = this.UserService.GetUserByUserId(token[0]);
-                if (user == null) {
+                if (user == null || user.Status == UserStatus.DISABLE) {
                     return false;
                 }
                 Controller controller = context.Controller as Controller;

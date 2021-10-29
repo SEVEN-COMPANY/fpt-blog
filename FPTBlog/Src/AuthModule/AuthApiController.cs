@@ -24,7 +24,8 @@ namespace FPTBlog.Src.AuthModule {
 
         private readonly IAuthService AuthService;
         private readonly IUserService UserService;
-        private readonly IJwtService JwtService; private readonly INotificationService NotificationService;
+        private readonly IJwtService JwtService;
+        private readonly INotificationService NotificationService;
         public AuthApiController(IAuthService authService, IJwtService jwtService, IUserService userService, INotificationService notificationService) {
             this.AuthService = authService;
             this.UserService = userService;
@@ -55,7 +56,7 @@ namespace FPTBlog.Src.AuthModule {
                 var context = new Dictionary<string, object>();
                 for (int i = 0; i < notifications.Count; i++) {
                     var item = notifications[i];
-                    if (item.Level == NotificationLevel.BANNED) {
+                    if (item.Level == NotificationLevel.BANNED || item.Level == NotificationLevel.WARNING) {
                         context.Add("Reason", item.Content);
                         context.Add("ID", item.NotificationId);
                         break;

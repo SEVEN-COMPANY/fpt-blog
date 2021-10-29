@@ -53,7 +53,7 @@ namespace FPTBlog.Src.UserModule {
                 notification.Level = NotificationLevel.INFORMATION;
             }
             else {
-                notification.Level = NotificationLevel.BANNED;
+                notification.Level = body.Level;
             }
 
             this.NotificationService.AddNotification(notification);

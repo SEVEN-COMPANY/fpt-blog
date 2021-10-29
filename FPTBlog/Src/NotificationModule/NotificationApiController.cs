@@ -39,20 +39,18 @@ namespace FPTBlog.Src.NotificationModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if (body.ReceiverId == null) {
-                body.ReceiverId = "";
-            }
+            var (users, _) = this.UserService.GetUsersStatusAndRoleWithCount(0, 1, "", UserStatus.ENABLE, UserRole.LECTURER);
 
             User sender = this.UserService.GetUserByUsername(body.Username);
             var notification = new Notification();
-            notification.Content = body.Content;
+            notification.Content = "This user requests to unlock their account";
             notification.Description = body.Description;
             notification.SenderId = sender.UserId;
-            notification.ReceiverId = body.ReceiverId;
-            notification.Level = body.Level;
+            notification.ReceiverId = users[0].UserId;
+            notification.Level = NotificationLevel.INFORMATION;
 
             this.NotificationService.AddNotification(notification);
-            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_BLOCK_USER);
             res.data = notification;
             return new ObjectResult(res.getResponse());
         }
