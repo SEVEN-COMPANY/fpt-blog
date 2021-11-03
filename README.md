@@ -79,7 +79,7 @@ Our system was launched to support students from FPT University, they are writer
      - Github: https://github.com/tantruong2303
 - Nguyễn Lương Hoàng Nam | Backend
      - Gmail: monkeynam208@gmail.com
-     - Linkedin: https://linkedin.com/in/truongbinhtan
+     - Linkedin: https://www.linkedin.com/in/monkinam/
      - Github: https://www.linkedin.com/in/monkinam
 
 ## Special Thank For Supporting Us
