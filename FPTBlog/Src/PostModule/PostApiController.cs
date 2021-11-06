@@ -342,7 +342,7 @@ namespace FPTBlog.Src.PostModule {
                 return new NotFoundObjectResult(res.getResponse());
             }
 
-            if (post.Status != PostStatus.DRAFT) {
+            if (post.Status == PostStatus.APPROVED || post.Status == PostStatus.WAIT) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
