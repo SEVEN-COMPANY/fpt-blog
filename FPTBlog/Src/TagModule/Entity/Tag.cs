@@ -26,7 +26,7 @@ namespace FPTBlog.Src.TagModule.Entity {
         }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string CreateDate {
             get; set;
         }

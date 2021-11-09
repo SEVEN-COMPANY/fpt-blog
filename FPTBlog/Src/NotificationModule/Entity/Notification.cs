@@ -37,7 +37,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
         }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string CreateDate {
             get; set;
         }
@@ -66,7 +66,7 @@ namespace FPTBlog.Src.NotificationModule.Entity {
             this.Content = "";
             this.Description = "";
             this.Level = NotificationLevel.INFORMATION;
-            this.CreateDate = DateTime.Now.ToShortDateString();
+            this.CreateDate = DateTime.Now.ToString("dddd, dd MMMM yyyy");
             this.Sender = null;
             this.Receiver = null;
         }

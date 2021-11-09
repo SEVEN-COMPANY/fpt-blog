@@ -77,7 +77,7 @@ namespace FPTBlog.Src.CommentModule.Entity {
             this.Content = "<p>Content</p>";
             this.Like = 0;
             this.Dislike = 0;
-            this.CreateDate = DateTime.Now.ToShortDateString();
+            this.CreateDate = DateTime.Now.ToString("dddd, dd MMMM yyyy");
             this.OriCommentId = null;
             this.PostId = null;
             this.UserId = null;

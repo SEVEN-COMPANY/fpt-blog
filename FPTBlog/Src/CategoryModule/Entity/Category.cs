@@ -46,7 +46,7 @@ namespace FPTBlog.Src.CategoryModule.Entity {
             this.Name = "";
             this.Description = "";
             this.Status = CategoryStatus.ACTIVE;
-            this.CreateDate = DateTime.Now.ToShortDateString();
+            this.CreateDate = DateTime.Now.ToString("dddd, dd MMMM yyyy");
         }
     }
 }

@@ -66,7 +66,7 @@ namespace FPTBlog.Src.PostModule {
 
         [HttpGet("me")]
         [ServiceFilter(typeof(AuthGuard))]
-        public IActionResult GetMyBlogsWithStatus(int pageSize = 12, int pageIndex = 0) {
+        public IActionResult GetMyBlogsWithStatus(int pageSize = 100, int pageIndex = 0) {
 
 
             var user = (User) this.ViewData["user"];
@@ -112,6 +112,11 @@ namespace FPTBlog.Src.PostModule {
         [HttpGet("")]
         public IActionResult GetBlogByBlogId(string postId) {
             var post = this.PostService.GetViewPostByPostId(postId);
+            if (post.Post.Status != PostStatus.APPROVED) {
+                return Redirect(Routers.CommonGetHome.Link);
+            }
+
+
             string now = DateTime.Now.ToLongTimeString();
             DateTime timeNow = DateTime.Parse(now);
             string time = this.HttpContext.Session.GetString(ViewSession);
