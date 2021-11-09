@@ -119,7 +119,7 @@ namespace FPTBlog.Src.PostModule.Entity {
             this.Dislike = 0;
             this.View = 0;
             this.Status = PostStatus.DRAFT;
-            this.CreateDate = DateTime.Now.ToString("dddd, dd MMMM yyyy");
+            this.CreateDate = DateTime.Now.ToString("dd MMMM yyyy");
             this.Student = null;
             this.Lecturer = null;
             this.Category = null;

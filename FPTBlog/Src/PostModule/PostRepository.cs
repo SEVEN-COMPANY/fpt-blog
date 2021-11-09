@@ -85,7 +85,7 @@ namespace FPTBlog.Src.PostModule {
             var query = this.GetAll(item => item.StudentId == studentId && item.Status != PostStatus.APPROVED, includeProperties: "Category").OrderBy(item => item.Status);
 
 
-            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).OrderByDescending(item => item.CreateDate).ToList();
+            List<Post> list = query.OrderBy(item => item.CreateDate).Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             int count = query.Count();
             return (list, count);
 
@@ -96,7 +96,7 @@ namespace FPTBlog.Src.PostModule {
                          where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search))) && Post.Status == status && Post.Status != PostStatus.DRAFT
                          select Post);
 
-            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).OrderByDescending(item => item.CreateDate).ToList();
+            List<Post> list = query.OrderBy(item => item.CreateDate).Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             foreach (var post in list) {
                 this.Db.Entry(post).Reference(item => item.Student).Load();
             }
@@ -109,7 +109,7 @@ namespace FPTBlog.Src.PostModule {
                          where ((Post.Student.Name.Contains(search) || Post.Student.Username.Contains(search) || Post.Title.Contains(search)) && Post.Status != PostStatus.DRAFT)
                          select Post);
 
-            List<Post> list = query.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).OrderByDescending(item => item.CreateDate).ToList();
+            List<Post> list = query.OrderBy(item => item.CreateDate).Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             foreach (var post in list) {
                 this.Db.Entry(post).Reference(item => item.Student).Load();
             }

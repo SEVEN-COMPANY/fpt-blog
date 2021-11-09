@@ -92,7 +92,7 @@ namespace FPTBlog.Src.UserModule {
             }
 
             var count = list.Count();
-            var pagelist = list.Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
+            var pagelist = list.OrderByDescending(item => item.Role).ThenBy(item => item.CreateDate).Take((pageIndex + 1) * pageSize).Skip(pageIndex * pageSize).ToList();
             return (pagelist, count);
         }
 
@@ -262,7 +262,7 @@ namespace FPTBlog.Src.UserModule {
                                   .OrderByDescending(item => item.View)
                                   .Select(item => item.StudentId)
                                   .ToList();
-            if(userIds.Count > 0){
+            if (userIds.Count > 0) {
                 User user = this.GetFirstOrDefault(item => item.UserId == userIds[0]);
                 return user;
             }
@@ -281,7 +281,7 @@ namespace FPTBlog.Src.UserModule {
                                   .Select(item => item.StudentId)
                                   .ToList();
 
-            if(userIds.Count > 0){
+            if (userIds.Count > 0) {
                 User user = this.GetFirstOrDefault(item => item.UserId == userIds[0]);
                 return user;
             }
@@ -300,7 +300,7 @@ namespace FPTBlog.Src.UserModule {
                                    .OrderByDescending(item => item.Count())
                                    .Select(item => item.Key)
                                    .ToList();
-            if(userIds.Count > 0){
+            if (userIds.Count > 0) {
                 User user = this.GetFirstOrDefault(item => item.UserId == userIds[0]);
                 return user;
             }

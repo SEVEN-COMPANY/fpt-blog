@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBlog.Src.PostModule {
     [Route("/api/post")]
-    [ServiceFilter(typeof(AuthGuard))]
+    // [ServiceFilter(typeof(AuthGuard))]
     public class PostApiController : Controller {
         private readonly IUploadFileService UploadFileService;
         private readonly IPostService PostService;
@@ -37,6 +37,8 @@ namespace FPTBlog.Src.PostModule {
             this.TagService = tagService;
             this.UserService = userService;
         }
+
+
 
         [HttpPost("image")]
         public IActionResult UploadImageHandler(IFormFile image) {
