@@ -3,15 +3,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FPTBlog.Src.UserModule.Entity;
 
-namespace FPTBlog.Src.CommentModule.Entity
-{
+namespace FPTBlog.Src.CommentModule.Entity {
     public enum Expression {
         LIKE = 1,
         DISLIKE = 2
     }
     [Table("tblLikeComment")]
-    public class LikeComment
-    {
+    public class LikeComment {
         [Key]
         [Required]
         public string LikeCommentId {
@@ -29,7 +27,7 @@ namespace FPTBlog.Src.CommentModule.Entity
         }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string CreateDate {
             get; set;
         }
@@ -51,7 +49,7 @@ namespace FPTBlog.Src.CommentModule.Entity
 
         public LikeComment() {
             this.LikeCommentId = Guid.NewGuid().ToString();
-            this.CreateDate = DateTime.Now.ToShortDateString();
+            this.CreateDate = DateTime.Now.ToString("dddd, dd MMMM yyyy");
         }
     }
 }

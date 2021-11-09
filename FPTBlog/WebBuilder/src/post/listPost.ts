@@ -37,7 +37,7 @@ for (let index = 0; index < btn.length; index++) {
         const postName = document.getElementById('postName');
         const postLink = document.getElementById('postLink');
         if (title && postName) postName.innerText = title;
-        if (postLink && postId) postLink.setAttribute('href', `/post?postId=${postId}`);
+        if (postLink && postId) postLink.setAttribute('href', `/post/preview?postId=${postId}`);
         if (postId) {
             const approvedPostForm = document.getElementById('approvedPostForm');
             approvedPostForm?.addEventListener('submit', function (event) {

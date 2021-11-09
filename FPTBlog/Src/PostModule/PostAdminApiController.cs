@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentValidation.Results;
 
 using FPTBlog.Src.AuthModule;
@@ -25,6 +26,30 @@ namespace FPTBlog.Src.PostModule {
             this.PostService = postService;
             this.CategoryService = categoryService;
             this.TagService = tagService;
+        }
+
+
+        // remove on production
+        [HttpGet("super")]
+        public IActionResult SupperChange(string postId, int like, int dislike, int view, string createDate) {
+            var res = new ServerApiResponse<Post>();
+            Post post = this.PostService.GetPostByPostId(postId);
+            post.Like = like;
+            post.Dislike = dislike;
+            post.View = view;
+            post.CreateDate = createDate;
+
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        // remove on production
+        [HttpGet("superAll")]
+        public IActionResult SupperGet(string postId, int like, int dislike, int view, string createDate) {
+            var res = new ServerApiResponse<List<Post>>();
+            var (post, total) = this.PostService.GetAllPosts(100000, 0, "");
+            res.data = post;
+            return new ObjectResult(res.getResponse());
         }
 
         [HttpPost("approved")]

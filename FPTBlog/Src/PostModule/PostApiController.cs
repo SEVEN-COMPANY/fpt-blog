@@ -63,7 +63,7 @@ namespace FPTBlog.Src.PostModule {
 
             User user = (User) this.ViewData["user"];
             var (posts, count) = this.PostService.GetPostsOfStudentWithStatus(user.UserId, PostStatus.DRAFT);
-            if (count >= 12) {
+            if (count >= 50) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
@@ -80,6 +80,7 @@ namespace FPTBlog.Src.PostModule {
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_ADD_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
+
 
         [HttpPost("save")]
         public IActionResult SaveBlogHandler([FromBody] SavePostDto input) {
@@ -116,6 +117,28 @@ namespace FPTBlog.Src.PostModule {
 
             res.data = post;
             res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_SAVE_SUCCESS);
+            return new ObjectResult(res.getResponse());
+        }
+
+        [HttpPut("status")]
+        public IActionResult UpdatePostStatus([FromBody] ChangeStatusPostDto input) {
+
+            var user = (User) this.ViewData["user"];
+            var res = new ServerApiResponse<Post>();
+            ValidationResult result = new ChangeStatusPostDtoValidator().Validate(input);
+            if (!result.IsValid) {
+                res.mapDetails(result);
+                return new BadRequestObjectResult(res.getResponse());
+            }
+            Post blog = this.PostService.GetPostByPostId(input.PostId);
+            if (blog == null && blog.StudentId != user.UserId) {
+                res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_FOUND, "postId");
+                return new NotFoundObjectResult(res.getResponse());
+            }
+
+            blog.Status = input.Status;
+            this.PostService.UpdatePost(blog);
+            res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UPDATE_SUCCESS);
             return new ObjectResult(res.getResponse());
         }
 

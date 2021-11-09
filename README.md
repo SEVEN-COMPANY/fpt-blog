@@ -8,15 +8,10 @@
 
 ## Case Study
 
-Trong kỷ nguyên số, nguồn thông tin và dữ liệu trên Internet được xem như một tài nguyên tri thức vô cùng phong phú. Con người có thể dễ dàng tìm kiếm thông tin,
-dữ liệu thông qua nguồn tài nguyên này. Tuy nhiên, với biển dữ liệu lớn này, SV đang gặp khó khăn trong việc chọn lọc nội dung, chủ đề cấp thiết nhất cho ngành học,
-môn học của mình tại trường ĐH. Bên cạnh đó, những SV đã trích lọc được những kinh nghiệm, kiến thức thông qua các môn học,
-các chủ đề lại không có nền tảng để phổ biến đến đúng đối tượng-là các sinh viên trong trường.
+It has been more than 40 years since the world began to get in the digital era. In this epoch, the information and data sources on the Internet are considered as a resource of knowledge that is very plentiful and abundance. People who live in this era can easily look for information and data in this resource. However, everyone knows the thing that searching information in this huge resource is not different from swimming in the ocean. Especially students, they found a lot of difficulties in choosing the content, topic which are belong to their major and subject in the university. In addition, the other students who have got experiences and knowledges through subjects, topic of workshops,… do not have the suitable platform to share to other people.
 
-Hệ thống ra đời nhằm hỗ trợ các bạn sinh viên trường F, là những writer, reader theo các chuyên mục, chuyên ngành hay môn học nào đó.
-Nơi đây, các bạn writer có thể viết bài, đăng bài; các bạn reader được cập nhật các nội dung có chất lượng, gần gũi với các vấn đề học tập,
-cá nhân mình đang gặp phải. Ngoài ra, các mentor/lecturer tham gia với vai trò kiểm duyệt nội dung bài. Các bài blog có nội dung hay,
-thiết thực, được quan tâm nhiều, được phản hồi nhiều sẽ được trao các phần thưởng danh dự tương ứng.
+Our system was launched to support students from FPT University, they are writers or readers of certain categories, subjects or majors. In this website, writers can write and post the articles. For readers, they are always up-to-date with the quality content and the suitable of searching purpose of them. Moreover, mentors/lecturers can participate in the role of content moderator. Every blog articles that have a good content and get well-received interactions will be awarded the corresponding honorary rewards.
+
 
 ## Feature by role
 
@@ -84,7 +79,7 @@ thiết thực, được quan tâm nhiều, được phản hồi nhiều sẽ �
      - Github: https://github.com/tantruong2303
 - Nguyễn Lương Hoàng Nam | Backend
      - Gmail: monkeynam208@gmail.com
-     - Linkedin: https://linkedin.com/in/truongbinhtan
+     - Linkedin: https://www.linkedin.com/in/monkinam/
      - Github: https://www.linkedin.com/in/monkinam
 
 ## Special Thank For Supporting Us

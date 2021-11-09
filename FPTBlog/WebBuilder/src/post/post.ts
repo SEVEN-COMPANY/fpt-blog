@@ -1,9 +1,18 @@
 import { http } from '../package/axios';
-import { routers } from '../package/axios/routes';
+import { routerLinks, routers } from '../package/axios/routes';
 import { ServerResponse } from '../package/interface/serverResponse';
-
+enum PostStatus {
+    DRAFT = 1,
+    WAIT = 2,
+    APPROVED = 3,
+    DENY = 4,
+}
 interface PostLikeOrDislike {
     postId: string;
+}
+interface PostChangeStatus {
+    postId: string;
+    status: PostStatus;
 }
 
 const likeCount = document.getElementById('like-count');
@@ -11,6 +20,21 @@ const dislikeCount = document.getElementById('dislike-count');
 const likeBtn = document.getElementById('post-like');
 const dislikeBtn = document.getElementById('post-dislike');
 const postId = document.getElementById('postId') as HTMLInputElement;
+const editPost = document.getElementById('editMyPost');
+editPost?.addEventListener('click', function () {
+    const input: PostChangeStatus = {
+        postId: postId.value,
+        status: PostStatus.DRAFT,
+    };
+    http.put(routers.post.changePostStatus, input).then(({ data }) => {
+        const isCorrect = confirm('Are you sure to change this post?');
+        if (isCorrect) {
+            setTimeout(() => {
+                window.location.assign(routerLinks.myDraftList);
+            }, 700);
+        }
+    });
+});
 
 likeBtn?.addEventListener('click', function () {
     const input: PostLikeOrDislike = {

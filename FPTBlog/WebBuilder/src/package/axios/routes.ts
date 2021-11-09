@@ -1,6 +1,7 @@
 export const routerLinks = {
     home: '/',
     loginForm: '/auth/login',
+    myDraftList: '/post/me',
 };
 export const routers = {
     category: {
@@ -16,6 +17,7 @@ export const routers = {
         save: '/api/post/save',
         uploadImagePost: '/api/post/image',
         addCategoryToPost: '/api/post/category',
+        changePostStatus: '/api/post/status',
         likePost: '/api/post/like',
         dislikePost: '/api/post/dislike',
         sendPost: '/api/post/send',

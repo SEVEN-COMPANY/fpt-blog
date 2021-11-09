@@ -23,6 +23,8 @@
     this.ViewData["ImageUrl"] = value.Post.CoverUrl;
     this.ViewData["Description"] = value.Post.Description;
 
+    var user = (User)this.ViewData["user"];
+
     var categoryLink = $"{Routers.PostGetSearch.Link}?categoryId={value.Post.CategoryId}";
     var profileLink = $"{Routers.UserGetProfile.Link}?userId={value.Post.StudentId}";
     var facebookLink = $"{Routers.ServerURL.Link}{Routers.PostGetPost.Link}?postId={value.Post.PostId}";
@@ -64,7 +66,13 @@ new {Name="postId", Value=value.Post.PostId})
             }
         </div>
     </div>
-
+    <div class="flex justify-end px-4 md:px-0">
+        @if (user.UserId == value.Post.StudentId)
+        {
+            @await Html.PartialAsync("../../Components/Form/BtnFuncIcon.cshtml",
+        new { Label = "Edit Post", Icon = "../../Components/Icons/EditPost.cshtml", Id="editMyPost" })
+        }
+    </div>
     <div class="my-4 border-b border-tango-300 ">
     </div>
 
