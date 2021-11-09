@@ -47,6 +47,11 @@ namespace FPTBlog.Src.AuthModule {
             string id = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
             User user = this.UserService.GetUserByGoogleId(id);
             if (user == null) {
+                string host = this.JwtService.GetDataFromJwtToken(jwtToken, "email").ToString().Split('@')[1];
+                if (host.ToLower() != "fpt.edu.vn") {
+                    res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_WRONG, "email");
+                    return new BadRequestObjectResult(res.getResponse());
+                }
                 user = new User();
                 user.UserId = Guid.NewGuid().ToString();
                 user.GoogleId = (string) this.JwtService.GetDataFromJwtToken(jwtToken, "sub");
