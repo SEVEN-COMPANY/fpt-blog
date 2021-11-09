@@ -13,7 +13,7 @@ namespace FPTBlog.Utils.Common {
 
     public class Routers {
 
-        public static readonly RouterItem ServerURL = new RouterItem() { Page = "", Title = "", Link = "https://fptblog.vinhnhan.com" };
+        public static readonly RouterItem ServerURL = new RouterItem() { Page = "", Title = "", Link = "https://fptblog.website" };
 
 
         // Home

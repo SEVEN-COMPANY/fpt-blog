@@ -4,14 +4,13 @@
 
 [![Grocery Store Logo](doc/logo.svg)](https://fptblog.vinhnhan.com)
 
-## [Live Demo](https://fptblog.vinhnhan.com) - [Live Document](https://heaty566.github.io/fpt-blog-doc/document.pdf)
+## [Live Demo](https://fptblog.website) - [Live Document](https://heaty566.github.io/fpt-blog-doc/document.pdf)
 
 ## Case Study
 
 It has been more than 40 years since the world began to get in the digital era. In this epoch, the information and data sources on the Internet are considered as a resource of knowledge that is very plentiful and abundance. People who live in this era can easily look for information and data in this resource. However, everyone knows the thing that searching information in this huge resource is not different from swimming in the ocean. Especially students, they found a lot of difficulties in choosing the content, topic which are belong to their major and subject in the university. In addition, the other students who have got experiences and knowledges through subjects, topic of workshops,… do not have the suitable platform to share to other people.
 
 Our system was launched to support students from FPT University, they are writers or readers of certain categories, subjects or majors. In this website, writers can write and post the articles. For readers, they are always up-to-date with the quality content and the suitable of searching purpose of them. Moreover, mentors/lecturers can participate in the role of content moderator. Every blog articles that have a good content and get well-received interactions will be awarded the corresponding honorary rewards.
-
 
 ## Feature by role
 
