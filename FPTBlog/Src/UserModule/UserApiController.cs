@@ -30,6 +30,8 @@ namespace FPTBlog.Src.UserModule {
             this.PostService = postService;
         }
 
+
+
         [HttpGet("")]
         public IActionResult GetUser() {
             var res = new ServerApiResponse<User>();
@@ -159,12 +161,12 @@ namespace FPTBlog.Src.UserModule {
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if(post.Status != PostStatus.APPROVED){
+            if (post.Status != PostStatus.APPROVED) {
                 res.setErrorMessage(CustomLanguageValidator.ErrorMessageKey.ERROR_NOT_ALLOW);
                 return new BadRequestObjectResult(res.getResponse());
             }
 
-            if(this.UserService.IsSave(user.UserId, input.PostId)){
+            if (this.UserService.IsSave(user.UserId, input.PostId)) {
                 res.setMessage(CustomLanguageValidator.MessageKey.MESSAGE_UNSAVE_SUCCESS);
                 this.UserService.UnsavePost(user, post);
             }
