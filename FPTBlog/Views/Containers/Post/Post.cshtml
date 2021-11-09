@@ -67,7 +67,7 @@ new {Name="postId", Value=value.Post.PostId})
         </div>
     </div>
     <div class="flex justify-end px-4 md:px-0">
-        @if (user.UserId == value.Post.StudentId)
+        @if (user != null && user.UserId == value.Post.StudentId)
         {
             @await Html.PartialAsync("../../Components/Form/BtnFuncIcon.cshtml",
         new { Label = "Edit Post", Icon = "../../Components/Icons/EditPost.cshtml", Id="editMyPost" })

@@ -1,5 +1,4 @@
 <div>
-
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         function continueWithNextIdp(notification) {
@@ -12,6 +11,9 @@
                     btn?.classList.add('hidden');
                     if (data.data) {
                         btn?.classList.remove('hidden');
+                    } else {
+                        const error = document.getElementById('ERRORMESSAGEERROR');
+                        error.innerText = ("Please login with FPT email");
                     }
                 });;
             }

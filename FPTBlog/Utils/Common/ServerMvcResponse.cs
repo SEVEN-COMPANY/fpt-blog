@@ -2,10 +2,6 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-using Microsoft.AspNetCore.Mvc;
-
-
-
 namespace FPTBlog.Utils.Common {
     public class ServerMvcResponse {
         public static void SetFieldErrorMessage(string field, string key, ViewDataDictionary dataView) {
