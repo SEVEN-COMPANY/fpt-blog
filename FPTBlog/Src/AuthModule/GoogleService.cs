@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace FPTBlog.Src.AuthModule {
             string uri = $"https://www.googleapis.com/oauth2/v1/userinfo?access_token={accessToken}";
 
             HttpClient client = new HttpClient();
+            Console.WriteLine(client + "ahihi");
             HttpResponseMessage responseMessage = await client.GetAsync(uri);
 
             return responseMessage;
