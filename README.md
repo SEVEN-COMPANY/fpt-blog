@@ -4,7 +4,7 @@
 
 [![Grocery Store Logo](doc/logo.svg)](https://fptblog.vinhnhan.com)
 
-## [Live Demo](https://fptblog.website) - [Live Document](https://heaty566.github.io/fpt-blog-doc/document.pdf)
+## [Live Demo](https://fptblog.website) - [Document Design](./SWP391-FPTBlog_Design.pdf) - [Document SRS](./SWP391-FPTBlog_SRS.pdf)
 
 ## Case Study
 
