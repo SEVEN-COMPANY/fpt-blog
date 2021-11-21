@@ -32,7 +32,6 @@ namespace FPTBlog.Src.CommentModule.Entity {
         }
 
         [Required]
-        [StringLength(20)]
         public string CreateDate {
             get; set;
         }
